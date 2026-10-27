@@ -11,15 +11,21 @@
 #===============================================================================
 module FM
   class Club
-    attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential, :stadium,
-                :facilities, :mon_ratings, :rating, :wallet, :form
-    attr_accessor :fame
+    attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential,
+                :facilities, :mon_ratings, :rating, :wallet, :form, :city_size, :stadium_shared,
+                :home_fill
+    attr_accessor :fame, :stadium, :clubhouse, :project
 
     def initialize(data)
       @id, @name, @region, @city = data.values_at(:id, :name, :region, :city)
       @role, @canon, @level, @potential = data.values_at(:role, :canon, :level, :potential)
       @stadium = data[:stadium]
-      @facilities  = data[:facilities] || {}
+      @stadium_shared = data.fetch(:stadium_shared, false)
+      @clubhouse = data.fetch(:clubhouse, 1)
+      @city_size = data.fetch(:city_size, 1)
+      @facilities  = (data[:facilities] || {}).dup
+      @project   = nil   # { kind:, target:, to:, done: [y, m, d] }
+      @home_fill = []    # attendance / capacity, last 5 home games
       @mon_ratings = data[:pokemon].map { |m| Rating.mon(m) }
       @rating  = Rating.team(data[:pokemon])
       @fame    = Economy.initial_fame(level: @level, role: @role, canon: @canon)
@@ -34,6 +40,16 @@ module FM
 
     def recent_wins
       @form.empty? ? 2 : @form.count(:w)   # demand() assumes 2 without a table
+    end
+
+    def push_fill(ratio)
+      @home_fill << ratio
+      @home_fill.shift while @home_fill.size > 5
+    end
+
+    def weekly_cost
+      @mon_ratings.sum { |r| Economy.food(ovr: Economy.ovr(r), fame: @fame) } +
+        @facilities.values.sum { |lv| Economy.facility_keep(lv) } + Economy.stadium_keep(@stadium)
     end
   end
 
@@ -70,6 +86,8 @@ module FM
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
           weekly_economy
+          events.concat(finish_projects)
+          @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) }
         end
       end
       round = league_dates.index(@calendar.date)
@@ -110,6 +128,7 @@ module FM
         gate = Economy.gate(home_fame: home.fame, away_fame: away.fame, wins: home.recent_wins,
                             stadium: home.stadium, rng: @rng)
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
+        home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
         r = MatchSim.play(home.rating, away.rating, rng: @rng)
         settle(r, home, away, ranking)
         r.merge(attendance: gate[:attendance])
@@ -150,6 +169,20 @@ module FM
         w.record(-Economy.stadium_keep(c.stadium), category: :std, date: date)
         merch = Economy.merch(c.fame)
         w.record(merch, category: :merch, date: date) if merch.positive?
+      end
+    end
+
+    def finish_projects
+      @clubs.each_value.filter_map do |c|
+        p = c.project
+        next unless p && @calendar.days_until(p[:done]) <= 0
+        case p[:kind]
+        when :building  then c.facilities[p[:target]] = p[:to]
+        when :clubhouse then c.clubhouse = p[:to]
+        when :stadium   then c.stadium = p[:to]
+        end
+        c.project = nil
+        { kind: :built, club: c.id, what: p[:target], level: p[:to], date: date }
       end
     end
 

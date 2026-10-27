@@ -29,11 +29,16 @@ def club_data
   %w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each do |f|
     pbs_sections(f).each { |id, s| bst[id] = s["BaseStats"].first.split(",").sum(&:to_i) if s["BaseStats"].any? }
   end
+  cities = pbs_sections("fm_cities.txt")
   pbs_sections("fm_clubs.txt").map do |id, s|
     one = ->(k) { s[k].first }
+    city = cities.fetch(one.("City"))
     { id: id, name: one.("Name"), region: one.("Region"), city: one.("City"), role: one.("Role"),
       canon: one.("Canon") == "true", level: one.("Level").to_i, potential: one.("Potential").to_i,
-      stadium: one.("Stadium").to_i,
+      stadium: one.("Stadium").to_i, clubhouse: one.("Clubhouse").to_i,
+      city_size: city["Size"].first.to_i,
+      # Milan cities share one stadium; capitals use the committee's (design 09).
+      stadium_shared: %w[MILAN LEAGUE].include?(city["Form"].first),
       facilities: s["Facility"].to_h { |f| k, lv = f.split(","); [k.to_sym, lv.to_i] },
       pokemon: s["Pokemon"].map do |p|
         sp, lv, stars = p.split(",")
@@ -47,6 +52,13 @@ seed = (ARGV[1] || 1).to_i
 data = club_data
 world = FM::World.new_game(data, seed: seed)
 start_funds = world.clubs.values.sum { |c| c.wallet.balance }
+growth = lambda do
+  cs = world.clubs.values
+  avg = ->(b) { cs.sum { |c| c.facilities.fetch(b, 0) }.fdiv(cs.size).round(2) }
+  "clubhouse #{cs.map(&:clubhouse).tally.sort.to_h}, stadium #{cs.map(&:stadium).tally.sort.to_h}, " \
+    "mean TRAINING #{avg.(:TRAINING)} SCOUTING #{avg.(:SCOUTING)} MEDICAL #{avg.(:MEDICAL)}"
+end
+start_growth = growth.call
 ends = []
 results = []
 
@@ -84,6 +96,8 @@ puts "money per club per year: " +
 balances = world.clubs.values.map { |c| c.wallet.balance }.sort
 puts "funds: start total #{won.(start_funds)} -> end total #{won.(balances.sum)}; " \
      "end median #{won.(balances[90])}, in debt #{balances.count(&:negative?)} of 180"
+puts "start: #{start_growth}"
+puts "end:   #{growth.call}"
 by_role = world.clubs.values.group_by { |c| c.role[0] }
 puts "mean end funds by role: " + %w[C E G T].map { |r| "#{r} #{won.(by_role[r].sum { |c| c.wallet.balance } / by_role[r].size)}" }.join(", ")
 
