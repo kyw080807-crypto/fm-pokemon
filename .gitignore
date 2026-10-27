@@ -1,32 +1,42 @@
-# Audio, Graphics and Plugins folders
-Audio/
-Graphics/
-Plugins/
+# 게임 레포용 .gitignore (Maruno 엔진 레포 버전에서 변경: Plugins/·맵 데이터를 추적)
 
-# Data folder, but not Data/Scripts folder or messages_core.dat
-Data/*
-!Data/Scripts.rxdata
-!Data/Scripts/
+# --- 컴파일 산출물 (PBS / Plugins 에서 재생성) ---
+Data/*.dat
+# 코어 텍스트는 엔진 레포가 추적하는 파일. messages_game.dat 는 컴파일 산출물이라 무시
 !Data/messages_core.dat
+Data/PluginScripts.rxdata
+Data/ScriptsBackup.rxdata
+Data/debuglog.txt
+Data/Backup/
 
-# Files in the main project folder
-Game.ini
-Game.rxproj
+# --- 런타임/로그 ---
+errorlog.txt
+logs/
+Screenshots/
 RGSS*.dll
+*.tmp
+~*
 
-# Common code editor folders & files
+# --- 개인 설정 / 에디터 ---
+CLAUDE.local.md
+.claude/settings.local.json
 .vscode/
 *.code-workspace
 .idea/
 *.mkproj
 
-# Operating system generated files & folders
+# --- OS ---
 .DS_Store
 .DS_Store?
 ehthumbs.db
 Thumbs.db
 [Dd]esktop.ini
 
-# Temp files
+# --- 배포 빌드 ---
+dist/
+Release/
 
-~*
+# 추적 대상 (무시하지 말 것):
+# Data/Map*.rxdata, MapInfos/Tilesets/System/CommonEvents/Animations.rxdata,
+# Data/Scripts/, Data/Scripts.rxdata(로더), Plugins/, PBS/, Game.ini, Game.rxproj
+# Graphics/, Audio/ 는 LFS 설정(.gitattributes) 후 추적
