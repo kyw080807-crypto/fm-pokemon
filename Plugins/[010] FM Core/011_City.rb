@@ -9,7 +9,7 @@
 #===============================================================================
 module FM
   module Civic
-    POPULATION   = [5_000, 15_000, 40_000, 100_000, 250_000].freeze   # by size (draft)
+    POPULATION   = [5_000, 15_000, 40_000, 100_000, 100_000].freeze   # by size (draft)
     PUBLIC_PLOTS = [4, 6, 8, 10, 12].freeze                             # design 01
     PUBLIC_CAP   = [2, 3, 4, 5, 5].freeze                               # design 01
     TAX_PER_HEAD = 0.25         # ₽ per resident per week (draft; 0.5 left budgets at a ₽20M median after 20 years)

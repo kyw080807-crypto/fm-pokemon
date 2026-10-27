@@ -19,8 +19,8 @@ module FM
     START = { SIDE_STADIUM: 3, LEAGUE_HQ: 3, HUB: 2, BROADCAST: 2, HALL_OF_FAME: 1 }.freeze
     MAX_LEVEL = 5
     DUES_PER_FAME = 10              # ₽ per fame point per week (draft)
-    HQ_INCOME_PER_LEVEL = 3000      # ₽ per week (draft: broadcast rights, league sponsors)
-    BROADCAST_PER_LEVEL = 300       # ₽ per club per week (draft)
+    HQ_INCOME_PER_LEVEL = 1500      # ₽ per week (draft: broadcast rights, league sponsors)
+    BROADCAST_PER_LEVEL = 150       # ₽ per club per week (draft)
     COST_MUL = 2.0                  # x club building step cost (draft)
     QUARTER_MONTHS = [1, 4, 7, 10].freeze
     GYM_SEATS = 2
