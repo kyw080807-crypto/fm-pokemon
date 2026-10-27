@@ -8,9 +8,10 @@
 *.dat    binary
 *.ttf    binary
 *.otf    binary
-# Git LFS: git-lfs 설치 + `git lfs install` 후, Graphics/Audio 를 처음 커밋하기 전에 주석 해제.
+# Git LFS (`git lfs install --local` 로 이 레포에서 켬). 새 클론에서는 `git lfs install` 후 `git lfs pull`.
 # Fonts/ 는 이미 일반 blob으로 이력에 있으므로 LFS에 넣지 않는다.
-# Graphics/**/*.png filter=lfs diff=lfs merge=lfs -text
-# Audio/**/*.ogg    filter=lfs diff=lfs merge=lfs -text
-# Audio/**/*.wav    filter=lfs diff=lfs merge=lfs -text
-# Audio/**/*.mid    filter=lfs diff=lfs merge=lfs -text
+Graphics/**/*.png filter=lfs diff=lfs merge=lfs -text
+Graphics/**/*.bmp filter=lfs diff=lfs merge=lfs -text
+Audio/**/*.ogg    filter=lfs diff=lfs merge=lfs -text
+Audio/**/*.wav    filter=lfs diff=lfs merge=lfs -text
+Audio/**/*.mid    filter=lfs diff=lfs merge=lfs -text
