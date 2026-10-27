@@ -1,0 +1,6 @@
+Name       = FM Font
+Version    = 0.1.0
+Essentials = 21.1
+Requires   = v21.1 Hotfixes
+Credits    = FM Pokémon team
+Credits    = Galmuri font: Lee Minseo (quiple), SIL OFL 1.1
