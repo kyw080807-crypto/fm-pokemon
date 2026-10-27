@@ -185,8 +185,18 @@ dex.each do |d|
   d["evo"].each { |e| species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}\n" }
 end
 
+# --- sponsors: Poké Manager SPONSORS --------------------------------------
+sponsors = JSON.parse(File.read(File.join(ROOT, "import", "pokemanager", "data", "sponsors.json"), encoding: "utf-8"))
+sponsor_txt = +header.call("sponsors")
+sponsors.each do |s|
+  sponsor_txt << "#-------------------------------\n[#{s['id'].upcase}]\nName = #{s['name']}\n"
+  sponsor_txt << "Region = #{REGIONS[s['region']]}\nTier = #{s['tier'].upcase}\nKind = #{s['kind'].upcase}\n"
+  sponsor_txt << "MinFame = #{s['min_fame']}\n"
+end
+
 # PBS files in this project are UTF-8 with BOM and CRLF, like the shipped ones.
-{ "fm_cities.txt" => city_txt, "fm_clubs.txt" => club_txt, "fm_species.txt" => species_txt }.each do |file, txt|
+{ "fm_cities.txt" => city_txt, "fm_clubs.txt" => club_txt, "fm_species.txt" => species_txt,
+  "fm_sponsors.txt" => sponsor_txt }.each do |file, txt|
   File.binwrite(File.join(ROOT, "PBS", file), "﻿".encode("UTF-8") + txt.gsub("\n", "\r\n"))
 end
 puts "cities: #{cities.size}  clubs: #{trainers.size}  " \

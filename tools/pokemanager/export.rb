@@ -19,23 +19,25 @@ OUT  = File.join(ROOT, "import", "pokemanager", "data")
 REGION_NAMES = %w[관동 성도 호연 신오 하나 칼로스 알로라 가라르 팔데아].freeze
 
 # Returns the JS array/object literal that starts right after `marker`.
+# Scans bytes: indexing a big UTF-8 string by character is O(n) per access.
 def literal_after(text, marker)
-  start = text.index(marker) or raise "marker not found: #{marker}"
-  i = text.index(/[\[{]/, start + marker.size)
+  bytes = text.b
+  start = bytes.index(marker.b) or raise "marker not found: #{marker}"
+  i = bytes.index(/[\[{]/n, start + marker.bytesize)
   depth = 0
   quote = nil
   j = i
-  while j < text.size
-    c = text[j]
+  while j < bytes.bytesize
+    c = bytes.getbyte(j)
     if quote
-      if c == "\\" then j += 1
+      if c == 92 then j += 1            # backslash
       elsif c == quote then quote = nil
       end
-    elsif c == '"' || c == "'" then quote = c
-    elsif c == "[" || c == "{" then depth += 1
-    elsif c == "]" || c == "}"
+    elsif c == 34 || c == 39 then quote = c   # " '
+    elsif c == 91 || c == 123 then depth += 1  # [ {
+    elsif c == 93 || c == 125                  # ] }
       depth -= 1
-      return text[i..j] if depth.zero?
+      return bytes[i..j].force_encoding("UTF-8") if depth.zero?
     end
     j += 1
   end
@@ -57,7 +59,13 @@ trainers = JSON.parse(literal_after(text, "const TRAINERS=")).each_with_index.fl
   end
 end
 
+# SPONSORS [id, 이름, 지방, 등급 big/local/shop, 종류, 최소 명성] — single-quoted JS.
+sponsors = JSON.parse(literal_after(text, "const SPONSORS=").tr("'", '"')).map do |id, name, region, tier, kind, fame|
+  { id: id, name: name, region: region, tier: tier, kind: kind, min_fame: fame }
+end
+
 FileUtils.mkdir_p(OUT)
+File.write(File.join(OUT, "sponsors.json"), JSON.pretty_generate(sponsors), mode: "w:UTF-8")
 File.write(File.join(OUT, "dex.json"), JSON.pretty_generate(dex), mode: "w:UTF-8")
 File.write(File.join(OUT, "trainers.json"), JSON.pretty_generate(trainers), mode: "w:UTF-8")
 

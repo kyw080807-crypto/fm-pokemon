@@ -13,8 +13,8 @@ module FM
   class Club
     attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential,
                 :facilities, :rating, :wallet, :form, :stadium_shared,
-                :home_fill, :traits, :squad, :retired
-    attr_accessor :fame, :stadium, :clubhouse, :project, :city_size
+                :home_fill, :traits, :squad, :retired, :sponsor_bans
+    attr_accessor :fame, :stadium, :clubhouse, :project, :city_size, :sponsor
 
     def initialize(data)
       @id, @name, @region, @city = data.values_at(:id, :name, :region, :city)
@@ -32,6 +32,8 @@ module FM
                 age: m.fetch(:age, 0), canon: @canon)
       end
       @retired = []
+      @sponsor = nil          # FM::Sponsor.deal hash for this season
+      @sponsor_bans = {}      # sponsor id => last banned year
       @fame    = Economy.initial_fame(level: @level, role: @role, canon: @canon)
       refresh_rating
       @wallet  = Finance.new(balance: Economy.start_funds(@fame))
@@ -77,15 +79,17 @@ module FM
 
     # species: FM::Scout pool (PBS/fm_species.txt). Without it squads stay
     # fixed (no growth, aging or scouting) — enough for league/economy tests.
-    def self.new_game(club_data, seed:, cities: [], species: nil)
-      new(club_data.map { |d| Club.new(d) }, seed: seed, cities: cities.map { |d| City.new(d) }, species: species)
+    def self.new_game(club_data, seed:, cities: [], species: nil, sponsors: nil)
+      new(club_data.map { |d| Club.new(d) }, seed: seed, cities: cities.map { |d| City.new(d) },
+          species: species, sponsors: sponsors)
     end
 
-    def initialize(clubs, seed:, cities: [], species: nil)
+    def initialize(clubs, seed:, cities: [], species: nil, sponsors: nil)
       @calendar = Calendar.new
       @clubs    = clubs.to_h { |c| [c.id, c] }
       @cities   = cities.to_h { |c| [c.id, c] }
       @species  = species
+      @sponsors = sponsors
       @clubs.each_value do |c|
         city = @cities[c.city] or next
         city.club_ids << c.id
@@ -94,7 +98,18 @@ module FM
       @rng      = Random.new(seed)
       @league_dates = {}
       seed_squads if @species
+      sign_sponsors
       start_leagues
+    end
+
+    # Every club takes its best offer for the season (aiPickSponsor).
+    def sign_sponsors
+      return unless @sponsors
+      @clubs.each_value do |c|
+        offers = Sponsor.offers(@sponsors, region: c.region, fame: c.fame, clubhouse: c.clubhouse,
+                                           bans: c.sponsor_bans, year: @calendar.year, rng: @rng)
+        c.sponsor = Sponsor.ai_pick(offers)
+      end
     end
 
     # buildWorld: starting mons get an age of 0-4 and the EVs that age would
@@ -132,6 +147,7 @@ module FM
         case kind
         when :new_year
           events.concat(season_rollover)
+          sign_sponsors
           start_leagues
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
@@ -225,7 +241,27 @@ module FM
         w.record(-Economy.stadium_keep(c.stadium), category: :std, date: date)
         merch = Economy.merch(c.fame)
         w.record(merch, category: :merch, date: date) if merch.positive?
+        pay_sponsor(c)
       end
+    end
+
+    def pay_sponsor(c)
+      s = c.sponsor or return
+      if s[:kind] == "RISKY" && @rng.rand < Sponsor::BUST_CHANCE
+        c.sponsor = nil
+        return
+      end
+      c.wallet.record((s[:base] / 52.0).round, category: :spon, date: date)
+    end
+
+    # sponSeasonEnd, plus the bonus for a top-4 finish.
+    def sponsor_season_end(c, pos)
+      s = c.sponsor or return
+      if %w[PERF STRICT].include?(s[:kind]) && pos <= Sponsor::BONUS_POSITION && s[:bonus].positive?
+        c.wallet.record(s[:bonus], category: :spon, date: date)
+      end
+      c.fame = Economy.add_fame(c.fame, Sponsor::FAME_BONUS) if s[:kind] == "FAME"
+      c.sponsor_bans[s[:id]] = @calendar.year + Sponsor::STRICT_BAN_SEASONS if s[:kind] == "STRICT" && pos > Sponsor::BONUS_POSITION
     end
 
     def season_rollover
@@ -321,6 +357,7 @@ module FM
         aid = Economy.rebuild_aid(pos)
         c.wallet.record(aid, category: :aid, date: date) if aid.positive?
         c.fame = Economy.add_fame(c.fame, (11 - pos) * 0.6 + (pos == 1 ? 5 : 0))
+        sponsor_season_end(c, pos)
       end
       { kind: :league_end, region: region, date: date, standings: standings }
     end

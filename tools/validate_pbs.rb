@@ -37,6 +37,13 @@ SCHEMAS = {
     "Facility"  => { repeat: true, check: /\A(TRAINING|MEDICAL|SCOUTING|DAYCARE|SHOP),[1-5]\z/ },
     "Pokemon"   => { repeat: true, required: true, check: :species }
   },
+  "fm_sponsors" => {
+    "Name"    => { required: true },
+    "Region"  => { required: true, check: REGIONS },
+    "Tier"    => { required: true, check: %w[BIG LOCAL SHOP] },
+    "Kind"    => { required: true, check: %w[STABLE PERF STRICT FAME BUZZ SHOP RISKY] },
+    "MinFame" => { required: true, check: INT }
+  },
   "fm_species" => {
     "Dex"       => { required: true, check: INT },
     "BST"       => { required: true, check: INT },

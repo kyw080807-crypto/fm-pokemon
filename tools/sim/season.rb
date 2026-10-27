@@ -40,6 +40,13 @@ def species_data
   end
 end
 
+def sponsor_data
+  pbs_sections("fm_sponsors.txt").map do |id, s|
+    { id: id, name: s["Name"].first, region: s["Region"].first, tier: s["Tier"].first,
+      kind: s["Kind"].first, min_fame: s["MinFame"].first.to_i }
+  end
+end
+
 def club_data
   bst = {}
   %w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each do |f|
@@ -67,7 +74,8 @@ end
 years = (ARGV[0] || 1).to_i
 seed = (ARGV[1] || 1).to_i
 data = club_data
-world = FM::World.new_game(data, seed: seed, cities: city_data, species: species_data)
+world = FM::World.new_game(data, seed: seed, cities: city_data, species: species_data, sponsors: sponsor_data)
+puts "year-1 sponsors: " + world.clubs.values.map { |c| c.sponsor && c.sponsor[:kind] }.tally.sort_by { |_, n| -n }.to_h.to_s
 start_rating = world.clubs.transform_values(&:rating)
 city_sizes = -> { world.cities.values.map(&:size).tally.sort.to_h }
 start_cities = city_sizes.call
