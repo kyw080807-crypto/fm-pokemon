@@ -77,6 +77,18 @@ module FM
 
   class World
     attr_reader :calendar, :clubs, :leagues, :cities, :species, :cups
+    # The club the player manages: the AI doesn't build, scout, sign or
+    # release for it (emergency youth still applies). nil in older saves.
+    attr_accessor :player_club
+
+    def ai?(club) = club.id != @player_club
+
+    # A scout trip in `region` for the player's club (FM::Recruit.scout).
+    def player_scout(region)
+      c = @clubs.fetch(@player_club)
+      Recruit.scout(c, pool: @species, region: region, avg_level: avg_level(region), rng: @rng,
+                       date: @calendar.date)
+    end
 
     # species: FM::Scout pool (PBS/fm_species.txt). Without it squads stay
     # fixed (no growth, aging or scouting) — enough for league/economy tests.
@@ -158,7 +170,7 @@ module FM
           events.concat(finish_projects)
           events.concat(finish_city_projects)
           events.concat(squad_week) if @species
-          @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) }
+          @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) }
         when :new_month
           events.concat(Meeting.monthly(self, date: date))
         end
@@ -316,12 +328,12 @@ module FM
         train = c.facilities.fetch(:TRAINING, 0)
         c.squad.each { |m| Growth.week(m, train_level: train, species: @species) }
         avg = avg_level(c.region)
-        released = Recruit.budget(c, pool: @species)
+        released = ai?(c) ? Recruit.budget(c, pool: @species) : []
         events << { kind: :released, club: c.id, mons: released, date: date } unless released.empty?
         youth = Recruit.emergency(c, pool: @species, avg_level: avg, rng: @rng)
         events << { kind: :youth, club: c.id, mons: youth, date: date } unless youth.empty?
-        e = Recruit.weekly(c, pool: @species, regions: regions, avg_level: avg,
-                              window: window, date: date, rng: @rng)
+        e = ai?(c) && Recruit.weekly(c, pool: @species, regions: regions, avg_level: avg,
+                                      window: window, date: date, rng: @rng)
         events << e if e
         c.refresh_rating
       end

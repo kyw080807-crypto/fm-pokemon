@@ -139,6 +139,13 @@ FM::Smoke.register("fm_menu_render") do
     bitmap.to_file("logs/fm_menu.png")
     bitmap.dispose
     FM::Log.info("smoke: menu rows for #{club.name}: #{rows.size}")
+    # Player actions the new menu items call.
+    opts = FM::Invest.options(club)
+    raise "no build options" if opts.empty?
+    cands = FM.world.player_scout(club.region)
+    raise "scout returned nothing" if cands.nil? || cands.empty?
+    names = cands.map { |cd| FM::UI.species_name(cd[:mon].species) }
+    FM::Log.info("smoke: #{opts.size} build options; scouted #{names.join(', ')}")
   ensure
     FM::Bridge.state = saved
   end

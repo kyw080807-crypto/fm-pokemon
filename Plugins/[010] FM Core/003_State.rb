@@ -14,7 +14,12 @@ module FM
     START_BALANCE  = 10_000
 
     attr_reader :calendar, :finance, :world
-    attr_accessor :player_club   # club id the player manages; nil until chosen
+    attr_reader :player_club   # club id the player manages; nil until chosen
+
+    def player_club=(id)
+      @player_club = id
+      @world.player_club = id if @world
+    end
 
     def self.new_game(balance: START_BALANCE, world: nil)
       new(calendar: Calendar.new, finance: Finance.new(balance: balance), world: world)

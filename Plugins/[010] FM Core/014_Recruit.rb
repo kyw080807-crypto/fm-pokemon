@@ -87,5 +87,35 @@ module FM
       club.squad << pick[:mon]
       { kind: :signed, club: club.id, species: pick[:mon].species, cost: pick[:cost], released: out, date: date }
     end
+
+    # --- player actions ---------------------------------------------------
+    # One scout trip for the player: pays the fee and returns the candidates
+    # (nil if the fee can't be paid).
+    def scout(club, pool:, region:, avg_level:, rng:, date:)
+      return nil if club.wallet.balance < Scout::FEE
+      club.wallet.record(-Scout::FEE, category: :scout, date: date)
+      q = Growth.original_level(club.facilities.fetch(:SCOUTING, 0))
+      n = 3 + (q >= 7 ? 1 : 0) + (q >= 10 ? 1 : 0)
+      Array.new(n) do
+        Scout.candidate(pool, region: region, scout_level: club.facilities.fetch(:SCOUTING, 0),
+                              avg_level: avg_level, rng: rng)
+      end
+    end
+
+    # Signs a candidate; with a full squad, `release` (a Mon in the squad)
+    # makes room.
+    def sign(club, cand, date:, release: nil)
+      raise Finance::InsufficientFunds, "need #{cand[:cost]}" if club.wallet.balance < cand[:cost]
+      if club.squad.size >= Build.squad_size(club.clubhouse)
+        raise ArgumentError, "squad full: choose a mon to release" unless release && club.squad.include?(release)
+        club.squad.delete(release)
+        club.retired << release
+      end
+      club.wallet.record(-cand[:cost], category: :sign, date: date, memo: cand[:mon].species)
+      club.squad << cand[:mon]
+      club.refresh_rating
+      { kind: :signed, club: club.id, species: cand[:mon].species, cost: cand[:cost],
+        released: release&.species, date: date }
+    end
   end
 end

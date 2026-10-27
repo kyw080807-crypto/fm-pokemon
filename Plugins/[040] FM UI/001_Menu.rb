@@ -77,14 +77,16 @@ module FM
                                date_text(s[:next][:date]), s[:next][:in_days]) : ""
         header = _INTL("{1} ({2}) · {3}\n{4}", date_text(s[:date]), _INTL(WEEKDAYS[s[:weekday]]),
                        phase_text(s[:phase]), nxt)
-        commands = [_INTL("내 클럽"), _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"),
-                    _INTL("클럽 선택"), _INTL("닫기")]
+        commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("리그 순위"), _INTL("대회"),
+                    _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
-        when 1 then standings
-        when 2 then cups
-        when 3 then advance_week
-        when 4 then choose_club
+        when 1 then invest
+        when 2 then scout
+        when 3 then standings
+        when 4 then cups
+        when 5 then advance_week
+        when 6 then choose_club
         else break
         end
       end
@@ -136,6 +138,81 @@ module FM
                       m[:age] + 1, m[:rating])
       end
       rows
+    end
+
+    # The player's club, or nil (after telling them to pick one).
+    def player_club
+      id = FM.state.player_club
+      return world.clubs[id] if id
+      pbMessage(_INTL("아직 맡은 클럽이 없습니다. 먼저 클럽을 고르세요."))
+      choose_club
+      FM.state.player_club && world.clubs[FM.state.player_club]
+    end
+
+    def invest
+      c = player_club or return
+      if c.project
+        pbMessage(_INTL("{1} Lv{2} 공사 중입니다 ({3} 완공). 한 번에 하나만 지을 수 있습니다.",
+                        facility_name(c.project[:target]), c.project[:to], date_text(c.project[:done])))
+        return
+      end
+      opts = Invest.options(c)
+      if opts.empty?
+        pbMessage(_INTL("지금 올릴 수 있는 시설이 없습니다. 클럽하우스나 도시 크기가 상한을 정합니다."))
+        return
+      end
+      labels = opts.map do |kind, target, from, cost|
+        _INTL("{1} Lv{2}→{3} · {4} · {5}주", facility_name(target), from, from + 1, money(cost),
+              Build.build_weeks(kind, from))
+      end
+      i = pbMessage(_INTL("잔고 {1}. 무엇을 지을까요?", money(c.wallet.balance)), labels + [_INTL("취소")], labels.size + 1)
+      return if i >= opts.size
+      choice = opts[i]
+      if c.wallet.balance < choice.last
+        pbMessage(_INTL("돈이 모자랍니다 ({1} 필요).", money(choice.last)))
+        return
+      end
+      return unless pbConfirmMessage(_INTL("{1}에 {2}을 쓸까요?", facility_name(choice[1]), money(choice.last)))
+      Invest.start(c, choice, date: world.calendar.date, calendar: world.calendar)
+      pbMessage(_INTL("공사를 시작했습니다. {1} 완공 예정.", date_text(c.project[:done])))
+    end
+
+    # Scouting stays in the home region for now (design 05: travel level sets
+    # the range; travel isn't built yet).
+    def scout
+      c = player_club or return
+      unless pbConfirmMessage(_INTL("{1}에 스카우트를 보낼까요? (비용 {2})", region_name(c.region), money(Scout::FEE)))
+        return
+      end
+      cands = world.player_scout(c.region)
+      unless cands
+        pbMessage(_INTL("스카우트 비용이 모자랍니다."))
+        return
+      end
+      labels = cands.map do |cand|
+        m = cand[:mon]
+        _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · {6}", species_name(m.species), m.level, m.stars,
+              m.age + 1, m.rating.round, money(cand[:cost]))
+      end
+      i = pbMessage(_INTL("스카우트 보고서입니다. 영입할 포켓몬을 고르세요."), labels + [_INTL("영입 안 함")],
+                    labels.size + 1)
+      return if i >= cands.size
+      cand = cands[i]
+      if c.wallet.balance < cand[:cost]
+        pbMessage(_INTL("돈이 모자랍니다 ({1} 필요).", money(cand[:cost])))
+        return
+      end
+      release = nil
+      if c.squad.size >= Build.squad_size(c.clubhouse)
+        names = c.squad.map { |m| _INTL("{1} Lv{2} ★{3} · 전력 {4}", species_name(m.species), m.level, m.stars, m.rating.round) }
+        j = pbMessage(_INTL("스쿼드가 가득 찼습니다. 누구를 내보낼까요?"), names + [_INTL("취소")], names.size + 1)
+        return if j >= c.squad.size
+        release = c.squad[j]
+      end
+      e = Recruit.sign(c, cand, date: world.calendar.date, release: release)
+      msg = _INTL("{1}을 영입했습니다 ({2}).", species_name(e[:species]), money(e[:cost]))
+      msg += " " + _INTL("{1}은 팀을 떠났습니다.", species_name(e[:released])) if e[:released]
+      pbMessage(msg)
     end
 
     def facility_name(key)

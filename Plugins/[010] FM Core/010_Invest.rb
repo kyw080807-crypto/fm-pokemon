@@ -21,10 +21,33 @@ module FM
       return if spare <= 0
       choice = stadium_step(club, spare) || building_step(club, spare) || clubhouse_step(club, spare)
       return unless choice
+      start(club, choice, date: date, calendar: calendar)
+    end
+
+    # Pays for a step and starts building it. choice = [kind, target, from, cost].
+    def start(club, choice, date:, calendar:)
       kind, target, from, cost = choice
+      raise ArgumentError, "already building" if club.project
+      raise Finance::InsufficientFunds, "need #{cost}" if club.wallet.balance < cost
       club.wallet.record(-cost, category: :invest, date: date, memo: "#{target} #{from}->#{from + 1}")
       done = calendar.date_after(date, 7 * Build.build_weeks(kind, from))
       club.project = { kind: kind, target: target, to: from + 1, done: done }
+    end
+
+    # Every step the rules allow right now, cheapest first, regardless of the
+    # AI's money margins (for the player's own decisions).
+    def options(club)
+      out = []
+      unless club.stadium_shared || club.stadium >= Build::STADIUM_COST.size
+        out << [:stadium, :STADIUM, club.stadium, Build.stadium_cost(club.stadium)]
+      end
+      cap = Build.building_cap(club.clubhouse)
+      Build::CLUB_BUILDINGS.each { |b| (st = step_for(club, b, cap)) && out << st }
+      next_lv = club.clubhouse + 1
+      if next_lv <= Build.clubhouse_max(club.city_size) && club.fame >= Build.clubhouse_fame(next_lv)
+        out << [:clubhouse, :CLUBHOUSE, club.clubhouse, Build.clubhouse_cost(club.clubhouse)]
+      end
+      out.sort_by(&:last)
     end
 
     def stadium_step(club, spare)
