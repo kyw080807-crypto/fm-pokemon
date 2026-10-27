@@ -81,6 +81,7 @@ city_sizes = -> { world.cities.values.map(&:size).tally.sort.to_h }
 start_cities = city_sizes.call
 meetings = []
 squad_events = Hash.new(0)
+cup_champs = []
 start_funds = world.clubs.values.sum { |c| c.wallet.balance }
 growth = lambda do
   cs = world.clubs.values
@@ -99,6 +100,7 @@ time = Benchmark.realtime do
       results.concat(e[:results]) if e[:kind] == :league_round
       meetings << e if e[:kind] == :meeting
       squad_events[e[:kind]] += 1 if %i[signed released youth].include?(e[:kind])
+      cup_champs << e.merge(year: e[:date][0]) if e[:kind] == :cup_champion
     end
   end
 end
@@ -149,6 +151,12 @@ puts "rating change by end TRAINING level: #{by_train.join(', ')}"
 ratings = cs.map(&:rating).sort
 puts "ratings: start #{start_rating.values.min.round}-#{start_rating.values.max.round} " \
      "(median #{start_rating.values.sort[90].round}) -> end #{ratings.first.round}-#{ratings.last.round} (median #{ratings[90].round})"
+pwt = cup_champs.select { |e| e[:cup] == :pwt }
+puts "PWT champions: " + pwt.map { |e| c = world.clubs[e[:club]]; "Y#{e[:year]} #{c.name}(#{c.region})" }.join(", ")
+puts "PWT titles by region: #{pwt.map { |e| world.clubs[e[:club]].region }.tally.sort_by { |_, n| -n }.to_h}; " \
+     "by role: #{pwt.map { |e| world.clubs[e[:club]].role[0] }.tally}"
+subs = cup_champs.reject { |e| e[:cup] == :pwt }
+puts "PET/PENT champions by role: #{subs.map { |e| world.clubs[e[:club]].role[0] }.tally}"
 by_role = world.clubs.values.group_by { |c| c.role[0] }
 puts "mean end funds by role: " + %w[C E G T].map { |r| "#{r} #{won.(by_role[r].sum { |c| c.wallet.balance } / by_role[r].size)}" }.join(", ")
 

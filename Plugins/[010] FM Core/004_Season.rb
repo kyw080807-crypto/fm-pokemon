@@ -37,11 +37,17 @@ module FM
 
     # Post-league tournaments, one round per Sunday (design table):
     # weeks 38-39 travel, 40-43 PET·PENT, 44-48 PWT Swiss, 49-52 PWT knockout.
+    # 52 weeks of 7 days don't fit a 365-day year when the league starts on
+    # Feb 6 or 7: week 52 would land in January. Then everything after the
+    # league moves a week earlier (one travel week instead of two; the
+    # design's worst trip is 6 days).
     def tournament_dates(calendar, year)
       week = ->(w) { season_week_sunday(calendar, year, w) }
-      { pet:          (40..43).map(&week),
-        pwt_swiss:    (44..48).map(&week),
-        pwt_knockout: (49..52).map(&week) }
+      dates = { pet:          (40..43).map(&week),
+                pwt_swiss:    (44..48).map(&week),
+                pwt_knockout: (49..52).map(&week) }
+      return dates if dates[:pwt_knockout].last[0] == year
+      dates.transform_values { |ds| ds.map { |d| calendar.date_after(d, -7) } }
     end
 
     def preseason?(date)

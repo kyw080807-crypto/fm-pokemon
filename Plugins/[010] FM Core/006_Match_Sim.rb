@@ -15,13 +15,14 @@ module FM
 
     module_function
 
-    def win_probability(home, away)
-      1.0 / (1.0 + Math.exp(-(home - away + HOME_EDGE) / SCALE))
+    def win_probability(home, away, neutral: false)
+      1.0 / (1.0 + Math.exp(-(home - away + (neutral ? 0 : HOME_EDGE)) / SCALE))
     end
 
     # -> { res: 1 home win / -1 away win / 0 draw, ko_a:, ko_b: }
-    def play(home, away, rng: Random.new)
-      p = win_probability(home, away)
+    # neutral: tournament games at a third venue, no home edge.
+    def play(home, away, rng: Random.new, neutral: false)
+      p = win_probability(home, away, neutral: neutral)
       if rng.rand < DRAW_RATE
         ko = Array.new(2) { rng.rand(3) }
         return { res: 0, ko_a: ko[0], ko_b: ko[1] }

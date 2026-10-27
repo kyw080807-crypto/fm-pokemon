@@ -13,7 +13,7 @@ module FM
   class Club
     attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential,
                 :facilities, :rating, :wallet, :form, :stadium_shared,
-                :home_fill, :traits, :squad, :retired, :sponsor_bans
+                :home_fill, :traits, :squad, :retired, :sponsor_bans, :history
     attr_accessor :fame, :stadium, :clubhouse, :project, :city_size, :sponsor
 
     def initialize(data)
@@ -34,6 +34,7 @@ module FM
       @retired = []
       @sponsor = nil          # FM::Sponsor.deal hash for this season
       @sponsor_bans = {}      # sponsor id => last banned year
+      @history = {}           # year => { pos:, pwt: (result symbol), pwt_wins:, cup: }
       @fame    = Economy.initial_fame(level: @level, role: @role, canon: @canon)
       refresh_rating
       @wallet  = Finance.new(balance: Economy.start_funds(@fame))
@@ -75,7 +76,7 @@ module FM
   end
 
   class World
-    attr_reader :calendar, :clubs, :leagues, :cities, :species
+    attr_reader :calendar, :clubs, :leagues, :cities, :species, :cups
 
     # species: FM::Scout pool (PBS/fm_species.txt). Without it squads stay
     # fixed (no growth, aging or scouting) — enough for league/economy tests.
@@ -149,6 +150,7 @@ module FM
           events.concat(season_rollover)
           sign_sponsors
           start_leagues
+          reset_cups
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
           weekly_economy
@@ -169,7 +171,37 @@ module FM
           events << finish_league(region, league) if league.done?
         end
       end
+      events.concat(Cups.setup(self, rng: @rng)) if @cups.nil? && @leagues.values.all?(&:done?)
+      events.concat(Cups.play_day(self, rng: @rng)) if @cups
       events
+    end
+
+    # Region strength for PWT places: mean PWT points of its clubs over the
+    # last three seasons, weighted 1 / 0.6 / 0.3 (leagueCoef). Before any
+    # PWT, the mean rating of its best four clubs.
+    def league_coefficients
+      year = @calendar.year
+      by_region = @clubs.values.group_by(&:region)
+      by_region.to_h do |region, cs|
+        score = 0.0
+        has = false
+        [1.0, 0.6, 0.3].each_with_index do |weight, i|
+          entries = cs.filter_map { |c| c.history[year - i] }.select { |h| h[:pwt] }
+          next if entries.empty?
+          has = true
+          score += entries.sum { |h| Tournament.pwt_points(h[:pwt], wins: h[:pwt_wins] || 0) } / entries.size.to_f * weight
+        end
+        score = cs.map(&:rating).max(4).sum / 4.0 unless has
+        [region, score]
+      end
+    end
+
+    def reset_cups
+      @cups = nil
+    end
+
+    def set_cups(cups)
+      @cups = cups
     end
 
     private
@@ -358,6 +390,7 @@ module FM
         c.wallet.record(aid, category: :aid, date: date) if aid.positive?
         c.fame = Economy.add_fame(c.fame, (11 - pos) * 0.6 + (pos == 1 ? 5 : 0))
         sponsor_season_end(c, pos)
+        (c.history[@calendar.year] ||= {})[:pos] = pos
       end
       { kind: :league_end, region: region, date: date, standings: standings }
     end

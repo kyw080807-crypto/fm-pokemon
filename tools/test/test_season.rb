@@ -70,6 +70,16 @@ class TestSeason < Minitest::Test
     assert_equal 12, all.last[1]
   end
 
+  def test_tournaments_finish_within_the_year_every_year
+    (1..28).each do |y|
+      t = FM::Season.tournament_dates(@cal, y)
+      all = t.values.flatten(1)
+      assert(all.all? { |d| d[0] == y }, "year #{y}: #{t[:pwt_knockout].last.inspect}")
+      gap = @cal.days_between(league(y).last, t[:pet].first)
+      assert gap >= 14, "year #{y}: only #{gap} days after the league"
+    end
+  end
+
   def test_weekday_of
     assert_equal :mon, @cal.weekday_of([1, 1, 1])
     assert_equal :sun, @cal.weekday_of([1, 1, 7])
