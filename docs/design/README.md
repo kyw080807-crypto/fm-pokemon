@@ -47,6 +47,10 @@ ruby tools/split_design_doc.rb <내보낸 JSON 파일> --write
 
 - **단계 0 — 환경 세팅: 완료.** Essentials v21.1 + Hotfixes, 한글 폰트, Claude Code 설정, 세이브 연동.
 - **단계 0 — 데이터 변환: 원본 찾음, 추출 도구 있음.** 아래 "포켓 매니저 원본 데이터" 참고.
+- **단계 0 확인 기준 "데이터가 Essentials에서 읽힌다": 통과(2026-10-27).** `[030] FM Data` 플러그인이 `fm_cities·clubs·
+  species·sponsors.txt`를 엔진 컴파일러로 GameData(`.dat`)로 만든다(180·100·1025·33). `[020] FM Bridge`가 새 게임 때 그
+  데이터로 `FM::World`를 만들어 세이브(`SaveData :fm_state`)에 넣는다. 엔진 안 스모크 `world_from_gamedata`: 세계 생성
+  0.01초, 60일 진행 0.22초. 세이브→불러오기 뒤에도 같은 상태.
 - **단계 0 — 시작 세계 데이터: 완료.** `PBS/fm_cities.txt`(100도시), `PBS/fm_clubs.txt`(180클럽, 포켓몬 729마리)를
   `ruby tools/pokemanager/build_pbs.rb`로 생성(08 배치표 + 09 시작 상태 + 원본 TRAINERS + 고정 로스터).
   형태 리그 9·밀란 10·런던 30·단독 51, 크기 1/2/3/5 = 29/43/19/9로 설계 수치와 일치. 검사: `ruby tools/validate_pbs.rb`.

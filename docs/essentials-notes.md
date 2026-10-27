@@ -29,6 +29,12 @@
 - Generation 9 Pack 3.3.8 (Caruban): `Requires = v21.1 Hotfixes,1.0.9`. 새 PBS는 `*_Gen_9_Pack.txt` 6개로 자동 추가,
   기본 PBS 5개(abilities/items/moves/pokemon/pokemon_forms) + pokemon_metrics는 팩의 바닐라 갱신본으로 덮어씀.
   `Graphics/Pokemon`은 팩의 1~9세대 리사이즈 스프라이트로 교체. 설치 후 전체 컴파일·부팅·스모크 통과 (2026-10-27)
+- 커스텀 PBS → GameData: `module GameData; class X` 에 `DATA = {}`, `DATA_FILENAME`, `PBS_BASE_FILENAME`, `SCHEMA`를 두고
+  `extend ClassMethodsSymbols; include InstanceMethods`. 그러면 `GameData.load_all`·`get_all_data_filenames`·PBS 파일 찾기가
+  자동으로 잡는다(`010_Data/001_GameData.rb:248-282`). 컴파일 순서는 `Compiler.compile_pbs_files` 고정 목록
+  (`021_Compiler/001_Compiler.rb:983`)이라 `class << Compiler` 에서 alias로 뒤에 `compile_PBS_file_generic(GameData::X, *paths)`
+  를 붙인다. 스키마 글자(`get_csv_record` :690): s 문자열·u 양의 정수·b 참거짓·m 심볼·e 열거(3번째 값에 :Species 등)·q 원문,
+  `^` 여러 줄 반복, 대문자 = 생략 가능 (2026-10-27)
 - SaveData: `SaveData.register(:id) { ensure_class; save_value {}; load_value {|v|}; new_game_value {} }`.
   저장 해시가 키를 갖고 있지 않으면(옛 세이브) new_game_value로 채움 — `002_SaveData_Value.rb:195,220-229` (2026-10-27)
 - 폰트 상수: `FONT_NAME`/`FONT_SIZE`, `SMALL_FONT_NAME`/`SMALL_FONT_SIZE`, `NARROW_FONT_NAME`/`NARROW_FONT_SIZE`

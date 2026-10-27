@@ -73,15 +73,32 @@ FM::Smoke.register("save_round_trip") do
   end
   value.load_new_game_value
   raise "new game balance wrong" unless FM.balance == FM::State::START_BALANCE
-  FM.state.finance.add_recurring(:smoke_sponsor, amount: 500, category: :sponsor, every: :week)
+  raise "new game has no world" unless FM.world
   FM.advance_days(14)
-  before = FM.state.to_h
+  fingerprint = -> { [FM.world.calendar.date, FM.world.clubs.values.map { |c| [c.wallet.balance, c.fame] }] }
+  before = fingerprint.call
   saved = Marshal.load(Marshal.dump(value.save))
   value.load_new_game_value
-  raise "new game did not reset state" if FM.state.to_h == before
+  raise "new game did not reset state" if fingerprint.call == before
   value.load(saved)
-  raise "state changed across save/load" unless FM.state.to_h == before
-  FM::Log.info("smoke: after load #{FM.date_text}, balance #{FM.balance}")
+  raise "world changed across save/load" unless fingerprint.call == before
+  FM::Log.info("smoke: after load #{FM.date_text}, #{FM.world.clubs.size} clubs")
+end
+
+# Stage-0 gate: the FM data compiles and a full world runs in the engine.
+FM::Smoke.register("world_from_gamedata") do
+  counts = [GameData::FmClub.count, GameData::FmCity.count, GameData::FmSpecies.count, GameData::FmSponsor.count]
+  raise "FM data counts #{counts.inspect}" unless counts == [180, 100, 1025, 33]
+  t = Time.now
+  w = FM::Bridge.build_world(seed: 1)
+  built = Time.now - t
+  t = Time.now
+  events = w.advance_days(60)
+  ran = Time.now - t
+  rounds = events.count { |e| e[:kind] == :league_round }
+  raise "no league rounds by March 1" if rounds.zero?
+  FM::Log.info(format("smoke: world built in %.2fs; 60 days in %.2fs (%d league rounds, %d events)",
+                      built, ran, rounds, events.size))
 end
 
 # Gen 9+ species used by Poké Manager rosters must exist in compiled data

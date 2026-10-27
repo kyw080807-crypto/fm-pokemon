@@ -27,10 +27,43 @@ class TestState < Minitest::Test
     assert_equal state.to_h, copy.to_h
   end
 
-  def test_save_hash_is_plain_data
+  # Calendar and finance are plain data; the world (when present) is kept as
+  # objects under a schema version — see FM::State.
+  def test_save_hash_without_world_is_plain_data
     h = FM::State.new_game.to_h
     assert_kind_of Hash, h
     refute_includes Marshal.dump(h), "FM::", "save data must not depend on FM class names"
+  end
+
+  def small_world(seed)
+    clubs = (0...4).map do |i|
+      { id: "K#{i}", name: "K#{i}", region: "KANTO", city: "C", role: "T", canon: true, level: 20 + i,
+        potential: 3, stadium: 1, pokemon: [{ species: "PIDGEY", bst: 251 + 40 * i, level: 20, stars: 3 }] * 3 }
+    end
+    FM::World.new_game(clubs, seed: seed, species: { "PIDGEY" => { bst: 251, fb: 479, tier: 0, region: "KANTO",
+                                                                   basic: true, evo: [] } })
+  end
+
+  # A world saved mid-season and loaded must continue exactly as if it had
+  # never stopped (Random state included).
+  def test_world_survives_save_and_continues_identically
+    a = small_world(9)
+    a.advance_days(100)
+    state = FM::State.new_game(world: a)
+    copy = FM::State.from_h(Marshal.load(Marshal.dump(state.to_h)))
+    b = copy.world
+    a.advance_days(200)
+    b.advance_days(200)
+    fingerprint = ->(w) { w.clubs.values.map { |c| [c.wallet.balance, c.fame.round(4), c.squad.size, c.rating.round(4)] } }
+    assert_equal fingerprint.(a), fingerprint.(b)
+    assert_equal a.calendar.date, b.calendar.date
+  end
+
+  def test_state_v1_saves_still_load
+    v1 = { schema_version: 1, calendar: FM::Calendar.new.to_h, finance: FM::Finance.new(balance: 5).to_h }
+    s = FM::State.from_h(v1)
+    assert_nil s.world
+    assert_equal 5, s.finance.balance
   end
 
   def test_rejects_future_schema

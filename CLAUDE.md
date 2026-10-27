@@ -28,8 +28,10 @@
 - `Plugins/[000] FM Logger/` — `logs/fm_runtime.log` 기록, 예외 백트레이스
 - `Plugins/[005] FM Font/` — 한글 폰트(Galmuri11/9)로 MessageConfig 교체
 - `Plugins/[010] FM Core/` — 순수 Ruby: Calendar, Finance, State(세이브 단위). **RGSS/엔진 비의존**
-- `Plugins/[020] FM Bridge/` — 엔진 연결. `SaveData :fm_state`(= `FM::State#to_h`, 순수 데이터 Hash)와
-  이벤트용 API(`FM.advance_days`, `FM.balance`, `FM.date_text`). 엔진 접근은 여기서만
+- `Plugins/[020] FM Bridge/` — 엔진 연결. 새 게임 때 GameData로 `FM::World`를 만들고 `SaveData :fm_state`
+  (= `FM::State#to_h`, 세계는 객체 그대로 — 구조를 바꾸면 `State::SCHEMA_VERSION`을 올리고 변환 추가)에 저장.
+  이벤트용 API(`FM.world`, `FM.advance_days`, `FM.date_text`). 엔진 접근은 여기서만
+- `Plugins/[030] FM Data/` — `PBS/fm_*.txt` → GameData(`FmCity`·`FmClub`·`FmSpecies`·`FmSponsor`) 컴파일
 - `Plugins/[030] FM Data/` — 커스텀 GameData + 컴파일러 확장 (`PBS/fm_*.txt`)
 - `Plugins/[040] FM UI/` — 메뉴 Scene
 - `Plugins/[900] FM Debug/` — 스모크 테스트 러너(디버그 전용)
