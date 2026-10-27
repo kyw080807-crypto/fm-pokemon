@@ -1,7 +1,9 @@
 # FM Pokémon (Essentials v21.1 / mkxp-z / Ruby 3.1)
 
-9지역 FM(풋볼 매니저)형 매니지먼트 팬게임. 비상업 팬게임(Essentials 코드 CC-BY-NC-SA, 수익화 금지).
-상세 기획은 `docs/design/` — 작업과 관련된 파일만 읽을 것. 엔진 메모는 `docs/essentials-notes.md`.
+"포켓 매니저 에센셜": 연고 도시를 키우고 클럽을 이끌어 9개 지방(100도시, 180클럽)의 정상에 도전하는
+육성·경영 팬게임. 비상업(Essentials 코드 CC-BY-NC-SA, 수익화 금지), 한국어 전용.
+기획은 `docs/design/README.md`부터 — 목차·로드맵·현재 코드와의 차이가 있고, 그다음 작업과 관련된 절 파일만 읽을 것.
+`docs/design/NN_*.md`는 Google Docs 원본의 사본이라 직접 고치지 않는다. 엔진 메모는 `docs/essentials-notes.md`.
 
 ## 명령
 - 단위 테스트: `ruby tools/test/run_all.rb` (시스템 Ruby 3.1 + minitest, 엔진 불필요)
