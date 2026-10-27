@@ -31,7 +31,9 @@ SCHEMAS = {
     "Level"     => { required: true, check: INT },
     "Potential" => { required: true, check: /\A[1-5]\z/ },
     "Type"      => { required: true, check: TYPES },
+    "Canon"     => { required: true, check: %w[true false] },
     "Clubhouse" => { required: true, check: /\A[1-5]\z/ },
+    "Stadium"   => { required: true, check: /\A[0-6]\z/ },
     "Facility"  => { repeat: true, check: /\A(TRAINING|MEDICAL|SCOUTING|DAYCARE|SHOP),[1-5]\z/ },
     "Pokemon"   => { repeat: true, required: true, check: :species }
   }

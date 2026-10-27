@@ -1,9 +1,8 @@
-# Headless season run (roadmap stage 1): all 9 regional leagues, 180 clubs,
-# 38 rounds each, results from FM::MatchSim — no engine, no graphics.
-#   ruby tools/sim/season.rb [seasons=1] [seed=1]
-# Club strength = mean base stat total of its best 3 roster species (matches
-# are 3-of-6 at Lv50, as in Poké Manager). Reads PBS/fm_clubs.txt and species
-# base stats from PBS; loads FM Core straight from Plugins/[010] FM Core.
+# Headless world run (roadmap stage 1): 180 clubs in 9 regional leagues,
+# advanced day by day through FM::World — no engine, no graphics.
+#   ruby tools/sim/season.rb [years=1] [seed=1]
+# Reads PBS/fm_clubs.txt and species base stats from PBS; loads FM Core
+# straight from Plugins/[010] FM Core.
 require "benchmark"
 
 ROOT = File.expand_path("../..", __dir__)
@@ -25,52 +24,72 @@ def pbs_sections(file)
   sections
 end
 
-bst = {}
-%w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each do |f|
-  pbs_sections(f).each { |id, s| bst[id] = s["BaseStats"].first.split(",").sum(&:to_i) if s["BaseStats"].any? }
+def club_data
+  bst = {}
+  %w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each do |f|
+    pbs_sections(f).each { |id, s| bst[id] = s["BaseStats"].first.split(",").sum(&:to_i) if s["BaseStats"].any? }
+  end
+  pbs_sections("fm_clubs.txt").map do |id, s|
+    one = ->(k) { s[k].first }
+    { id: id, name: one.("Name"), region: one.("Region"), city: one.("City"), role: one.("Role"),
+      canon: one.("Canon") == "true", level: one.("Level").to_i, potential: one.("Potential").to_i,
+      stadium: one.("Stadium").to_i,
+      facilities: s["Facility"].to_h { |f| k, lv = f.split(","); [k.to_sym, lv.to_i] },
+      pokemon: s["Pokemon"].map do |p|
+        sp, lv, stars = p.split(",")
+        { bst: bst.fetch(sp), level: lv.to_i, stars: stars.to_i }
+      end }
+  end
 end
 
-clubs = pbs_sections("fm_clubs.txt").map do |id, s|
-  totals = s["Pokemon"].map { |p| bst.fetch(p.split(",").first) }.sort.reverse
-  { id: id, name: s["Name"].first, region: s["Region"].first, rating: totals.first(3).sum / 3.0 }
-end
-by_id = clubs.to_h { |c| [c[:id], c] }
-regions = clubs.group_by { |c| c[:region] }
-
-seasons = (ARGV[0] || 1).to_i
+years = (ARGV[0] || 1).to_i
 seed = (ARGV[1] || 1).to_i
-rng = Random.new(seed)
-stats = Hash.new(0)
-last = nil
+data = club_data
+world = FM::World.new_game(data, seed: seed)
+start_funds = world.clubs.values.sum { |c| c.wallet.balance }
+ends = []
+results = []
 
 time = Benchmark.realtime do
-  seasons.times do
-    last = regions.to_h do |region, list|
-      league = FM::League.new(list.map { |c| c[:id] }, rng: rng)
-      league.rounds.times do
-        league.play_round do |home, away|
-          ra, rb = by_id[home][:rating], by_id[away][:rating]
-          r = FM::MatchSim.play(ra, rb, rng: rng)
-          stats[:matches] += 1
-          stats[:draws] += 1 if r[:res].zero?
-          fav_home = ra >= rb
-          stats[:fav_wins] += 1 if (r[:res] == 1 && fav_home) || (r[:res] == -1 && !fav_home)
-          stats[:home_wins] += 1 if r[:res] == 1
-          r
-        end
-      end
-      [region, league]
+  years.times do
+    world.advance_days(365).each do |e|
+      ends << e if e[:kind] == :league_end
+      results.concat(e[:results]) if e[:kind] == :league_round
     end
   end
 end
 
-pct = ->(k) { format("%.1f%%", 100.0 * stats[k] / stats[:matches]) }
-puts format("%d season(s), %d matches in %.3fs (%.2f ms per season of 180 clubs)",
-            seasons, stats[:matches], time, 1000 * time / seasons)
-puts "favourite wins #{pct.(:fav_wins)}, home wins #{pct.(:home_wins)}, draws #{pct.(:draws)}"
+puts format("%d year(s): %d league matches in %.3fs (%.1f ms per year of 180 clubs)",
+            years, results.size, time, 1000 * time / years)
+n = results.size.to_f
+fav = results.count do |h, a, r|
+  hr, ar = world.clubs[h].rating, world.clubs[a].rating
+  (r[:res] == 1 && hr >= ar) || (r[:res] == -1 && ar > hr)
+end
+puts format("favourite wins %.1f%%, home wins %.1f%%, draws %.1f%%, mean crowd %d",
+            100 * fav / n, 100 * results.count { |*, r| r[:res] == 1 } / n,
+            100 * results.count { |*, r| r[:res].zero? } / n, results.sum { |*, r| r[:attendance] } / n)
+
+# Where clubs of each role finish, averaged over all simulated seasons.
+pos = Hash.new { |h, k| h[k] = [] }
+ends.each { |e| e[:standings].each_with_index { |id, i| pos[world.clubs[id].role[0]] << i + 1 } }
+puts "mean finishing position by role: " +
+     %w[C E G T].map { |r| format("%s %.1f", r, pos[r].sum.fdiv(pos[r].size)) }.join(", ")
+
+won = ->(v) { (v.negative? ? "-₽" : "₽") + v.abs.round.to_s.reverse.scan(/\d{1,3}/).join(",").reverse }
+money = Hash.new(0)
+world.clubs.each_value { |c| c.wallet.totals.each { |k, v| money[k] += v } }
+puts "money per club per year: " +
+     money.sort_by { |_, v| -v }.map { |k, v| "#{k} #{won.(v / 180.0 / years)}" }.join(", ")
+balances = world.clubs.values.map { |c| c.wallet.balance }.sort
+puts "funds: start total #{won.(start_funds)} -> end total #{won.(balances.sum)}; " \
+     "end median #{won.(balances[90])}, in debt #{balances.count(&:negative?)} of 180"
+by_role = world.clubs.values.group_by { |c| c.role[0] }
+puts "mean end funds by role: " + %w[C E G T].map { |r| "#{r} #{won.(by_role[r].sum { |c| c.wallet.balance } / by_role[r].size)}" }.join(", ")
+
 puts "last season, per region: champion (rating) / runner-up / bottom"
-last.each do |region, league|
-  s = league.standings
-  fmt = ->(id) { c = by_id[id]; t = league.table[id]; "#{c[:name]} #{t[:pts]}pts (#{c[:rating].round})" }
-  puts "  #{region.ljust(7)} #{fmt.(s[0])} / #{fmt.(s[1])} / #{fmt.(s[-1])}"
+ends.last(world.leagues.size).each do |e|
+  s = e[:standings]
+  fmt = ->(id) { c = world.clubs[id]; "#{c.name} (#{c.rating.round})" }
+  puts "  #{e[:region].ljust(7)} #{fmt.(s[0])} / #{fmt.(s[1])} / #{fmt.(s[-1])}"
 end

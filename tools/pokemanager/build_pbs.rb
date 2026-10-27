@@ -102,12 +102,27 @@ md_rows(File.join(ROOT, "docs", "design", "09_initial_state.md")).each do |regio
       [BUILDINGS.fetch(bm[1]) { die "09: building name #{bm[1]}" }, bm[2].to_i, landmark ? "LANDMARK" : nil].compact
     end
   end
+  # Stadium a club plays home league games in (0 = city-owned rental).
+  # "메인 Lv5 + 사이드 Lv3 (위원회 소유)" capitals: league games use the side
+  # stadium. "공동 LvN" Milan: shared. "단독 LvN" / "시 소유 임대": the one club.
+  # "초련 Lv2 · 하준 임대": per club.
+  stadium_of = lambda do |short|
+    case stadium
+    when /사이드 Lv(\d)/ then Regexp.last_match(1).to_i
+    when /\A(공동|단독) Lv(\d)\z/ then Regexp.last_match(2).to_i
+    when "시 소유 임대" then 0
+    else
+      part = stadium.split(" · ").find { |p| p.start_with?("#{short} ") } or die "09: no stadium for #{short} in '#{stadium}'"
+      part.end_with?("임대") ? 0 : part[/Lv(\d)/, 1].to_i
+    end
+  end
   clubs.split(" / ").each do |entry|
     name, levels, type = entry.split(" · ").map(&:strip)
     nm = name.match(/\A(.+) H(\d)\z/) or die "09: club '#{entry}'"
     t = find_trainer(trainers, region, nm[1])
     facs = levels.split.map { |x| xm = x.match(/\A(\D+)(\d)\z/); [CLUB_BUILDINGS.fetch(xm[1]), xm[2].to_i] }
-    club_state[[t["region"], t["name"]]] = { clubhouse: nm[2].to_i, facilities: facs, type: TYPES.fetch(type) }
+    club_state[[t["region"], t["name"]]] = { clubhouse: nm[2].to_i, facilities: facs, type: TYPES.fetch(type),
+                                             stadium: stadium_of.(nm[1]) }
   end
 end
 missing = cities.reject { |c| c[:size] }.map { |c| c[:name] }
@@ -137,7 +152,8 @@ trainers.each_with_index do |t, i|
   club_txt << "Role = #{t['role']}\n"
   club_txt << "Label = #{t['label']}\n" if t["label"]
   club_txt << "Level = #{t['level']}\nPotential = #{t['potential']}\nType = #{st[:type]}\n"
-  club_txt << "Clubhouse = #{st[:clubhouse]}\n"
+  club_txt << "Canon = #{t['canon'] ? 'true' : 'false'}\n"
+  club_txt << "Clubhouse = #{st[:clubhouse]}\nStadium = #{st[:stadium]}\n"
   st[:facilities].each { |f, lv| club_txt << "Facility = #{f},#{lv}\n" }
   t["roster"].each { |num| club_txt << "Pokemon = #{ids[num - 1]},#{t['level']},#{t['potential']}\n" }
   (locked_by[key] || []).each do |m|
