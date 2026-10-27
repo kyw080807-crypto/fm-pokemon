@@ -69,6 +69,10 @@ module FM
       days_between(self.date, date)
     end
 
+    def weekday_of(date)
+      WEEKDAYS[(@elapsed_days + days_until(date)) % 7]
+    end
+
     # Advances the date and returns the boundary events crossed, in order,
     # e.g. [[:new_year, snapshot], [:new_month, snapshot], [:new_week, snapshot]].
     # Callers (Bridge) turn these into league fixtures, salaries, news and so on.
