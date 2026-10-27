@@ -179,6 +179,7 @@ end
 species_txt = +header.call("species growth data")
 dex.each do |d|
   species_txt << "#-------------------------------\n[#{ids[d['num'] - 1]}]\n"
+  species_txt << "Name = #{d['name']}\n"   # Korean name from Poké Manager (Essentials' are English)
   species_txt << "Dex = #{d['num']}\nBST = #{bst_of.(d)}\nFinalBST = #{final_bst.(d['num'])}\n"
   species_txt << "Tier = #{d['tier']}\nRegion = #{REGIONS[ranges.index { |r| d['num'] <= r }]}\n"
   species_txt << "Basic = #{d['prev'] ? 'false' : 'true'}\n"

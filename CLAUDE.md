@@ -32,6 +32,7 @@
   (= `FM::State#to_h`, 세계는 객체 그대로 — 구조를 바꾸면 `State::SCHEMA_VERSION`을 올리고 변환 추가)에 저장.
   이벤트용 API(`FM.world`, `FM.advance_days`, `FM.date_text`). 엔진 접근은 여기서만
 - `Plugins/[030] FM Data/` — `PBS/fm_*.txt` → GameData(`FmCity`·`FmClub`·`FmSpecies`·`FmSponsor`) 컴파일
+- `Plugins/[040] FM UI/` — 일시정지 메뉴 "FM" 화면. 데이터는 `FM::View`, 글자는 여기서 `_INTL`
 - `Plugins/[030] FM Data/` — 커스텀 GameData + 컴파일러 확장 (`PBS/fm_*.txt`)
 - `Plugins/[040] FM UI/` — 메뉴 Scene
 - `Plugins/[900] FM Debug/` — 스모크 테스트 러너(디버그 전용)

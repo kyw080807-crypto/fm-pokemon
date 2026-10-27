@@ -118,6 +118,32 @@ FM::Smoke.register("roster_gen9_species") do
   FM::Log.info("smoke: #{count} species compiled, #{ids.size} roster Gen 9+ species OK")
 end
 
+# The FM pause-menu entry exists, and the text its screens would show (for
+# a chosen club, 60 days in) renders: written to logs/fm_menu.png to look at.
+FM::Smoke.register("fm_menu_render") do
+  keys = []
+  MenuHandlers.each(:pause_menu) { |key, *_| keys << key }
+  raise "pause menu has no :fm entry (#{keys.inspect})" unless keys.include?(:fm)
+  saved = FM::Bridge.state
+  FM::Bridge.state = FM::State.new_game(world: FM::Bridge.build_world(seed: 7))
+  begin
+    club = FM.world.clubs.values.find { |c| c.region == "KANTO" && c.role == "G3" } || FM.world.clubs.values.first
+    FM.state.player_club = club.id
+    FM.advance_days(60)
+    rows = FM::UI.my_club_rows(club.id).first(8) + FM::UI.standings_rows("KANTO").first(6)
+    bitmap = Bitmap.new(Graphics.width, 32 * rows.size)
+    bitmap.fill_rect(bitmap.rect, Color.new(248, 248, 248))
+    pbSetSystemFont(bitmap)
+    bitmap.font.color = Color.new(80, 80, 88)
+    rows.each_with_index { |t, i| bitmap.draw_text(8, 32 * i, Graphics.width - 16, 32, t) }
+    bitmap.to_file("logs/fm_menu.png")
+    bitmap.dispose
+    FM::Log.info("smoke: menu rows for #{club.name}: #{rows.size}")
+  ensure
+    FM::Bridge.state = saved
+  end
+end
+
 # Run just before the title screen: by then Compiler.main has compiled and
 # Game.set_up_system has loaded GameData (Data/Scripts/999_Main/999_Main.rb).
 # Running at plugin load would see empty GameData.

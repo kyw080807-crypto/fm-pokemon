@@ -59,6 +59,12 @@ class TestState < Minitest::Test
     assert_equal a.calendar.date, b.calendar.date
   end
 
+  def test_player_club_is_saved
+    s = FM::State.new_game
+    s.player_club = :CLUB_KANTO_03
+    assert_equal :CLUB_KANTO_03, FM::State.from_h(Marshal.load(Marshal.dump(s.to_h))).player_club
+  end
+
   def test_state_v1_saves_still_load
     v1 = { schema_version: 1, calendar: FM::Calendar.new.to_h, finance: FM::Finance.new(balance: 5).to_h }
     s = FM::State.from_h(v1)

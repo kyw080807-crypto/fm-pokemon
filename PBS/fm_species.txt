@@ -2,6 +2,7 @@
 # Sources: docs/design/08_placement.md, 09_initial_state.md, Poké Manager TRAINERS, tools/pokemanager/data/rosters.json
 #-------------------------------
 [BULBASAUR]
+Name = 이상해씨
 Dex = 1
 BST = 318
 FinalBST = 525
@@ -11,6 +12,7 @@ Basic = true
 Evolution = IVYSAUR,16
 #-------------------------------
 [IVYSAUR]
+Name = 이상해풀
 Dex = 2
 BST = 405
 FinalBST = 525
@@ -20,6 +22,7 @@ Basic = false
 Evolution = VENUSAUR,32
 #-------------------------------
 [VENUSAUR]
+Name = 이상해꽃
 Dex = 3
 BST = 525
 FinalBST = 525
@@ -28,6 +31,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [CHARMANDER]
+Name = 파이리
 Dex = 4
 BST = 309
 FinalBST = 534
@@ -37,6 +41,7 @@ Basic = true
 Evolution = CHARMELEON,16
 #-------------------------------
 [CHARMELEON]
+Name = 리자드
 Dex = 5
 BST = 405
 FinalBST = 534
@@ -46,6 +51,7 @@ Basic = false
 Evolution = CHARIZARD,36
 #-------------------------------
 [CHARIZARD]
+Name = 리자몽
 Dex = 6
 BST = 534
 FinalBST = 534
@@ -54,6 +60,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SQUIRTLE]
+Name = 꼬부기
 Dex = 7
 BST = 314
 FinalBST = 530
@@ -63,6 +70,7 @@ Basic = true
 Evolution = WARTORTLE,16
 #-------------------------------
 [WARTORTLE]
+Name = 어니부기
 Dex = 8
 BST = 405
 FinalBST = 530
@@ -72,6 +80,7 @@ Basic = false
 Evolution = BLASTOISE,36
 #-------------------------------
 [BLASTOISE]
+Name = 거북왕
 Dex = 9
 BST = 530
 FinalBST = 530
@@ -80,6 +89,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [CATERPIE]
+Name = 캐터피
 Dex = 10
 BST = 195
 FinalBST = 395
@@ -89,6 +99,7 @@ Basic = true
 Evolution = METAPOD,7
 #-------------------------------
 [METAPOD]
+Name = 단데기
 Dex = 11
 BST = 205
 FinalBST = 395
@@ -98,6 +109,7 @@ Basic = false
 Evolution = BUTTERFREE,10
 #-------------------------------
 [BUTTERFREE]
+Name = 버터플
 Dex = 12
 BST = 395
 FinalBST = 395
@@ -106,6 +118,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [WEEDLE]
+Name = 뿔충이
 Dex = 13
 BST = 195
 FinalBST = 395
@@ -115,6 +128,7 @@ Basic = true
 Evolution = KAKUNA,7
 #-------------------------------
 [KAKUNA]
+Name = 딱충이
 Dex = 14
 BST = 205
 FinalBST = 395
@@ -124,6 +138,7 @@ Basic = false
 Evolution = BEEDRILL,10
 #-------------------------------
 [BEEDRILL]
+Name = 독침붕
 Dex = 15
 BST = 395
 FinalBST = 395
@@ -132,6 +147,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [PIDGEY]
+Name = 구구
 Dex = 16
 BST = 251
 FinalBST = 479
@@ -141,6 +157,7 @@ Basic = true
 Evolution = PIDGEOTTO,18
 #-------------------------------
 [PIDGEOTTO]
+Name = 피죤
 Dex = 17
 BST = 349
 FinalBST = 479
@@ -150,6 +167,7 @@ Basic = false
 Evolution = PIDGEOT,36
 #-------------------------------
 [PIDGEOT]
+Name = 피죤투
 Dex = 18
 BST = 479
 FinalBST = 479
@@ -158,6 +176,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [RATTATA]
+Name = 꼬렛
 Dex = 19
 BST = 253
 FinalBST = 413
@@ -167,6 +186,7 @@ Basic = true
 Evolution = RATICATE,20
 #-------------------------------
 [RATICATE]
+Name = 레트라
 Dex = 20
 BST = 413
 FinalBST = 413
@@ -175,6 +195,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SPEAROW]
+Name = 깨비참
 Dex = 21
 BST = 262
 FinalBST = 442
@@ -184,6 +205,7 @@ Basic = true
 Evolution = FEAROW,20
 #-------------------------------
 [FEAROW]
+Name = 깨비드릴조
 Dex = 22
 BST = 442
 FinalBST = 442
@@ -192,6 +214,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [EKANS]
+Name = 아보
 Dex = 23
 BST = 288
 FinalBST = 448
@@ -201,6 +224,7 @@ Basic = true
 Evolution = ARBOK,22
 #-------------------------------
 [ARBOK]
+Name = 아보크
 Dex = 24
 BST = 448
 FinalBST = 448
@@ -209,6 +233,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [PIKACHU]
+Name = 피카츄
 Dex = 25
 BST = 320
 FinalBST = 485
@@ -218,6 +243,7 @@ Basic = false
 Evolution = RAICHU,27
 #-------------------------------
 [RAICHU]
+Name = 라이츄
 Dex = 26
 BST = 485
 FinalBST = 485
@@ -226,6 +252,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SANDSHREW]
+Name = 모래두지
 Dex = 27
 BST = 300
 FinalBST = 450
@@ -235,6 +262,7 @@ Basic = true
 Evolution = SANDSLASH,22
 #-------------------------------
 [SANDSLASH]
+Name = 고지
 Dex = 28
 BST = 450
 FinalBST = 450
@@ -243,6 +271,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [NIDORANfE]
+Name = 니드런♀
 Dex = 29
 BST = 275
 FinalBST = 505
@@ -252,6 +281,7 @@ Basic = true
 Evolution = NIDORINA,16
 #-------------------------------
 [NIDORINA]
+Name = 니드리나
 Dex = 30
 BST = 365
 FinalBST = 505
@@ -261,6 +291,7 @@ Basic = false
 Evolution = NIDOQUEEN,30
 #-------------------------------
 [NIDOQUEEN]
+Name = 니드퀸
 Dex = 31
 BST = 505
 FinalBST = 505
@@ -269,6 +300,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [NIDORANmA]
+Name = 니드런♂
 Dex = 32
 BST = 273
 FinalBST = 505
@@ -278,6 +310,7 @@ Basic = true
 Evolution = NIDORINO,16
 #-------------------------------
 [NIDORINO]
+Name = 니드리노
 Dex = 33
 BST = 365
 FinalBST = 505
@@ -287,6 +320,7 @@ Basic = false
 Evolution = NIDOKING,30
 #-------------------------------
 [NIDOKING]
+Name = 니드킹
 Dex = 34
 BST = 505
 FinalBST = 505
@@ -295,6 +329,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [CLEFAIRY]
+Name = 삐삐
 Dex = 35
 BST = 323
 FinalBST = 483
@@ -304,6 +339,7 @@ Basic = false
 Evolution = CLEFABLE,27
 #-------------------------------
 [CLEFABLE]
+Name = 픽시
 Dex = 36
 BST = 483
 FinalBST = 483
@@ -312,6 +348,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [VULPIX]
+Name = 식스테일
 Dex = 37
 BST = 299
 FinalBST = 505
@@ -321,6 +358,7 @@ Basic = true
 Evolution = NINETALES,25
 #-------------------------------
 [NINETALES]
+Name = 나인테일
 Dex = 38
 BST = 505
 FinalBST = 505
@@ -329,6 +367,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [JIGGLYPUFF]
+Name = 푸린
 Dex = 39
 BST = 270
 FinalBST = 435
@@ -338,6 +377,7 @@ Basic = false
 Evolution = WIGGLYTUFF,24
 #-------------------------------
 [WIGGLYTUFF]
+Name = 푸크린
 Dex = 40
 BST = 435
 FinalBST = 435
@@ -346,6 +386,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [ZUBAT]
+Name = 주뱃
 Dex = 41
 BST = 245
 FinalBST = 535
@@ -355,6 +396,7 @@ Basic = true
 Evolution = GOLBAT,22
 #-------------------------------
 [GOLBAT]
+Name = 골뱃
 Dex = 42
 BST = 455
 FinalBST = 535
@@ -364,6 +406,7 @@ Basic = false
 Evolution = CROBAT,38
 #-------------------------------
 [ODDISH]
+Name = 뚜벅쵸
 Dex = 43
 BST = 320
 FinalBST = 490
@@ -373,6 +416,7 @@ Basic = true
 Evolution = GLOOM,21
 #-------------------------------
 [GLOOM]
+Name = 냄새꼬
 Dex = 44
 BST = 395
 FinalBST = 490
@@ -383,6 +427,7 @@ Evolution = VILEPLUME,33
 Evolution = BELLOSSOM,33
 #-------------------------------
 [VILEPLUME]
+Name = 라플레시아
 Dex = 45
 BST = 490
 FinalBST = 490
@@ -391,6 +436,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [PARAS]
+Name = 파라스
 Dex = 46
 BST = 285
 FinalBST = 405
@@ -400,6 +446,7 @@ Basic = true
 Evolution = PARASECT,24
 #-------------------------------
 [PARASECT]
+Name = 파라섹트
 Dex = 47
 BST = 405
 FinalBST = 405
@@ -408,6 +455,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [VENONAT]
+Name = 콘팡
 Dex = 48
 BST = 305
 FinalBST = 450
@@ -417,6 +465,7 @@ Basic = true
 Evolution = VENOMOTH,31
 #-------------------------------
 [VENOMOTH]
+Name = 도나리
 Dex = 49
 BST = 450
 FinalBST = 450
@@ -425,6 +474,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [DIGLETT]
+Name = 디그다
 Dex = 50
 BST = 265
 FinalBST = 425
@@ -434,6 +484,7 @@ Basic = true
 Evolution = DUGTRIO,26
 #-------------------------------
 [DUGTRIO]
+Name = 닥트리오
 Dex = 51
 BST = 425
 FinalBST = 425
@@ -442,6 +493,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [MEOWTH]
+Name = 나옹
 Dex = 52
 BST = 290
 FinalBST = 440
@@ -451,6 +503,7 @@ Basic = true
 Evolution = PERSIAN,28
 #-------------------------------
 [PERSIAN]
+Name = 페르시온
 Dex = 53
 BST = 440
 FinalBST = 440
@@ -459,6 +512,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [PSYDUCK]
+Name = 고라파덕
 Dex = 54
 BST = 320
 FinalBST = 500
@@ -468,6 +522,7 @@ Basic = true
 Evolution = GOLDUCK,33
 #-------------------------------
 [GOLDUCK]
+Name = 골덕
 Dex = 55
 BST = 500
 FinalBST = 500
@@ -476,6 +531,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [MANKEY]
+Name = 망키
 Dex = 56
 BST = 305
 FinalBST = 535
@@ -485,6 +541,7 @@ Basic = true
 Evolution = PRIMEAPE,28
 #-------------------------------
 [PRIMEAPE]
+Name = 성원숭
 Dex = 57
 BST = 455
 FinalBST = 535
@@ -494,6 +551,7 @@ Basic = false
 Evolution = ANNIHILAPE,38
 #-------------------------------
 [GROWLITHE]
+Name = 가디
 Dex = 58
 BST = 350
 FinalBST = 555
@@ -503,6 +561,7 @@ Basic = true
 Evolution = ARCANINE,29
 #-------------------------------
 [ARCANINE]
+Name = 윈디
 Dex = 59
 BST = 555
 FinalBST = 555
@@ -511,6 +570,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [POLIWAG]
+Name = 발챙이
 Dex = 60
 BST = 300
 FinalBST = 510
@@ -520,6 +580,7 @@ Basic = true
 Evolution = POLIWHIRL,25
 #-------------------------------
 [POLIWHIRL]
+Name = 슈륙챙이
 Dex = 61
 BST = 385
 FinalBST = 510
@@ -530,6 +591,7 @@ Evolution = POLIWRATH,32
 Evolution = POLITOED,32
 #-------------------------------
 [POLIWRATH]
+Name = 강챙이
 Dex = 62
 BST = 510
 FinalBST = 510
@@ -538,6 +600,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [ABRA]
+Name = 캐이시
 Dex = 63
 BST = 310
 FinalBST = 500
@@ -547,6 +610,7 @@ Basic = true
 Evolution = KADABRA,16
 #-------------------------------
 [KADABRA]
+Name = 윤겔라
 Dex = 64
 BST = 400
 FinalBST = 500
@@ -556,6 +620,7 @@ Basic = false
 Evolution = ALAKAZAM,33
 #-------------------------------
 [ALAKAZAM]
+Name = 후딘
 Dex = 65
 BST = 500
 FinalBST = 500
@@ -564,6 +629,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [MACHOP]
+Name = 알통몬
 Dex = 66
 BST = 305
 FinalBST = 505
@@ -573,6 +639,7 @@ Basic = true
 Evolution = MACHOKE,28
 #-------------------------------
 [MACHOKE]
+Name = 근육몬
 Dex = 67
 BST = 405
 FinalBST = 505
@@ -582,6 +649,7 @@ Basic = false
 Evolution = MACHAMP,34
 #-------------------------------
 [MACHAMP]
+Name = 괴력몬
 Dex = 68
 BST = 505
 FinalBST = 505
@@ -590,6 +658,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [BELLSPROUT]
+Name = 모다피
 Dex = 69
 BST = 300
 FinalBST = 490
@@ -599,6 +668,7 @@ Basic = true
 Evolution = WEEPINBELL,21
 #-------------------------------
 [WEEPINBELL]
+Name = 우츠동
 Dex = 70
 BST = 390
 FinalBST = 490
@@ -608,6 +678,7 @@ Basic = false
 Evolution = VICTREEBEL,33
 #-------------------------------
 [VICTREEBEL]
+Name = 우츠보트
 Dex = 71
 BST = 490
 FinalBST = 490
@@ -616,6 +687,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [TENTACOOL]
+Name = 왕눈해
 Dex = 72
 BST = 335
 FinalBST = 515
@@ -625,6 +697,7 @@ Basic = true
 Evolution = TENTACRUEL,30
 #-------------------------------
 [TENTACRUEL]
+Name = 독파리
 Dex = 73
 BST = 515
 FinalBST = 515
@@ -633,6 +706,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [GEODUDE]
+Name = 꼬마돌
 Dex = 74
 BST = 300
 FinalBST = 495
@@ -642,6 +716,7 @@ Basic = true
 Evolution = GRAVELER,25
 #-------------------------------
 [GRAVELER]
+Name = 데구리
 Dex = 75
 BST = 390
 FinalBST = 495
@@ -651,6 +726,7 @@ Basic = false
 Evolution = GOLEM,33
 #-------------------------------
 [GOLEM]
+Name = 딱구리
 Dex = 76
 BST = 495
 FinalBST = 495
@@ -659,6 +735,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [PONYTA]
+Name = 포니타
 Dex = 77
 BST = 410
 FinalBST = 500
@@ -668,6 +745,7 @@ Basic = true
 Evolution = RAPIDASH,40
 #-------------------------------
 [RAPIDASH]
+Name = 날쌩마
 Dex = 78
 BST = 500
 FinalBST = 500
@@ -676,6 +754,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SLOWPOKE]
+Name = 야돈
 Dex = 79
 BST = 315
 FinalBST = 490
@@ -686,6 +765,7 @@ Evolution = SLOWBRO,37
 Evolution = SLOWKING,26
 #-------------------------------
 [SLOWBRO]
+Name = 야도란
 Dex = 80
 BST = 490
 FinalBST = 490
@@ -694,6 +774,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [MAGNEMITE]
+Name = 코일
 Dex = 81
 BST = 325
 FinalBST = 535
@@ -703,6 +784,7 @@ Basic = true
 Evolution = MAGNETON,30
 #-------------------------------
 [MAGNETON]
+Name = 레어코일
 Dex = 82
 BST = 465
 FinalBST = 535
@@ -712,6 +794,7 @@ Basic = false
 Evolution = MAGNEZONE,39
 #-------------------------------
 [FARFETCHD]
+Name = 파오리
 Dex = 83
 BST = 377
 FinalBST = 377
@@ -720,6 +803,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [DODUO]
+Name = 두두
 Dex = 84
 BST = 310
 FinalBST = 470
@@ -729,6 +813,7 @@ Basic = true
 Evolution = DODRIO,31
 #-------------------------------
 [DODRIO]
+Name = 두트리오
 Dex = 85
 BST = 470
 FinalBST = 470
@@ -737,6 +822,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SEEL]
+Name = 쥬쥬
 Dex = 86
 BST = 325
 FinalBST = 475
@@ -746,6 +832,7 @@ Basic = true
 Evolution = DEWGONG,34
 #-------------------------------
 [DEWGONG]
+Name = 쥬레곤
 Dex = 87
 BST = 475
 FinalBST = 475
@@ -754,6 +841,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [GRIMER]
+Name = 질퍽이
 Dex = 88
 BST = 325
 FinalBST = 500
@@ -763,6 +851,7 @@ Basic = true
 Evolution = MUK,38
 #-------------------------------
 [MUK]
+Name = 질뻐기
 Dex = 89
 BST = 500
 FinalBST = 500
@@ -771,6 +860,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SHELLDER]
+Name = 셀러
 Dex = 90
 BST = 305
 FinalBST = 525
@@ -780,6 +870,7 @@ Basic = true
 Evolution = CLOYSTER,25
 #-------------------------------
 [CLOYSTER]
+Name = 파르셀
 Dex = 91
 BST = 525
 FinalBST = 525
@@ -788,6 +879,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [GASTLY]
+Name = 고오스
 Dex = 92
 BST = 310
 FinalBST = 500
@@ -797,6 +889,7 @@ Basic = true
 Evolution = HAUNTER,25
 #-------------------------------
 [HAUNTER]
+Name = 고우스트
 Dex = 93
 BST = 405
 FinalBST = 500
@@ -806,6 +899,7 @@ Basic = false
 Evolution = GENGAR,34
 #-------------------------------
 [GENGAR]
+Name = 팬텀
 Dex = 94
 BST = 500
 FinalBST = 500
@@ -814,6 +908,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [ONIX]
+Name = 롱스톤
 Dex = 95
 BST = 385
 FinalBST = 510
@@ -823,6 +918,7 @@ Basic = true
 Evolution = STEELIX,32
 #-------------------------------
 [DROWZEE]
+Name = 슬리프
 Dex = 96
 BST = 328
 FinalBST = 483
@@ -832,6 +928,7 @@ Basic = true
 Evolution = HYPNO,26
 #-------------------------------
 [HYPNO]
+Name = 슬리퍼
 Dex = 97
 BST = 483
 FinalBST = 483
@@ -840,6 +937,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [KRABBY]
+Name = 크랩
 Dex = 98
 BST = 325
 FinalBST = 475
@@ -849,6 +947,7 @@ Basic = true
 Evolution = KINGLER,28
 #-------------------------------
 [KINGLER]
+Name = 킹크랩
 Dex = 99
 BST = 475
 FinalBST = 475
@@ -857,6 +956,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [VOLTORB]
+Name = 찌리리공
 Dex = 100
 BST = 330
 FinalBST = 490
@@ -866,6 +966,7 @@ Basic = true
 Evolution = ELECTRODE,30
 #-------------------------------
 [ELECTRODE]
+Name = 붐볼
 Dex = 101
 BST = 490
 FinalBST = 490
@@ -874,6 +975,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [EXEGGCUTE]
+Name = 아라리
 Dex = 102
 BST = 325
 FinalBST = 530
@@ -883,6 +985,7 @@ Basic = true
 Evolution = EXEGGUTOR,27
 #-------------------------------
 [EXEGGUTOR]
+Name = 나시
 Dex = 103
 BST = 530
 FinalBST = 530
@@ -891,6 +994,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [CUBONE]
+Name = 탕구리
 Dex = 104
 BST = 320
 FinalBST = 425
@@ -900,6 +1004,7 @@ Basic = true
 Evolution = MAROWAK,28
 #-------------------------------
 [MAROWAK]
+Name = 텅구리
 Dex = 105
 BST = 425
 FinalBST = 425
@@ -908,6 +1013,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [HITMONLEE]
+Name = 시라소몬
 Dex = 106
 BST = 455
 FinalBST = 455
@@ -916,6 +1022,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [HITMONCHAN]
+Name = 홍수몬
 Dex = 107
 BST = 455
 FinalBST = 455
@@ -924,6 +1031,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [LICKITUNG]
+Name = 내루미
 Dex = 108
 BST = 385
 FinalBST = 515
@@ -933,6 +1041,7 @@ Basic = true
 Evolution = LICKILICKY,32
 #-------------------------------
 [KOFFING]
+Name = 또가스
 Dex = 109
 BST = 340
 FinalBST = 490
@@ -942,6 +1051,7 @@ Basic = true
 Evolution = WEEZING,35
 #-------------------------------
 [WEEZING]
+Name = 또도가스
 Dex = 110
 BST = 490
 FinalBST = 490
@@ -950,6 +1060,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [RHYHORN]
+Name = 뿔카노
 Dex = 111
 BST = 345
 FinalBST = 535
@@ -959,6 +1070,7 @@ Basic = true
 Evolution = RHYDON,42
 #-------------------------------
 [RHYDON]
+Name = 코뿌리
 Dex = 112
 BST = 485
 FinalBST = 535
@@ -968,6 +1080,7 @@ Basic = false
 Evolution = RHYPERIOR,48
 #-------------------------------
 [CHANSEY]
+Name = 럭키
 Dex = 113
 BST = 450
 FinalBST = 540
@@ -977,6 +1090,7 @@ Basic = false
 Evolution = BLISSEY,38
 #-------------------------------
 [TANGELA]
+Name = 덩쿠리
 Dex = 114
 BST = 435
 FinalBST = 535
@@ -986,6 +1100,7 @@ Basic = true
 Evolution = TANGROWTH,36
 #-------------------------------
 [KANGASKHAN]
+Name = 캥카
 Dex = 115
 BST = 490
 FinalBST = 490
@@ -994,6 +1109,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [HORSEA]
+Name = 쏘드라
 Dex = 116
 BST = 295
 FinalBST = 540
@@ -1003,6 +1119,7 @@ Basic = true
 Evolution = SEADRA,32
 #-------------------------------
 [SEADRA]
+Name = 시드라
 Dex = 117
 BST = 440
 FinalBST = 540
@@ -1012,6 +1129,7 @@ Basic = false
 Evolution = KINGDRA,38
 #-------------------------------
 [GOLDEEN]
+Name = 콘치
 Dex = 118
 BST = 320
 FinalBST = 450
@@ -1021,6 +1139,7 @@ Basic = true
 Evolution = SEAKING,33
 #-------------------------------
 [SEAKING]
+Name = 왕콘치
 Dex = 119
 BST = 450
 FinalBST = 450
@@ -1029,6 +1148,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [STARYU]
+Name = 별가사리
 Dex = 120
 BST = 340
 FinalBST = 520
@@ -1038,6 +1158,7 @@ Basic = true
 Evolution = STARMIE,28
 #-------------------------------
 [STARMIE]
+Name = 아쿠스타
 Dex = 121
 BST = 520
 FinalBST = 520
@@ -1046,6 +1167,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [MRMIME]
+Name = 마임맨
 Dex = 122
 BST = 460
 FinalBST = 460
@@ -1054,6 +1176,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [SCYTHER]
+Name = 스라크
 Dex = 123
 BST = 500
 FinalBST = 500
@@ -1064,6 +1187,7 @@ Evolution = SCIZOR,40
 Evolution = KLEAVOR,40
 #-------------------------------
 [JYNX]
+Name = 루주라
 Dex = 124
 BST = 455
 FinalBST = 455
@@ -1072,6 +1196,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [ELECTABUZZ]
+Name = 에레브
 Dex = 125
 BST = 490
 FinalBST = 540
@@ -1081,6 +1206,7 @@ Basic = false
 Evolution = ELECTIVIRE,40
 #-------------------------------
 [MAGMAR]
+Name = 마그마
 Dex = 126
 BST = 495
 FinalBST = 540
@@ -1090,6 +1216,7 @@ Basic = false
 Evolution = MAGMORTAR,40
 #-------------------------------
 [PINSIR]
+Name = 쁘사이저
 Dex = 127
 BST = 500
 FinalBST = 500
@@ -1098,6 +1225,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [TAUROS]
+Name = 켄타로스
 Dex = 128
 BST = 490
 FinalBST = 490
@@ -1106,6 +1234,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [MAGIKARP]
+Name = 잉어킹
 Dex = 129
 BST = 200
 FinalBST = 540
@@ -1115,6 +1244,7 @@ Basic = true
 Evolution = GYARADOS,20
 #-------------------------------
 [GYARADOS]
+Name = 갸라도스
 Dex = 130
 BST = 540
 FinalBST = 540
@@ -1123,6 +1253,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [LAPRAS]
+Name = 라프라스
 Dex = 131
 BST = 535
 FinalBST = 535
@@ -1131,6 +1262,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [DITTO]
+Name = 메타몽
 Dex = 132
 BST = 288
 FinalBST = 288
@@ -1139,6 +1271,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [EEVEE]
+Name = 이브이
 Dex = 133
 BST = 325
 FinalBST = 525
@@ -1155,6 +1288,7 @@ Evolution = GLACEON,27
 Evolution = SYLVEON,27
 #-------------------------------
 [VAPOREON]
+Name = 샤미드
 Dex = 134
 BST = 525
 FinalBST = 525
@@ -1163,6 +1297,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [JOLTEON]
+Name = 쥬피썬더
 Dex = 135
 BST = 525
 FinalBST = 525
@@ -1171,6 +1306,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [FLAREON]
+Name = 부스터
 Dex = 136
 BST = 525
 FinalBST = 525
@@ -1179,6 +1315,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [PORYGON]
+Name = 폴리곤
 Dex = 137
 BST = 395
 FinalBST = 535
@@ -1188,6 +1325,7 @@ Basic = true
 Evolution = PORYGON2,33
 #-------------------------------
 [OMANYTE]
+Name = 암나이트
 Dex = 138
 BST = 355
 FinalBST = 495
@@ -1197,6 +1335,7 @@ Basic = true
 Evolution = OMASTAR,40
 #-------------------------------
 [OMASTAR]
+Name = 암스타
 Dex = 139
 BST = 495
 FinalBST = 495
@@ -1205,6 +1344,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [KABUTO]
+Name = 투구
 Dex = 140
 BST = 355
 FinalBST = 495
@@ -1214,6 +1354,7 @@ Basic = true
 Evolution = KABUTOPS,40
 #-------------------------------
 [KABUTOPS]
+Name = 투구푸스
 Dex = 141
 BST = 495
 FinalBST = 495
@@ -1222,6 +1363,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [AERODACTYL]
+Name = 프테라
 Dex = 142
 BST = 515
 FinalBST = 515
@@ -1230,6 +1372,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [SNORLAX]
+Name = 잠만보
 Dex = 143
 BST = 540
 FinalBST = 540
@@ -1238,6 +1381,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [ARTICUNO]
+Name = 프리져
 Dex = 144
 BST = 580
 FinalBST = 580
@@ -1246,6 +1390,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [ZAPDOS]
+Name = 썬더
 Dex = 145
 BST = 580
 FinalBST = 580
@@ -1254,6 +1399,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [MOLTRES]
+Name = 파이어
 Dex = 146
 BST = 580
 FinalBST = 580
@@ -1262,6 +1408,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [DRATINI]
+Name = 미뇽
 Dex = 147
 BST = 300
 FinalBST = 600
@@ -1271,6 +1418,7 @@ Basic = true
 Evolution = DRAGONAIR,30
 #-------------------------------
 [DRAGONAIR]
+Name = 신뇽
 Dex = 148
 BST = 420
 FinalBST = 600
@@ -1280,6 +1428,7 @@ Basic = false
 Evolution = DRAGONITE,55
 #-------------------------------
 [DRAGONITE]
+Name = 망나뇽
 Dex = 149
 BST = 600
 FinalBST = 600
@@ -1288,6 +1437,7 @@ Region = KANTO
 Basic = false
 #-------------------------------
 [MEWTWO]
+Name = 뮤츠
 Dex = 150
 BST = 680
 FinalBST = 680
@@ -1296,6 +1446,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [MEW]
+Name = 뮤
 Dex = 151
 BST = 600
 FinalBST = 600
@@ -1304,6 +1455,7 @@ Region = KANTO
 Basic = true
 #-------------------------------
 [CHIKORITA]
+Name = 치코리타
 Dex = 152
 BST = 318
 FinalBST = 525
@@ -1313,6 +1465,7 @@ Basic = true
 Evolution = BAYLEEF,16
 #-------------------------------
 [BAYLEEF]
+Name = 베이리프
 Dex = 153
 BST = 405
 FinalBST = 525
@@ -1322,6 +1475,7 @@ Basic = false
 Evolution = MEGANIUM,32
 #-------------------------------
 [MEGANIUM]
+Name = 메가니움
 Dex = 154
 BST = 525
 FinalBST = 525
@@ -1330,6 +1484,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [CYNDAQUIL]
+Name = 브케인
 Dex = 155
 BST = 309
 FinalBST = 534
@@ -1339,6 +1494,7 @@ Basic = true
 Evolution = QUILAVA,14
 #-------------------------------
 [QUILAVA]
+Name = 마그케인
 Dex = 156
 BST = 405
 FinalBST = 534
@@ -1348,6 +1504,7 @@ Basic = false
 Evolution = TYPHLOSION,36
 #-------------------------------
 [TYPHLOSION]
+Name = 블레이범
 Dex = 157
 BST = 534
 FinalBST = 534
@@ -1356,6 +1513,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [TOTODILE]
+Name = 리아코
 Dex = 158
 BST = 314
 FinalBST = 530
@@ -1365,6 +1523,7 @@ Basic = true
 Evolution = CROCONAW,18
 #-------------------------------
 [CROCONAW]
+Name = 엘리게이
 Dex = 159
 BST = 405
 FinalBST = 530
@@ -1374,6 +1533,7 @@ Basic = false
 Evolution = FERALIGATR,30
 #-------------------------------
 [FERALIGATR]
+Name = 장크로다일
 Dex = 160
 BST = 530
 FinalBST = 530
@@ -1382,6 +1542,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SENTRET]
+Name = 꼬리선
 Dex = 161
 BST = 215
 FinalBST = 415
@@ -1391,6 +1552,7 @@ Basic = true
 Evolution = FURRET,15
 #-------------------------------
 [FURRET]
+Name = 다꼬리
 Dex = 162
 BST = 415
 FinalBST = 415
@@ -1399,6 +1561,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [HOOTHOOT]
+Name = 부우부
 Dex = 163
 BST = 262
 FinalBST = 452
@@ -1408,6 +1571,7 @@ Basic = true
 Evolution = NOCTOWL,20
 #-------------------------------
 [NOCTOWL]
+Name = 야부엉
 Dex = 164
 BST = 452
 FinalBST = 452
@@ -1416,6 +1580,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [LEDYBA]
+Name = 레디바
 Dex = 165
 BST = 265
 FinalBST = 390
@@ -1425,6 +1590,7 @@ Basic = true
 Evolution = LEDIAN,18
 #-------------------------------
 [LEDIAN]
+Name = 레디안
 Dex = 166
 BST = 390
 FinalBST = 390
@@ -1433,6 +1599,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SPINARAK]
+Name = 페이검
 Dex = 167
 BST = 250
 FinalBST = 400
@@ -1442,6 +1609,7 @@ Basic = true
 Evolution = ARIADOS,22
 #-------------------------------
 [ARIADOS]
+Name = 아리아도스
 Dex = 168
 BST = 400
 FinalBST = 400
@@ -1450,6 +1618,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [CROBAT]
+Name = 크로뱃
 Dex = 169
 BST = 535
 FinalBST = 535
@@ -1458,6 +1627,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [CHINCHOU]
+Name = 초라기
 Dex = 170
 BST = 330
 FinalBST = 460
@@ -1467,6 +1637,7 @@ Basic = true
 Evolution = LANTURN,27
 #-------------------------------
 [LANTURN]
+Name = 랜턴
 Dex = 171
 BST = 460
 FinalBST = 460
@@ -1475,6 +1646,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [PICHU]
+Name = 피츄
 Dex = 172
 BST = 205
 FinalBST = 485
@@ -1484,6 +1656,7 @@ Basic = true
 Evolution = PIKACHU,17
 #-------------------------------
 [CLEFFA]
+Name = 삐
 Dex = 173
 BST = 218
 FinalBST = 483
@@ -1493,6 +1666,7 @@ Basic = true
 Evolution = CLEFAIRY,18
 #-------------------------------
 [IGGLYBUFF]
+Name = 푸푸린
 Dex = 174
 BST = 210
 FinalBST = 435
@@ -1502,6 +1676,7 @@ Basic = true
 Evolution = JIGGLYPUFF,18
 #-------------------------------
 [TOGEPI]
+Name = 토게피
 Dex = 175
 BST = 245
 FinalBST = 545
@@ -1511,6 +1686,7 @@ Basic = true
 Evolution = TOGETIC,20
 #-------------------------------
 [TOGETIC]
+Name = 토게틱
 Dex = 176
 BST = 405
 FinalBST = 545
@@ -1520,6 +1696,7 @@ Basic = false
 Evolution = TOGEKISS,34
 #-------------------------------
 [NATU]
+Name = 네이티
 Dex = 177
 BST = 320
 FinalBST = 470
@@ -1529,6 +1706,7 @@ Basic = true
 Evolution = XATU,25
 #-------------------------------
 [XATU]
+Name = 네이티오
 Dex = 178
 BST = 470
 FinalBST = 470
@@ -1537,6 +1715,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [MAREEP]
+Name = 메리프
 Dex = 179
 BST = 280
 FinalBST = 510
@@ -1546,6 +1725,7 @@ Basic = true
 Evolution = FLAAFFY,15
 #-------------------------------
 [FLAAFFY]
+Name = 보송송
 Dex = 180
 BST = 365
 FinalBST = 510
@@ -1555,6 +1735,7 @@ Basic = false
 Evolution = AMPHAROS,30
 #-------------------------------
 [AMPHAROS]
+Name = 전룡
 Dex = 181
 BST = 510
 FinalBST = 510
@@ -1563,6 +1744,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [BELLOSSOM]
+Name = 아르코
 Dex = 182
 BST = 490
 FinalBST = 490
@@ -1571,6 +1753,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [MARILL]
+Name = 마릴
 Dex = 183
 BST = 250
 FinalBST = 420
@@ -1580,6 +1763,7 @@ Basic = false
 Evolution = AZUMARILL,18
 #-------------------------------
 [AZUMARILL]
+Name = 마릴리
 Dex = 184
 BST = 420
 FinalBST = 420
@@ -1588,6 +1772,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SUDOWOODO]
+Name = 꼬지모
 Dex = 185
 BST = 410
 FinalBST = 410
@@ -1596,6 +1781,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [POLITOED]
+Name = 왕구리
 Dex = 186
 BST = 500
 FinalBST = 500
@@ -1604,6 +1790,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [HOPPIP]
+Name = 통통코
 Dex = 187
 BST = 250
 FinalBST = 460
@@ -1613,6 +1800,7 @@ Basic = true
 Evolution = SKIPLOOM,18
 #-------------------------------
 [SKIPLOOM]
+Name = 두코
 Dex = 188
 BST = 340
 FinalBST = 460
@@ -1622,6 +1810,7 @@ Basic = false
 Evolution = JUMPLUFF,27
 #-------------------------------
 [JUMPLUFF]
+Name = 솜솜코
 Dex = 189
 BST = 460
 FinalBST = 460
@@ -1630,6 +1819,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [AIPOM]
+Name = 에이팜
 Dex = 190
 BST = 360
 FinalBST = 482
@@ -1639,6 +1829,7 @@ Basic = true
 Evolution = AMBIPOM,30
 #-------------------------------
 [SUNKERN]
+Name = 해너츠
 Dex = 191
 BST = 180
 FinalBST = 425
@@ -1648,6 +1839,7 @@ Basic = true
 Evolution = SUNFLORA,16
 #-------------------------------
 [SUNFLORA]
+Name = 해루미
 Dex = 192
 BST = 425
 FinalBST = 425
@@ -1656,6 +1848,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [YANMA]
+Name = 왕자리
 Dex = 193
 BST = 390
 FinalBST = 515
@@ -1665,6 +1858,7 @@ Basic = true
 Evolution = YANMEGA,33
 #-------------------------------
 [WOOPER]
+Name = 우파
 Dex = 194
 BST = 210
 FinalBST = 430
@@ -1674,6 +1868,7 @@ Basic = true
 Evolution = QUAGSIRE,20
 #-------------------------------
 [QUAGSIRE]
+Name = 누오
 Dex = 195
 BST = 430
 FinalBST = 430
@@ -1682,6 +1877,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [ESPEON]
+Name = 에브이
 Dex = 196
 BST = 525
 FinalBST = 525
@@ -1690,6 +1886,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [UMBREON]
+Name = 블래키
 Dex = 197
 BST = 525
 FinalBST = 525
@@ -1698,6 +1895,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [MURKROW]
+Name = 니로우
 Dex = 198
 BST = 405
 FinalBST = 505
@@ -1707,6 +1905,7 @@ Basic = true
 Evolution = HONCHKROW,34
 #-------------------------------
 [SLOWKING]
+Name = 야도킹
 Dex = 199
 BST = 490
 FinalBST = 490
@@ -1715,6 +1914,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [MISDREAVUS]
+Name = 무우마
 Dex = 200
 BST = 435
 FinalBST = 495
@@ -1724,6 +1924,7 @@ Basic = true
 Evolution = MISMAGIUS,36
 #-------------------------------
 [UNOWN]
+Name = 안농
 Dex = 201
 BST = 336
 FinalBST = 336
@@ -1732,6 +1933,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [WOBBUFFET]
+Name = 마자용
 Dex = 202
 BST = 405
 FinalBST = 405
@@ -1740,6 +1942,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [GIRAFARIG]
+Name = 키링키
 Dex = 203
 BST = 455
 FinalBST = 520
@@ -1749,6 +1952,7 @@ Basic = true
 Evolution = FARIGIRAF,38
 #-------------------------------
 [PINECO]
+Name = 피콘
 Dex = 204
 BST = 290
 FinalBST = 465
@@ -1758,6 +1962,7 @@ Basic = true
 Evolution = FORRETRESS,31
 #-------------------------------
 [FORRETRESS]
+Name = 쏘콘
 Dex = 205
 BST = 465
 FinalBST = 465
@@ -1766,6 +1971,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [DUNSPARCE]
+Name = 노고치
 Dex = 206
 BST = 415
 FinalBST = 520
@@ -1775,6 +1981,7 @@ Basic = true
 Evolution = DUDUNSPARCE,35
 #-------------------------------
 [GLIGAR]
+Name = 글라이거
 Dex = 207
 BST = 430
 FinalBST = 510
@@ -1784,6 +1991,7 @@ Basic = true
 Evolution = GLISCOR,36
 #-------------------------------
 [STEELIX]
+Name = 강철톤
 Dex = 208
 BST = 510
 FinalBST = 510
@@ -1792,6 +2000,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SNUBBULL]
+Name = 블루
 Dex = 209
 BST = 300
 FinalBST = 450
@@ -1801,6 +2010,7 @@ Basic = true
 Evolution = GRANBULL,23
 #-------------------------------
 [GRANBULL]
+Name = 그랑블루
 Dex = 210
 BST = 450
 FinalBST = 450
@@ -1809,6 +2019,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [QWILFISH]
+Name = 침바루
 Dex = 211
 BST = 440
 FinalBST = 440
@@ -1817,6 +2028,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [SCIZOR]
+Name = 핫삼
 Dex = 212
 BST = 500
 FinalBST = 500
@@ -1825,6 +2037,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SHUCKLE]
+Name = 단단지
 Dex = 213
 BST = 505
 FinalBST = 505
@@ -1833,6 +2046,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [HERACROSS]
+Name = 헤라크로스
 Dex = 214
 BST = 500
 FinalBST = 500
@@ -1841,6 +2055,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [SNEASEL]
+Name = 포푸니
 Dex = 215
 BST = 430
 FinalBST = 510
@@ -1850,6 +2065,7 @@ Basic = true
 Evolution = WEAVILE,36
 #-------------------------------
 [TEDDIURSA]
+Name = 깜지곰
 Dex = 216
 BST = 330
 FinalBST = 550
@@ -1859,6 +2075,7 @@ Basic = true
 Evolution = URSARING,30
 #-------------------------------
 [URSARING]
+Name = 링곰
 Dex = 217
 BST = 500
 FinalBST = 550
@@ -1868,6 +2085,7 @@ Basic = false
 Evolution = URSALUNA,40
 #-------------------------------
 [SLUGMA]
+Name = 마그마그
 Dex = 218
 BST = 250
 FinalBST = 430
@@ -1877,6 +2095,7 @@ Basic = true
 Evolution = MAGCARGO,38
 #-------------------------------
 [MAGCARGO]
+Name = 마그카르고
 Dex = 219
 BST = 430
 FinalBST = 430
@@ -1885,6 +2104,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SWINUB]
+Name = 꾸꾸리
 Dex = 220
 BST = 250
 FinalBST = 530
@@ -1894,6 +2114,7 @@ Basic = true
 Evolution = PILOSWINE,33
 #-------------------------------
 [PILOSWINE]
+Name = 메꾸리
 Dex = 221
 BST = 450
 FinalBST = 530
@@ -1903,6 +2124,7 @@ Basic = false
 Evolution = MAMOSWINE,39
 #-------------------------------
 [CORSOLA]
+Name = 코산호
 Dex = 222
 BST = 410
 FinalBST = 410
@@ -1911,6 +2133,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [REMORAID]
+Name = 총어
 Dex = 223
 BST = 300
 FinalBST = 480
@@ -1920,6 +2143,7 @@ Basic = true
 Evolution = OCTILLERY,25
 #-------------------------------
 [OCTILLERY]
+Name = 대포무노
 Dex = 224
 BST = 480
 FinalBST = 480
@@ -1928,6 +2152,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [DELIBIRD]
+Name = 딜리버드
 Dex = 225
 BST = 330
 FinalBST = 330
@@ -1936,6 +2161,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [MANTINE]
+Name = 만타인
 Dex = 226
 BST = 485
 FinalBST = 485
@@ -1944,6 +2170,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SKARMORY]
+Name = 무장조
 Dex = 227
 BST = 465
 FinalBST = 465
@@ -1952,6 +2179,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [HOUNDOUR]
+Name = 델빌
 Dex = 228
 BST = 330
 FinalBST = 500
@@ -1961,6 +2189,7 @@ Basic = true
 Evolution = HOUNDOOM,24
 #-------------------------------
 [HOUNDOOM]
+Name = 헬가
 Dex = 229
 BST = 500
 FinalBST = 500
@@ -1969,6 +2198,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [KINGDRA]
+Name = 킹드라
 Dex = 230
 BST = 540
 FinalBST = 540
@@ -1977,6 +2207,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [PHANPY]
+Name = 코코리
 Dex = 231
 BST = 330
 FinalBST = 500
@@ -1986,6 +2217,7 @@ Basic = true
 Evolution = DONPHAN,25
 #-------------------------------
 [DONPHAN]
+Name = 코리갑
 Dex = 232
 BST = 500
 FinalBST = 500
@@ -1994,6 +2226,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [PORYGON2]
+Name = 폴리곤2
 Dex = 233
 BST = 515
 FinalBST = 535
@@ -2003,6 +2236,7 @@ Basic = false
 Evolution = PORYGONZ,40
 #-------------------------------
 [STANTLER]
+Name = 노라키
 Dex = 234
 BST = 465
 FinalBST = 525
@@ -2012,6 +2246,7 @@ Basic = true
 Evolution = WYRDEER,39
 #-------------------------------
 [SMEARGLE]
+Name = 루브도
 Dex = 235
 BST = 250
 FinalBST = 250
@@ -2020,6 +2255,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [TYROGUE]
+Name = 배루키
 Dex = 236
 BST = 210
 FinalBST = 455
@@ -2031,6 +2267,7 @@ Evolution = HITMONCHAN,20
 Evolution = HITMONTOP,20
 #-------------------------------
 [HITMONTOP]
+Name = 카포에라
 Dex = 237
 BST = 455
 FinalBST = 455
@@ -2039,6 +2276,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [SMOOCHUM]
+Name = 뽀뽀라
 Dex = 238
 BST = 305
 FinalBST = 455
@@ -2048,6 +2286,7 @@ Basic = true
 Evolution = JYNX,30
 #-------------------------------
 [ELEKID]
+Name = 에레키드
 Dex = 239
 BST = 360
 FinalBST = 540
@@ -2057,6 +2296,7 @@ Basic = true
 Evolution = ELECTABUZZ,30
 #-------------------------------
 [MAGBY]
+Name = 마그비
 Dex = 240
 BST = 365
 FinalBST = 540
@@ -2066,6 +2306,7 @@ Basic = true
 Evolution = MAGMAR,30
 #-------------------------------
 [MILTANK]
+Name = 밀탱크
 Dex = 241
 BST = 490
 FinalBST = 490
@@ -2074,6 +2315,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [BLISSEY]
+Name = 해피너스
 Dex = 242
 BST = 540
 FinalBST = 540
@@ -2082,6 +2324,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [RAIKOU]
+Name = 라이코
 Dex = 243
 BST = 580
 FinalBST = 580
@@ -2090,6 +2333,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [ENTEI]
+Name = 앤테이
 Dex = 244
 BST = 580
 FinalBST = 580
@@ -2098,6 +2342,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [SUICUNE]
+Name = 스이쿤
 Dex = 245
 BST = 580
 FinalBST = 580
@@ -2106,6 +2351,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [LARVITAR]
+Name = 애버라스
 Dex = 246
 BST = 300
 FinalBST = 600
@@ -2115,6 +2361,7 @@ Basic = true
 Evolution = PUPITAR,30
 #-------------------------------
 [PUPITAR]
+Name = 데기라스
 Dex = 247
 BST = 410
 FinalBST = 600
@@ -2124,6 +2371,7 @@ Basic = false
 Evolution = TYRANITAR,55
 #-------------------------------
 [TYRANITAR]
+Name = 마기라스
 Dex = 248
 BST = 600
 FinalBST = 600
@@ -2132,6 +2380,7 @@ Region = JOHTO
 Basic = false
 #-------------------------------
 [LUGIA]
+Name = 루기아
 Dex = 249
 BST = 680
 FinalBST = 680
@@ -2140,6 +2389,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [HOOH]
+Name = 칠색조
 Dex = 250
 BST = 680
 FinalBST = 680
@@ -2148,6 +2398,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [CELEBI]
+Name = 세레비
 Dex = 251
 BST = 600
 FinalBST = 600
@@ -2156,6 +2407,7 @@ Region = JOHTO
 Basic = true
 #-------------------------------
 [TREECKO]
+Name = 나무지기
 Dex = 252
 BST = 310
 FinalBST = 530
@@ -2165,6 +2417,7 @@ Basic = true
 Evolution = GROVYLE,16
 #-------------------------------
 [GROVYLE]
+Name = 나무돌이
 Dex = 253
 BST = 405
 FinalBST = 530
@@ -2174,6 +2427,7 @@ Basic = false
 Evolution = SCEPTILE,36
 #-------------------------------
 [SCEPTILE]
+Name = 나무킹
 Dex = 254
 BST = 530
 FinalBST = 530
@@ -2182,6 +2436,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [TORCHIC]
+Name = 아차모
 Dex = 255
 BST = 310
 FinalBST = 530
@@ -2191,6 +2446,7 @@ Basic = true
 Evolution = COMBUSKEN,16
 #-------------------------------
 [COMBUSKEN]
+Name = 영치코
 Dex = 256
 BST = 405
 FinalBST = 530
@@ -2200,6 +2456,7 @@ Basic = false
 Evolution = BLAZIKEN,36
 #-------------------------------
 [BLAZIKEN]
+Name = 번치코
 Dex = 257
 BST = 530
 FinalBST = 530
@@ -2208,6 +2465,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [MUDKIP]
+Name = 물짱이
 Dex = 258
 BST = 310
 FinalBST = 535
@@ -2217,6 +2475,7 @@ Basic = true
 Evolution = MARSHTOMP,16
 #-------------------------------
 [MARSHTOMP]
+Name = 늪짱이
 Dex = 259
 BST = 405
 FinalBST = 535
@@ -2226,6 +2485,7 @@ Basic = false
 Evolution = SWAMPERT,36
 #-------------------------------
 [SWAMPERT]
+Name = 대짱이
 Dex = 260
 BST = 535
 FinalBST = 535
@@ -2234,6 +2494,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [POOCHYENA]
+Name = 포챠나
 Dex = 261
 BST = 220
 FinalBST = 420
@@ -2243,6 +2504,7 @@ Basic = true
 Evolution = MIGHTYENA,18
 #-------------------------------
 [MIGHTYENA]
+Name = 그라에나
 Dex = 262
 BST = 420
 FinalBST = 420
@@ -2251,6 +2513,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [ZIGZAGOON]
+Name = 지그제구리
 Dex = 263
 BST = 240
 FinalBST = 420
@@ -2260,6 +2523,7 @@ Basic = true
 Evolution = LINOONE,20
 #-------------------------------
 [LINOONE]
+Name = 직구리
 Dex = 264
 BST = 420
 FinalBST = 420
@@ -2268,6 +2532,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [WURMPLE]
+Name = 개무소
 Dex = 265
 BST = 195
 FinalBST = 395
@@ -2278,6 +2543,7 @@ Evolution = SILCOON,7
 Evolution = CASCOON,7
 #-------------------------------
 [SILCOON]
+Name = 실쿤
 Dex = 266
 BST = 205
 FinalBST = 395
@@ -2287,6 +2553,7 @@ Basic = false
 Evolution = BEAUTIFLY,10
 #-------------------------------
 [BEAUTIFLY]
+Name = 뷰티플라이
 Dex = 267
 BST = 395
 FinalBST = 395
@@ -2295,6 +2562,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [CASCOON]
+Name = 카스쿤
 Dex = 268
 BST = 205
 FinalBST = 385
@@ -2304,6 +2572,7 @@ Basic = false
 Evolution = DUSTOX,10
 #-------------------------------
 [DUSTOX]
+Name = 독케일
 Dex = 269
 BST = 385
 FinalBST = 385
@@ -2312,6 +2581,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [LOTAD]
+Name = 연꽃몬
 Dex = 270
 BST = 220
 FinalBST = 480
@@ -2321,6 +2591,7 @@ Basic = true
 Evolution = LOMBRE,14
 #-------------------------------
 [LOMBRE]
+Name = 로토스
 Dex = 271
 BST = 340
 FinalBST = 480
@@ -2330,6 +2601,7 @@ Basic = false
 Evolution = LUDICOLO,28
 #-------------------------------
 [LUDICOLO]
+Name = 로파파
 Dex = 272
 BST = 480
 FinalBST = 480
@@ -2338,6 +2610,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SEEDOT]
+Name = 도토링
 Dex = 273
 BST = 220
 FinalBST = 480
@@ -2347,6 +2620,7 @@ Basic = true
 Evolution = NUZLEAF,14
 #-------------------------------
 [NUZLEAF]
+Name = 잎새코
 Dex = 274
 BST = 340
 FinalBST = 480
@@ -2356,6 +2630,7 @@ Basic = false
 Evolution = SHIFTRY,28
 #-------------------------------
 [SHIFTRY]
+Name = 다탱구
 Dex = 275
 BST = 480
 FinalBST = 480
@@ -2364,6 +2639,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [TAILLOW]
+Name = 테일로
 Dex = 276
 BST = 270
 FinalBST = 455
@@ -2373,6 +2649,7 @@ Basic = true
 Evolution = SWELLOW,22
 #-------------------------------
 [SWELLOW]
+Name = 스왈로
 Dex = 277
 BST = 455
 FinalBST = 455
@@ -2381,6 +2658,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [WINGULL]
+Name = 갈모매
 Dex = 278
 BST = 270
 FinalBST = 440
@@ -2390,6 +2668,7 @@ Basic = true
 Evolution = PELIPPER,25
 #-------------------------------
 [PELIPPER]
+Name = 패리퍼
 Dex = 279
 BST = 440
 FinalBST = 440
@@ -2398,6 +2677,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [RALTS]
+Name = 랄토스
 Dex = 280
 BST = 198
 FinalBST = 518
@@ -2407,6 +2687,7 @@ Basic = true
 Evolution = KIRLIA,20
 #-------------------------------
 [KIRLIA]
+Name = 킬리아
 Dex = 281
 BST = 278
 FinalBST = 518
@@ -2417,6 +2698,7 @@ Evolution = GARDEVOIR,30
 Evolution = GALLADE,26
 #-------------------------------
 [GARDEVOIR]
+Name = 가디안
 Dex = 282
 BST = 518
 FinalBST = 518
@@ -2425,6 +2707,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SURSKIT]
+Name = 비구술
 Dex = 283
 BST = 269
 FinalBST = 454
@@ -2434,6 +2717,7 @@ Basic = true
 Evolution = MASQUERAIN,22
 #-------------------------------
 [MASQUERAIN]
+Name = 비나방
 Dex = 284
 BST = 454
 FinalBST = 454
@@ -2442,6 +2726,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SHROOMISH]
+Name = 버섯꼬
 Dex = 285
 BST = 295
 FinalBST = 460
@@ -2451,6 +2736,7 @@ Basic = true
 Evolution = BRELOOM,23
 #-------------------------------
 [BRELOOM]
+Name = 버섯모
 Dex = 286
 BST = 460
 FinalBST = 460
@@ -2459,6 +2745,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SLAKOTH]
+Name = 게을로
 Dex = 287
 BST = 280
 FinalBST = 670
@@ -2468,6 +2755,7 @@ Basic = true
 Evolution = VIGOROTH,18
 #-------------------------------
 [VIGOROTH]
+Name = 발바로
 Dex = 288
 BST = 440
 FinalBST = 670
@@ -2477,6 +2765,7 @@ Basic = false
 Evolution = SLAKING,36
 #-------------------------------
 [SLAKING]
+Name = 게을킹
 Dex = 289
 BST = 670
 FinalBST = 670
@@ -2485,6 +2774,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [NINCADA]
+Name = 토중몬
 Dex = 290
 BST = 266
 FinalBST = 456
@@ -2495,6 +2785,7 @@ Evolution = NINJASK,20
 Evolution = SHEDINJA,20
 #-------------------------------
 [NINJASK]
+Name = 아이스크
 Dex = 291
 BST = 456
 FinalBST = 456
@@ -2503,6 +2794,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SHEDINJA]
+Name = 껍질몬
 Dex = 292
 BST = 236
 FinalBST = 236
@@ -2511,6 +2803,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [WHISMUR]
+Name = 소곤룡
 Dex = 293
 BST = 240
 FinalBST = 490
@@ -2520,6 +2813,7 @@ Basic = true
 Evolution = LOUDRED,20
 #-------------------------------
 [LOUDRED]
+Name = 노공룡
 Dex = 294
 BST = 360
 FinalBST = 490
@@ -2529,6 +2823,7 @@ Basic = false
 Evolution = EXPLOUD,40
 #-------------------------------
 [EXPLOUD]
+Name = 폭음룡
 Dex = 295
 BST = 490
 FinalBST = 490
@@ -2537,6 +2832,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [MAKUHITA]
+Name = 마크탕
 Dex = 296
 BST = 237
 FinalBST = 474
@@ -2546,6 +2842,7 @@ Basic = true
 Evolution = HARIYAMA,24
 #-------------------------------
 [HARIYAMA]
+Name = 하리뭉
 Dex = 297
 BST = 474
 FinalBST = 474
@@ -2554,6 +2851,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [AZURILL]
+Name = 루리리
 Dex = 298
 BST = 190
 FinalBST = 420
@@ -2563,6 +2861,7 @@ Basic = true
 Evolution = MARILL,16
 #-------------------------------
 [NOSEPASS]
+Name = 코코파스
 Dex = 299
 BST = 375
 FinalBST = 525
@@ -2572,6 +2871,7 @@ Basic = true
 Evolution = PROBOPASS,31
 #-------------------------------
 [SKITTY]
+Name = 에나비
 Dex = 300
 BST = 260
 FinalBST = 400
@@ -2581,6 +2881,7 @@ Basic = true
 Evolution = DELCATTY,22
 #-------------------------------
 [DELCATTY]
+Name = 델케티
 Dex = 301
 BST = 400
 FinalBST = 400
@@ -2589,6 +2890,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SABLEYE]
+Name = 깜까미
 Dex = 302
 BST = 380
 FinalBST = 380
@@ -2597,6 +2899,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [MAWILE]
+Name = 입치트
 Dex = 303
 BST = 380
 FinalBST = 380
@@ -2605,6 +2908,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [ARON]
+Name = 가보리
 Dex = 304
 BST = 330
 FinalBST = 530
@@ -2614,6 +2918,7 @@ Basic = true
 Evolution = LAIRON,32
 #-------------------------------
 [LAIRON]
+Name = 갱도라
 Dex = 305
 BST = 430
 FinalBST = 530
@@ -2623,6 +2928,7 @@ Basic = false
 Evolution = AGGRON,42
 #-------------------------------
 [AGGRON]
+Name = 보스로라
 Dex = 306
 BST = 530
 FinalBST = 530
@@ -2631,6 +2937,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [MEDITITE]
+Name = 요가랑
 Dex = 307
 BST = 280
 FinalBST = 410
@@ -2640,6 +2947,7 @@ Basic = true
 Evolution = MEDICHAM,37
 #-------------------------------
 [MEDICHAM]
+Name = 요가램
 Dex = 308
 BST = 410
 FinalBST = 410
@@ -2648,6 +2956,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [ELECTRIKE]
+Name = 썬더라이
 Dex = 309
 BST = 295
 FinalBST = 475
@@ -2657,6 +2966,7 @@ Basic = true
 Evolution = MANECTRIC,26
 #-------------------------------
 [MANECTRIC]
+Name = 썬더볼트
 Dex = 310
 BST = 475
 FinalBST = 475
@@ -2665,6 +2975,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [PLUSLE]
+Name = 플러시
 Dex = 311
 BST = 405
 FinalBST = 405
@@ -2673,6 +2984,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [MINUN]
+Name = 마이농
 Dex = 312
 BST = 405
 FinalBST = 405
@@ -2681,6 +2993,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [VOLBEAT]
+Name = 볼비트
 Dex = 313
 BST = 430
 FinalBST = 430
@@ -2689,6 +3002,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [ILLUMISE]
+Name = 네오비트
 Dex = 314
 BST = 430
 FinalBST = 430
@@ -2697,6 +3011,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [ROSELIA]
+Name = 로젤리아
 Dex = 315
 BST = 400
 FinalBST = 515
@@ -2706,6 +3021,7 @@ Basic = false
 Evolution = ROSERADE,33
 #-------------------------------
 [GULPIN]
+Name = 꼴깍몬
 Dex = 316
 BST = 302
 FinalBST = 467
@@ -2715,6 +3031,7 @@ Basic = true
 Evolution = SWALOT,26
 #-------------------------------
 [SWALOT]
+Name = 꿀꺽몬
 Dex = 317
 BST = 467
 FinalBST = 467
@@ -2723,6 +3040,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [CARVANHA]
+Name = 샤프니아
 Dex = 318
 BST = 305
 FinalBST = 460
@@ -2732,6 +3050,7 @@ Basic = true
 Evolution = SHARPEDO,30
 #-------------------------------
 [SHARPEDO]
+Name = 샤크니아
 Dex = 319
 BST = 460
 FinalBST = 460
@@ -2740,6 +3059,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [WAILMER]
+Name = 고래왕자
 Dex = 320
 BST = 400
 FinalBST = 500
@@ -2749,6 +3069,7 @@ Basic = true
 Evolution = WAILORD,40
 #-------------------------------
 [WAILORD]
+Name = 고래왕
 Dex = 321
 BST = 500
 FinalBST = 500
@@ -2757,6 +3078,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [NUMEL]
+Name = 둔타
 Dex = 322
 BST = 305
 FinalBST = 460
@@ -2766,6 +3088,7 @@ Basic = true
 Evolution = CAMERUPT,33
 #-------------------------------
 [CAMERUPT]
+Name = 폭타
 Dex = 323
 BST = 460
 FinalBST = 460
@@ -2774,6 +3097,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [TORKOAL]
+Name = 코터스
 Dex = 324
 BST = 470
 FinalBST = 470
@@ -2782,6 +3106,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [SPOINK]
+Name = 피그점프
 Dex = 325
 BST = 330
 FinalBST = 470
@@ -2791,6 +3116,7 @@ Basic = true
 Evolution = GRUMPIG,32
 #-------------------------------
 [GRUMPIG]
+Name = 피그킹
 Dex = 326
 BST = 470
 FinalBST = 470
@@ -2799,6 +3125,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SPINDA]
+Name = 얼루기
 Dex = 327
 BST = 360
 FinalBST = 360
@@ -2807,6 +3134,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [TRAPINCH]
+Name = 톱치
 Dex = 328
 BST = 290
 FinalBST = 520
@@ -2816,6 +3144,7 @@ Basic = true
 Evolution = VIBRAVA,35
 #-------------------------------
 [VIBRAVA]
+Name = 비브라바
 Dex = 329
 BST = 340
 FinalBST = 520
@@ -2825,6 +3154,7 @@ Basic = false
 Evolution = FLYGON,45
 #-------------------------------
 [FLYGON]
+Name = 플라이곤
 Dex = 330
 BST = 520
 FinalBST = 520
@@ -2833,6 +3163,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [CACNEA]
+Name = 선인왕
 Dex = 331
 BST = 335
 FinalBST = 475
@@ -2842,6 +3173,7 @@ Basic = true
 Evolution = CACTURNE,32
 #-------------------------------
 [CACTURNE]
+Name = 밤선인
 Dex = 332
 BST = 475
 FinalBST = 475
@@ -2850,6 +3182,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SWABLU]
+Name = 파비코
 Dex = 333
 BST = 310
 FinalBST = 490
@@ -2859,6 +3192,7 @@ Basic = true
 Evolution = ALTARIA,35
 #-------------------------------
 [ALTARIA]
+Name = 파비코리
 Dex = 334
 BST = 490
 FinalBST = 490
@@ -2867,6 +3201,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [ZANGOOSE]
+Name = 쟝고
 Dex = 335
 BST = 458
 FinalBST = 458
@@ -2875,6 +3210,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [SEVIPER]
+Name = 세비퍼
 Dex = 336
 BST = 458
 FinalBST = 458
@@ -2883,6 +3219,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [LUNATONE]
+Name = 루나톤
 Dex = 337
 BST = 460
 FinalBST = 460
@@ -2891,6 +3228,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [SOLROCK]
+Name = 솔록
 Dex = 338
 BST = 460
 FinalBST = 460
@@ -2899,6 +3237,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [BARBOACH]
+Name = 미꾸리
 Dex = 339
 BST = 288
 FinalBST = 468
@@ -2908,6 +3247,7 @@ Basic = true
 Evolution = WHISCASH,30
 #-------------------------------
 [WHISCASH]
+Name = 메깅
 Dex = 340
 BST = 468
 FinalBST = 468
@@ -2916,6 +3256,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [CORPHISH]
+Name = 가재군
 Dex = 341
 BST = 308
 FinalBST = 468
@@ -2925,6 +3266,7 @@ Basic = true
 Evolution = CRAWDAUNT,30
 #-------------------------------
 [CRAWDAUNT]
+Name = 가재장군
 Dex = 342
 BST = 468
 FinalBST = 468
@@ -2933,6 +3275,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [BALTOY]
+Name = 오뚝군
 Dex = 343
 BST = 300
 FinalBST = 500
@@ -2942,6 +3285,7 @@ Basic = true
 Evolution = CLAYDOL,36
 #-------------------------------
 [CLAYDOL]
+Name = 점토도리
 Dex = 344
 BST = 500
 FinalBST = 500
@@ -2950,6 +3294,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [LILEEP]
+Name = 릴링
 Dex = 345
 BST = 355
 FinalBST = 495
@@ -2959,6 +3304,7 @@ Basic = true
 Evolution = CRADILY,40
 #-------------------------------
 [CRADILY]
+Name = 릴리요
 Dex = 346
 BST = 495
 FinalBST = 495
@@ -2967,6 +3313,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [ANORITH]
+Name = 아노딥스
 Dex = 347
 BST = 355
 FinalBST = 495
@@ -2976,6 +3323,7 @@ Basic = true
 Evolution = ARMALDO,40
 #-------------------------------
 [ARMALDO]
+Name = 아말도
 Dex = 348
 BST = 495
 FinalBST = 495
@@ -2984,6 +3332,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [FEEBAS]
+Name = 빈티나
 Dex = 349
 BST = 200
 FinalBST = 540
@@ -2993,6 +3342,7 @@ Basic = true
 Evolution = MILOTIC,17
 #-------------------------------
 [MILOTIC]
+Name = 밀로틱
 Dex = 350
 BST = 540
 FinalBST = 540
@@ -3001,6 +3351,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [CASTFORM]
+Name = 캐스퐁
 Dex = 351
 BST = 420
 FinalBST = 420
@@ -3009,6 +3360,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [KECLEON]
+Name = 켈리몬
 Dex = 352
 BST = 440
 FinalBST = 440
@@ -3017,6 +3369,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [SHUPPET]
+Name = 어둠대신
 Dex = 353
 BST = 295
 FinalBST = 455
@@ -3026,6 +3379,7 @@ Basic = true
 Evolution = BANETTE,37
 #-------------------------------
 [BANETTE]
+Name = 다크펫
 Dex = 354
 BST = 455
 FinalBST = 455
@@ -3034,6 +3388,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [DUSKULL]
+Name = 해골몽
 Dex = 355
 BST = 295
 FinalBST = 525
@@ -3043,6 +3398,7 @@ Basic = true
 Evolution = DUSCLOPS,37
 #-------------------------------
 [DUSCLOPS]
+Name = 미라몽
 Dex = 356
 BST = 455
 FinalBST = 525
@@ -3052,6 +3408,7 @@ Basic = false
 Evolution = DUSKNOIR,43
 #-------------------------------
 [TROPIUS]
+Name = 트로피우스
 Dex = 357
 BST = 460
 FinalBST = 460
@@ -3060,6 +3417,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [CHIMECHO]
+Name = 치렁
 Dex = 358
 BST = 455
 FinalBST = 455
@@ -3068,6 +3426,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [ABSOL]
+Name = 앱솔
 Dex = 359
 BST = 465
 FinalBST = 465
@@ -3076,6 +3435,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [WYNAUT]
+Name = 마자
 Dex = 360
 BST = 260
 FinalBST = 405
@@ -3085,6 +3445,7 @@ Basic = true
 Evolution = WOBBUFFET,15
 #-------------------------------
 [SNORUNT]
+Name = 눈꼬마
 Dex = 361
 BST = 300
 FinalBST = 480
@@ -3095,6 +3456,7 @@ Evolution = GLALIE,42
 Evolution = FROSLASS,25
 #-------------------------------
 [GLALIE]
+Name = 얼음귀신
 Dex = 362
 BST = 480
 FinalBST = 480
@@ -3103,6 +3465,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [SPHEAL]
+Name = 대굴레오
 Dex = 363
 BST = 290
 FinalBST = 530
@@ -3112,6 +3475,7 @@ Basic = true
 Evolution = SEALEO,32
 #-------------------------------
 [SEALEO]
+Name = 씨레오
 Dex = 364
 BST = 410
 FinalBST = 530
@@ -3121,6 +3485,7 @@ Basic = false
 Evolution = WALREIN,44
 #-------------------------------
 [WALREIN]
+Name = 씨카이저
 Dex = 365
 BST = 530
 FinalBST = 530
@@ -3129,6 +3494,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [CLAMPERL]
+Name = 진주몽
 Dex = 366
 BST = 345
 FinalBST = 485
@@ -3139,6 +3505,7 @@ Evolution = HUNTAIL,29
 Evolution = GOREBYSS,29
 #-------------------------------
 [HUNTAIL]
+Name = 헌테일
 Dex = 367
 BST = 485
 FinalBST = 485
@@ -3147,6 +3514,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [GOREBYSS]
+Name = 분홍장이
 Dex = 368
 BST = 485
 FinalBST = 485
@@ -3155,6 +3523,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [RELICANTH]
+Name = 시라칸
 Dex = 369
 BST = 485
 FinalBST = 485
@@ -3163,6 +3532,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [LUVDISC]
+Name = 사랑동이
 Dex = 370
 BST = 330
 FinalBST = 330
@@ -3171,6 +3541,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [BAGON]
+Name = 아공이
 Dex = 371
 BST = 300
 FinalBST = 600
@@ -3180,6 +3551,7 @@ Basic = true
 Evolution = SHELGON,30
 #-------------------------------
 [SHELGON]
+Name = 쉘곤
 Dex = 372
 BST = 420
 FinalBST = 600
@@ -3189,6 +3561,7 @@ Basic = false
 Evolution = SALAMENCE,50
 #-------------------------------
 [SALAMENCE]
+Name = 보만다
 Dex = 373
 BST = 600
 FinalBST = 600
@@ -3197,6 +3570,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [BELDUM]
+Name = 메탕
 Dex = 374
 BST = 300
 FinalBST = 600
@@ -3206,6 +3580,7 @@ Basic = true
 Evolution = METANG,20
 #-------------------------------
 [METANG]
+Name = 메탕구
 Dex = 375
 BST = 420
 FinalBST = 600
@@ -3215,6 +3590,7 @@ Basic = false
 Evolution = METAGROSS,45
 #-------------------------------
 [METAGROSS]
+Name = 메타그로스
 Dex = 376
 BST = 600
 FinalBST = 600
@@ -3223,6 +3599,7 @@ Region = HOENN
 Basic = false
 #-------------------------------
 [REGIROCK]
+Name = 레지락
 Dex = 377
 BST = 580
 FinalBST = 580
@@ -3231,6 +3608,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [REGICE]
+Name = 레지아이스
 Dex = 378
 BST = 580
 FinalBST = 580
@@ -3239,6 +3617,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [REGISTEEL]
+Name = 레지스틸
 Dex = 379
 BST = 580
 FinalBST = 580
@@ -3247,6 +3626,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [LATIAS]
+Name = 라티아스
 Dex = 380
 BST = 600
 FinalBST = 600
@@ -3255,6 +3635,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [LATIOS]
+Name = 라티오스
 Dex = 381
 BST = 600
 FinalBST = 600
@@ -3263,6 +3644,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [KYOGRE]
+Name = 가이오가
 Dex = 382
 BST = 670
 FinalBST = 670
@@ -3271,6 +3653,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [GROUDON]
+Name = 그란돈
 Dex = 383
 BST = 670
 FinalBST = 670
@@ -3279,6 +3662,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [RAYQUAZA]
+Name = 레쿠쟈
 Dex = 384
 BST = 680
 FinalBST = 680
@@ -3287,6 +3671,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [JIRACHI]
+Name = 지라치
 Dex = 385
 BST = 600
 FinalBST = 600
@@ -3295,6 +3680,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [DEOXYS]
+Name = 테오키스
 Dex = 386
 BST = 600
 FinalBST = 600
@@ -3303,6 +3689,7 @@ Region = HOENN
 Basic = true
 #-------------------------------
 [TURTWIG]
+Name = 모부기
 Dex = 387
 BST = 318
 FinalBST = 525
@@ -3312,6 +3699,7 @@ Basic = true
 Evolution = GROTLE,18
 #-------------------------------
 [GROTLE]
+Name = 수풀부기
 Dex = 388
 BST = 405
 FinalBST = 525
@@ -3321,6 +3709,7 @@ Basic = false
 Evolution = TORTERRA,32
 #-------------------------------
 [TORTERRA]
+Name = 토대부기
 Dex = 389
 BST = 525
 FinalBST = 525
@@ -3329,6 +3718,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [CHIMCHAR]
+Name = 불꽃숭이
 Dex = 390
 BST = 309
 FinalBST = 534
@@ -3338,6 +3728,7 @@ Basic = true
 Evolution = MONFERNO,14
 #-------------------------------
 [MONFERNO]
+Name = 파이숭이
 Dex = 391
 BST = 405
 FinalBST = 534
@@ -3347,6 +3738,7 @@ Basic = false
 Evolution = INFERNAPE,36
 #-------------------------------
 [INFERNAPE]
+Name = 초염몽
 Dex = 392
 BST = 534
 FinalBST = 534
@@ -3355,6 +3747,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [PIPLUP]
+Name = 팽도리
 Dex = 393
 BST = 314
 FinalBST = 530
@@ -3364,6 +3757,7 @@ Basic = true
 Evolution = PRINPLUP,16
 #-------------------------------
 [PRINPLUP]
+Name = 팽태자
 Dex = 394
 BST = 405
 FinalBST = 530
@@ -3373,6 +3767,7 @@ Basic = false
 Evolution = EMPOLEON,36
 #-------------------------------
 [EMPOLEON]
+Name = 엠페르트
 Dex = 395
 BST = 530
 FinalBST = 530
@@ -3381,6 +3776,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [STARLY]
+Name = 찌르꼬
 Dex = 396
 BST = 245
 FinalBST = 485
@@ -3390,6 +3786,7 @@ Basic = true
 Evolution = STARAVIA,14
 #-------------------------------
 [STARAVIA]
+Name = 찌르버드
 Dex = 397
 BST = 340
 FinalBST = 485
@@ -3399,6 +3796,7 @@ Basic = false
 Evolution = STARAPTOR,34
 #-------------------------------
 [STARAPTOR]
+Name = 찌르호크
 Dex = 398
 BST = 485
 FinalBST = 485
@@ -3407,6 +3805,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [BIDOOF]
+Name = 비버니
 Dex = 399
 BST = 250
 FinalBST = 410
@@ -3416,6 +3815,7 @@ Basic = true
 Evolution = BIBAREL,15
 #-------------------------------
 [BIBAREL]
+Name = 비버통
 Dex = 400
 BST = 410
 FinalBST = 410
@@ -3424,6 +3824,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [KRICKETOT]
+Name = 귀뚤뚜기
 Dex = 401
 BST = 194
 FinalBST = 384
@@ -3433,6 +3834,7 @@ Basic = true
 Evolution = KRICKETUNE,10
 #-------------------------------
 [KRICKETUNE]
+Name = 귀뚤톡크
 Dex = 402
 BST = 384
 FinalBST = 384
@@ -3441,6 +3843,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [SHINX]
+Name = 꼬링크
 Dex = 403
 BST = 263
 FinalBST = 523
@@ -3450,6 +3853,7 @@ Basic = true
 Evolution = LUXIO,15
 #-------------------------------
 [LUXIO]
+Name = 럭시오
 Dex = 404
 BST = 363
 FinalBST = 523
@@ -3459,6 +3863,7 @@ Basic = false
 Evolution = LUXRAY,30
 #-------------------------------
 [LUXRAY]
+Name = 렌트라
 Dex = 405
 BST = 523
 FinalBST = 523
@@ -3467,6 +3872,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [BUDEW]
+Name = 꼬몽울
 Dex = 406
 BST = 280
 FinalBST = 515
@@ -3476,6 +3882,7 @@ Basic = true
 Evolution = ROSELIA,23
 #-------------------------------
 [ROSERADE]
+Name = 로즈레이드
 Dex = 407
 BST = 515
 FinalBST = 515
@@ -3484,6 +3891,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [CRANIDOS]
+Name = 두개도스
 Dex = 408
 BST = 350
 FinalBST = 495
@@ -3493,6 +3901,7 @@ Basic = true
 Evolution = RAMPARDOS,30
 #-------------------------------
 [RAMPARDOS]
+Name = 램펄드
 Dex = 409
 BST = 495
 FinalBST = 495
@@ -3501,6 +3910,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [SHIELDON]
+Name = 방패톱스
 Dex = 410
 BST = 350
 FinalBST = 495
@@ -3510,6 +3920,7 @@ Basic = true
 Evolution = BASTIODON,30
 #-------------------------------
 [BASTIODON]
+Name = 바리톱스
 Dex = 411
 BST = 495
 FinalBST = 495
@@ -3518,6 +3929,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [BURMY]
+Name = 도롱충이
 Dex = 412
 BST = 224
 FinalBST = 424
@@ -3528,6 +3940,7 @@ Evolution = WORMADAM,20
 Evolution = MOTHIM,20
 #-------------------------------
 [WORMADAM]
+Name = 도롱마담
 Dex = 413
 BST = 424
 FinalBST = 424
@@ -3536,6 +3949,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MOTHIM]
+Name = 나메일
 Dex = 414
 BST = 424
 FinalBST = 424
@@ -3544,6 +3958,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [COMBEE]
+Name = 세꿀버리
 Dex = 415
 BST = 244
 FinalBST = 474
@@ -3553,6 +3968,7 @@ Basic = true
 Evolution = VESPIQUEN,21
 #-------------------------------
 [VESPIQUEN]
+Name = 비퀸
 Dex = 416
 BST = 474
 FinalBST = 474
@@ -3561,6 +3977,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [PACHIRISU]
+Name = 파치리스
 Dex = 417
 BST = 405
 FinalBST = 405
@@ -3569,6 +3986,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [BUIZEL]
+Name = 브이젤
 Dex = 418
 BST = 330
 FinalBST = 495
@@ -3578,6 +3996,7 @@ Basic = true
 Evolution = FLOATZEL,26
 #-------------------------------
 [FLOATZEL]
+Name = 플로젤
 Dex = 419
 BST = 495
 FinalBST = 495
@@ -3586,6 +4005,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [CHERUBI]
+Name = 체리버
 Dex = 420
 BST = 275
 FinalBST = 450
@@ -3595,6 +4015,7 @@ Basic = true
 Evolution = CHERRIM,25
 #-------------------------------
 [CHERRIM]
+Name = 체리꼬
 Dex = 421
 BST = 450
 FinalBST = 450
@@ -3603,6 +4024,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [SHELLOS]
+Name = 깝질무
 Dex = 422
 BST = 325
 FinalBST = 475
@@ -3612,6 +4034,7 @@ Basic = true
 Evolution = GASTRODON,30
 #-------------------------------
 [GASTRODON]
+Name = 트리토돈
 Dex = 423
 BST = 475
 FinalBST = 475
@@ -3620,6 +4043,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [AMBIPOM]
+Name = 겟핸보숭
 Dex = 424
 BST = 482
 FinalBST = 482
@@ -3628,6 +4052,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [DRIFLOON]
+Name = 흔들풍손
 Dex = 425
 BST = 348
 FinalBST = 498
@@ -3637,6 +4062,7 @@ Basic = true
 Evolution = DRIFBLIM,28
 #-------------------------------
 [DRIFBLIM]
+Name = 둥실라이드
 Dex = 426
 BST = 498
 FinalBST = 498
@@ -3645,6 +4071,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [BUNEARY]
+Name = 이어롤
 Dex = 427
 BST = 350
 FinalBST = 480
@@ -3654,6 +4081,7 @@ Basic = true
 Evolution = LOPUNNY,29
 #-------------------------------
 [LOPUNNY]
+Name = 이어롭
 Dex = 428
 BST = 480
 FinalBST = 480
@@ -3662,6 +4090,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MISMAGIUS]
+Name = 무우마직
 Dex = 429
 BST = 495
 FinalBST = 495
@@ -3670,6 +4099,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [HONCHKROW]
+Name = 돈크로우
 Dex = 430
 BST = 505
 FinalBST = 505
@@ -3678,6 +4108,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [GLAMEOW]
+Name = 나옹마
 Dex = 431
 BST = 310
 FinalBST = 452
@@ -3687,6 +4118,7 @@ Basic = true
 Evolution = PURUGLY,38
 #-------------------------------
 [PURUGLY]
+Name = 몬냥이
 Dex = 432
 BST = 452
 FinalBST = 452
@@ -3695,6 +4127,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [CHINGLING]
+Name = 랑딸랑
 Dex = 433
 BST = 285
 FinalBST = 455
@@ -3704,6 +4137,7 @@ Basic = true
 Evolution = CHIMECHO,24
 #-------------------------------
 [STUNKY]
+Name = 스컹뿡
 Dex = 434
 BST = 329
 FinalBST = 479
@@ -3713,6 +4147,7 @@ Basic = true
 Evolution = SKUNTANK,34
 #-------------------------------
 [SKUNTANK]
+Name = 스컹탱크
 Dex = 435
 BST = 479
 FinalBST = 479
@@ -3721,6 +4156,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [BRONZOR]
+Name = 동미러
 Dex = 436
 BST = 300
 FinalBST = 500
@@ -3730,6 +4166,7 @@ Basic = true
 Evolution = BRONZONG,33
 #-------------------------------
 [BRONZONG]
+Name = 동탁군
 Dex = 437
 BST = 500
 FinalBST = 500
@@ -3738,6 +4175,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [BONSLY]
+Name = 꼬지지
 Dex = 438
 BST = 290
 FinalBST = 410
@@ -3747,6 +4185,7 @@ Basic = true
 Evolution = SUDOWOODO,24
 #-------------------------------
 [MIMEJR]
+Name = 흉내내
 Dex = 439
 BST = 310
 FinalBST = 460
@@ -3756,6 +4195,7 @@ Basic = true
 Evolution = MRMIME,26
 #-------------------------------
 [HAPPINY]
+Name = 핑복
 Dex = 440
 BST = 220
 FinalBST = 540
@@ -3765,6 +4205,7 @@ Basic = true
 Evolution = CHANSEY,18
 #-------------------------------
 [CHATOT]
+Name = 페라페
 Dex = 441
 BST = 411
 FinalBST = 411
@@ -3773,6 +4214,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [SPIRITOMB]
+Name = 화강돌
 Dex = 442
 BST = 485
 FinalBST = 485
@@ -3781,6 +4223,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [GIBLE]
+Name = 딥상어동
 Dex = 443
 BST = 300
 FinalBST = 600
@@ -3790,6 +4233,7 @@ Basic = true
 Evolution = GABITE,24
 #-------------------------------
 [GABITE]
+Name = 한바이트
 Dex = 444
 BST = 410
 FinalBST = 600
@@ -3799,6 +4243,7 @@ Basic = false
 Evolution = GARCHOMP,48
 #-------------------------------
 [GARCHOMP]
+Name = 한카리아스
 Dex = 445
 BST = 600
 FinalBST = 600
@@ -3807,6 +4252,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MUNCHLAX]
+Name = 먹고자
 Dex = 446
 BST = 390
 FinalBST = 540
@@ -3816,6 +4262,7 @@ Basic = true
 Evolution = SNORLAX,33
 #-------------------------------
 [RIOLU]
+Name = 리오르
 Dex = 447
 BST = 285
 FinalBST = 525
@@ -3825,6 +4272,7 @@ Basic = true
 Evolution = LUCARIO,24
 #-------------------------------
 [LUCARIO]
+Name = 루카리오
 Dex = 448
 BST = 525
 FinalBST = 525
@@ -3833,6 +4281,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [HIPPOPOTAS]
+Name = 히포포타스
 Dex = 449
 BST = 330
 FinalBST = 525
@@ -3842,6 +4291,7 @@ Basic = true
 Evolution = HIPPOWDON,34
 #-------------------------------
 [HIPPOWDON]
+Name = 하마돈
 Dex = 450
 BST = 525
 FinalBST = 525
@@ -3850,6 +4300,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [SKORUPI]
+Name = 스콜피
 Dex = 451
 BST = 330
 FinalBST = 500
@@ -3859,6 +4310,7 @@ Basic = true
 Evolution = DRAPION,40
 #-------------------------------
 [DRAPION]
+Name = 드래피온
 Dex = 452
 BST = 500
 FinalBST = 500
@@ -3867,6 +4319,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [CROAGUNK]
+Name = 삐딱구리
 Dex = 453
 BST = 300
 FinalBST = 490
@@ -3876,6 +4329,7 @@ Basic = true
 Evolution = TOXICROAK,37
 #-------------------------------
 [TOXICROAK]
+Name = 독개굴
 Dex = 454
 BST = 490
 FinalBST = 490
@@ -3884,6 +4338,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [CARNIVINE]
+Name = 무스틈니
 Dex = 455
 BST = 454
 FinalBST = 454
@@ -3892,6 +4347,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [FINNEON]
+Name = 형광어
 Dex = 456
 BST = 330
 FinalBST = 460
@@ -3901,6 +4357,7 @@ Basic = true
 Evolution = LUMINEON,31
 #-------------------------------
 [LUMINEON]
+Name = 네오라이트
 Dex = 457
 BST = 460
 FinalBST = 460
@@ -3909,6 +4366,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MANTYKE]
+Name = 타만타
 Dex = 458
 BST = 345
 FinalBST = 485
@@ -3918,6 +4376,7 @@ Basic = true
 Evolution = MANTINE,29
 #-------------------------------
 [SNOVER]
+Name = 눈쓰개
 Dex = 459
 BST = 334
 FinalBST = 494
@@ -3927,6 +4386,7 @@ Basic = true
 Evolution = ABOMASNOW,40
 #-------------------------------
 [ABOMASNOW]
+Name = 눈설왕
 Dex = 460
 BST = 494
 FinalBST = 494
@@ -3935,6 +4395,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [WEAVILE]
+Name = 포푸니라
 Dex = 461
 BST = 510
 FinalBST = 510
@@ -3943,6 +4404,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MAGNEZONE]
+Name = 자포코일
 Dex = 462
 BST = 535
 FinalBST = 535
@@ -3951,6 +4413,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [LICKILICKY]
+Name = 내룸벨트
 Dex = 463
 BST = 515
 FinalBST = 515
@@ -3959,6 +4422,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [RHYPERIOR]
+Name = 거대코뿌리
 Dex = 464
 BST = 535
 FinalBST = 535
@@ -3967,6 +4431,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [TANGROWTH]
+Name = 덩쿠림보
 Dex = 465
 BST = 535
 FinalBST = 535
@@ -3975,6 +4440,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [ELECTIVIRE]
+Name = 에레키블
 Dex = 466
 BST = 540
 FinalBST = 540
@@ -3983,6 +4449,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MAGMORTAR]
+Name = 마그마번
 Dex = 467
 BST = 540
 FinalBST = 540
@@ -3991,6 +4458,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [TOGEKISS]
+Name = 토게키스
 Dex = 468
 BST = 545
 FinalBST = 545
@@ -3999,6 +4467,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [YANMEGA]
+Name = 메가자리
 Dex = 469
 BST = 515
 FinalBST = 515
@@ -4007,6 +4476,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [LEAFEON]
+Name = 리피아
 Dex = 470
 BST = 525
 FinalBST = 525
@@ -4015,6 +4485,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [GLACEON]
+Name = 글레이시아
 Dex = 471
 BST = 525
 FinalBST = 525
@@ -4023,6 +4494,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [GLISCOR]
+Name = 글라이온
 Dex = 472
 BST = 510
 FinalBST = 510
@@ -4031,6 +4503,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [MAMOSWINE]
+Name = 맘모꾸리
 Dex = 473
 BST = 530
 FinalBST = 530
@@ -4039,6 +4512,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [PORYGONZ]
+Name = 폴리곤Z
 Dex = 474
 BST = 535
 FinalBST = 535
@@ -4047,6 +4521,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [GALLADE]
+Name = 엘레이드
 Dex = 475
 BST = 518
 FinalBST = 518
@@ -4055,6 +4530,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [PROBOPASS]
+Name = 대코파스
 Dex = 476
 BST = 525
 FinalBST = 525
@@ -4063,6 +4539,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [DUSKNOIR]
+Name = 야느와르몽
 Dex = 477
 BST = 525
 FinalBST = 525
@@ -4071,6 +4548,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [FROSLASS]
+Name = 눈여아
 Dex = 478
 BST = 480
 FinalBST = 480
@@ -4079,6 +4557,7 @@ Region = SINNOH
 Basic = false
 #-------------------------------
 [ROTOM]
+Name = 로토무
 Dex = 479
 BST = 440
 FinalBST = 440
@@ -4087,6 +4566,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [UXIE]
+Name = 유크시
 Dex = 480
 BST = 580
 FinalBST = 580
@@ -4095,6 +4575,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [MESPRIT]
+Name = 엠라이트
 Dex = 481
 BST = 580
 FinalBST = 580
@@ -4103,6 +4584,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [AZELF]
+Name = 아그놈
 Dex = 482
 BST = 580
 FinalBST = 580
@@ -4111,6 +4593,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [DIALGA]
+Name = 디아루가
 Dex = 483
 BST = 680
 FinalBST = 680
@@ -4119,6 +4602,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [PALKIA]
+Name = 펄기아
 Dex = 484
 BST = 680
 FinalBST = 680
@@ -4127,6 +4611,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [HEATRAN]
+Name = 히드런
 Dex = 485
 BST = 600
 FinalBST = 600
@@ -4135,6 +4620,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [REGIGIGAS]
+Name = 레지기가스
 Dex = 486
 BST = 670
 FinalBST = 670
@@ -4143,6 +4629,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [GIRATINA]
+Name = 기라티나
 Dex = 487
 BST = 680
 FinalBST = 680
@@ -4151,6 +4638,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [CRESSELIA]
+Name = 크레세리아
 Dex = 488
 BST = 580
 FinalBST = 580
@@ -4159,6 +4647,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [PHIONE]
+Name = 피오네
 Dex = 489
 BST = 480
 FinalBST = 480
@@ -4167,6 +4656,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [MANAPHY]
+Name = 마나피
 Dex = 490
 BST = 600
 FinalBST = 600
@@ -4175,6 +4665,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [DARKRAI]
+Name = 다크라이
 Dex = 491
 BST = 600
 FinalBST = 600
@@ -4183,6 +4674,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [SHAYMIN]
+Name = 쉐이미
 Dex = 492
 BST = 600
 FinalBST = 600
@@ -4191,6 +4683,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [ARCEUS]
+Name = 아르세우스
 Dex = 493
 BST = 720
 FinalBST = 720
@@ -4199,6 +4692,7 @@ Region = SINNOH
 Basic = true
 #-------------------------------
 [VICTINI]
+Name = 비크티니
 Dex = 494
 BST = 600
 FinalBST = 600
@@ -4207,6 +4701,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [SNIVY]
+Name = 주리비얀
 Dex = 495
 BST = 308
 FinalBST = 528
@@ -4216,6 +4711,7 @@ Basic = true
 Evolution = SERVINE,17
 #-------------------------------
 [SERVINE]
+Name = 샤비
 Dex = 496
 BST = 413
 FinalBST = 528
@@ -4225,6 +4721,7 @@ Basic = false
 Evolution = SERPERIOR,36
 #-------------------------------
 [SERPERIOR]
+Name = 샤로다
 Dex = 497
 BST = 528
 FinalBST = 528
@@ -4233,6 +4730,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [TEPIG]
+Name = 뚜꾸리
 Dex = 498
 BST = 308
 FinalBST = 528
@@ -4242,6 +4740,7 @@ Basic = true
 Evolution = PIGNITE,17
 #-------------------------------
 [PIGNITE]
+Name = 차오꿀
 Dex = 499
 BST = 418
 FinalBST = 528
@@ -4251,6 +4750,7 @@ Basic = false
 Evolution = EMBOAR,36
 #-------------------------------
 [EMBOAR]
+Name = 염무왕
 Dex = 500
 BST = 528
 FinalBST = 528
@@ -4259,6 +4759,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [OSHAWOTT]
+Name = 수댕이
 Dex = 501
 BST = 308
 FinalBST = 528
@@ -4268,6 +4769,7 @@ Basic = true
 Evolution = DEWOTT,17
 #-------------------------------
 [DEWOTT]
+Name = 쌍검자비
 Dex = 502
 BST = 413
 FinalBST = 528
@@ -4277,6 +4779,7 @@ Basic = false
 Evolution = SAMUROTT,36
 #-------------------------------
 [SAMUROTT]
+Name = 대검귀
 Dex = 503
 BST = 528
 FinalBST = 528
@@ -4285,6 +4788,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PATRAT]
+Name = 보르쥐
 Dex = 504
 BST = 255
 FinalBST = 420
@@ -4294,6 +4798,7 @@ Basic = true
 Evolution = WATCHOG,20
 #-------------------------------
 [WATCHOG]
+Name = 보르그
 Dex = 505
 BST = 420
 FinalBST = 420
@@ -4302,6 +4807,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [LILLIPUP]
+Name = 요테리
 Dex = 506
 BST = 275
 FinalBST = 500
@@ -4311,6 +4817,7 @@ Basic = true
 Evolution = HERDIER,16
 #-------------------------------
 [HERDIER]
+Name = 하데리어
 Dex = 507
 BST = 370
 FinalBST = 500
@@ -4320,6 +4827,7 @@ Basic = false
 Evolution = STOUTLAND,32
 #-------------------------------
 [STOUTLAND]
+Name = 바랜드
 Dex = 508
 BST = 500
 FinalBST = 500
@@ -4328,6 +4836,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PURRLOIN]
+Name = 쌔비냥
 Dex = 509
 BST = 281
 FinalBST = 446
@@ -4337,6 +4846,7 @@ Basic = true
 Evolution = LIEPARD,20
 #-------------------------------
 [LIEPARD]
+Name = 레파르다스
 Dex = 510
 BST = 446
 FinalBST = 446
@@ -4345,6 +4855,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PANSAGE]
+Name = 야나프
 Dex = 511
 BST = 316
 FinalBST = 498
@@ -4354,6 +4865,7 @@ Basic = true
 Evolution = SIMISAGE,26
 #-------------------------------
 [SIMISAGE]
+Name = 야나키
 Dex = 512
 BST = 498
 FinalBST = 498
@@ -4362,6 +4874,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PANSEAR]
+Name = 바오프
 Dex = 513
 BST = 316
 FinalBST = 498
@@ -4371,6 +4884,7 @@ Basic = true
 Evolution = SIMISEAR,26
 #-------------------------------
 [SIMISEAR]
+Name = 바오키
 Dex = 514
 BST = 498
 FinalBST = 498
@@ -4379,6 +4893,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PANPOUR]
+Name = 앗차프
 Dex = 515
 BST = 316
 FinalBST = 498
@@ -4388,6 +4903,7 @@ Basic = true
 Evolution = SIMIPOUR,26
 #-------------------------------
 [SIMIPOUR]
+Name = 앗차키
 Dex = 516
 BST = 498
 FinalBST = 498
@@ -4396,6 +4912,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [MUNNA]
+Name = 몽나
 Dex = 517
 BST = 292
 FinalBST = 487
@@ -4405,6 +4922,7 @@ Basic = true
 Evolution = MUSHARNA,24
 #-------------------------------
 [MUSHARNA]
+Name = 몽얌나
 Dex = 518
 BST = 487
 FinalBST = 487
@@ -4413,6 +4931,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PIDOVE]
+Name = 콩둘기
 Dex = 519
 BST = 264
 FinalBST = 488
@@ -4422,6 +4941,7 @@ Basic = true
 Evolution = TRANQUILL,21
 #-------------------------------
 [TRANQUILL]
+Name = 유토브
 Dex = 520
 BST = 358
 FinalBST = 488
@@ -4431,6 +4951,7 @@ Basic = false
 Evolution = UNFEZANT,32
 #-------------------------------
 [UNFEZANT]
+Name = 켄호로우
 Dex = 521
 BST = 488
 FinalBST = 488
@@ -4439,6 +4960,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [BLITZLE]
+Name = 줄뮤마
 Dex = 522
 BST = 295
 FinalBST = 497
@@ -4448,6 +4970,7 @@ Basic = true
 Evolution = ZEBSTRIKA,27
 #-------------------------------
 [ZEBSTRIKA]
+Name = 제브라이카
 Dex = 523
 BST = 497
 FinalBST = 497
@@ -4456,6 +4979,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [ROGGENROLA]
+Name = 단굴
 Dex = 524
 BST = 280
 FinalBST = 515
@@ -4465,6 +4989,7 @@ Basic = true
 Evolution = BOLDORE,25
 #-------------------------------
 [BOLDORE]
+Name = 암트르
 Dex = 525
 BST = 390
 FinalBST = 515
@@ -4474,6 +4999,7 @@ Basic = false
 Evolution = GIGALITH,33
 #-------------------------------
 [GIGALITH]
+Name = 기가이어스
 Dex = 526
 BST = 515
 FinalBST = 515
@@ -4482,6 +5008,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [WOOBAT]
+Name = 또르박쥐
 Dex = 527
 BST = 323
 FinalBST = 425
@@ -4491,6 +5018,7 @@ Basic = true
 Evolution = SWOOBAT,27
 #-------------------------------
 [SWOOBAT]
+Name = 맘박쥐
 Dex = 528
 BST = 425
 FinalBST = 425
@@ -4499,6 +5027,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [DRILBUR]
+Name = 두더류
 Dex = 529
 BST = 328
 FinalBST = 508
@@ -4508,6 +5037,7 @@ Basic = true
 Evolution = EXCADRILL,31
 #-------------------------------
 [EXCADRILL]
+Name = 몰드류
 Dex = 530
 BST = 508
 FinalBST = 508
@@ -4516,6 +5046,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [AUDINO]
+Name = 다부니
 Dex = 531
 BST = 445
 FinalBST = 445
@@ -4524,6 +5055,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [TIMBURR]
+Name = 으랏차
 Dex = 532
 BST = 305
 FinalBST = 505
@@ -4533,6 +5065,7 @@ Basic = true
 Evolution = GURDURR,25
 #-------------------------------
 [GURDURR]
+Name = 토쇠골
 Dex = 533
 BST = 405
 FinalBST = 505
@@ -4542,6 +5075,7 @@ Basic = false
 Evolution = CONKELDURR,34
 #-------------------------------
 [CONKELDURR]
+Name = 노보청
 Dex = 534
 BST = 505
 FinalBST = 505
@@ -4550,6 +5084,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [TYMPOLE]
+Name = 동챙이
 Dex = 535
 BST = 294
 FinalBST = 509
@@ -4559,6 +5094,7 @@ Basic = true
 Evolution = PALPITOAD,25
 #-------------------------------
 [PALPITOAD]
+Name = 두까비
 Dex = 536
 BST = 384
 FinalBST = 509
@@ -4568,6 +5104,7 @@ Basic = false
 Evolution = SEISMITOAD,36
 #-------------------------------
 [SEISMITOAD]
+Name = 두빅굴
 Dex = 537
 BST = 509
 FinalBST = 509
@@ -4576,6 +5113,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [THROH]
+Name = 던지미
 Dex = 538
 BST = 465
 FinalBST = 465
@@ -4584,6 +5122,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [SAWK]
+Name = 타격귀
 Dex = 539
 BST = 465
 FinalBST = 465
@@ -4592,6 +5131,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [SEWADDLE]
+Name = 두르보
 Dex = 540
 BST = 310
 FinalBST = 500
@@ -4601,6 +5141,7 @@ Basic = true
 Evolution = SWADLOON,20
 #-------------------------------
 [SWADLOON]
+Name = 두르쿤
 Dex = 541
 BST = 380
 FinalBST = 500
@@ -4610,6 +5151,7 @@ Basic = false
 Evolution = LEAVANNY,32
 #-------------------------------
 [LEAVANNY]
+Name = 모아머
 Dex = 542
 BST = 500
 FinalBST = 500
@@ -4618,6 +5160,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [VENIPEDE]
+Name = 마디네
 Dex = 543
 BST = 260
 FinalBST = 485
@@ -4627,6 +5170,7 @@ Basic = true
 Evolution = WHIRLIPEDE,22
 #-------------------------------
 [WHIRLIPEDE]
+Name = 휠구
 Dex = 544
 BST = 360
 FinalBST = 485
@@ -4636,6 +5180,7 @@ Basic = false
 Evolution = SCOLIPEDE,30
 #-------------------------------
 [SCOLIPEDE]
+Name = 펜드라
 Dex = 545
 BST = 485
 FinalBST = 485
@@ -4644,6 +5189,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [COTTONEE]
+Name = 소미안
 Dex = 546
 BST = 280
 FinalBST = 480
@@ -4653,6 +5199,7 @@ Basic = true
 Evolution = WHIMSICOTT,23
 #-------------------------------
 [WHIMSICOTT]
+Name = 엘풍
 Dex = 547
 BST = 480
 FinalBST = 480
@@ -4661,6 +5208,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PETILIL]
+Name = 치릴리
 Dex = 548
 BST = 280
 FinalBST = 480
@@ -4670,6 +5218,7 @@ Basic = true
 Evolution = LILLIGANT,23
 #-------------------------------
 [LILLIGANT]
+Name = 드레디어
 Dex = 549
 BST = 480
 FinalBST = 480
@@ -4678,6 +5227,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [BASCULIN]
+Name = 배쓰나이
 Dex = 550
 BST = 460
 FinalBST = 460
@@ -4686,6 +5236,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [SANDILE]
+Name = 깜눈크
 Dex = 551
 BST = 292
 FinalBST = 519
@@ -4695,6 +5246,7 @@ Basic = true
 Evolution = KROKOROK,29
 #-------------------------------
 [KROKOROK]
+Name = 악비르
 Dex = 552
 BST = 351
 FinalBST = 519
@@ -4704,6 +5256,7 @@ Basic = false
 Evolution = KROOKODILE,40
 #-------------------------------
 [KROOKODILE]
+Name = 악비아르
 Dex = 553
 BST = 519
 FinalBST = 519
@@ -4712,6 +5265,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [DARUMAKA]
+Name = 달막화
 Dex = 554
 BST = 315
 FinalBST = 480
@@ -4721,6 +5275,7 @@ Basic = true
 Evolution = DARMANITAN,35
 #-------------------------------
 [DARMANITAN]
+Name = 불비달마
 Dex = 555
 BST = 480
 FinalBST = 480
@@ -4729,6 +5284,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [MARACTUS]
+Name = 마라카치
 Dex = 556
 BST = 461
 FinalBST = 461
@@ -4737,6 +5293,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [DWEBBLE]
+Name = 돌살이
 Dex = 557
 BST = 325
 FinalBST = 485
@@ -4746,6 +5303,7 @@ Basic = true
 Evolution = CRUSTLE,34
 #-------------------------------
 [CRUSTLE]
+Name = 암팰리스
 Dex = 558
 BST = 485
 FinalBST = 485
@@ -4754,6 +5312,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [SCRAGGY]
+Name = 곤율랭
 Dex = 559
 BST = 348
 FinalBST = 488
@@ -4763,6 +5322,7 @@ Basic = true
 Evolution = SCRAFTY,39
 #-------------------------------
 [SCRAFTY]
+Name = 곤율거니
 Dex = 560
 BST = 488
 FinalBST = 488
@@ -4771,6 +5331,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [SIGILYPH]
+Name = 심보러
 Dex = 561
 BST = 490
 FinalBST = 490
@@ -4779,6 +5340,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [YAMASK]
+Name = 데스마스
 Dex = 562
 BST = 303
 FinalBST = 483
@@ -4788,6 +5350,7 @@ Basic = true
 Evolution = COFAGRIGUS,34
 #-------------------------------
 [COFAGRIGUS]
+Name = 데스니칸
 Dex = 563
 BST = 483
 FinalBST = 483
@@ -4796,6 +5359,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [TIRTOUGA]
+Name = 프로토가
 Dex = 564
 BST = 355
 FinalBST = 495
@@ -4805,6 +5369,7 @@ Basic = true
 Evolution = CARRACOSTA,37
 #-------------------------------
 [CARRACOSTA]
+Name = 늑골라
 Dex = 565
 BST = 495
 FinalBST = 495
@@ -4813,6 +5378,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [ARCHEN]
+Name = 아켄
 Dex = 566
 BST = 401
 FinalBST = 567
@@ -4822,6 +5388,7 @@ Basic = true
 Evolution = ARCHEOPS,37
 #-------------------------------
 [ARCHEOPS]
+Name = 아케오스
 Dex = 567
 BST = 567
 FinalBST = 567
@@ -4830,6 +5397,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [TRUBBISH]
+Name = 깨봉이
 Dex = 568
 BST = 329
 FinalBST = 474
@@ -4839,6 +5407,7 @@ Basic = true
 Evolution = GARBODOR,36
 #-------------------------------
 [GARBODOR]
+Name = 더스트나
 Dex = 569
 BST = 474
 FinalBST = 474
@@ -4847,6 +5416,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [ZORUA]
+Name = 조로아
 Dex = 570
 BST = 330
 FinalBST = 510
@@ -4856,6 +5426,7 @@ Basic = true
 Evolution = ZOROARK,30
 #-------------------------------
 [ZOROARK]
+Name = 조로아크
 Dex = 571
 BST = 510
 FinalBST = 510
@@ -4864,6 +5435,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [MINCCINO]
+Name = 치라미
 Dex = 572
 BST = 300
 FinalBST = 470
@@ -4873,6 +5445,7 @@ Basic = true
 Evolution = CINCCINO,25
 #-------------------------------
 [CINCCINO]
+Name = 치라치노
 Dex = 573
 BST = 470
 FinalBST = 470
@@ -4881,6 +5454,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [GOTHITA]
+Name = 고디탱
 Dex = 574
 BST = 290
 FinalBST = 490
@@ -4890,6 +5464,7 @@ Basic = true
 Evolution = GOTHORITA,32
 #-------------------------------
 [GOTHORITA]
+Name = 고디보미
 Dex = 575
 BST = 390
 FinalBST = 490
@@ -4899,6 +5474,7 @@ Basic = false
 Evolution = GOTHITELLE,41
 #-------------------------------
 [GOTHITELLE]
+Name = 고디모아젤
 Dex = 576
 BST = 490
 FinalBST = 490
@@ -4907,6 +5483,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [SOLOSIS]
+Name = 유니란
 Dex = 577
 BST = 290
 FinalBST = 490
@@ -4916,6 +5493,7 @@ Basic = true
 Evolution = DUOSION,32
 #-------------------------------
 [DUOSION]
+Name = 듀란
 Dex = 578
 BST = 370
 FinalBST = 490
@@ -4925,6 +5503,7 @@ Basic = false
 Evolution = REUNICLUS,41
 #-------------------------------
 [REUNICLUS]
+Name = 란쿨루스
 Dex = 579
 BST = 490
 FinalBST = 490
@@ -4933,6 +5512,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [DUCKLETT]
+Name = 꼬지보리
 Dex = 580
 BST = 305
 FinalBST = 473
@@ -4942,6 +5522,7 @@ Basic = true
 Evolution = SWANNA,35
 #-------------------------------
 [SWANNA]
+Name = 스완나
 Dex = 581
 BST = 473
 FinalBST = 473
@@ -4950,6 +5531,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [VANILLITE]
+Name = 바닐프티
 Dex = 582
 BST = 305
 FinalBST = 535
@@ -4959,6 +5541,7 @@ Basic = true
 Evolution = VANILLISH,35
 #-------------------------------
 [VANILLISH]
+Name = 바닐리치
 Dex = 583
 BST = 395
 FinalBST = 535
@@ -4968,6 +5551,7 @@ Basic = false
 Evolution = VANILLUXE,47
 #-------------------------------
 [VANILLUXE]
+Name = 배바닐라
 Dex = 584
 BST = 535
 FinalBST = 535
@@ -4976,6 +5560,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [DEERLING]
+Name = 사철록
 Dex = 585
 BST = 335
 FinalBST = 475
@@ -4985,6 +5570,7 @@ Basic = true
 Evolution = SAWSBUCK,34
 #-------------------------------
 [SAWSBUCK]
+Name = 바라철록
 Dex = 586
 BST = 475
 FinalBST = 475
@@ -4993,6 +5579,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [EMOLGA]
+Name = 에몽가
 Dex = 587
 BST = 428
 FinalBST = 428
@@ -5001,6 +5588,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [KARRABLAST]
+Name = 딱정곤
 Dex = 588
 BST = 315
 FinalBST = 495
@@ -5010,6 +5598,7 @@ Basic = true
 Evolution = ESCAVALIER,26
 #-------------------------------
 [ESCAVALIER]
+Name = 슈바르고
 Dex = 589
 BST = 495
 FinalBST = 495
@@ -5018,6 +5607,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [FOONGUS]
+Name = 깜놀버슬
 Dex = 590
 BST = 294
 FinalBST = 464
@@ -5027,6 +5617,7 @@ Basic = true
 Evolution = AMOONGUSS,39
 #-------------------------------
 [AMOONGUSS]
+Name = 뽀록나
 Dex = 591
 BST = 464
 FinalBST = 464
@@ -5035,6 +5626,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [FRILLISH]
+Name = 탱그릴
 Dex = 592
 BST = 335
 FinalBST = 480
@@ -5044,6 +5636,7 @@ Basic = true
 Evolution = JELLICENT,40
 #-------------------------------
 [JELLICENT]
+Name = 탱탱겔
 Dex = 593
 BST = 480
 FinalBST = 480
@@ -5052,6 +5645,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [ALOMOMOLA]
+Name = 맘복치
 Dex = 594
 BST = 470
 FinalBST = 470
@@ -5060,6 +5654,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [JOLTIK]
+Name = 파쪼옥
 Dex = 595
 BST = 319
 FinalBST = 472
@@ -5069,6 +5664,7 @@ Basic = true
 Evolution = GALVANTULA,36
 #-------------------------------
 [GALVANTULA]
+Name = 전툴라
 Dex = 596
 BST = 472
 FinalBST = 472
@@ -5077,6 +5673,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [FERROSEED]
+Name = 철시드
 Dex = 597
 BST = 305
 FinalBST = 489
@@ -5086,6 +5683,7 @@ Basic = true
 Evolution = FERROTHORN,40
 #-------------------------------
 [FERROTHORN]
+Name = 너트령
 Dex = 598
 BST = 489
 FinalBST = 489
@@ -5094,6 +5692,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [KLINK]
+Name = 기어르
 Dex = 599
 BST = 300
 FinalBST = 520
@@ -5103,6 +5702,7 @@ Basic = true
 Evolution = KLANG,38
 #-------------------------------
 [KLANG]
+Name = 기기어르
 Dex = 600
 BST = 440
 FinalBST = 520
@@ -5112,6 +5712,7 @@ Basic = false
 Evolution = KLINKLANG,49
 #-------------------------------
 [KLINKLANG]
+Name = 기기기어르
 Dex = 601
 BST = 520
 FinalBST = 520
@@ -5120,6 +5721,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [TYNAMO]
+Name = 저리어
 Dex = 602
 BST = 275
 FinalBST = 515
@@ -5129,6 +5731,7 @@ Basic = true
 Evolution = EELEKTRIK,39
 #-------------------------------
 [EELEKTRIK]
+Name = 저리릴
 Dex = 603
 BST = 405
 FinalBST = 515
@@ -5138,6 +5741,7 @@ Basic = false
 Evolution = EELEKTROSS,45
 #-------------------------------
 [EELEKTROSS]
+Name = 저리더프
 Dex = 604
 BST = 515
 FinalBST = 515
@@ -5146,6 +5750,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [ELGYEM]
+Name = 리그레
 Dex = 605
 BST = 335
 FinalBST = 485
@@ -5155,6 +5760,7 @@ Basic = true
 Evolution = BEHEEYEM,42
 #-------------------------------
 [BEHEEYEM]
+Name = 벰크
 Dex = 606
 BST = 485
 FinalBST = 485
@@ -5163,6 +5769,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [LITWICK]
+Name = 불켜미
 Dex = 607
 BST = 275
 FinalBST = 520
@@ -5172,6 +5779,7 @@ Basic = true
 Evolution = LAMPENT,41
 #-------------------------------
 [LAMPENT]
+Name = 램프라
 Dex = 608
 BST = 370
 FinalBST = 520
@@ -5181,6 +5789,7 @@ Basic = false
 Evolution = CHANDELURE,47
 #-------------------------------
 [CHANDELURE]
+Name = 샹델라
 Dex = 609
 BST = 520
 FinalBST = 520
@@ -5189,6 +5798,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [AXEW]
+Name = 터검니
 Dex = 610
 BST = 320
 FinalBST = 540
@@ -5198,6 +5808,7 @@ Basic = true
 Evolution = FRAXURE,38
 #-------------------------------
 [FRAXURE]
+Name = 액슨도
 Dex = 611
 BST = 410
 FinalBST = 540
@@ -5207,6 +5818,7 @@ Basic = false
 Evolution = HAXORUS,48
 #-------------------------------
 [HAXORUS]
+Name = 액스라이즈
 Dex = 612
 BST = 540
 FinalBST = 540
@@ -5215,6 +5827,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [CUBCHOO]
+Name = 코고미
 Dex = 613
 BST = 305
 FinalBST = 505
@@ -5224,6 +5837,7 @@ Basic = true
 Evolution = BEARTIC,37
 #-------------------------------
 [BEARTIC]
+Name = 툰베어
 Dex = 614
 BST = 505
 FinalBST = 505
@@ -5232,6 +5846,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [CRYOGONAL]
+Name = 프리지오
 Dex = 615
 BST = 515
 FinalBST = 515
@@ -5240,6 +5855,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [SHELMET]
+Name = 쪼마리
 Dex = 616
 BST = 305
 FinalBST = 495
@@ -5249,6 +5865,7 @@ Basic = true
 Evolution = ACCELGOR,25
 #-------------------------------
 [ACCELGOR]
+Name = 어지리더
 Dex = 617
 BST = 495
 FinalBST = 495
@@ -5257,6 +5874,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [STUNFISK]
+Name = 메더
 Dex = 618
 BST = 471
 FinalBST = 471
@@ -5265,6 +5883,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [MIENFOO]
+Name = 비조푸
 Dex = 619
 BST = 350
 FinalBST = 510
@@ -5274,6 +5893,7 @@ Basic = true
 Evolution = MIENSHAO,50
 #-------------------------------
 [MIENSHAO]
+Name = 비조도
 Dex = 620
 BST = 510
 FinalBST = 510
@@ -5282,6 +5902,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [DRUDDIGON]
+Name = 크리만
 Dex = 621
 BST = 485
 FinalBST = 485
@@ -5290,6 +5911,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [GOLETT]
+Name = 골비람
 Dex = 622
 BST = 303
 FinalBST = 483
@@ -5299,6 +5921,7 @@ Basic = true
 Evolution = GOLURK,43
 #-------------------------------
 [GOLURK]
+Name = 골루그
 Dex = 623
 BST = 483
 FinalBST = 483
@@ -5307,6 +5930,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [PAWNIARD]
+Name = 자망칼
 Dex = 624
 BST = 340
 FinalBST = 550
@@ -5316,6 +5940,7 @@ Basic = true
 Evolution = BISHARP,52
 #-------------------------------
 [BISHARP]
+Name = 절각참
 Dex = 625
 BST = 490
 FinalBST = 550
@@ -5325,6 +5950,7 @@ Basic = false
 Evolution = KINGAMBIT,58
 #-------------------------------
 [BOUFFALANT]
+Name = 버프론
 Dex = 626
 BST = 490
 FinalBST = 490
@@ -5333,6 +5959,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [RUFFLET]
+Name = 수리둥보
 Dex = 627
 BST = 350
 FinalBST = 510
@@ -5342,6 +5969,7 @@ Basic = true
 Evolution = BRAVIARY,54
 #-------------------------------
 [BRAVIARY]
+Name = 워글
 Dex = 628
 BST = 510
 FinalBST = 510
@@ -5350,6 +5978,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [VULLABY]
+Name = 벌차이
 Dex = 629
 BST = 370
 FinalBST = 510
@@ -5359,6 +5988,7 @@ Basic = true
 Evolution = MANDIBUZZ,54
 #-------------------------------
 [MANDIBUZZ]
+Name = 버랜지나
 Dex = 630
 BST = 510
 FinalBST = 510
@@ -5367,6 +5997,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [HEATMOR]
+Name = 앤티골
 Dex = 631
 BST = 484
 FinalBST = 484
@@ -5375,6 +6006,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [DURANT]
+Name = 아이앤트
 Dex = 632
 BST = 484
 FinalBST = 484
@@ -5383,6 +6015,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [DEINO]
+Name = 모노두
 Dex = 633
 BST = 300
 FinalBST = 600
@@ -5392,6 +6025,7 @@ Basic = true
 Evolution = ZWEILOUS,50
 #-------------------------------
 [ZWEILOUS]
+Name = 디헤드
 Dex = 634
 BST = 420
 FinalBST = 600
@@ -5401,6 +6035,7 @@ Basic = false
 Evolution = HYDREIGON,64
 #-------------------------------
 [HYDREIGON]
+Name = 삼삼드래
 Dex = 635
 BST = 600
 FinalBST = 600
@@ -5409,6 +6044,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [LARVESTA]
+Name = 활화르바
 Dex = 636
 BST = 360
 FinalBST = 550
@@ -5418,6 +6054,7 @@ Basic = true
 Evolution = VOLCARONA,59
 #-------------------------------
 [VOLCARONA]
+Name = 불카모스
 Dex = 637
 BST = 550
 FinalBST = 550
@@ -5426,6 +6063,7 @@ Region = UNOVA
 Basic = false
 #-------------------------------
 [COBALION]
+Name = 코바르온
 Dex = 638
 BST = 580
 FinalBST = 580
@@ -5434,6 +6072,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [TERRAKION]
+Name = 테라키온
 Dex = 639
 BST = 580
 FinalBST = 580
@@ -5442,6 +6081,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [VIRIZION]
+Name = 비리디온
 Dex = 640
 BST = 580
 FinalBST = 580
@@ -5450,6 +6090,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [TORNADUS]
+Name = 토네로스
 Dex = 641
 BST = 580
 FinalBST = 580
@@ -5458,6 +6099,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [THUNDURUS]
+Name = 볼트로스
 Dex = 642
 BST = 580
 FinalBST = 580
@@ -5466,6 +6108,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [RESHIRAM]
+Name = 레시라무
 Dex = 643
 BST = 680
 FinalBST = 680
@@ -5474,6 +6117,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [ZEKROM]
+Name = 제크로무
 Dex = 644
 BST = 680
 FinalBST = 680
@@ -5482,6 +6126,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [LANDORUS]
+Name = 랜드로스
 Dex = 645
 BST = 600
 FinalBST = 600
@@ -5490,6 +6135,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [KYUREM]
+Name = 큐레무
 Dex = 646
 BST = 660
 FinalBST = 660
@@ -5498,6 +6144,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [KELDEO]
+Name = 케르디오
 Dex = 647
 BST = 580
 FinalBST = 580
@@ -5506,6 +6153,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [MELOETTA]
+Name = 메로엣타
 Dex = 648
 BST = 600
 FinalBST = 600
@@ -5514,6 +6162,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [GENESECT]
+Name = 게노세크트
 Dex = 649
 BST = 600
 FinalBST = 600
@@ -5522,6 +6171,7 @@ Region = UNOVA
 Basic = true
 #-------------------------------
 [CHESPIN]
+Name = 도치마론
 Dex = 650
 BST = 313
 FinalBST = 530
@@ -5531,6 +6181,7 @@ Basic = true
 Evolution = QUILLADIN,16
 #-------------------------------
 [QUILLADIN]
+Name = 도치보구
 Dex = 651
 BST = 405
 FinalBST = 530
@@ -5540,6 +6191,7 @@ Basic = false
 Evolution = CHESNAUGHT,36
 #-------------------------------
 [CHESNAUGHT]
+Name = 브리가론
 Dex = 652
 BST = 530
 FinalBST = 530
@@ -5548,6 +6200,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [FENNEKIN]
+Name = 푸호꼬
 Dex = 653
 BST = 307
 FinalBST = 534
@@ -5557,6 +6210,7 @@ Basic = true
 Evolution = BRAIXEN,16
 #-------------------------------
 [BRAIXEN]
+Name = 테르나
 Dex = 654
 BST = 409
 FinalBST = 534
@@ -5566,6 +6220,7 @@ Basic = false
 Evolution = DELPHOX,36
 #-------------------------------
 [DELPHOX]
+Name = 마폭시
 Dex = 655
 BST = 534
 FinalBST = 534
@@ -5574,6 +6229,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [FROAKIE]
+Name = 개구마르
 Dex = 656
 BST = 314
 FinalBST = 530
@@ -5583,6 +6239,7 @@ Basic = true
 Evolution = FROGADIER,16
 #-------------------------------
 [FROGADIER]
+Name = 개굴반장
 Dex = 657
 BST = 405
 FinalBST = 530
@@ -5592,6 +6249,7 @@ Basic = false
 Evolution = GRENINJA,36
 #-------------------------------
 [GRENINJA]
+Name = 개굴닌자
 Dex = 658
 BST = 530
 FinalBST = 530
@@ -5600,6 +6258,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [BUNNELBY]
+Name = 파르빗
 Dex = 659
 BST = 237
 FinalBST = 423
@@ -5609,6 +6268,7 @@ Basic = true
 Evolution = DIGGERSBY,20
 #-------------------------------
 [DIGGERSBY]
+Name = 파르토
 Dex = 660
 BST = 423
 FinalBST = 423
@@ -5617,6 +6277,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [FLETCHLING]
+Name = 화살꼬빈
 Dex = 661
 BST = 278
 FinalBST = 499
@@ -5626,6 +6287,7 @@ Basic = true
 Evolution = FLETCHINDER,17
 #-------------------------------
 [FLETCHINDER]
+Name = 불화살빈
 Dex = 662
 BST = 382
 FinalBST = 499
@@ -5635,6 +6297,7 @@ Basic = false
 Evolution = TALONFLAME,35
 #-------------------------------
 [TALONFLAME]
+Name = 파이어로
 Dex = 663
 BST = 499
 FinalBST = 499
@@ -5643,6 +6306,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [SCATTERBUG]
+Name = 분이벌레
 Dex = 664
 BST = 200
 FinalBST = 411
@@ -5652,6 +6316,7 @@ Basic = true
 Evolution = SPEWPA,9
 #-------------------------------
 [SPEWPA]
+Name = 분떠도리
 Dex = 665
 BST = 213
 FinalBST = 411
@@ -5661,6 +6326,7 @@ Basic = false
 Evolution = VIVILLON,12
 #-------------------------------
 [VIVILLON]
+Name = 비비용
 Dex = 666
 BST = 411
 FinalBST = 411
@@ -5669,6 +6335,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [LITLEO]
+Name = 레오꼬
 Dex = 667
 BST = 369
 FinalBST = 507
@@ -5678,6 +6345,7 @@ Basic = true
 Evolution = PYROAR,35
 #-------------------------------
 [PYROAR]
+Name = 화염레오
 Dex = 668
 BST = 507
 FinalBST = 507
@@ -5686,6 +6354,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [FLABEBE]
+Name = 플라베베
 Dex = 669
 BST = 303
 FinalBST = 552
@@ -5695,6 +6364,7 @@ Basic = true
 Evolution = FLOETTE,19
 #-------------------------------
 [FLOETTE]
+Name = 플라엣테
 Dex = 670
 BST = 371
 FinalBST = 552
@@ -5704,6 +6374,7 @@ Basic = false
 Evolution = FLORGES,31
 #-------------------------------
 [FLORGES]
+Name = 플라제스
 Dex = 671
 BST = 552
 FinalBST = 552
@@ -5712,6 +6383,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [SKIDDO]
+Name = 메이클
 Dex = 672
 BST = 350
 FinalBST = 531
@@ -5721,6 +6393,7 @@ Basic = true
 Evolution = GOGOAT,32
 #-------------------------------
 [GOGOAT]
+Name = 고고트
 Dex = 673
 BST = 531
 FinalBST = 531
@@ -5729,6 +6402,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [PANCHAM]
+Name = 판짱
 Dex = 674
 BST = 348
 FinalBST = 495
@@ -5738,6 +6412,7 @@ Basic = true
 Evolution = PANGORO,32
 #-------------------------------
 [PANGORO]
+Name = 부란다
 Dex = 675
 BST = 495
 FinalBST = 495
@@ -5746,6 +6421,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [FURFROU]
+Name = 트리미앙
 Dex = 676
 BST = 472
 FinalBST = 472
@@ -5754,6 +6430,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [ESPURR]
+Name = 냐스퍼
 Dex = 677
 BST = 355
 FinalBST = 466
@@ -5763,6 +6440,7 @@ Basic = true
 Evolution = MEOWSTIC,25
 #-------------------------------
 [MEOWSTIC]
+Name = 냐오닉스
 Dex = 678
 BST = 466
 FinalBST = 466
@@ -5771,6 +6449,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [HONEDGE]
+Name = 단칼빙
 Dex = 679
 BST = 325
 FinalBST = 500
@@ -5780,6 +6459,7 @@ Basic = true
 Evolution = DOUBLADE,35
 #-------------------------------
 [DOUBLADE]
+Name = 쌍검킬
 Dex = 680
 BST = 448
 FinalBST = 500
@@ -5789,6 +6469,7 @@ Basic = false
 Evolution = AEGISLASH,41
 #-------------------------------
 [AEGISLASH]
+Name = 킬가르도
 Dex = 681
 BST = 500
 FinalBST = 500
@@ -5797,6 +6478,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [SPRITZEE]
+Name = 슈쁘
 Dex = 682
 BST = 341
 FinalBST = 462
@@ -5806,6 +6488,7 @@ Basic = true
 Evolution = AROMATISSE,28
 #-------------------------------
 [AROMATISSE]
+Name = 프레프티르
 Dex = 683
 BST = 462
 FinalBST = 462
@@ -5814,6 +6497,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [SWIRLIX]
+Name = 나룸퍼프
 Dex = 684
 BST = 341
 FinalBST = 480
@@ -5823,6 +6507,7 @@ Basic = true
 Evolution = SLURPUFF,28
 #-------------------------------
 [SLURPUFF]
+Name = 나루림
 Dex = 685
 BST = 480
 FinalBST = 480
@@ -5831,6 +6516,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [INKAY]
+Name = 오케이징
 Dex = 686
 BST = 288
 FinalBST = 482
@@ -5840,6 +6526,7 @@ Basic = true
 Evolution = MALAMAR,30
 #-------------------------------
 [MALAMAR]
+Name = 칼라마네로
 Dex = 687
 BST = 482
 FinalBST = 482
@@ -5848,6 +6535,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [BINACLE]
+Name = 거북손손
 Dex = 688
 BST = 306
 FinalBST = 500
@@ -5857,6 +6545,7 @@ Basic = true
 Evolution = BARBARACLE,39
 #-------------------------------
 [BARBARACLE]
+Name = 거북손데스
 Dex = 689
 BST = 500
 FinalBST = 500
@@ -5865,6 +6554,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [SKRELP]
+Name = 수레기
 Dex = 690
 BST = 320
 FinalBST = 494
@@ -5874,6 +6564,7 @@ Basic = true
 Evolution = DRAGALGE,48
 #-------------------------------
 [DRAGALGE]
+Name = 드래캄
 Dex = 691
 BST = 494
 FinalBST = 494
@@ -5882,6 +6573,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [CLAUNCHER]
+Name = 완철포
 Dex = 692
 BST = 330
 FinalBST = 500
@@ -5891,6 +6583,7 @@ Basic = true
 Evolution = CLAWITZER,37
 #-------------------------------
 [CLAWITZER]
+Name = 블로스터
 Dex = 693
 BST = 500
 FinalBST = 500
@@ -5899,6 +6592,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [HELIOPTILE]
+Name = 목도리키텔
 Dex = 694
 BST = 289
 FinalBST = 481
@@ -5908,6 +6602,7 @@ Basic = true
 Evolution = HELIOLISK,24
 #-------------------------------
 [HELIOLISK]
+Name = 일레도리자드
 Dex = 695
 BST = 481
 FinalBST = 481
@@ -5916,6 +6611,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [TYRUNT]
+Name = 티고라스
 Dex = 696
 BST = 362
 FinalBST = 521
@@ -5925,6 +6621,7 @@ Basic = true
 Evolution = TYRANTRUM,39
 #-------------------------------
 [TYRANTRUM]
+Name = 견고라스
 Dex = 697
 BST = 521
 FinalBST = 521
@@ -5933,6 +6630,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [AMAURA]
+Name = 아마루스
 Dex = 698
 BST = 362
 FinalBST = 521
@@ -5942,6 +6640,7 @@ Basic = true
 Evolution = AURORUS,39
 #-------------------------------
 [AURORUS]
+Name = 아마루르가
 Dex = 699
 BST = 521
 FinalBST = 521
@@ -5950,6 +6649,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [SYLVEON]
+Name = 님피아
 Dex = 700
 BST = 525
 FinalBST = 525
@@ -5958,6 +6658,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [HAWLUCHA]
+Name = 루차불
 Dex = 701
 BST = 500
 FinalBST = 500
@@ -5966,6 +6667,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [DEDENNE]
+Name = 데덴네
 Dex = 702
 BST = 431
 FinalBST = 431
@@ -5974,6 +6676,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [CARBINK]
+Name = 멜리시
 Dex = 703
 BST = 500
 FinalBST = 500
@@ -5982,6 +6685,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [GOOMY]
+Name = 미끄메라
 Dex = 704
 BST = 300
 FinalBST = 600
@@ -5991,6 +6695,7 @@ Basic = true
 Evolution = SLIGGOO,40
 #-------------------------------
 [SLIGGOO]
+Name = 미끄네일
 Dex = 705
 BST = 452
 FinalBST = 600
@@ -6000,6 +6705,7 @@ Basic = false
 Evolution = GOODRA,50
 #-------------------------------
 [GOODRA]
+Name = 미끄래곤
 Dex = 706
 BST = 600
 FinalBST = 600
@@ -6008,6 +6714,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [KLEFKI]
+Name = 클레피
 Dex = 707
 BST = 470
 FinalBST = 470
@@ -6016,6 +6723,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [PHANTUMP]
+Name = 나목령
 Dex = 708
 BST = 309
 FinalBST = 474
@@ -6025,6 +6733,7 @@ Basic = true
 Evolution = TREVENANT,26
 #-------------------------------
 [TREVENANT]
+Name = 대로트
 Dex = 709
 BST = 474
 FinalBST = 474
@@ -6033,6 +6742,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [PUMPKABOO]
+Name = 호바귀
 Dex = 710
 BST = 335
 FinalBST = 494
@@ -6042,6 +6752,7 @@ Basic = true
 Evolution = GOURGEIST,28
 #-------------------------------
 [GOURGEIST]
+Name = 펌킨인
 Dex = 711
 BST = 494
 FinalBST = 494
@@ -6050,6 +6761,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [BERGMITE]
+Name = 꽁어름
 Dex = 712
 BST = 304
 FinalBST = 514
@@ -6059,6 +6771,7 @@ Basic = true
 Evolution = AVALUGG,37
 #-------------------------------
 [AVALUGG]
+Name = 크레베이스
 Dex = 713
 BST = 514
 FinalBST = 514
@@ -6067,6 +6780,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [NOIBAT]
+Name = 음뱃
 Dex = 714
 BST = 245
 FinalBST = 535
@@ -6076,6 +6790,7 @@ Basic = true
 Evolution = NOIVERN,48
 #-------------------------------
 [NOIVERN]
+Name = 음번
 Dex = 715
 BST = 535
 FinalBST = 535
@@ -6084,6 +6799,7 @@ Region = KALOS
 Basic = false
 #-------------------------------
 [XERNEAS]
+Name = 제르네아스
 Dex = 716
 BST = 680
 FinalBST = 680
@@ -6092,6 +6808,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [YVELTAL]
+Name = 이벨타르
 Dex = 717
 BST = 680
 FinalBST = 680
@@ -6100,6 +6817,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [ZYGARDE]
+Name = 지가르데
 Dex = 718
 BST = 600
 FinalBST = 600
@@ -6108,6 +6826,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [DIANCIE]
+Name = 디안시
 Dex = 719
 BST = 600
 FinalBST = 600
@@ -6116,6 +6835,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [HOOPA]
+Name = 후파
 Dex = 720
 BST = 600
 FinalBST = 600
@@ -6124,6 +6844,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [VOLCANION]
+Name = 볼케니온
 Dex = 721
 BST = 600
 FinalBST = 600
@@ -6132,6 +6853,7 @@ Region = KALOS
 Basic = true
 #-------------------------------
 [ROWLET]
+Name = 나몰빼미
 Dex = 722
 BST = 320
 FinalBST = 530
@@ -6141,6 +6863,7 @@ Basic = true
 Evolution = DARTRIX,17
 #-------------------------------
 [DARTRIX]
+Name = 빼미스로우
 Dex = 723
 BST = 420
 FinalBST = 530
@@ -6150,6 +6873,7 @@ Basic = false
 Evolution = DECIDUEYE,34
 #-------------------------------
 [DECIDUEYE]
+Name = 모크나이퍼
 Dex = 724
 BST = 530
 FinalBST = 530
@@ -6158,6 +6882,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [LITTEN]
+Name = 냐오불
 Dex = 725
 BST = 320
 FinalBST = 530
@@ -6167,6 +6892,7 @@ Basic = true
 Evolution = TORRACAT,17
 #-------------------------------
 [TORRACAT]
+Name = 냐오히트
 Dex = 726
 BST = 420
 FinalBST = 530
@@ -6176,6 +6902,7 @@ Basic = false
 Evolution = INCINEROAR,34
 #-------------------------------
 [INCINEROAR]
+Name = 어흥염
 Dex = 727
 BST = 530
 FinalBST = 530
@@ -6184,6 +6911,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [POPPLIO]
+Name = 누리공
 Dex = 728
 BST = 320
 FinalBST = 530
@@ -6193,6 +6921,7 @@ Basic = true
 Evolution = BRIONNE,17
 #-------------------------------
 [BRIONNE]
+Name = 키요공
 Dex = 729
 BST = 420
 FinalBST = 530
@@ -6202,6 +6931,7 @@ Basic = false
 Evolution = PRIMARINA,34
 #-------------------------------
 [PRIMARINA]
+Name = 누리레느
 Dex = 730
 BST = 530
 FinalBST = 530
@@ -6210,6 +6940,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [PIKIPEK]
+Name = 콕코구리
 Dex = 731
 BST = 265
 FinalBST = 485
@@ -6219,6 +6950,7 @@ Basic = true
 Evolution = TRUMBEAK,14
 #-------------------------------
 [TRUMBEAK]
+Name = 크라파
 Dex = 732
 BST = 355
 FinalBST = 485
@@ -6228,6 +6960,7 @@ Basic = false
 Evolution = TOUCANNON,28
 #-------------------------------
 [TOUCANNON]
+Name = 왕큰부리
 Dex = 733
 BST = 485
 FinalBST = 485
@@ -6236,6 +6969,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [YUNGOOS]
+Name = 영구스
 Dex = 734
 BST = 253
 FinalBST = 418
@@ -6245,6 +6979,7 @@ Basic = true
 Evolution = GUMSHOOS,20
 #-------------------------------
 [GUMSHOOS]
+Name = 형사구스
 Dex = 735
 BST = 418
 FinalBST = 418
@@ -6253,6 +6988,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [GRUBBIN]
+Name = 턱지충이
 Dex = 736
 BST = 300
 FinalBST = 500
@@ -6262,6 +6998,7 @@ Basic = true
 Evolution = CHARJABUG,20
 #-------------------------------
 [CHARJABUG]
+Name = 전지충이
 Dex = 737
 BST = 400
 FinalBST = 500
@@ -6271,6 +7008,7 @@ Basic = false
 Evolution = VIKAVOLT,33
 #-------------------------------
 [VIKAVOLT]
+Name = 투구뿌논
 Dex = 738
 BST = 500
 FinalBST = 500
@@ -6279,6 +7017,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [CRABRAWLER]
+Name = 오기지게
 Dex = 739
 BST = 338
 FinalBST = 478
@@ -6288,6 +7027,7 @@ Basic = true
 Evolution = CRABOMINABLE,28
 #-------------------------------
 [CRABOMINABLE]
+Name = 모단단게
 Dex = 740
 BST = 478
 FinalBST = 478
@@ -6296,6 +7036,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [ORICORIO]
+Name = 춤추새
 Dex = 741
 BST = 476
 FinalBST = 476
@@ -6304,6 +7045,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [CUTIEFLY]
+Name = 에블리
 Dex = 742
 BST = 304
 FinalBST = 464
@@ -6313,6 +7055,7 @@ Basic = true
 Evolution = RIBOMBEE,25
 #-------------------------------
 [RIBOMBEE]
+Name = 에리본
 Dex = 743
 BST = 464
 FinalBST = 464
@@ -6321,6 +7064,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [ROCKRUFF]
+Name = 암멍이
 Dex = 744
 BST = 280
 FinalBST = 487
@@ -6330,6 +7074,7 @@ Basic = true
 Evolution = LYCANROC,25
 #-------------------------------
 [LYCANROC]
+Name = 루가루암
 Dex = 745
 BST = 487
 FinalBST = 487
@@ -6338,6 +7083,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [WISHIWASHI]
+Name = 약어리
 Dex = 746
 BST = 175
 FinalBST = 175
@@ -6346,6 +7092,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [MAREANIE]
+Name = 시마사리
 Dex = 747
 BST = 305
 FinalBST = 495
@@ -6355,6 +7102,7 @@ Basic = true
 Evolution = TOXAPEX,38
 #-------------------------------
 [TOXAPEX]
+Name = 더시마사리
 Dex = 748
 BST = 495
 FinalBST = 495
@@ -6363,6 +7111,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [MUDBRAY]
+Name = 머드나기
 Dex = 749
 BST = 385
 FinalBST = 500
@@ -6372,6 +7121,7 @@ Basic = true
 Evolution = MUDSDALE,30
 #-------------------------------
 [MUDSDALE]
+Name = 만마드
 Dex = 750
 BST = 500
 FinalBST = 500
@@ -6380,6 +7130,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [DEWPIDER]
+Name = 물거미
 Dex = 751
 BST = 269
 FinalBST = 454
@@ -6389,6 +7140,7 @@ Basic = true
 Evolution = ARAQUANID,22
 #-------------------------------
 [ARAQUANID]
+Name = 깨비물거미
 Dex = 752
 BST = 454
 FinalBST = 454
@@ -6397,6 +7149,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [FOMANTIS]
+Name = 짜랑랑
 Dex = 753
 BST = 250
 FinalBST = 480
@@ -6406,6 +7159,7 @@ Basic = true
 Evolution = LURANTIS,34
 #-------------------------------
 [LURANTIS]
+Name = 라란티스
 Dex = 754
 BST = 480
 FinalBST = 480
@@ -6414,6 +7168,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [MORELULL]
+Name = 자마슈
 Dex = 755
 BST = 285
 FinalBST = 405
@@ -6423,6 +7178,7 @@ Basic = true
 Evolution = SHIINOTIC,24
 #-------------------------------
 [SHIINOTIC]
+Name = 마셰이드
 Dex = 756
 BST = 405
 FinalBST = 405
@@ -6431,6 +7187,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [SALANDIT]
+Name = 야도뇽
 Dex = 757
 BST = 320
 FinalBST = 480
@@ -6440,6 +7197,7 @@ Basic = true
 Evolution = SALAZZLE,33
 #-------------------------------
 [SALAZZLE]
+Name = 염뉴트
 Dex = 758
 BST = 480
 FinalBST = 480
@@ -6448,6 +7206,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [STUFFUL]
+Name = 포곰곰
 Dex = 759
 BST = 340
 FinalBST = 500
@@ -6457,6 +7216,7 @@ Basic = true
 Evolution = BEWEAR,27
 #-------------------------------
 [BEWEAR]
+Name = 이븐곰
 Dex = 760
 BST = 500
 FinalBST = 500
@@ -6465,6 +7225,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [BOUNSWEET]
+Name = 달콤아
 Dex = 761
 BST = 210
 FinalBST = 510
@@ -6474,6 +7235,7 @@ Basic = true
 Evolution = STEENEE,18
 #-------------------------------
 [STEENEE]
+Name = 달무리나
 Dex = 762
 BST = 290
 FinalBST = 510
@@ -6483,6 +7245,7 @@ Basic = false
 Evolution = TSAREENA,24
 #-------------------------------
 [TSAREENA]
+Name = 달코퀸
 Dex = 763
 BST = 510
 FinalBST = 510
@@ -6491,6 +7254,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [COMFEY]
+Name = 큐아링
 Dex = 764
 BST = 485
 FinalBST = 485
@@ -6499,6 +7263,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [ORANGURU]
+Name = 하랑우탄
 Dex = 765
 BST = 490
 FinalBST = 490
@@ -6507,6 +7272,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [PASSIMIAN]
+Name = 내던숭이
 Dex = 766
 BST = 490
 FinalBST = 490
@@ -6515,6 +7281,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [WIMPOD]
+Name = 꼬시레
 Dex = 767
 BST = 230
 FinalBST = 530
@@ -6524,6 +7291,7 @@ Basic = true
 Evolution = GOLISOPOD,30
 #-------------------------------
 [GOLISOPOD]
+Name = 갑주무사
 Dex = 768
 BST = 530
 FinalBST = 530
@@ -6532,6 +7300,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [SANDYGAST]
+Name = 모래꿍
 Dex = 769
 BST = 320
 FinalBST = 480
@@ -6541,6 +7310,7 @@ Basic = true
 Evolution = PALOSSAND,42
 #-------------------------------
 [PALOSSAND]
+Name = 모래성이당
 Dex = 770
 BST = 480
 FinalBST = 480
@@ -6549,6 +7319,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [PYUKUMUKU]
+Name = 해무기
 Dex = 771
 BST = 410
 FinalBST = 410
@@ -6557,6 +7328,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [TYPENULL]
+Name = 타입:널
 Dex = 772
 BST = 534
 FinalBST = 570
@@ -6566,6 +7338,7 @@ Basic = true
 Evolution = SILVALLY,40
 #-------------------------------
 [SILVALLY]
+Name = 실버디
 Dex = 773
 BST = 570
 FinalBST = 570
@@ -6574,6 +7347,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [MINIOR]
+Name = 메테노
 Dex = 774
 BST = 500
 FinalBST = 500
@@ -6582,6 +7356,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [KOMALA]
+Name = 자말라
 Dex = 775
 BST = 480
 FinalBST = 480
@@ -6590,6 +7365,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [TURTONATOR]
+Name = 폭거북스
 Dex = 776
 BST = 485
 FinalBST = 485
@@ -6598,6 +7374,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [TOGEDEMARU]
+Name = 토게데마루
 Dex = 777
 BST = 435
 FinalBST = 435
@@ -6606,6 +7383,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [MIMIKYU]
+Name = 따라큐
 Dex = 778
 BST = 476
 FinalBST = 476
@@ -6614,6 +7392,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [BRUXISH]
+Name = 치갈기
 Dex = 779
 BST = 475
 FinalBST = 475
@@ -6622,6 +7401,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [DRAMPA]
+Name = 할비롱
 Dex = 780
 BST = 485
 FinalBST = 485
@@ -6630,6 +7410,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [DHELMISE]
+Name = 타타륜
 Dex = 781
 BST = 517
 FinalBST = 517
@@ -6638,6 +7419,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [JANGMOO]
+Name = 짜랑꼬
 Dex = 782
 BST = 300
 FinalBST = 600
@@ -6647,6 +7429,7 @@ Basic = true
 Evolution = HAKAMOO,35
 #-------------------------------
 [HAKAMOO]
+Name = 짜랑고우
 Dex = 783
 BST = 420
 FinalBST = 600
@@ -6656,6 +7439,7 @@ Basic = false
 Evolution = KOMMOO,45
 #-------------------------------
 [KOMMOO]
+Name = 짜랑고우거
 Dex = 784
 BST = 600
 FinalBST = 600
@@ -6664,6 +7448,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [TAPUKOKO]
+Name = 카푸꼬꼬꼭
 Dex = 785
 BST = 570
 FinalBST = 570
@@ -6672,6 +7457,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [TAPULELE]
+Name = 카푸나비나
 Dex = 786
 BST = 570
 FinalBST = 570
@@ -6680,6 +7466,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [TAPUBULU]
+Name = 카푸브루루
 Dex = 787
 BST = 570
 FinalBST = 570
@@ -6688,6 +7475,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [TAPUFINI]
+Name = 카푸느지느
 Dex = 788
 BST = 570
 FinalBST = 570
@@ -6696,6 +7484,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [COSMOG]
+Name = 코스모그
 Dex = 789
 BST = 200
 FinalBST = 680
@@ -6705,6 +7494,7 @@ Basic = true
 Evolution = COSMOEM,43
 #-------------------------------
 [COSMOEM]
+Name = 코스모움
 Dex = 790
 BST = 400
 FinalBST = 680
@@ -6715,6 +7505,7 @@ Evolution = SOLGALEO,53
 Evolution = LUNALA,53
 #-------------------------------
 [SOLGALEO]
+Name = 솔가레오
 Dex = 791
 BST = 680
 FinalBST = 680
@@ -6723,6 +7514,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [LUNALA]
+Name = 루나아라
 Dex = 792
 BST = 680
 FinalBST = 680
@@ -6731,6 +7523,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [NIHILEGO]
+Name = 텅비드
 Dex = 793
 BST = 570
 FinalBST = 570
@@ -6739,6 +7532,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [BUZZWOLE]
+Name = 매시붕
 Dex = 794
 BST = 570
 FinalBST = 570
@@ -6747,6 +7541,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [PHEROMOSA]
+Name = 페로코체
 Dex = 795
 BST = 570
 FinalBST = 570
@@ -6755,6 +7550,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [XURKITREE]
+Name = 전수목
 Dex = 796
 BST = 570
 FinalBST = 570
@@ -6763,6 +7559,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [CELESTEELA]
+Name = 철화구야
 Dex = 797
 BST = 570
 FinalBST = 570
@@ -6771,6 +7568,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [KARTANA]
+Name = 종이신도
 Dex = 798
 BST = 570
 FinalBST = 570
@@ -6779,6 +7577,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [GUZZLORD]
+Name = 악식킹
 Dex = 799
 BST = 570
 FinalBST = 570
@@ -6787,6 +7586,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [NECROZMA]
+Name = 네크로즈마
 Dex = 800
 BST = 600
 FinalBST = 600
@@ -6795,6 +7595,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [MAGEARNA]
+Name = 마기아나
 Dex = 801
 BST = 600
 FinalBST = 600
@@ -6803,6 +7604,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [MARSHADOW]
+Name = 마샤도
 Dex = 802
 BST = 600
 FinalBST = 600
@@ -6811,6 +7613,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [POIPOLE]
+Name = 베베놈
 Dex = 803
 BST = 420
 FinalBST = 540
@@ -6820,6 +7623,7 @@ Basic = true
 Evolution = NAGANADEL,35
 #-------------------------------
 [NAGANADEL]
+Name = 아고용
 Dex = 804
 BST = 540
 FinalBST = 540
@@ -6828,6 +7632,7 @@ Region = ALOLA
 Basic = false
 #-------------------------------
 [STAKATAKA]
+Name = 차곡차곡
 Dex = 805
 BST = 570
 FinalBST = 570
@@ -6836,6 +7641,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [BLACEPHALON]
+Name = 두파팡
 Dex = 806
 BST = 570
 FinalBST = 570
@@ -6844,6 +7650,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [ZERAORA]
+Name = 제라오라
 Dex = 807
 BST = 600
 FinalBST = 600
@@ -6852,6 +7659,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [MELTAN]
+Name = 멜탄
 Dex = 808
 BST = 300
 FinalBST = 300
@@ -6860,6 +7668,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [MELMETAL]
+Name = 멜메탈
 Dex = 809
 BST = 600
 FinalBST = 600
@@ -6868,6 +7677,7 @@ Region = ALOLA
 Basic = true
 #-------------------------------
 [GROOKEY]
+Name = 흥나숭
 Dex = 810
 BST = 310
 FinalBST = 530
@@ -6877,6 +7687,7 @@ Basic = true
 Evolution = THWACKEY,16
 #-------------------------------
 [THWACKEY]
+Name = 채키몽
 Dex = 811
 BST = 420
 FinalBST = 530
@@ -6886,6 +7697,7 @@ Basic = false
 Evolution = RILLABOOM,35
 #-------------------------------
 [RILLABOOM]
+Name = 고릴타
 Dex = 812
 BST = 530
 FinalBST = 530
@@ -6894,6 +7706,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [SCORBUNNY]
+Name = 염버니
 Dex = 813
 BST = 310
 FinalBST = 530
@@ -6903,6 +7716,7 @@ Basic = true
 Evolution = RABOOT,16
 #-------------------------------
 [RABOOT]
+Name = 래비풋
 Dex = 814
 BST = 420
 FinalBST = 530
@@ -6912,6 +7726,7 @@ Basic = false
 Evolution = CINDERACE,35
 #-------------------------------
 [CINDERACE]
+Name = 에이스번
 Dex = 815
 BST = 530
 FinalBST = 530
@@ -6920,6 +7735,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [SOBBLE]
+Name = 울머기
 Dex = 816
 BST = 310
 FinalBST = 530
@@ -6929,6 +7745,7 @@ Basic = true
 Evolution = DRIZZILE,16
 #-------------------------------
 [DRIZZILE]
+Name = 누겔레온
 Dex = 817
 BST = 420
 FinalBST = 530
@@ -6938,6 +7755,7 @@ Basic = false
 Evolution = INTELEON,35
 #-------------------------------
 [INTELEON]
+Name = 인텔리레온
 Dex = 818
 BST = 530
 FinalBST = 530
@@ -6946,6 +7764,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [SKWOVET]
+Name = 탐리스
 Dex = 819
 BST = 275
 FinalBST = 460
@@ -6955,6 +7774,7 @@ Basic = true
 Evolution = GREEDENT,24
 #-------------------------------
 [GREEDENT]
+Name = 요씽리스
 Dex = 820
 BST = 460
 FinalBST = 460
@@ -6963,6 +7783,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [ROOKIDEE]
+Name = 파라꼬
 Dex = 821
 BST = 245
 FinalBST = 495
@@ -6972,6 +7793,7 @@ Basic = true
 Evolution = CORVISQUIRE,18
 #-------------------------------
 [CORVISQUIRE]
+Name = 파크로우
 Dex = 822
 BST = 365
 FinalBST = 495
@@ -6981,6 +7803,7 @@ Basic = false
 Evolution = CORVIKNIGHT,38
 #-------------------------------
 [CORVIKNIGHT]
+Name = 아머까오
 Dex = 823
 BST = 495
 FinalBST = 495
@@ -6989,6 +7812,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [BLIPBUG]
+Name = 두루지벌레
 Dex = 824
 BST = 180
 FinalBST = 505
@@ -6998,6 +7822,7 @@ Basic = true
 Evolution = DOTTLER,10
 #-------------------------------
 [DOTTLER]
+Name = 레돔벌레
 Dex = 825
 BST = 335
 FinalBST = 505
@@ -7007,6 +7832,7 @@ Basic = false
 Evolution = ORBEETLE,30
 #-------------------------------
 [ORBEETLE]
+Name = 이올브
 Dex = 826
 BST = 505
 FinalBST = 505
@@ -7015,6 +7841,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [NICKIT]
+Name = 훔처우
 Dex = 827
 BST = 245
 FinalBST = 455
@@ -7024,6 +7851,7 @@ Basic = true
 Evolution = THIEVUL,18
 #-------------------------------
 [THIEVUL]
+Name = 폭슬라이
 Dex = 828
 BST = 455
 FinalBST = 455
@@ -7032,6 +7860,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [GOSSIFLEUR]
+Name = 꼬모카
 Dex = 829
 BST = 250
 FinalBST = 460
@@ -7041,6 +7870,7 @@ Basic = true
 Evolution = ELDEGOSS,20
 #-------------------------------
 [ELDEGOSS]
+Name = 백솜모카
 Dex = 830
 BST = 460
 FinalBST = 460
@@ -7049,6 +7879,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [WOOLOO]
+Name = 우르
 Dex = 831
 BST = 270
 FinalBST = 490
@@ -7058,6 +7889,7 @@ Basic = true
 Evolution = DUBWOOL,24
 #-------------------------------
 [DUBWOOL]
+Name = 배우르
 Dex = 832
 BST = 490
 FinalBST = 490
@@ -7066,6 +7898,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [CHEWTLE]
+Name = 깨물부기
 Dex = 833
 BST = 284
 FinalBST = 485
@@ -7075,6 +7908,7 @@ Basic = true
 Evolution = DREDNAW,22
 #-------------------------------
 [DREDNAW]
+Name = 갈가부기
 Dex = 834
 BST = 485
 FinalBST = 485
@@ -7083,6 +7917,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [YAMPER]
+Name = 멍파치
 Dex = 835
 BST = 270
 FinalBST = 490
@@ -7092,6 +7927,7 @@ Basic = true
 Evolution = BOLTUND,25
 #-------------------------------
 [BOLTUND]
+Name = 펄스멍
 Dex = 836
 BST = 490
 FinalBST = 490
@@ -7100,6 +7936,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [ROLYCOLY]
+Name = 탄동
 Dex = 837
 BST = 240
 FinalBST = 510
@@ -7109,6 +7946,7 @@ Basic = true
 Evolution = CARKOL,18
 #-------------------------------
 [CARKOL]
+Name = 탄차곤
 Dex = 838
 BST = 410
 FinalBST = 510
@@ -7118,6 +7956,7 @@ Basic = false
 Evolution = COALOSSAL,34
 #-------------------------------
 [COALOSSAL]
+Name = 석탄산
 Dex = 839
 BST = 510
 FinalBST = 510
@@ -7126,6 +7965,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [APPLIN]
+Name = 과사삭벌레
 Dex = 840
 BST = 260
 FinalBST = 540
@@ -7137,6 +7977,7 @@ Evolution = APPLETUN,22
 Evolution = DIPPLIN,22
 #-------------------------------
 [FLAPPLE]
+Name = 애프룡
 Dex = 841
 BST = 485
 FinalBST = 485
@@ -7145,6 +7986,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [APPLETUN]
+Name = 단지래플
 Dex = 842
 BST = 485
 FinalBST = 485
@@ -7153,6 +7995,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [SILICOBRA]
+Name = 모래뱀
 Dex = 843
 BST = 315
 FinalBST = 510
@@ -7162,6 +8005,7 @@ Basic = true
 Evolution = SANDACONDA,36
 #-------------------------------
 [SANDACONDA]
+Name = 사다이사
 Dex = 844
 BST = 510
 FinalBST = 510
@@ -7170,6 +8014,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [CRAMORANT]
+Name = 윽우지
 Dex = 845
 BST = 475
 FinalBST = 475
@@ -7178,6 +8023,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [ARROKUDA]
+Name = 찌로꼬치
 Dex = 846
 BST = 280
 FinalBST = 490
@@ -7187,6 +8033,7 @@ Basic = true
 Evolution = BARRASKEWDA,26
 #-------------------------------
 [BARRASKEWDA]
+Name = 꼬치조
 Dex = 847
 BST = 490
 FinalBST = 490
@@ -7195,6 +8042,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [TOXEL]
+Name = 일레즌
 Dex = 848
 BST = 242
 FinalBST = 502
@@ -7204,6 +8052,7 @@ Basic = true
 Evolution = TOXTRICITY,30
 #-------------------------------
 [TOXTRICITY]
+Name = 스트린더
 Dex = 849
 BST = 502
 FinalBST = 502
@@ -7212,6 +8061,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [SIZZLIPEDE]
+Name = 태우지네
 Dex = 850
 BST = 305
 FinalBST = 525
@@ -7221,6 +8071,7 @@ Basic = true
 Evolution = CENTISKORCH,28
 #-------------------------------
 [CENTISKORCH]
+Name = 다태우지네
 Dex = 851
 BST = 525
 FinalBST = 525
@@ -7229,6 +8080,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [CLOBBOPUS]
+Name = 때때무노
 Dex = 852
 BST = 310
 FinalBST = 480
@@ -7238,6 +8090,7 @@ Basic = true
 Evolution = GRAPPLOCT,26
 #-------------------------------
 [GRAPPLOCT]
+Name = 케오퍼스
 Dex = 853
 BST = 480
 FinalBST = 480
@@ -7246,6 +8099,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [SINISTEA]
+Name = 데인차
 Dex = 854
 BST = 308
 FinalBST = 508
@@ -7255,6 +8109,7 @@ Basic = true
 Evolution = POLTEAGEIST,26
 #-------------------------------
 [POLTEAGEIST]
+Name = 포트데스
 Dex = 855
 BST = 508
 FinalBST = 508
@@ -7263,6 +8118,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [HATENNA]
+Name = 몸지브림
 Dex = 856
 BST = 265
 FinalBST = 510
@@ -7272,6 +8128,7 @@ Basic = true
 Evolution = HATTREM,32
 #-------------------------------
 [HATTREM]
+Name = 손지브림
 Dex = 857
 BST = 370
 FinalBST = 510
@@ -7281,6 +8138,7 @@ Basic = false
 Evolution = HATTERENE,42
 #-------------------------------
 [HATTERENE]
+Name = 브리무음
 Dex = 858
 BST = 510
 FinalBST = 510
@@ -7289,6 +8147,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [IMPIDIMP]
+Name = 메롱꿍
 Dex = 859
 BST = 265
 FinalBST = 510
@@ -7298,6 +8157,7 @@ Basic = true
 Evolution = MORGREM,32
 #-------------------------------
 [MORGREM]
+Name = 쏘겨모
 Dex = 860
 BST = 370
 FinalBST = 510
@@ -7307,6 +8167,7 @@ Basic = false
 Evolution = GRIMMSNARL,42
 #-------------------------------
 [GRIMMSNARL]
+Name = 오롱털
 Dex = 861
 BST = 510
 FinalBST = 510
@@ -7315,6 +8176,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [OBSTAGOON]
+Name = 가로막구리
 Dex = 862
 BST = 520
 FinalBST = 520
@@ -7323,6 +8185,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [PERRSERKER]
+Name = 나이킹
 Dex = 863
 BST = 440
 FinalBST = 440
@@ -7331,6 +8194,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [CURSOLA]
+Name = 산호르곤
 Dex = 864
 BST = 510
 FinalBST = 510
@@ -7339,6 +8203,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [SIRFETCHD]
+Name = 창파나이트
 Dex = 865
 BST = 507
 FinalBST = 507
@@ -7347,6 +8212,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [MRRIME]
+Name = 마임꽁꽁
 Dex = 866
 BST = 520
 FinalBST = 520
@@ -7355,6 +8221,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [RUNERIGUS]
+Name = 데스판
 Dex = 867
 BST = 483
 FinalBST = 483
@@ -7363,6 +8230,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [MILCERY]
+Name = 마빌크
 Dex = 868
 BST = 270
 FinalBST = 495
@@ -7372,6 +8240,7 @@ Basic = true
 Evolution = ALCREMIE,23
 #-------------------------------
 [ALCREMIE]
+Name = 마휘핑
 Dex = 869
 BST = 495
 FinalBST = 495
@@ -7380,6 +8249,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [FALINKS]
+Name = 대여르
 Dex = 870
 BST = 470
 FinalBST = 470
@@ -7388,6 +8258,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [PINCURCHIN]
+Name = 찌르성게
 Dex = 871
 BST = 435
 FinalBST = 435
@@ -7396,6 +8267,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [SNOM]
+Name = 누니머기
 Dex = 872
 BST = 185
 FinalBST = 475
@@ -7405,6 +8277,7 @@ Basic = true
 Evolution = FROSMOTH,16
 #-------------------------------
 [FROSMOTH]
+Name = 모스노우
 Dex = 873
 BST = 475
 FinalBST = 475
@@ -7413,6 +8286,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [STONJOURNER]
+Name = 돌헨진
 Dex = 874
 BST = 470
 FinalBST = 470
@@ -7421,6 +8295,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [EISCUE]
+Name = 빙큐보
 Dex = 875
 BST = 470
 FinalBST = 470
@@ -7429,6 +8304,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [INDEEDEE]
+Name = 에써르
 Dex = 876
 BST = 475
 FinalBST = 475
@@ -7437,6 +8313,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [MORPEKO]
+Name = 모르페코
 Dex = 877
 BST = 436
 FinalBST = 436
@@ -7445,6 +8322,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [CUFANT]
+Name = 끼리동
 Dex = 878
 BST = 330
 FinalBST = 500
@@ -7454,6 +8332,7 @@ Basic = true
 Evolution = COPPERAJAH,34
 #-------------------------------
 [COPPERAJAH]
+Name = 대왕끼리동
 Dex = 879
 BST = 500
 FinalBST = 500
@@ -7462,6 +8341,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [DRACOZOLT]
+Name = 파치래곤
 Dex = 880
 BST = 505
 FinalBST = 505
@@ -7470,6 +8350,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [ARCTOZOLT]
+Name = 파치르돈
 Dex = 881
 BST = 505
 FinalBST = 505
@@ -7478,6 +8359,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [DRACOVISH]
+Name = 어래곤
 Dex = 882
 BST = 505
 FinalBST = 505
@@ -7486,6 +8368,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [ARCTOVISH]
+Name = 어치르돈
 Dex = 883
 BST = 505
 FinalBST = 505
@@ -7494,6 +8377,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [DURALUDON]
+Name = 두랄루돈
 Dex = 884
 BST = 535
 FinalBST = 600
@@ -7503,6 +8387,7 @@ Basic = true
 Evolution = ARCHALUDON,40
 #-------------------------------
 [DREEPY]
+Name = 드라꼰
 Dex = 885
 BST = 270
 FinalBST = 600
@@ -7512,6 +8397,7 @@ Basic = true
 Evolution = DRAKLOAK,50
 #-------------------------------
 [DRAKLOAK]
+Name = 드래런치
 Dex = 886
 BST = 410
 FinalBST = 600
@@ -7521,6 +8407,7 @@ Basic = false
 Evolution = DRAGAPULT,60
 #-------------------------------
 [DRAGAPULT]
+Name = 드래펄트
 Dex = 887
 BST = 600
 FinalBST = 600
@@ -7529,6 +8416,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [ZACIAN]
+Name = 자시안
 Dex = 888
 BST = 660
 FinalBST = 660
@@ -7537,6 +8425,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [ZAMAZENTA]
+Name = 자마젠타
 Dex = 889
 BST = 660
 FinalBST = 660
@@ -7545,6 +8434,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [ETERNATUS]
+Name = 무한다이노
 Dex = 890
 BST = 690
 FinalBST = 690
@@ -7553,6 +8443,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [KUBFU]
+Name = 치고마
 Dex = 891
 BST = 385
 FinalBST = 550
@@ -7562,6 +8453,7 @@ Basic = true
 Evolution = URSHIFU,32
 #-------------------------------
 [URSHIFU]
+Name = 우라오스
 Dex = 892
 BST = 550
 FinalBST = 550
@@ -7570,6 +8462,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [ZARUDE]
+Name = 자루도
 Dex = 893
 BST = 600
 FinalBST = 600
@@ -7578,6 +8471,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [REGIELEKI]
+Name = 레지에레키
 Dex = 894
 BST = 580
 FinalBST = 580
@@ -7586,6 +8480,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [REGIDRAGO]
+Name = 레지드래고
 Dex = 895
 BST = 580
 FinalBST = 580
@@ -7594,6 +8489,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [GLASTRIER]
+Name = 블리자포스
 Dex = 896
 BST = 580
 FinalBST = 580
@@ -7602,6 +8498,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [SPECTRIER]
+Name = 레이스포스
 Dex = 897
 BST = 580
 FinalBST = 580
@@ -7610,6 +8507,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [CALYREX]
+Name = 버드렉스
 Dex = 898
 BST = 500
 FinalBST = 500
@@ -7618,6 +8516,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [WYRDEER]
+Name = 신비록
 Dex = 899
 BST = 525
 FinalBST = 525
@@ -7626,6 +8525,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [KLEAVOR]
+Name = 사마자르
 Dex = 900
 BST = 500
 FinalBST = 500
@@ -7634,6 +8534,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [URSALUNA]
+Name = 다투곰
 Dex = 901
 BST = 550
 FinalBST = 550
@@ -7642,6 +8543,7 @@ Region = GALAR
 Basic = false
 #-------------------------------
 [BASCULEGION]
+Name = 대쓰여너
 Dex = 902
 BST = 530
 FinalBST = 530
@@ -7650,6 +8552,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [SNEASLER]
+Name = 포푸니크
 Dex = 903
 BST = 510
 FinalBST = 510
@@ -7658,6 +8561,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [OVERQWIL]
+Name = 장침바루
 Dex = 904
 BST = 510
 FinalBST = 510
@@ -7666,6 +8570,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [ENAMORUS]
+Name = 러브로스
 Dex = 905
 BST = 580
 FinalBST = 580
@@ -7674,6 +8579,7 @@ Region = GALAR
 Basic = true
 #-------------------------------
 [SPRIGATITO]
+Name = 나오하
 Dex = 906
 BST = 310
 FinalBST = 530
@@ -7683,6 +8589,7 @@ Basic = true
 Evolution = FLORAGATO,16
 #-------------------------------
 [FLORAGATO]
+Name = 나로테
 Dex = 907
 BST = 410
 FinalBST = 530
@@ -7692,6 +8599,7 @@ Basic = false
 Evolution = MEOWSCARADA,36
 #-------------------------------
 [MEOWSCARADA]
+Name = 마스카나
 Dex = 908
 BST = 530
 FinalBST = 530
@@ -7700,6 +8608,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [FUECOCO]
+Name = 뜨아거
 Dex = 909
 BST = 310
 FinalBST = 530
@@ -7709,6 +8618,7 @@ Basic = true
 Evolution = CROCALOR,16
 #-------------------------------
 [CROCALOR]
+Name = 악뜨거
 Dex = 910
 BST = 411
 FinalBST = 530
@@ -7718,6 +8628,7 @@ Basic = false
 Evolution = SKELEDIRGE,36
 #-------------------------------
 [SKELEDIRGE]
+Name = 라우드본
 Dex = 911
 BST = 530
 FinalBST = 530
@@ -7726,6 +8637,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [QUAXLY]
+Name = 꾸왁스
 Dex = 912
 BST = 310
 FinalBST = 530
@@ -7735,6 +8647,7 @@ Basic = true
 Evolution = QUAXWELL,16
 #-------------------------------
 [QUAXWELL]
+Name = 아꾸왁
 Dex = 913
 BST = 410
 FinalBST = 530
@@ -7744,6 +8657,7 @@ Basic = false
 Evolution = QUAQUAVAL,36
 #-------------------------------
 [QUAQUAVAL]
+Name = 웨이니발
 Dex = 914
 BST = 530
 FinalBST = 530
@@ -7752,6 +8666,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [LECHONK]
+Name = 맛보돈
 Dex = 915
 BST = 254
 FinalBST = 489
@@ -7761,6 +8676,7 @@ Basic = true
 Evolution = OINKOLOGNE,18
 #-------------------------------
 [OINKOLOGNE]
+Name = 퍼퓨돈
 Dex = 916
 BST = 489
 FinalBST = 489
@@ -7769,6 +8685,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [TAROUNTULA]
+Name = 타랜툴라
 Dex = 917
 BST = 210
 FinalBST = 404
@@ -7778,6 +8695,7 @@ Basic = true
 Evolution = SPIDOPS,15
 #-------------------------------
 [SPIDOPS]
+Name = 트래피더
 Dex = 918
 BST = 404
 FinalBST = 404
@@ -7786,6 +8704,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [NYMBLE]
+Name = 콩알뚜기
 Dex = 919
 BST = 210
 FinalBST = 450
@@ -7795,6 +8714,7 @@ Basic = true
 Evolution = LOKIX,24
 #-------------------------------
 [LOKIX]
+Name = 엑스레그
 Dex = 920
 BST = 450
 FinalBST = 450
@@ -7803,6 +8723,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [PAWMI]
+Name = 빠모
 Dex = 921
 BST = 240
 FinalBST = 490
@@ -7812,6 +8733,7 @@ Basic = true
 Evolution = PAWMO,18
 #-------------------------------
 [PAWMO]
+Name = 빠모트
 Dex = 922
 BST = 350
 FinalBST = 490
@@ -7821,6 +8743,7 @@ Basic = false
 Evolution = PAWMOT,29
 #-------------------------------
 [PAWMOT]
+Name = 빠르모트
 Dex = 923
 BST = 490
 FinalBST = 490
@@ -7829,6 +8752,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [TANDEMAUS]
+Name = 두리쥐
 Dex = 924
 BST = 305
 FinalBST = 470
@@ -7838,6 +8762,7 @@ Basic = true
 Evolution = MAUSHOLD,25
 #-------------------------------
 [MAUSHOLD]
+Name = 파밀리쥐
 Dex = 925
 BST = 470
 FinalBST = 470
@@ -7846,6 +8771,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [FIDOUGH]
+Name = 쫀도기
 Dex = 926
 BST = 312
 FinalBST = 477
@@ -7855,6 +8781,7 @@ Basic = true
 Evolution = DACHSBUN,26
 #-------------------------------
 [DACHSBUN]
+Name = 바우첼
 Dex = 927
 BST = 477
 FinalBST = 477
@@ -7863,6 +8790,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [SMOLIV]
+Name = 미니브
 Dex = 928
 BST = 260
 FinalBST = 510
@@ -7872,6 +8800,7 @@ Basic = true
 Evolution = DOLLIV,25
 #-------------------------------
 [DOLLIV]
+Name = 올리뇨
 Dex = 929
 BST = 354
 FinalBST = 510
@@ -7881,6 +8810,7 @@ Basic = false
 Evolution = ARBOLIVA,35
 #-------------------------------
 [ARBOLIVA]
+Name = 올리르바
 Dex = 930
 BST = 510
 FinalBST = 510
@@ -7889,6 +8819,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [SQUAWKABILLY]
+Name = 시비꼬
 Dex = 931
 BST = 417
 FinalBST = 417
@@ -7897,6 +8828,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [NACLI]
+Name = 베베솔트
 Dex = 932
 BST = 280
 FinalBST = 500
@@ -7906,6 +8838,7 @@ Basic = true
 Evolution = NACLSTACK,24
 #-------------------------------
 [NACLSTACK]
+Name = 스태솔트
 Dex = 933
 BST = 355
 FinalBST = 500
@@ -7915,6 +8848,7 @@ Basic = false
 Evolution = GARGANACL,38
 #-------------------------------
 [GARGANACL]
+Name = 콜로솔트
 Dex = 934
 BST = 500
 FinalBST = 500
@@ -7923,6 +8857,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [CHARCADET]
+Name = 카르본
 Dex = 935
 BST = 255
 FinalBST = 525
@@ -7933,6 +8868,7 @@ Evolution = ARMAROUGE,21
 Evolution = CERULEDGE,21
 #-------------------------------
 [ARMAROUGE]
+Name = 카디나르마
 Dex = 936
 BST = 525
 FinalBST = 525
@@ -7941,6 +8877,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [CERULEDGE]
+Name = 파라블레이즈
 Dex = 937
 BST = 525
 FinalBST = 525
@@ -7949,6 +8886,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [TADBULB]
+Name = 빈나두
 Dex = 938
 BST = 272
 FinalBST = 495
@@ -7958,6 +8896,7 @@ Basic = true
 Evolution = BELLIBOLT,23
 #-------------------------------
 [BELLIBOLT]
+Name = 찌리배리
 Dex = 939
 BST = 495
 FinalBST = 495
@@ -7966,6 +8905,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [WATTREL]
+Name = 찌리비
 Dex = 940
 BST = 280
 FinalBST = 490
@@ -7975,6 +8915,7 @@ Basic = true
 Evolution = KILOWATTREL,25
 #-------------------------------
 [KILOWATTREL]
+Name = 찌리비크
 Dex = 941
 BST = 490
 FinalBST = 490
@@ -7983,6 +8924,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [MASCHIFF]
+Name = 오라티프
 Dex = 942
 BST = 340
 FinalBST = 505
@@ -7992,6 +8934,7 @@ Basic = true
 Evolution = MABOSSTIFF,30
 #-------------------------------
 [MABOSSTIFF]
+Name = 마피티프
 Dex = 943
 BST = 505
 FinalBST = 505
@@ -8000,6 +8943,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [SHROODLE]
+Name = 땃쭈르
 Dex = 944
 BST = 290
 FinalBST = 485
@@ -8009,6 +8953,7 @@ Basic = true
 Evolution = GRAFAIAI,28
 #-------------------------------
 [GRAFAIAI]
+Name = 태깅구르
 Dex = 945
 BST = 485
 FinalBST = 485
@@ -8017,6 +8962,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [BRAMBLIN]
+Name = 그푸리
 Dex = 946
 BST = 275
 FinalBST = 480
@@ -8026,6 +8972,7 @@ Basic = true
 Evolution = BRAMBLEGHAST,23
 #-------------------------------
 [BRAMBLEGHAST]
+Name = 공푸리
 Dex = 947
 BST = 480
 FinalBST = 480
@@ -8034,6 +8981,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [TOEDSCOOL]
+Name = 들눈해
 Dex = 948
 BST = 335
 FinalBST = 515
@@ -8043,6 +8991,7 @@ Basic = true
 Evolution = TOEDSCRUEL,30
 #-------------------------------
 [TOEDSCRUEL]
+Name = 육파리
 Dex = 949
 BST = 515
 FinalBST = 515
@@ -8051,6 +9000,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [KLAWF]
+Name = 절벼게
 Dex = 950
 BST = 450
 FinalBST = 450
@@ -8059,6 +9009,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [CAPSAKID]
+Name = 캡싸이
 Dex = 951
 BST = 304
 FinalBST = 486
@@ -8068,6 +9019,7 @@ Basic = true
 Evolution = SCOVILLAIN,25
 #-------------------------------
 [SCOVILLAIN]
+Name = 스코빌런
 Dex = 952
 BST = 486
 FinalBST = 486
@@ -8076,6 +9028,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [RELLOR]
+Name = 구르데
 Dex = 953
 BST = 270
 FinalBST = 470
@@ -8085,6 +9038,7 @@ Basic = true
 Evolution = RABSCA,23
 #-------------------------------
 [RABSCA]
+Name = 베라카스
 Dex = 954
 BST = 470
 FinalBST = 470
@@ -8093,6 +9047,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [FLITTLE]
+Name = 하느라기
 Dex = 955
 BST = 255
 FinalBST = 481
@@ -8102,6 +9057,7 @@ Basic = true
 Evolution = ESPATHRA,35
 #-------------------------------
 [ESPATHRA]
+Name = 클레스퍼트라
 Dex = 956
 BST = 481
 FinalBST = 481
@@ -8110,6 +9066,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [TINKATINK]
+Name = 어리짱
 Dex = 957
 BST = 297
 FinalBST = 506
@@ -8119,6 +9076,7 @@ Basic = true
 Evolution = TINKATUFF,24
 #-------------------------------
 [TINKATUFF]
+Name = 벼리짱
 Dex = 958
 BST = 380
 FinalBST = 506
@@ -8128,6 +9086,7 @@ Basic = false
 Evolution = TINKATON,38
 #-------------------------------
 [TINKATON]
+Name = 두드리짱
 Dex = 959
 BST = 506
 FinalBST = 506
@@ -8136,6 +9095,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [WIGLETT]
+Name = 바다그다
 Dex = 960
 BST = 245
 FinalBST = 425
@@ -8145,6 +9105,7 @@ Basic = true
 Evolution = WUGTRIO,26
 #-------------------------------
 [WUGTRIO]
+Name = 바닥트리오
 Dex = 961
 BST = 425
 FinalBST = 425
@@ -8153,6 +9114,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [BOMBIRDIER]
+Name = 떨구새
 Dex = 962
 BST = 485
 FinalBST = 485
@@ -8161,6 +9123,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [FINIZEN]
+Name = 맨돌핀
 Dex = 963
 BST = 315
 FinalBST = 457
@@ -8170,6 +9133,7 @@ Basic = true
 Evolution = PALAFIN,38
 #-------------------------------
 [PALAFIN]
+Name = 돌핀맨
 Dex = 964
 BST = 457
 FinalBST = 457
@@ -8178,6 +9142,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [VAROOM]
+Name = 부르롱
 Dex = 965
 BST = 300
 FinalBST = 500
@@ -8187,6 +9152,7 @@ Basic = true
 Evolution = REVAVROOM,40
 #-------------------------------
 [REVAVROOM]
+Name = 부르르룸
 Dex = 966
 BST = 500
 FinalBST = 500
@@ -8195,6 +9161,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [CYCLIZAR]
+Name = 모토마
 Dex = 967
 BST = 501
 FinalBST = 501
@@ -8203,6 +9170,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [ORTHWORM]
+Name = 꿈트렁
 Dex = 968
 BST = 480
 FinalBST = 480
@@ -8211,6 +9179,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [GLIMMET]
+Name = 초롱순
 Dex = 969
 BST = 350
 FinalBST = 525
@@ -8220,6 +9189,7 @@ Basic = true
 Evolution = GLIMMORA,35
 #-------------------------------
 [GLIMMORA]
+Name = 킬라플로르
 Dex = 970
 BST = 525
 FinalBST = 525
@@ -8228,6 +9198,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [GREAVARD]
+Name = 망망이
 Dex = 971
 BST = 290
 FinalBST = 488
@@ -8237,6 +9208,7 @@ Basic = true
 Evolution = HOUNDSTONE,30
 #-------------------------------
 [HOUNDSTONE]
+Name = 묘두기
 Dex = 972
 BST = 488
 FinalBST = 488
@@ -8245,6 +9217,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [FLAMIGO]
+Name = 꼬이밍고
 Dex = 973
 BST = 500
 FinalBST = 500
@@ -8253,6 +9226,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [CETODDLE]
+Name = 터벅고래
 Dex = 974
 BST = 334
 FinalBST = 521
@@ -8262,6 +9236,7 @@ Basic = true
 Evolution = CETITAN,28
 #-------------------------------
 [CETITAN]
+Name = 우락고래
 Dex = 975
 BST = 521
 FinalBST = 521
@@ -8270,6 +9245,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [VELUZA]
+Name = 가비루사
 Dex = 976
 BST = 478
 FinalBST = 478
@@ -8278,6 +9254,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [DONDOZO]
+Name = 어써러셔
 Dex = 977
 BST = 530
 FinalBST = 530
@@ -8286,6 +9263,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [TATSUGIRI]
+Name = 싸리용
 Dex = 978
 BST = 475
 FinalBST = 475
@@ -8294,6 +9272,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [ANNIHILAPE]
+Name = 저승갓숭
 Dex = 979
 BST = 535
 FinalBST = 535
@@ -8302,6 +9281,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [CLODSIRE]
+Name = 토오
 Dex = 980
 BST = 430
 FinalBST = 430
@@ -8310,6 +9290,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [FARIGIRAF]
+Name = 키키링
 Dex = 981
 BST = 520
 FinalBST = 520
@@ -8318,6 +9299,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [DUDUNSPARCE]
+Name = 노고고치
 Dex = 982
 BST = 520
 FinalBST = 520
@@ -8326,6 +9308,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [KINGAMBIT]
+Name = 대도각참
 Dex = 983
 BST = 550
 FinalBST = 550
@@ -8334,6 +9317,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [GREATTUSK]
+Name = 위대한엄니
 Dex = 984
 BST = 570
 FinalBST = 570
@@ -8342,6 +9326,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [SCREAMTAIL]
+Name = 우렁찬꼬리
 Dex = 985
 BST = 570
 FinalBST = 570
@@ -8350,6 +9335,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [BRUTEBONNET]
+Name = 사나운버섯
 Dex = 986
 BST = 570
 FinalBST = 570
@@ -8358,6 +9344,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [FLUTTERMANE]
+Name = 날개치는머리
 Dex = 987
 BST = 570
 FinalBST = 570
@@ -8366,6 +9353,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [SLITHERWING]
+Name = 땅을기는날개
 Dex = 988
 BST = 570
 FinalBST = 570
@@ -8374,6 +9362,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [SANDYSHOCKS]
+Name = 모래털가죽
 Dex = 989
 BST = 570
 FinalBST = 570
@@ -8382,6 +9371,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONTREADS]
+Name = 무쇠바퀴
 Dex = 990
 BST = 570
 FinalBST = 570
@@ -8390,6 +9380,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONBUNDLE]
+Name = 무쇠보따리
 Dex = 991
 BST = 570
 FinalBST = 570
@@ -8398,6 +9389,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONHANDS]
+Name = 무쇠손
 Dex = 992
 BST = 570
 FinalBST = 570
@@ -8406,6 +9398,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONJUGULIS]
+Name = 무쇠머리
 Dex = 993
 BST = 570
 FinalBST = 570
@@ -8414,6 +9407,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONMOTH]
+Name = 무쇠독나방
 Dex = 994
 BST = 570
 FinalBST = 570
@@ -8422,6 +9416,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONTHORNS]
+Name = 무쇠가시
 Dex = 995
 BST = 570
 FinalBST = 570
@@ -8430,6 +9425,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [FRIGIBAX]
+Name = 드니차
 Dex = 996
 BST = 320
 FinalBST = 600
@@ -8439,6 +9435,7 @@ Basic = true
 Evolution = ARCTIBAX,35
 #-------------------------------
 [ARCTIBAX]
+Name = 드니꽁
 Dex = 997
 BST = 423
 FinalBST = 600
@@ -8448,6 +9445,7 @@ Basic = false
 Evolution = BAXCALIBUR,54
 #-------------------------------
 [BAXCALIBUR]
+Name = 드닐레이브
 Dex = 998
 BST = 600
 FinalBST = 600
@@ -8456,6 +9454,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [GIMMIGHOUL]
+Name = 모으령
 Dex = 999
 BST = 300
 FinalBST = 550
@@ -8465,6 +9464,7 @@ Basic = true
 Evolution = GHOLDENGO,25
 #-------------------------------
 [GHOLDENGO]
+Name = 타부자고
 Dex = 1000
 BST = 550
 FinalBST = 550
@@ -8473,6 +9473,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [WOCHIEN]
+Name = 총지엔
 Dex = 1001
 BST = 570
 FinalBST = 570
@@ -8481,6 +9482,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [CHIENPAO]
+Name = 파오젠
 Dex = 1002
 BST = 570
 FinalBST = 570
@@ -8489,6 +9491,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [TINGLU]
+Name = 딩루
 Dex = 1003
 BST = 570
 FinalBST = 570
@@ -8497,6 +9500,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [CHIYU]
+Name = 위유이
 Dex = 1004
 BST = 570
 FinalBST = 570
@@ -8505,6 +9509,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [ROARINGMOON]
+Name = 고동치는달
 Dex = 1005
 BST = 590
 FinalBST = 590
@@ -8513,6 +9518,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONVALIANT]
+Name = 무쇠무인
 Dex = 1006
 BST = 590
 FinalBST = 590
@@ -8521,6 +9527,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [KORAIDON]
+Name = 코라이돈
 Dex = 1007
 BST = 670
 FinalBST = 670
@@ -8529,6 +9536,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [MIRAIDON]
+Name = 미라이돈
 Dex = 1008
 BST = 670
 FinalBST = 670
@@ -8537,6 +9545,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [WALKINGWAKE]
+Name = 굽이치는물결
 Dex = 1009
 BST = 590
 FinalBST = 590
@@ -8545,6 +9554,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONLEAVES]
+Name = 무쇠잎새
 Dex = 1010
 BST = 590
 FinalBST = 590
@@ -8553,6 +9563,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [DIPPLIN]
+Name = 과미르
 Dex = 1011
 BST = 485
 FinalBST = 540
@@ -8562,6 +9573,7 @@ Basic = false
 Evolution = HYDRAPPLE,40
 #-------------------------------
 [POLTCHAGEIST]
+Name = 차데스
 Dex = 1012
 BST = 308
 FinalBST = 508
@@ -8571,6 +9583,7 @@ Basic = true
 Evolution = SINISTCHA,26
 #-------------------------------
 [SINISTCHA]
+Name = 그우린차
 Dex = 1013
 BST = 508
 FinalBST = 508
@@ -8579,6 +9592,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [OKIDOGI]
+Name = 조타구
 Dex = 1014
 BST = 555
 FinalBST = 555
@@ -8587,6 +9601,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [MUNKIDORI]
+Name = 이야후
 Dex = 1015
 BST = 555
 FinalBST = 555
@@ -8595,6 +9610,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [FEZANDIPITI]
+Name = 기로치
 Dex = 1016
 BST = 555
 FinalBST = 555
@@ -8603,6 +9619,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [OGERPON]
+Name = 오거폰
 Dex = 1017
 BST = 550
 FinalBST = 550
@@ -8611,6 +9628,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [ARCHALUDON]
+Name = 브리두라스
 Dex = 1018
 BST = 600
 FinalBST = 600
@@ -8619,6 +9637,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [HYDRAPPLE]
+Name = 과미드라
 Dex = 1019
 BST = 540
 FinalBST = 540
@@ -8627,6 +9646,7 @@ Region = PALDEA
 Basic = false
 #-------------------------------
 [GOUGINGFIRE]
+Name = 꿰뚫는화염
 Dex = 1020
 BST = 590
 FinalBST = 590
@@ -8635,6 +9655,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [RAGINGBOLT]
+Name = 날뛰는우레
 Dex = 1021
 BST = 590
 FinalBST = 590
@@ -8643,6 +9664,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONBOULDER]
+Name = 무쇠암석
 Dex = 1022
 BST = 590
 FinalBST = 590
@@ -8651,6 +9673,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [IRONCROWN]
+Name = 무쇠감투
 Dex = 1023
 BST = 590
 FinalBST = 590
@@ -8659,6 +9682,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [TERAPAGOS]
+Name = 테라파고스
 Dex = 1024
 BST = 450
 FinalBST = 450
@@ -8667,6 +9691,7 @@ Region = PALDEA
 Basic = true
 #-------------------------------
 [PECHARUNT]
+Name = 복숭악동
 Dex = 1025
 BST = 600
 FinalBST = 600

@@ -88,13 +88,14 @@ module GameData
   end
 
   class FmSpecies
-    attr_reader :id, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :pbs_file_suffix
+    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :pbs_file_suffix
 
     DATA = {}
     DATA_FILENAME = "fm_species.dat"
     PBS_BASE_FILENAME = "fm_species"
     SCHEMA = {
       "SectionName" => [:id,         "m"],
+      "Name"        => [:real_name,  "s"],   # Korean (Poké Manager)
       "Dex"         => [:dex,        "u"],
       "BST"         => [:bst,        "u"],
       "FinalBST"    => [:final_bst,  "u"],
@@ -109,6 +110,7 @@ module GameData
 
     def initialize(hash)
       @id         = hash[:id]
+      @real_name  = hash[:real_name] || ""
       @dex        = hash[:dex]
       @bst        = hash[:bst]
       @final_bst  = hash[:final_bst]

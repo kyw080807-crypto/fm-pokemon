@@ -45,6 +45,7 @@ SCHEMAS = {
     "MinFame" => { required: true, check: INT }
   },
   "fm_species" => {
+    "Name"      => { required: true },
     "Dex"       => { required: true, check: INT },
     "BST"       => { required: true, check: INT },
     "FinalBST"  => { required: true, check: INT },

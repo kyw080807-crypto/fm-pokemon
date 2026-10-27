@@ -51,6 +51,11 @@ ruby tools/split_design_doc.rb <내보낸 JSON 파일> --write
   species·sponsors.txt`를 엔진 컴파일러로 GameData(`.dat`)로 만든다(180·100·1025·33). `[020] FM Bridge`가 새 게임 때 그
   데이터로 `FM::World`를 만들어 세이브(`SaveData :fm_state`)에 넣는다. 엔진 안 스모크 `world_from_gamedata`: 세계 생성
   0.01초, 60일 진행 0.22초. 세이브→불러오기 뒤에도 같은 상태.
+- **첫 게임 화면(2026-10-27)**: 일시정지(Esc) 메뉴 맨 위 "FM"(`[040] FM UI`, 이벤트에서는 `FM::UI.main`).
+  날짜·요일·시즌 단계·다음 일정을 보여 주고 내 클럽(잔고·명성·전력·건물·공사·스폰서·스쿼드) / 리그 순위 / 대회 /
+  1주 진행(내 경기 결과·완공·영입·우승 소식) / 클럽 선택. 화면 데이터는 `FM::View`(Core, 테스트 있음), 글자는 UI가
+  `_INTL`로 만든다. 포켓몬 이름은 `fm_species.txt`의 한국어 이름(원본 DEX). 스모크가 화면 글자를 `logs/fm_menu.png`로 그린다.
+  아직 키 입력으로 직접 눌러 본 확인은 없다 — 게임에서 F12로 열어 볼 것.
 - **단계 0 — 시작 세계 데이터: 완료.** `PBS/fm_cities.txt`(100도시), `PBS/fm_clubs.txt`(180클럽, 포켓몬 729마리)를
   `ruby tools/pokemanager/build_pbs.rb`로 생성(08 배치표 + 09 시작 상태 + 원본 TRAINERS + 고정 로스터).
   형태 리그 9·밀란 10·런던 30·단독 51, 크기 1/2/3/5 = 29/43/19/9로 설계 수치와 일치. 검사: `ruby tools/validate_pbs.rb`.

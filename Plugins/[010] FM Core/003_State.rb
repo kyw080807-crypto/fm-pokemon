@@ -14,6 +14,7 @@ module FM
     START_BALANCE  = 10_000
 
     attr_reader :calendar, :finance, :world
+    attr_accessor :player_club   # club id the player manages; nil until chosen
 
     def self.new_game(balance: START_BALANCE, world: nil)
       new(calendar: Calendar.new, finance: Finance.new(balance: balance), world: world)
@@ -44,13 +45,16 @@ module FM
     def to_h
       h = { schema_version: SCHEMA_VERSION, calendar: @calendar.to_h, finance: @finance.to_h }
       h[:world] = @world if @world
+      h[:player_club] = @player_club if @player_club
       h
     end
 
     def self.from_h(h)
       version = h[:schema_version] || 0
       raise ArgumentError, "unknown FM state schema #{version}" if version > SCHEMA_VERSION
-      new(calendar: Calendar.from_h(h[:calendar]), finance: Finance.from_h(h[:finance]), world: h[:world])
+      s = new(calendar: Calendar.from_h(h[:calendar]), finance: Finance.from_h(h[:finance]), world: h[:world])
+      s.player_club = h[:player_club]
+      s
     end
   end
 end
