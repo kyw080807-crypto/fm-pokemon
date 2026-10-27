@@ -7,7 +7,9 @@ paths:
 # 플러그인 Ruby 규칙
 
 - 모든 FM 플러그인 폴더에 `meta.txt` 필수(없으면 폴더 전체가 무시됨). 의존성은 `Requires`로 명시하고,
-  폴더명 접두사(`[010]`)는 보조 수단으로만 쓴다.
+  폴더명 접두사(`[010]`)는 보조 수단으로만 쓴다. 로드 순서는 폴더명이 아니라 의존성으로만 보장된다.
+- `Optional`/`Exact`는 **버전이 없으면 조용히 무시된다**: `Optional = FM Bridge,0.1.0` 처럼 쓴다
+  (`Data/Scripts/001_Technical/005_PluginManager.rb:435-441`). `Requires`는 버전 없이도 동작.
 - 엔진 메서드 오버라이드는 재정의가 아니라 `alias` 감싸기:
   ```ruby
   class Battle

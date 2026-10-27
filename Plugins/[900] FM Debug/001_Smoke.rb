@@ -63,6 +63,27 @@ FM::Smoke.register("font_render") do
   bitmap.dispose
 end
 
+# Runs the registered :fm_state SaveData value through save -> Marshal ->
+# load the way a real save file does, and checks a new game starts clean.
+FM::Smoke.register("save_round_trip") do
+  value = SaveData.instance_variable_get(:@values).find { |v| v.id == :fm_state }
+  unless value
+    ids = SaveData.instance_variable_get(:@values).map(&:id)
+    raise "SaveData :fm_state is not registered (have #{ids.inspect}, FM::Bridge #{defined?(FM::Bridge) ? 'loaded' : 'missing'})"
+  end
+  value.load_new_game_value
+  raise "new game balance wrong" unless FM.balance == FM::State::START_BALANCE
+  FM.state.finance.add_recurring(:smoke_sponsor, amount: 500, category: :sponsor, every: :week)
+  FM.advance_days(14)
+  before = FM.state.to_h
+  saved = Marshal.load(Marshal.dump(value.save))
+  value.load_new_game_value
+  raise "new game did not reset state" if FM.state.to_h == before
+  value.load(saved)
+  raise "state changed across save/load" unless FM.state.to_h == before
+  FM::Log.info("smoke: after load #{FM.date_text}, balance #{FM.balance}")
+end
+
 if FM::Smoke.requested?
   FM::Smoke.run_all
   # PluginManager rescues SystemExit from `exit` and reports it as a plugin

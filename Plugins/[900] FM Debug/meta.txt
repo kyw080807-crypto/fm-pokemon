@@ -2,5 +2,6 @@ Name       = FM Debug
 Version    = 0.1.0
 Essentials = 21.1
 Requires   = FM Logger
-Optional   = FM Font
+Optional   = FM Font,0.1.0
+Optional   = FM Bridge,0.1.0
 Credits    = FM Pokémon team

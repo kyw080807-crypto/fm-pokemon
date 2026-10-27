@@ -9,6 +9,8 @@
 - 실행: `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_debug.ps1`
   (PluginScripts.rxdata 삭제 → `Game.exe debug` → 종료 후 `logs/fm_runtime.log` 출력)
 - PBS까지 재컴파일: `tools/run_debug.ps1 -RecompilePbs`
+- 스모크(게임 화면 없이 엔진 안 검증): `tools/run_debug.ps1 -Smoke` → `FM::Smoke.register`된 검사 실행 후
+  자동 종료. 결과는 `logs/fm_runtime.log`, 폰트 렌더링은 `logs/font_test.png`(이미지로 열어 확인)
 
 ## 절대 금지 (훅으로도 강제됨)
 - `*.rxdata` / `*.dat` 직접 Edit/Write 금지 (Ruby Marshal 바이너리). 맵·이벤트는 사람이 RMXP로 편집.
@@ -20,8 +22,10 @@
 
 ## 구조 지도
 - `Plugins/[000] FM Logger/` — `logs/fm_runtime.log` 기록, 예외 백트레이스
-- `Plugins/[010] FM Core/` — 순수 Ruby: 캘린더·재정·리그·시뮬. **RGSS/엔진 비의존**
-- `Plugins/[020] FM Bridge/` — 엔진 연결(세이브, `$game_variables`, 이벤트 API). 엔진 접근은 여기서만
+- `Plugins/[005] FM Font/` — 한글 폰트(Galmuri11/9)로 MessageConfig 교체
+- `Plugins/[010] FM Core/` — 순수 Ruby: Calendar, Finance, State(세이브 단위). **RGSS/엔진 비의존**
+- `Plugins/[020] FM Bridge/` — 엔진 연결. `SaveData :fm_state`(= `FM::State#to_h`, 순수 데이터 Hash)와
+  이벤트용 API(`FM.advance_days`, `FM.balance`, `FM.date_text`). 엔진 접근은 여기서만
 - `Plugins/[030] FM Data/` — 커스텀 GameData + 컴파일러 확장 (`PBS/fm_*.txt`)
 - `Plugins/[040] FM UI/` — 메뉴 Scene
 - `Plugins/[900] FM Debug/` — 스모크 테스트 러너(디버그 전용)
