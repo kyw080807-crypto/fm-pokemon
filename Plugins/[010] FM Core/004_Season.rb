@@ -28,6 +28,22 @@ module FM
       end
     end
 
+    # Season weeks follow the design doc's 52-week table: weeks 1-4 are
+    # pre-season and league week k is season week k + 4.
+    def season_week_sunday(calendar, year, week)
+      league_start = league_dates(calendar, year).first
+      calendar.date_after(league_start, 7 * (week - 5))
+    end
+
+    # Post-league tournaments, one round per Sunday (design table):
+    # weeks 38-39 travel, 40-43 PET·PENT, 44-48 PWT Swiss, 49-52 PWT knockout.
+    def tournament_dates(calendar, year)
+      week = ->(w) { season_week_sunday(calendar, year, w) }
+      { pet:          (40..43).map(&week),
+        pwt_swiss:    (44..48).map(&week),
+        pwt_knockout: (49..52).map(&week) }
+    end
+
     def preseason?(date)
       ([date[1], date[2]] <=> PRESEASON_LAST_DAY) <= 0
     end

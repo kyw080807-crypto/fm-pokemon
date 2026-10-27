@@ -8,6 +8,8 @@
 ## 명령
 - 단위 테스트: `ruby tools/test/run_all.rb` (시스템 Ruby 3.1 + minitest, 엔진 불필요)
 - PBS 검증: `ruby tools/validate_pbs.rb`
+- 시작 세계 PBS 생성: `ruby tools/pokemanager/build_pbs.rb` (`PBS/fm_cities.txt`·`fm_clubs.txt`는 생성물 — 직접 고치지 말 것)
+- 헤드리스 시즌: `ruby tools/sim/season.rb [시즌 수] [시드]`
 - 실행: `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_debug.ps1`
   (PluginScripts.rxdata 삭제 → `Game.exe debug` → 종료 후 `logs/fm_runtime.log` 출력)
 - PBS까지 재컴파일: `tools/run_debug.ps1 -RecompilePbs`
