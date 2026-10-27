@@ -57,3 +57,50 @@ class TestVote < Minitest::Test
     assert_equal :no_money, FM::Vote.expansion_reason(v, share: 300_000)
   end
 end
+
+class TestAwayFans < Minitest::Test
+  def city(id, transport: nil, hotel: nil)
+    b = [[:RESIDENTIAL, 1]]
+    b << [:TRANSPORT, transport] if transport
+    b << [:HOTEL, hotel] if hotel
+    FM::City.new(id: id, name: id, region: "KANTO", form: "SOLO", size: 2, buildings: b)
+  end
+
+  def fans(from, to, fame: 60, cap: 20_000)
+    FM::Civic.away_fans(away_fame: fame, from: from, to: to, capacity: cap)
+  end
+
+  # Design 05 example table: away fame 60 = 1,500 fans at L = 1.
+  def test_transport_factor_uses_the_lower_city
+    big_hotel = city("H", transport: 3, hotel: 5)
+    assert_in_delta 600, fans(city("A"), big_hotel)[:fans], 1            # Lv0: 0.4
+    assert_in_delta 1200, fans(city("B", transport: 2), big_hotel)[:fans], 1
+    assert_in_delta 1500, fans(city("C", transport: 3), big_hotel)[:fans], 1
+    assert_in_delta 1500, fans(city("D", transport: 4), big_hotel)[:fans], 1, "host Lv3 caps the factor"
+  end
+
+  def test_same_city_derby_bonus
+    c = city("X", transport: 5, hotel: 5)
+    assert_in_delta 1500 * 1.4 * 1.3, fans(c, c)[:fans], 1
+  end
+
+  # Design 05: 1,200 from a Lv2 city (2 days, everyone lodges) into an inn
+  # (400 beds) -> 400; hotel Lv2 (1,500) -> all 1,200.
+  def test_hotel_capacity_limits_lodging_fans
+    from = city("F", transport: 2)
+    assert_in_delta 400, fans(from, city("I", transport: 3))[:fans], 1
+    r = fans(from, city("J", transport: 3, hotel: 2))
+    assert_in_delta 1200, r[:fans], 1
+    assert_in_delta 1200, r[:lodging], 1
+  end
+
+  def test_one_day_trip_lodges_sixty_percent
+    r = fans(city("F", transport: 3), city("H", transport: 3, hotel: 5))
+    assert_in_delta 1500 * 0.6, r[:lodging], 1
+  end
+
+  def test_away_section_cap
+    c = city("H", transport: 5, hotel: 5)
+    assert fans(c, c, fame: 300, cap: 2000)[:fans] <= 600
+  end
+end

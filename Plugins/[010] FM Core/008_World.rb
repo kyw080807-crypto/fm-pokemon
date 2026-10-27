@@ -240,8 +240,13 @@ module FM
       ranking = round < 3 ? before.sort_by { |id| -@clubs[id].rating } : before
       results = league.play_round do |home_id, away_id|
         home, away = @clubs[home_id], @clubs[away_id]
+        hc, ac = @cities[home.city], @cities[away.city]
+        fans = hc && ac && Civic.away_fans(away_fame: away.fame, from: ac, to: hc,
+                                           capacity: Economy.capacity(home.stadium))
         gate = Economy.gate(home_fame: home.fame, away_fame: away.fame, wins: home.recent_wins,
-                            stadium: home.stadium, rng: @rng)
+                            stadium: home.stadium, rng: @rng, away: fans && fans[:fans])
+        tourism = fans ? (fans[:lodging] * Civic::LODGE_SPEND).round : 0
+        hc.budget.record(tourism, category: :tourism, date: date) if tourism.positive?
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
         home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
         contribute(home, gate[:revenue])

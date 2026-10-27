@@ -23,7 +23,34 @@ module FM
     # idle and clubs short: 53 of 17,279 meetings passed in a 20-year run.)
     BUDGET_RESERVE_WEEKS = 26
 
+    # Design 05, by transport level 0-5 (0 = no transport building).
+    TRANSPORT_DAYS = [3, 2, 2, 1, 1, 0].freeze
+    FAN_FACTOR     = [0.4, 0.6, 0.8, 1.0, 1.2, 1.4].freeze
+    SAME_CITY_D    = 1.3
+    SAME_REGION_D  = 1.0
+    # Design 05, by hotel level 0-5 (0 = the inn every city has).
+    HOTEL_CAP      = [400, 800, 1500, 2500, 4000, 6000].freeze
+    LODGE_SPEND    = 4      # ₽ per lodging fan per night, to the host city budget
+
     module_function
+
+    # Share of away fans who must stay the night, by one-way trip days.
+    def lodge_share(days) = days >= 2 ? 1.0 : days == 1 ? 0.6 : 0.3
+
+    # Away fans for a league game (design 05 팬 이동과 입장 수입):
+    # fame x 25 x L, L = T (the lower transport of the two cities) x D, at
+    # most the away section; those who must lodge are capped by the host's
+    # hotel. Same region only (league games); D for flights comes with travel.
+    def away_fans(away_fame:, from:, to:, capacity:)
+      same = from.id == to.id
+      t = FAN_FACTOR[[from.transport, to.transport].min]
+      base = Economy.fame_eff(away_fame) * 25 * t * (same ? SAME_CITY_D : SAME_REGION_D)
+      base = [base, capacity * Economy::AWAY_SECTION].min
+      days = same ? 0 : TRANSPORT_DAYS[from.transport]
+      wanting = base * lodge_share(days)
+      lodging = [wanting, HOTEL_CAP[to.hotel]].min
+      { fans: base - wanting + lodging, lodging: lodging }
+    end
 
     def population(size)  = POPULATION.fetch(size - 1)
     def public_plots(size) = PUBLIC_PLOTS.fetch(size - 1)
@@ -53,6 +80,13 @@ module FM
     end
 
     def capital? = @form == "LEAGUE"
+
+    def level(building)
+      @buildings.select { |b, *| b == building }.map { |_, lv, *| lv }.max || 0
+    end
+
+    def transport = level(:TRANSPORT)
+    def hotel = level(:HOTEL)
 
     def weekly_upkeep
       @buildings.sum { |_, lv| Economy.facility_keep(lv) }
