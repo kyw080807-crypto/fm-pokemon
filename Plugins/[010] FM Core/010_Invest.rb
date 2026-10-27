@@ -17,7 +17,7 @@ module FM
 
     def decide(club, date:, calendar:)
       return if club.project
-      spare = club.wallet.balance - club.weekly_cost * RESERVE_WEEKS
+      spare = club.spare
       return if spare <= 0
       choice = stadium_step(club, spare) || building_step(club, spare) || clubhouse_step(club, spare)
       return unless choice

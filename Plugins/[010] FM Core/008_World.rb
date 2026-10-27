@@ -12,9 +12,9 @@
 module FM
   class Club
     attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential,
-                :facilities, :mon_ratings, :rating, :wallet, :form, :city_size, :stadium_shared,
-                :home_fill
-    attr_accessor :fame, :stadium, :clubhouse, :project
+                :facilities, :mon_ratings, :rating, :wallet, :form, :stadium_shared,
+                :home_fill, :traits
+    attr_accessor :fame, :stadium, :clubhouse, :project, :city_size
 
     def initialize(data)
       @id, @name, @region, @city = data.values_at(:id, :name, :region, :city)
@@ -26,6 +26,7 @@ module FM
       @facilities  = (data[:facilities] || {}).dup
       @project   = nil   # { kind:, target:, to:, done: [y, m, d] }
       @home_fill = []    # attendance / capacity, last 5 home games
+      @traits    = Traits.generate(name: @name, role: @role, type: data.fetch(:type, "NORMAL"))
       @mon_ratings = data[:pokemon].map { |m| Rating.mon(m) }
       @rating  = Rating.team(data[:pokemon])
       @fame    = Economy.initial_fame(level: @level, role: @role, canon: @canon)
@@ -51,18 +52,29 @@ module FM
       @mon_ratings.sum { |r| Economy.food(ovr: Economy.ovr(r), fame: @fame) } +
         @facilities.values.sum { |lv| Economy.facility_keep(lv) } + Economy.stadium_keep(@stadium)
     end
+
+    # Money beyond Invest's running-cost reserve.
+    def spare
+      @wallet.balance - weekly_cost * Invest::RESERVE_WEEKS
+    end
   end
 
   class World
-    attr_reader :calendar, :clubs, :leagues
+    attr_reader :calendar, :clubs, :leagues, :cities
 
-    def self.new_game(club_data, seed:)
-      new(club_data.map { |d| Club.new(d) }, seed: seed)
+    def self.new_game(club_data, seed:, cities: [])
+      new(club_data.map { |d| Club.new(d) }, seed: seed, cities: cities.map { |d| City.new(d) })
     end
 
-    def initialize(clubs, seed:)
+    def initialize(clubs, seed:, cities: [])
       @calendar = Calendar.new
       @clubs    = clubs.to_h { |c| [c.id, c] }
+      @cities   = cities.to_h { |c| [c.id, c] }
+      @clubs.each_value do |c|
+        city = @cities[c.city] or next
+        city.club_ids << c.id
+        c.city_size = city.size
+      end
       @rng      = Random.new(seed)
       @league_dates = {}
       start_leagues
@@ -86,8 +98,12 @@ module FM
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
           weekly_economy
+          city_economy
           events.concat(finish_projects)
+          events.concat(finish_city_projects)
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) }
+        when :new_month
+          events.concat(Meeting.monthly(self, date: date))
         end
       end
       round = league_dates.index(@calendar.date)
@@ -129,6 +145,7 @@ module FM
                             stadium: home.stadium, rng: @rng)
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
         home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
+        contribute(home, gate[:revenue])
         r = MatchSim.play(home.rating, away.rating, rng: @rng)
         settle(r, home, away, ranking)
         r.merge(attendance: gate[:attendance])
@@ -169,6 +186,35 @@ module FM
         w.record(-Economy.stadium_keep(c.stadium), category: :std, date: date)
         merch = Economy.merch(c.fame)
         w.record(merch, category: :merch, date: date) if merch.positive?
+      end
+    end
+
+    # Design 04: clubs pay into their city's public budget (공공예산 기여금).
+    def contribute(club, gate_revenue)
+      city = @cities[club.city] or return
+      amount = (gate_revenue * Civic::CONTRIBUTION_RATE).round
+      return unless amount.positive?
+      club.wallet.record(-amount, category: :city, date: date)
+      city.budget.record(amount, category: :contribution, date: date)
+    end
+
+    def city_economy
+      @cities.each_value do |c|
+        c.budget.record(Civic.weekly_tax(c.size), category: :tax, date: date)
+        keep = c.weekly_upkeep
+        c.budget.record(-keep, category: :upkeep, date: date) if keep.positive?
+      end
+    end
+
+    def finish_city_projects
+      @cities.each_value.filter_map do |c|
+        p = c.project
+        next unless p && @calendar.days_until(p[:done]) <= 0
+        c.free_plots += Civic.public_plots(p[:to]) - Civic.public_plots(c.size)
+        c.size = p[:to]
+        c.club_ids.each { |id| @clubs[id].city_size = c.size }
+        c.project = nil
+        { kind: :city_grown, city: c.id, size: c.size, date: date }
       end
     end
 

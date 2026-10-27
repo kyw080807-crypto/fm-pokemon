@@ -24,6 +24,14 @@ def pbs_sections(file)
   sections
 end
 
+def city_data
+  pbs_sections("fm_cities.txt").map do |id, s|
+    { id: id, name: s["Name"].first, region: s["Region"].first, form: s["Form"].first,
+      size: s["Size"].first.to_i, free_plots: s["FreePlots"].first.to_i,
+      buildings: s["Building"].map { |b| k, lv = b.split(","); [k.to_sym, lv.to_i] } }
+  end
+end
+
 def club_data
   bst = {}
   %w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each do |f|
@@ -35,6 +43,7 @@ def club_data
     city = cities.fetch(one.("City"))
     { id: id, name: one.("Name"), region: one.("Region"), city: one.("City"), role: one.("Role"),
       canon: one.("Canon") == "true", level: one.("Level").to_i, potential: one.("Potential").to_i,
+      type: one.("Type"),
       stadium: one.("Stadium").to_i, clubhouse: one.("Clubhouse").to_i,
       city_size: city["Size"].first.to_i,
       # Milan cities share one stadium; capitals use the committee's (design 09).
@@ -50,7 +59,10 @@ end
 years = (ARGV[0] || 1).to_i
 seed = (ARGV[1] || 1).to_i
 data = club_data
-world = FM::World.new_game(data, seed: seed)
+world = FM::World.new_game(data, seed: seed, cities: city_data)
+city_sizes = -> { world.cities.values.map(&:size).tally.sort.to_h }
+start_cities = city_sizes.call
+meetings = []
 start_funds = world.clubs.values.sum { |c| c.wallet.balance }
 growth = lambda do
   cs = world.clubs.values
@@ -67,6 +79,7 @@ time = Benchmark.realtime do
     world.advance_days(365).each do |e|
       ends << e if e[:kind] == :league_end
       results.concat(e[:results]) if e[:kind] == :league_round
+      meetings << e if e[:kind] == :meeting
     end
   end
 end
@@ -98,6 +111,12 @@ puts "funds: start total #{won.(start_funds)} -> end total #{won.(balances.sum)}
      "end median #{won.(balances[90])}, in debt #{balances.count(&:negative?)} of 180"
 puts "start: #{start_growth}"
 puts "end:   #{growth.call}"
+puts "city sizes: start #{start_cities} -> end #{city_sizes.call}"
+reasons = meetings.flat_map { |m| m[:votes].values.map { |v| v[:reason] } }.compact.tally
+puts "expansion meetings: #{meetings.size}, passed #{meetings.count { |m| m[:passed] }}; " \
+     "no-vote reasons #{reasons}; total unrest #{world.cities.values.sum(&:unrest)}"
+budgets = world.cities.values.map { |c| c.budget.balance }.sort
+puts "city budgets: median #{won.(budgets[budgets.size / 2])}, negative #{budgets.count(&:negative?)} of #{budgets.size}"
 by_role = world.clubs.values.group_by { |c| c.role[0] }
 puts "mean end funds by role: " + %w[C E G T].map { |r| "#{r} #{won.(by_role[r].sum { |c| c.wallet.balance } / by_role[r].size)}" }.join(", ")
 
