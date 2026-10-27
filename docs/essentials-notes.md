@@ -23,6 +23,12 @@
 - `Bitmap#to_file(path)` 사용 가능(mkxp-z) → 화면 없이 렌더링 결과를 PNG로 확인 (2026-10-27)
 - 플러그인 안에서 `exit`는 PluginManager가 SystemExit을 잡아 "Error in Plugin"으로 보고함 → `exit!(0)` 사용 (2026-10-27)
 - 플러그인 meta.txt: `Optional`/`Exact`는 버전이 없으면 무시됨 — `005_PluginManager.rb:435-441` (2026-10-27)
+- 시작 순서: `PluginManager.runPlugins` → `Compiler.main` → `Game.initialize` → `Game.set_up_system` → `pbCallTitle`
+  — `Data/Scripts/999_Main/999_Main.rb:25-35`. **플러그인 로드 시점에는 GameData가 비어 있다**(Species 등 조회 불가).
+  데이터가 필요한 코드는 `pbCallTitle` 등 그 뒤로 미룬다(FM Debug 스모크가 그렇게 함) (2026-10-27)
+- Generation 9 Pack 3.3.8 (Caruban): `Requires = v21.1 Hotfixes,1.0.9`. 새 PBS는 `*_Gen_9_Pack.txt` 6개로 자동 추가,
+  기본 PBS 5개(abilities/items/moves/pokemon/pokemon_forms) + pokemon_metrics는 팩의 바닐라 갱신본으로 덮어씀.
+  `Graphics/Pokemon`은 팩의 1~9세대 리사이즈 스프라이트로 교체. 설치 후 전체 컴파일·부팅·스모크 통과 (2026-10-27)
 - SaveData: `SaveData.register(:id) { ensure_class; save_value {}; load_value {|v|}; new_game_value {} }`.
   저장 해시가 키를 갖고 있지 않으면(옛 세이브) new_game_value로 채움 — `002_SaveData_Value.rb:195,220-229` (2026-10-27)
 - 폰트 상수: `FONT_NAME`/`FONT_SIZE`, `SMALL_FONT_NAME`/`SMALL_FONT_SIZE`, `NARROW_FONT_NAME`/`NARROW_FONT_SIZE`

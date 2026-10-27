@@ -1,8 +1,8 @@
 #===============================================================================
 # FM Debug: smoke checks for Claude Code, which cannot see the game window.
 # tools/run_debug.ps1 -Smoke writes logs/smoke.flag; when it exists in debug
-# mode, every registered check runs at plugin load, results go to
-# logs/fm_runtime.log, and the game exits.
+# mode, every registered check runs once data is loaded (just before the
+# title screen), results go to logs/fm_runtime.log, and the game exits.
 #===============================================================================
 module FM
   module Smoke
@@ -84,9 +84,33 @@ FM::Smoke.register("save_round_trip") do
   FM::Log.info("smoke: after load #{FM.date_text}, balance #{FM.balance}")
 end
 
-if FM::Smoke.requested?
-  FM::Smoke.run_all
-  # PluginManager rescues SystemExit from `exit` and reports it as a plugin
-  # error, so leave immediately instead.
-  exit!(0)
+# Gen 9+ species used by Poké Manager rosters must exist in compiled data
+# (Generation 9 Pack) and have front sprites. List from:
+#   ruby tools/pokemanager/species_ids.rb --gen9-ids
+FM::Smoke.register("roster_gen9_species") do
+  ids = %i[OVERQWIL FLORAGATO MEOWSCARADA QUAQUAVAL OINKOLOGNE NYMBLE PAWMOT FIDOUGH DACHSBUN
+           SMOLIV SQUAWKABILLY GARGANACL TADBULB BELLIBOLT WATTREL MABOSSTIFF KLAWF SCOVILLAIN
+           RELLOR FLITTLE ESPATHRA TINKATON WUGTRIO VAROOM ORTHWORM GLIMMORA GREAVARD HOUNDSTONE
+           CETITAN VELUZA CLODSIRE FARIGIRAF DUDUNSPARCE KINGAMBIT BAXCALIBUR OGERPON]
+  missing = ids.reject { |id| GameData::Species.exists?(id) }
+  raise "species not compiled: #{missing.inspect}" unless missing.empty?
+  no_sprite = ids.reject { |id| pbResolveBitmap("Graphics/Pokemon/Front/#{id}") }
+  raise "no front sprite: #{no_sprite.inspect}" unless no_sprite.empty?
+  count = 0
+  GameData::Species.each_species { count += 1 }
+  FM::Log.info("smoke: #{count} species compiled, #{ids.size} roster Gen 9+ species OK")
+end
+
+# Run just before the title screen: by then Compiler.main has compiled and
+# Game.set_up_system has loaded GameData (Data/Scripts/999_Main/999_Main.rb).
+# Running at plugin load would see empty GameData.
+alias __fm_pbCallTitle pbCallTitle
+def pbCallTitle
+  if FM::Smoke.requested?
+    FM::Smoke.run_all
+    # Exit straight away: `exit` would be caught by the engine's error
+    # handling and reported as a crash.
+    exit!(0)
+  end
+  __fm_pbCallTitle
 end
