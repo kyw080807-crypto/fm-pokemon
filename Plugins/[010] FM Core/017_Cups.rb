@@ -91,11 +91,16 @@ module FM
       return [] if pwt[:players].size < 16   # small test worlds: no PWT
       pwt[:swiss] ||= Tournament::Swiss.new(pwt[:players], rng: rng)
       sw = pwt[:swiss]
+      return [] if sw.done?
       sw.play_round(&game(world, rng))
       events = [{ kind: :cup_round, cup: :pwt, round: :"swiss#{i + 1}", date: world.calendar.date }]
-      if sw.round == Tournament::SWISS_ROUNDS
+      if sw.done?
         q = sw.qualifiers(16)
-        (sw.players - q).each { |id| hist(world, id).merge!(pwt: :swiss, pwt_wins: sw.wins[id]) }
+        (sw.players - q).each do |id|
+          hist(world, id).merge!(pwt: :swiss, pwt_wins: sw.wins[id])
+          next if sw.losses[id] >= Tournament::SWISS_GOAL
+          world.clubs[id].wallet.record(Tournament::SWISS_PRIZE, category: :prize, date: world.calendar.date)
+        end
         pwt[:ko] = Tournament::Knockout.new(q)
       end
       events

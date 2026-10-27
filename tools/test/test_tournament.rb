@@ -23,27 +23,49 @@ class TestTournament < Minitest::Test
     assert_includes [1, -1], r[:res]
   end
 
-  def test_swiss_stage_qualifies_sixteen_and_avoids_rematches
-    sw = T::Swiss.new((1..36).to_a, rng: Random.new(1))
-    5.times { sw.play_round(&strong_wins) }
+  # Worlds-style: 3 wins and you're through with no more games, 3 losses and
+  # you're out; at most 5 rounds; 32 players give exactly 16 qualifiers
+  # (4 at 3-0, 6 at 3-1, 6 at 3-2: 32 -> 16 -> 8 -> 4 unbeaten, and so on).
+  def test_swiss_three_wins_advance_three_losses_out
+    sw = T::Swiss.new((1..32).to_a, rng: Random.new(1))
+    rounds = 0
+    until sw.done?
+      sw.play_round(&strong_wins)
+      rounds += 1
+    end
+    assert_equal 5, rounds
     q = sw.qualifiers(16)
     assert_equal 16, q.size
-    assert_equal (1..36).to_a, sw.players
-    # Like swissPairs, a rematch is allowed only when a group leaves no one
-    # else, so they must be rare.
-    rematches = sw.opponents.values.sum { |opps| opps.size - opps.uniq.size } / 2
-    assert rematches <= 2, "#{rematches} rematches"
-    assert q.include?(1)
-    refute q.include?(36)
+    assert(q.all? { |p| sw.wins[p] == 3 })
+    assert(((1..32).to_a - q).all? { |p| sw.losses[p] == 3 })
+    assert_equal({ 0 => 4, 1 => 6, 2 => 6 }, q.map { |p| sw.losses[p] }.tally.sort.to_h)
+    # Nobody plays after reaching 3 wins or 3 losses.
+    sw.players.each { |p| assert_equal sw.wins[p] + sw.losses[p], sw.opponents[p].size }
   end
 
-  def test_pwt_slots_add_to_34
+  def test_swiss_pairs_only_same_record_and_active_players
+    sw = T::Swiss.new((1..32).to_a, rng: Random.new(2))
+    3.times { sw.play_round(&strong_wins) }
+    sw.pairs.each do |a, b|
+      assert sw.active?(a) && sw.active?(b)
+      assert_equal [sw.wins[a], sw.losses[a]], [sw.wins[b], sw.losses[b]]
+    end
+  end
+
+  def test_qualifier_order_puts_three_oh_first
+    sw = T::Swiss.new((1..32).to_a, rng: Random.new(3))
+    sw.play_round(&strong_wins) until sw.done?
+    q = sw.qualifiers(16)
+    assert_equal 0, sw.losses[q.first]
+  end
+
+  def test_pwt_slots_add_to_30
     coef = { "KANTO" => 9, "JOHTO" => 8, "HOENN" => 7, "SINNOH" => 6, "UNOVA" => 5, "KALOS" => 4,
              "ALOLA" => 3, "GALAR" => 2, "PALDEA" => 1 }
     slots = T.pwt_slots(coef)
-    assert_equal 34, slots.values.sum
-    assert_equal 4, slots["KANTO"]
-    assert_equal 3, slots["PALDEA"]
+    assert_equal 30, slots.values.sum, "30 league places + PET and PENT winners = 32"
+    assert_equal [4, 4, 4], slots.values_at("KANTO", "JOHTO", "HOENN")
+    assert_equal 3, slots["SINNOH"]
   end
 
   def test_points_for_results

@@ -21,7 +21,7 @@ class TestTournamentWorld < Minitest::Test
     pwt = events.find { |e| e[:kind] == :cup_champion && e[:cup] == :pwt }
     sub_champs = pets.reject { |e| e[:cup] == :pwt }.map { |e| e[:club] }
     entrants = w.cups[:pwt][:players]
-    assert_equal 36, entrants.size
+    assert_equal 32, entrants.size
     sub_champs.each { |c| assert_includes entrants, c }
     champ = w.clubs[pwt[:club]]
     assert champ.wallet.totals[:prize] >= FM::Tournament::CHAMPION_PRIZE

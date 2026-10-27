@@ -3,9 +3,11 @@
 # swissPairs/swissRound, koRound, KO_PRIZE, pwtPts, leagueCoef; design 03/05
 # for hosts and dates). Pure Ruby.
 #
-# PWT: 34 league places split 4/3 by region coefficient + the PET and PENT
-# winners = 36; Swiss 5 rounds (BO1, same-record pairing, no rematches), top
-# 16 to a seeded best-of-3 knockout. PET (east: Kanto, Johto, Hoenn, Sinnoh)
+# PWT: 30 league places split 4/3 by region coefficient + the PET and PENT
+# winners = 32 (PWT_SIZE). Swiss stage like LoL Worlds: single games between
+# players on the same record; 3 wins and a player goes straight through with
+# no more games, 3 losses and they're out; at most 5 rounds, which leaves
+# exactly 16 for a seeded best-of-3 knockout. PET (east: Kanto, Johto, Hoenn, Sinnoh)
 # and PENT (the other five): 16 league finishers not going to the PWT,
 # single games with a best-of-3 final. PET/PENT prizes are not in the
 # original data we extracted: drafts.
@@ -15,7 +17,9 @@ module FM
     PET_REGIONS  = %w[KANTO JOHTO HOENN SINNOH].freeze
     PENT_REGIONS = %w[UNOVA KALOS ALOLA GALAR PALDEA].freeze
     ALL_REGIONS  = (PET_REGIONS + PENT_REGIONS).freeze
-    PWT_LEAGUE_PLACES = 34
+    PWT_LEAGUE_PLACES = 30
+    SWISS_GOAL = 3
+    SWISS_PRIZE = 25_000   # seedKnockout: non-qualifiers not out on 3 losses
     PWT_FEE = 10_000
     SUB_FEE = 3000
     SWISS_ROUNDS = 5
@@ -33,7 +37,7 @@ module FM
       list[(year - 1) % list.size]
     end
 
-    # Regions ranked by coefficient: the top seven get 4 places, the rest 3.
+    # Regions ranked by coefficient: the top three get 4 places, the rest 3.
     def pwt_slots(coef)
       ranked = ALL_REGIONS.sort_by { |r| [-coef.fetch(r, 0), ALL_REGIONS.index(r)] }
       extra = PWT_LEAGUE_PLACES - 3 * ALL_REGIONS.size
@@ -107,10 +111,17 @@ module FM
 
       def buchholz(p) = @opponents[p].sum { |o| @wins[o] }
 
-      # Same-record groups, best first; round 1 shuffled, later by Buchholz
-      # and KO difference; skip opponents already met where possible.
+      def active?(p) = @wins[p] < SWISS_GOAL && @losses[p] < SWISS_GOAL
+
+      def done?
+        @round >= SWISS_ROUNDS || @players.none? { |p| active?(p) }
+      end
+
+      # Active players only, in same-record groups, best first; round 1
+      # shuffled, later by Buchholz and KO difference; skip opponents already
+      # met where possible.
       def pairs
-        groups = @players.group_by { |p| [@wins[p], @losses[p]] }
+        groups = @players.select { |p| active?(p) }.group_by { |p| [@wins[p], @losses[p]] }
         keys = groups.keys.sort_by { |w, l| [-w, l] }
         out = []
         carry = []
@@ -145,11 +156,17 @@ module FM
         res
       end
 
+      # swissOrder: wins, fewer losses, Buchholz, KO difference.
       def standings
-        @players.sort_by { |p| [-@wins[p], -buchholz(p), -@kd[p], p.to_s] }
+        @players.sort_by { |p| [-@wins[p], @losses[p], -buchholz(p), -@kd[p], p.to_s] }
       end
 
-      def qualifiers(n) = standings.first(n)
+      # seedKnockout: the 3-win players in order, topped up from the rest if
+      # fewer than n made it.
+      def qualifiers(n)
+        top = standings.select { |p| @wins[p] >= SWISS_GOAL }
+        (top + (standings - top)).first(n)
+      end
     end
   end
 end
