@@ -32,6 +32,14 @@ def city_data
   end
 end
 
+def species_data
+  pbs_sections("fm_species.txt").to_h do |id, s|
+    [id, { bst: s["BST"].first.to_i, fb: s["FinalBST"].first.to_i, tier: s["Tier"].first.to_i,
+           region: s["Region"].first, basic: s["Basic"].first == "true",
+           evo: s["Evolution"].map { |e| to, lv = e.split(","); [to, lv.to_i] } }]
+  end
+end
+
 def club_data
   bst = {}
   %w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each do |f|
@@ -51,7 +59,7 @@ def club_data
       facilities: s["Facility"].to_h { |f| k, lv = f.split(","); [k.to_sym, lv.to_i] },
       pokemon: s["Pokemon"].map do |p|
         sp, lv, stars = p.split(",")
-        { bst: bst.fetch(sp), level: lv.to_i, stars: stars.to_i }
+        { species: sp, bst: bst.fetch(sp), level: lv.to_i, stars: stars.to_i }
       end }
   end
 end
@@ -59,10 +67,12 @@ end
 years = (ARGV[0] || 1).to_i
 seed = (ARGV[1] || 1).to_i
 data = club_data
-world = FM::World.new_game(data, seed: seed, cities: city_data)
+world = FM::World.new_game(data, seed: seed, cities: city_data, species: species_data)
+start_rating = world.clubs.transform_values(&:rating)
 city_sizes = -> { world.cities.values.map(&:size).tally.sort.to_h }
 start_cities = city_sizes.call
 meetings = []
+squad_events = Hash.new(0)
 start_funds = world.clubs.values.sum { |c| c.wallet.balance }
 growth = lambda do
   cs = world.clubs.values
@@ -80,6 +90,7 @@ time = Benchmark.realtime do
       ends << e if e[:kind] == :league_end
       results.concat(e[:results]) if e[:kind] == :league_round
       meetings << e if e[:kind] == :meeting
+      squad_events[e[:kind]] += 1 if %i[signed released youth].include?(e[:kind])
     end
   end
 end
@@ -117,6 +128,19 @@ puts "expansion meetings: #{meetings.size}, passed #{meetings.count { |m| m[:pas
      "no-vote reasons #{reasons}; total unrest #{world.cities.values.sum(&:unrest)}"
 budgets = world.cities.values.map { |c| c.budget.balance }.sort
 puts "city budgets: median #{won.(budgets[budgets.size / 2])}, negative #{budgets.count(&:negative?)} of #{budgets.size}"
+cs = world.clubs.values
+puts "squads: mean size #{(cs.sum { |c| c.squad.size }.fdiv(cs.size)).round(1)}, " \
+     "signing events #{squad_events.sort.to_h}, retired or released mons #{cs.sum { |c| c.retired.size }}, " \
+     "empty squads #{cs.count { |c| c.squad.empty? }}"
+# Does investment show up in strength? Compare rating change by end training level.
+by_train = cs.group_by { |c| c.facilities.fetch(:TRAINING, 0) }.sort.map do |lv, g|
+  delta = g.sum { |c| c.rating - start_rating[c.id] }.fdiv(g.size)
+  "T#{lv}: #{g.size} clubs #{delta >= 0 ? '+' : ''}#{delta.round}"
+end
+puts "rating change by end TRAINING level: #{by_train.join(', ')}"
+ratings = cs.map(&:rating).sort
+puts "ratings: start #{start_rating.values.min.round}-#{start_rating.values.max.round} " \
+     "(median #{start_rating.values.sort[90].round}) -> end #{ratings.first.round}-#{ratings.last.round} (median #{ratings[90].round})"
 by_role = world.clubs.values.group_by { |c| c.role[0] }
 puts "mean end funds by role: " + %w[C E G T].map { |r| "#{r} #{won.(by_role[r].sum { |c| c.wallet.balance } / by_role[r].size)}" }.join(", ")
 

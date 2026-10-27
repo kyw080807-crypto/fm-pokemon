@@ -15,8 +15,10 @@ module FM
 
     module_function
 
+    # m[:ev] is a live EV total when the squad is simulated; otherwise EVs
+    # are estimated from level the way makeMon/pretrain does.
     def mon(m)
-      ev = EV_MAX * ((m[:level] - 8) / 62.0).clamp(0.0, 1.0)
+      ev = m[:ev] || EV_MAX * ((m[:level] - 8) / 62.0).clamp(0.0, 1.0)
       m[:bst] + IV_MID.fetch(m[:stars] - 1) * 6 / 2.0 + ev / 8.0
     end
 

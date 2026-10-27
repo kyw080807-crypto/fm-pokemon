@@ -12,8 +12,8 @@
 module FM
   class Club
     attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential,
-                :facilities, :mon_ratings, :rating, :wallet, :form, :stadium_shared,
-                :home_fill, :traits
+                :facilities, :rating, :wallet, :form, :stadium_shared,
+                :home_fill, :traits, :squad, :retired
     attr_accessor :fame, :stadium, :clubhouse, :project, :city_size
 
     def initialize(data)
@@ -27,9 +27,13 @@ module FM
       @project   = nil   # { kind:, target:, to:, done: [y, m, d] }
       @home_fill = []    # attendance / capacity, last 5 home games
       @traits    = Traits.generate(name: @name, role: @role, type: data.fetch(:type, "NORMAL"))
-      @mon_ratings = data[:pokemon].map { |m| Rating.mon(m) }
-      @rating  = Rating.team(data[:pokemon])
+      @squad = data[:pokemon].map do |m|
+        Mon.new(species: m[:species], bst: m[:bst], level: m[:level], stars: m[:stars], ev: m[:ev],
+                age: m.fetch(:age, 0), canon: @canon)
+      end
+      @retired = []
       @fame    = Economy.initial_fame(level: @level, role: @role, canon: @canon)
+      refresh_rating
       @wallet  = Finance.new(balance: Economy.start_funds(@fame))
       @form    = []
     end
@@ -48,9 +52,18 @@ module FM
       @home_fill.shift while @home_fill.size > 5
     end
 
+    def refresh_rating
+      @rating = Rating.team(@squad.map(&:to_rating))
+    end
+
+    def mon_ratings = @squad.map(&:rating)
+
+    def food
+      @squad.sum { |m| Economy.food(ovr: Economy.ovr(m.rating), fame: @fame) }
+    end
+
     def weekly_cost
-      @mon_ratings.sum { |r| Economy.food(ovr: Economy.ovr(r), fame: @fame) } +
-        @facilities.values.sum { |lv| Economy.facility_keep(lv) } + Economy.stadium_keep(@stadium)
+      food + @facilities.values.sum { |lv| Economy.facility_keep(lv) } + Economy.stadium_keep(@stadium)
     end
 
     # Money beyond Invest's running-cost reserve.
@@ -60,16 +73,19 @@ module FM
   end
 
   class World
-    attr_reader :calendar, :clubs, :leagues, :cities
+    attr_reader :calendar, :clubs, :leagues, :cities, :species
 
-    def self.new_game(club_data, seed:, cities: [])
-      new(club_data.map { |d| Club.new(d) }, seed: seed, cities: cities.map { |d| City.new(d) })
+    # species: FM::Scout pool (PBS/fm_species.txt). Without it squads stay
+    # fixed (no growth, aging or scouting) — enough for league/economy tests.
+    def self.new_game(club_data, seed:, cities: [], species: nil)
+      new(club_data.map { |d| Club.new(d) }, seed: seed, cities: cities.map { |d| City.new(d) }, species: species)
     end
 
-    def initialize(clubs, seed:, cities: [])
+    def initialize(clubs, seed:, cities: [], species: nil)
       @calendar = Calendar.new
       @clubs    = clubs.to_h { |c| [c.id, c] }
       @cities   = cities.to_h { |c| [c.id, c] }
+      @species  = species
       @clubs.each_value do |c|
         city = @cities[c.city] or next
         city.club_ids << c.id
@@ -77,7 +93,28 @@ module FM
       end
       @rng      = Random.new(seed)
       @league_dates = {}
+      seed_squads if @species
       start_leagues
+    end
+
+    # buildWorld: starting mons get an age of 0-4 and the EVs that age would
+    # have built up, if more than their level implies.
+    def seed_squads
+      @clubs.each_value do |c|
+        t = Growth.original_level(c.facilities.fetch(:TRAINING, 0))
+        c.squad.each do |m|
+          m.age = @rng.rand(5)
+          by_level = Growth::EV_MAX * ((m.level - 8) / 62.0).clamp(0.0, 1.0)
+          by_age = Growth::EV_MAX * [1.0, m.age / Growth.grow_seasons(t)].min
+          m.ev = [by_level, by_age].max
+        end
+        c.refresh_rating
+      end
+    end
+
+    def avg_level(region)
+      ms = @clubs.values.select { |c| c.region == region }.flat_map(&:squad)
+      ms.empty? ? 30 : ms.sum(&:level).fdiv(ms.size)
     end
 
     def regions
@@ -94,6 +131,7 @@ module FM
       @calendar.advance(1).each do |kind, _|
         case kind
         when :new_year
+          events.concat(season_rollover)
           start_leagues
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
@@ -101,6 +139,7 @@ module FM
           city_economy
           events.concat(finish_projects)
           events.concat(finish_city_projects)
+          events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) }
         when :new_month
           events.concat(Meeting.monthly(self, date: date))
@@ -179,7 +218,7 @@ module FM
         w = c.wallet
         interest = Economy.debt_interest(w.balance)
         w.record(-interest, category: :interest, date: date) if interest.positive?
-        food = c.mon_ratings.sum { |r| Economy.food(ovr: Economy.ovr(r), fame: c.fame) }
+        food = c.food
         w.record(-food, category: :food, date: date) if food.positive?
         keep = c.facilities.values.sum { |lv| Economy.facility_keep(lv) }
         w.record(-keep, category: :fac, date: date) if keep.positive?
@@ -187,6 +226,47 @@ module FM
         merch = Economy.merch(c.fame)
         w.record(merch, category: :merch, date: date) if merch.positive?
       end
+    end
+
+    def season_rollover
+      events = []
+      @clubs.each_value do |c|
+        c.fame = Growth.fame_drift(c.fame)
+        next unless @species
+        gone = Growth.rollover(c.squad)
+        c.retired.concat(gone)
+        c.refresh_rating
+        events << { kind: :retired, club: c.id, mons: gone.map(&:species), date: date } unless gone.empty?
+      end
+      events
+    end
+
+    def squad_week
+      events = []
+      window = recruit_window?
+      @clubs.each_value do |c|
+        train = c.facilities.fetch(:TRAINING, 0)
+        c.squad.each { |m| Growth.week(m, train_level: train, species: @species) }
+        avg = avg_level(c.region)
+        released = Recruit.budget(c, pool: @species)
+        events << { kind: :released, club: c.id, mons: released, date: date } unless released.empty?
+        youth = Recruit.emergency(c, pool: @species, avg_level: avg, rng: @rng)
+        events << { kind: :youth, club: c.id, mons: youth, date: date } unless youth.empty?
+        e = Recruit.weekly(c, pool: @species, regions: regions, avg_level: avg,
+                              window: window, date: date, rng: @rng)
+        events << e if e
+        c.refresh_rating
+      end
+      events
+    end
+
+    # aiScoutWeek's transfer windows: the first weeks of the league and the
+    # weeks after it ends.
+    def recruit_window?
+      dates = league_dates
+      d = @calendar.days_until(dates.first)
+      e = @calendar.days_until(dates.last)
+      d.between?(-21, 0) || e.between?(-28, 0)
     end
 
     # Design 04: clubs pay into their city's public budget (공공예산 기여금).

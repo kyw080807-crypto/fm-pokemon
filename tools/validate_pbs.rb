@@ -36,6 +36,15 @@ SCHEMAS = {
     "Stadium"   => { required: true, check: /\A[0-6]\z/ },
     "Facility"  => { repeat: true, check: /\A(TRAINING|MEDICAL|SCOUTING|DAYCARE|SHOP),[1-5]\z/ },
     "Pokemon"   => { repeat: true, required: true, check: :species }
+  },
+  "fm_species" => {
+    "Dex"       => { required: true, check: INT },
+    "BST"       => { required: true, check: INT },
+    "FinalBST"  => { required: true, check: INT },
+    "Tier"      => { required: true, check: /\A[0-5]\z/ },
+    "Region"    => { required: true, check: REGIONS },
+    "Basic"     => { required: true, check: %w[true false] },
+    "Evolution" => { repeat: true, check: :evolution }
   }
 }.freeze
 
@@ -83,6 +92,10 @@ def bad_value(rule, value)
   when nil    then nil
   when Regexp then "#{value.inspect} doesn't match #{rule[:check].source}" unless value.match?(rule[:check])
   when Array  then "#{value.inspect} not one of #{rule[:check].first(4).join('/')}…" unless rule[:check].include?(value)
+  when :evolution
+    sp, lv = value.split(",")
+    return "#{value.inspect} must be SPECIES,LEVEL" unless lv&.match?(INT)
+    "unknown species #{sp}" unless SPECIES.key?(sp)
   when :species
     sp, lv, stars = value.split(",")
     return "#{value.inspect} must be SPECIES,LEVEL,STARS" unless lv&.match?(INT) && stars&.match?(/\A[1-5]\z/)

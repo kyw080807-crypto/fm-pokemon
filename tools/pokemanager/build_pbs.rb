@@ -162,8 +162,31 @@ trainers.each_with_index do |t, i|
   end
 end
 
+# --- species: Poké Manager's growth data (DEX) keyed by Essentials ID -------
+# Evolution levels are Poké Manager's (it turns every evolution into a level);
+# FinalBST is the best base stat total reachable by evolving, which scouting
+# aims at (SP[].fb). Region is the dex range of the species' generation.
+dex_path = File.join(ROOT, "import", "pokemanager", "data", "dex.json")
+die "#{dex_path} missing: run tools/pokemanager/export.rb" unless File.exist?(dex_path)
+dex = JSON.parse(File.read(dex_path, encoding: "utf-8"))
+ranges = [151, 251, 386, 493, 649, 721, 809, 905, 1025]
+bst_of = ->(d) { d["base"].sum }
+final_bst = lambda do |num, seen = []|
+  d = dex[num - 1]
+  kids = d["evo"].map { |e| e["num"] }.reject { |n| seen.include?(n) }
+  ([bst_of.(d)] + kids.map { |n| final_bst.(n, seen + [num]) }).max
+end
+species_txt = +header.call("species growth data")
+dex.each do |d|
+  species_txt << "#-------------------------------\n[#{ids[d['num'] - 1]}]\n"
+  species_txt << "Dex = #{d['num']}\nBST = #{bst_of.(d)}\nFinalBST = #{final_bst.(d['num'])}\n"
+  species_txt << "Tier = #{d['tier']}\nRegion = #{REGIONS[ranges.index { |r| d['num'] <= r }]}\n"
+  species_txt << "Basic = #{d['prev'] ? 'false' : 'true'}\n"
+  d["evo"].each { |e| species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}\n" }
+end
+
 # PBS files in this project are UTF-8 with BOM and CRLF, like the shipped ones.
-{ "fm_cities.txt" => city_txt, "fm_clubs.txt" => club_txt }.each do |file, txt|
+{ "fm_cities.txt" => city_txt, "fm_clubs.txt" => club_txt, "fm_species.txt" => species_txt }.each do |file, txt|
   File.binwrite(File.join(ROOT, "PBS", file), "﻿".encode("UTF-8") + txt.gsub("\n", "\r\n"))
 end
 puts "cities: #{cities.size}  clubs: #{trainers.size}  " \
