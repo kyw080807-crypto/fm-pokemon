@@ -138,6 +138,11 @@ meetings.group_by { |m| m[:agenda] }.each do |agenda, ms|
   puts "#{agenda} meetings: #{ms.size}, passed #{ms.count { |m| m[:passed] }}; no-vote reasons #{reasons}"
 end
 puts "total unrest #{world.cities.values.sum(&:unrest)}"
+cms = world.committees.values
+puts "committees: " + FM::Committee::START.keys.map { |f|
+  "#{f} #{cms.map { |c| c.facilities[f] }.tally.sort.to_h}" }.join(", ")
+caps = world.cities.values.select(&:capital?).map { |c| c.budget.balance }.sort
+puts "capital budgets: min #{won.(caps.first)}, median #{won.(caps[caps.size / 2])}"
 ordinary = world.cities.values.reject(&:capital?)
 puts "ordinary cities transport #{ordinary.map(&:transport).tally.sort.to_h}, hotel #{ordinary.map(&:hotel).tally.sort.to_h}"
 budgets = world.cities.values.map { |c| c.budget.balance }.sort

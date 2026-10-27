@@ -169,10 +169,17 @@ module FM
           city_economy
           events.concat(finish_projects)
           events.concat(finish_city_projects)
+          committees.each_value do |cm|
+            cm.weekly(self, date)
+            (e = cm.finish(self, date)) && events << e
+          end
           events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) }
         when :new_month
           events.concat(Meeting.monthly(self, date: date))
+          if Committee::QUARTER_MONTHS.include?(@calendar.month)
+            committees.each_value { |cm| (e = cm.quarterly(self, date)) && events << e }
+          end
         end
       end
       round = league_dates.index(@calendar.date)
@@ -414,7 +421,21 @@ module FM
         sponsor_season_end(c, pos)
         (c.history[@calendar.year] ||= {})[:pos] = pos
       end
+      if (cm = committees[region])
+        cm.seat_gym_reps(self, standings)
+        cm.distribute(self, standings, date)
+      end
       { kind: :league_end, region: region, date: date, standings: standings }
+    end
+
+    public
+
+    # One per region with a capital (form LEAGUE). Built on first use, so
+    # worlds saved before committees existed get them on load.
+    def committees
+      @committees ||= @cities.values.select(&:capital?).to_h do |c|
+        [c.region, Committee.new(region: c.region, city_id: c.id)]
+      end
     end
   end
 end
