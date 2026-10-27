@@ -1,0 +1,2426 @@
+{
+  "source": "Poké Manager buildWorld() (resources.neu index.html), run by tools/pokemanager/lock_rosters.js",
+  "seed": 20261027,
+  "note": "Only mons that buildWorld() picks at random: full rosters of non-canon trainers and filler mons added to canon rosters with fewer than 3. Canon roster species come from TRAINERS; their IVs/levels are also random in buildWorld() and are not locked here.",
+  "trainers": [
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "G1",
+      "name": "웅",
+      "canon": true,
+      "mons": [
+        {
+          "num": 138,
+          "species": "암나이트",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 21,
+            "atk": 23,
+            "def": 24,
+            "spa": 23,
+            "spd": 23,
+            "spe": 29
+          }
+        }
+      ]
+    },
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "G2",
+      "name": "이슬",
+      "canon": true,
+      "mons": [
+        {
+          "num": 54,
+          "species": "고라파덕",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 4,
+          "iv": {
+            "hp": 28,
+            "atk": 28,
+            "def": 24,
+            "spa": 22,
+            "spd": 30,
+            "spe": 24
+          }
+        }
+      ]
+    },
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "T",
+      "name": "에이스 트레이너 하준",
+      "canon": false,
+      "mons": [
+        {
+          "num": 22,
+          "species": "깨비드릴조",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 24,
+            "def": 26,
+            "spa": 21,
+            "spd": 23,
+            "spe": 22
+          }
+        },
+        {
+          "num": 44,
+          "species": "냄새꼬",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 18,
+            "def": 22,
+            "spa": 19,
+            "spd": 18,
+            "spe": 24
+          }
+        },
+        {
+          "num": 23,
+          "species": "아보",
+          "form": null,
+          "canon": false,
+          "level": 20,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 23,
+            "def": 19,
+            "spa": 19,
+            "spd": 22,
+            "spe": 18
+          }
+        },
+        {
+          "num": 28,
+          "species": "고지",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 19,
+            "def": 18,
+            "spa": 16,
+            "spd": 19,
+            "spe": 25
+          }
+        }
+      ]
+    },
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "T",
+      "name": "베테랑 트레이너 수아",
+      "canon": false,
+      "mons": [
+        {
+          "num": 77,
+          "species": "포니타",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 22,
+            "def": 21,
+            "spa": 21,
+            "spd": 23,
+            "spe": 24
+          }
+        },
+        {
+          "num": 44,
+          "species": "냄새꼬",
+          "form": null,
+          "canon": false,
+          "level": 29,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 24,
+            "def": 16,
+            "spa": 25,
+            "spd": 25,
+            "spe": 19
+          }
+        },
+        {
+          "num": 75,
+          "species": "데구리",
+          "form": null,
+          "canon": false,
+          "level": 29,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 22,
+            "def": 18,
+            "spa": 21,
+            "spd": 24,
+            "spe": 18
+          }
+        },
+        {
+          "num": 115,
+          "species": "캥카",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 17,
+            "def": 21,
+            "spa": 24,
+            "spd": 19,
+            "spe": 23
+          }
+        },
+        {
+          "num": 99,
+          "species": "킹크랩",
+          "form": null,
+          "canon": false,
+          "level": 28,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 24,
+            "def": 23,
+            "spa": 24,
+            "spd": 20,
+            "spe": 18
+          }
+        }
+      ]
+    },
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "T",
+      "name": "반바지 꼬마 지후",
+      "canon": false,
+      "mons": [
+        {
+          "num": 74,
+          "species": "꼬마돌",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 23,
+            "def": 26,
+            "spa": 16,
+            "spd": 24,
+            "spe": 17
+          }
+        },
+        {
+          "num": 86,
+          "species": "쥬쥬",
+          "form": null,
+          "canon": false,
+          "level": 14,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 24,
+            "def": 17,
+            "spa": 16,
+            "spd": 19,
+            "spe": 18
+          }
+        },
+        {
+          "num": 118,
+          "species": "콘치",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 26,
+            "def": 24,
+            "spa": 20,
+            "spd": 21,
+            "spe": 25
+          }
+        },
+        {
+          "num": 46,
+          "species": "파라스",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 24,
+            "def": 20,
+            "spa": 16,
+            "spd": 16,
+            "spe": 17
+          }
+        }
+      ]
+    },
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "T",
+      "name": "짧은치마 소라",
+      "canon": false,
+      "mons": [
+        {
+          "num": 48,
+          "species": "콘팡",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 16,
+            "def": 19,
+            "spa": 21,
+            "spd": 21,
+            "spe": 20
+          }
+        },
+        {
+          "num": 127,
+          "species": "쁘사이저",
+          "form": null,
+          "canon": false,
+          "level": 14,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 26,
+            "def": 23,
+            "spa": 26,
+            "spd": 20,
+            "spe": 17
+          }
+        },
+        {
+          "num": 202,
+          "species": "마자용",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 17,
+            "def": 22,
+            "spa": 26,
+            "spd": 19,
+            "spe": 19
+          }
+        },
+        {
+          "num": 12,
+          "species": "버터플",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 25,
+            "def": 24,
+            "spa": 21,
+            "spd": 18,
+            "spe": 21
+          }
+        }
+      ]
+    },
+    {
+      "region": 0,
+      "region_name": "관동",
+      "role": "T",
+      "name": "에이스 트레이너 은호",
+      "canon": false,
+      "mons": [
+        {
+          "num": 100,
+          "species": "찌리리공",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 24,
+            "def": 17,
+            "spa": 19,
+            "spd": 23,
+            "spe": 16
+          }
+        },
+        {
+          "num": 109,
+          "species": "또가스",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 21,
+            "def": 23,
+            "spa": 17,
+            "spd": 17,
+            "spe": 24
+          }
+        },
+        {
+          "num": 115,
+          "species": "캥카",
+          "form": null,
+          "canon": false,
+          "level": 22,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 22,
+            "def": 22,
+            "spa": 22,
+            "spd": 25,
+            "spe": 22
+          }
+        },
+        {
+          "num": 15,
+          "species": "독침붕",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 25,
+            "def": 21,
+            "spa": 24,
+            "spd": 26,
+            "spe": 19
+          }
+        },
+        {
+          "num": 58,
+          "species": "가디",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 17,
+            "def": 25,
+            "spa": 24,
+            "spd": 23,
+            "spe": 20
+          }
+        }
+      ]
+    },
+    {
+      "region": 1,
+      "region_name": "성도",
+      "role": "G1",
+      "name": "비상",
+      "canon": true,
+      "mons": [
+        {
+          "num": 163,
+          "species": "부우부",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 26,
+            "atk": 30,
+            "def": 21,
+            "spa": 21,
+            "spd": 22,
+            "spe": 22
+          }
+        }
+      ]
+    },
+    {
+      "region": 1,
+      "region_name": "성도",
+      "role": "G3",
+      "name": "꼭두",
+      "canon": true,
+      "mons": [
+        {
+          "num": 190,
+          "species": "에이팜",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 4,
+          "iv": {
+            "hp": 30,
+            "atk": 21,
+            "def": 28,
+            "spa": 23,
+            "spd": 23,
+            "spe": 30
+          }
+        }
+      ]
+    },
+    {
+      "region": 1,
+      "region_name": "성도",
+      "role": "G5",
+      "name": "사도",
+      "canon": true,
+      "mons": [
+        {
+          "num": 195,
+          "species": "누오",
+          "form": null,
+          "canon": false,
+          "level": 22,
+          "stars": 4,
+          "iv": {
+            "hp": 30,
+            "atk": 23,
+            "def": 25,
+            "spa": 25,
+            "spd": 23,
+            "spe": 25
+          }
+        }
+      ]
+    },
+    {
+      "region": 1,
+      "region_name": "성도",
+      "role": "T",
+      "name": "베테랑 트레이너 로운",
+      "canon": false,
+      "mons": [
+        {
+          "num": 40,
+          "species": "푸크린",
+          "form": null,
+          "canon": false,
+          "level": 30,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 26,
+            "def": 26,
+            "spa": 20,
+            "spd": 19,
+            "spe": 19
+          }
+        },
+        {
+          "num": 189,
+          "species": "솜솜코",
+          "form": null,
+          "canon": false,
+          "level": 29,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 21,
+            "def": 18,
+            "spa": 16,
+            "spd": 23,
+            "spe": 26
+          }
+        },
+        {
+          "num": 164,
+          "species": "야부엉",
+          "form": null,
+          "canon": false,
+          "level": 29,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 19,
+            "def": 24,
+            "spa": 25,
+            "spd": 24,
+            "spe": 26
+          }
+        },
+        {
+          "num": 678,
+          "species": "냐오닉스(암컷)",
+          "form": "f",
+          "canon": false,
+          "level": 28,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 19,
+            "def": 16,
+            "spa": 20,
+            "spd": 26,
+            "spe": 19
+          }
+        }
+      ]
+    },
+    {
+      "region": 1,
+      "region_name": "성도",
+      "role": "T",
+      "name": "랑스",
+      "canon": true,
+      "mons": [
+        {
+          "num": 211,
+          "species": "침바루",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 16,
+            "def": 22,
+            "spa": 20,
+            "spd": 20,
+            "spe": 17
+          }
+        }
+      ]
+    },
+    {
+      "region": 2,
+      "region_name": "호연",
+      "role": "G1",
+      "name": "원규",
+      "canon": true,
+      "mons": [
+        {
+          "num": 338,
+          "species": "솔록",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 27,
+            "atk": 25,
+            "def": 24,
+            "spa": 30,
+            "spd": 24,
+            "spe": 26
+          }
+        }
+      ]
+    },
+    {
+      "region": 2,
+      "region_name": "호연",
+      "role": "G2",
+      "name": "철구",
+      "canon": true,
+      "mons": [
+        {
+          "num": 307,
+          "species": "요가랑",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 4,
+          "iv": {
+            "hp": 27,
+            "atk": 21,
+            "def": 25,
+            "spa": 29,
+            "spd": 24,
+            "spe": 24
+          }
+        }
+      ]
+    },
+    {
+      "region": 2,
+      "region_name": "호연",
+      "role": "G7",
+      "name": "풍란 & 풍전",
+      "canon": true,
+      "mons": [
+        {
+          "num": 307,
+          "species": "요가랑",
+          "form": null,
+          "canon": false,
+          "level": 28,
+          "stars": 4,
+          "iv": {
+            "hp": 21,
+            "atk": 30,
+            "def": 26,
+            "spa": 22,
+            "spd": 23,
+            "spe": 28
+          }
+        }
+      ]
+    },
+    {
+      "region": 2,
+      "region_name": "호연",
+      "role": "T",
+      "name": "에이스 트레이너 시우",
+      "canon": false,
+      "mons": [
+        {
+          "num": 931,
+          "species": "시비꼬(블루 페더)",
+          "form": "blue",
+          "canon": false,
+          "level": 20,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 23,
+            "def": 20,
+            "spa": 18,
+            "spd": 20,
+            "spe": 23
+          }
+        },
+        {
+          "num": 341,
+          "species": "가재군",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 25,
+            "def": 24,
+            "spa": 19,
+            "spd": 19,
+            "spe": 16
+          }
+        },
+        {
+          "num": 281,
+          "species": "킬리아",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 26,
+            "def": 23,
+            "spa": 25,
+            "spd": 22,
+            "spe": 17
+          }
+        },
+        {
+          "num": 337,
+          "species": "루나톤",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 26,
+            "def": 17,
+            "spa": 16,
+            "spd": 16,
+            "spe": 23
+          }
+        }
+      ]
+    },
+    {
+      "region": 3,
+      "region_name": "신오",
+      "role": "T",
+      "name": "에이스 트레이너 유나",
+      "canon": false,
+      "mons": [
+        {
+          "num": 420,
+          "species": "체리버",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 19,
+            "def": 17,
+            "spa": 26,
+            "spd": 22,
+            "spe": 22
+          }
+        },
+        {
+          "num": 441,
+          "species": "페라페",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 24,
+            "def": 16,
+            "spa": 19,
+            "spd": 17,
+            "spe": 22
+          }
+        },
+        {
+          "num": 388,
+          "species": "수풀부기",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 23,
+            "def": 24,
+            "spa": 25,
+            "spd": 26,
+            "spe": 21
+          }
+        },
+        {
+          "num": 479,
+          "species": "로토무",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 26,
+            "def": 18,
+            "spa": 23,
+            "spd": 22,
+            "spe": 21
+          }
+        }
+      ]
+    },
+    {
+      "region": 3,
+      "region_name": "신오",
+      "role": "T",
+      "name": "에이스 트레이너 은하",
+      "canon": false,
+      "mons": [
+        {
+          "num": 707,
+          "species": "클레피",
+          "form": null,
+          "canon": false,
+          "level": 22,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 16,
+            "def": 16,
+            "spa": 26,
+            "spd": 26,
+            "spe": 22
+          }
+        },
+        {
+          "num": 439,
+          "species": "흉내내",
+          "form": null,
+          "canon": false,
+          "level": 20,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 21,
+            "def": 21,
+            "spa": 18,
+            "spd": 26,
+            "spe": 26
+          }
+        },
+        {
+          "num": 781,
+          "species": "타타륜",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 25,
+            "def": 24,
+            "spa": 19,
+            "spd": 24,
+            "spe": 18
+          }
+        },
+        {
+          "num": 456,
+          "species": "형광어",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 18,
+            "def": 24,
+            "spa": 16,
+            "spd": 22,
+            "spe": 16
+          }
+        },
+        {
+          "num": 455,
+          "species": "무스틈니",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 18,
+            "def": 24,
+            "spa": 22,
+            "spd": 17,
+            "spe": 17
+          }
+        }
+      ]
+    },
+    {
+      "region": 3,
+      "region_name": "신오",
+      "role": "T",
+      "name": "소풍가는 소녀 나리",
+      "canon": false,
+      "mons": [
+        {
+          "num": 412,
+          "species": "도롱충이",
+          "form": null,
+          "canon": false,
+          "level": 15,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 24,
+            "def": 22,
+            "spa": 22,
+            "spd": 22,
+            "spe": 20
+          }
+        },
+        {
+          "num": 651,
+          "species": "도치보구",
+          "form": null,
+          "canon": false,
+          "level": 17,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 21,
+            "def": 19,
+            "spa": 22,
+            "spd": 18,
+            "spe": 16
+          }
+        },
+        {
+          "num": 417,
+          "species": "파치리스",
+          "form": null,
+          "canon": false,
+          "level": 15,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 26,
+            "def": 18,
+            "spa": 25,
+            "spd": 22,
+            "spe": 18
+          }
+        },
+        {
+          "num": 479,
+          "species": "로토무",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 21,
+            "def": 26,
+            "spa": 25,
+            "spd": 20,
+            "spe": 24
+          }
+        }
+      ]
+    },
+    {
+      "region": 4,
+      "region_name": "하나",
+      "role": "G1",
+      "name": "덴트",
+      "canon": true,
+      "mons": [
+        {
+          "num": 548,
+          "species": "치릴리",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 24,
+            "atk": 25,
+            "def": 29,
+            "spa": 30,
+            "spd": 26,
+            "spe": 25
+          }
+        }
+      ]
+    },
+    {
+      "region": 4,
+      "region_name": "하나",
+      "role": "G2",
+      "name": "알로에",
+      "canon": true,
+      "mons": [
+        {
+          "num": 585,
+          "species": "사철록",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 4,
+          "iv": {
+            "hp": 26,
+            "atk": 29,
+            "def": 22,
+            "spa": 21,
+            "spd": 27,
+            "spe": 28
+          }
+        }
+      ]
+    },
+    {
+      "region": 4,
+      "region_name": "하나",
+      "role": "T",
+      "name": "에이스 트레이너 한결",
+      "canon": false,
+      "mons": [
+        {
+          "num": 863,
+          "species": "나이킹",
+          "form": null,
+          "canon": false,
+          "level": 22,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 22,
+            "def": 16,
+            "spa": 19,
+            "spd": 18,
+            "spe": 17
+          }
+        },
+        {
+          "num": 546,
+          "species": "소미안",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 22,
+            "def": 24,
+            "spa": 19,
+            "spd": 20,
+            "spe": 20
+          }
+        },
+        {
+          "num": 636,
+          "species": "활화르바",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 20,
+            "def": 17,
+            "spa": 21,
+            "spd": 18,
+            "spe": 25
+          }
+        },
+        {
+          "num": 538,
+          "species": "던지미",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 26,
+            "def": 18,
+            "spa": 25,
+            "spd": 20,
+            "spe": 18
+          }
+        },
+        {
+          "num": 572,
+          "species": "치라미",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 21,
+            "def": 19,
+            "spa": 24,
+            "spd": 20,
+            "spe": 17
+          }
+        }
+      ]
+    },
+    {
+      "region": 4,
+      "region_name": "하나",
+      "role": "T",
+      "name": "베테랑 트레이너 보람",
+      "canon": false,
+      "mons": [
+        {
+          "num": 636,
+          "species": "활화르바",
+          "form": null,
+          "canon": false,
+          "level": 31,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 26,
+            "def": 16,
+            "spa": 23,
+            "spd": 16,
+            "spe": 19
+          }
+        },
+        {
+          "num": 224,
+          "species": "대포무노",
+          "form": null,
+          "canon": false,
+          "level": 26,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 24,
+            "def": 20,
+            "spa": 19,
+            "spd": 18,
+            "spe": 18
+          }
+        },
+        {
+          "num": 561,
+          "species": "심보러",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 19,
+            "def": 19,
+            "spa": 19,
+            "spd": 21,
+            "spe": 24
+          }
+        },
+        {
+          "num": 525,
+          "species": "암트르",
+          "form": null,
+          "canon": false,
+          "level": 28,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 17,
+            "def": 16,
+            "spa": 21,
+            "spd": 25,
+            "spe": 23
+          }
+        },
+        {
+          "num": 568,
+          "species": "깨봉이",
+          "form": null,
+          "canon": false,
+          "level": 27,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 26,
+            "def": 24,
+            "spa": 24,
+            "spd": 24,
+            "spe": 19
+          }
+        }
+      ]
+    },
+    {
+      "region": 5,
+      "region_name": "칼로스",
+      "role": "G1",
+      "name": "비올라",
+      "canon": true,
+      "mons": [
+        {
+          "num": 701,
+          "species": "루차불",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 22,
+            "atk": 29,
+            "def": 23,
+            "spa": 24,
+            "spd": 25,
+            "spe": 27
+          }
+        }
+      ]
+    },
+    {
+      "region": 5,
+      "region_name": "칼로스",
+      "role": "G2",
+      "name": "자크로",
+      "canon": true,
+      "mons": [
+        {
+          "num": 688,
+          "species": "거북손손",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 4,
+          "iv": {
+            "hp": 25,
+            "atk": 30,
+            "def": 26,
+            "spa": 22,
+            "spd": 25,
+            "spe": 22
+          }
+        }
+      ]
+    },
+    {
+      "region": 5,
+      "region_name": "칼로스",
+      "role": "T",
+      "name": "포켓몬 브리더 지안",
+      "canon": false,
+      "mons": [
+        {
+          "num": 662,
+          "species": "불화살빈",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 20,
+            "def": 24,
+            "spa": 25,
+            "spd": 20,
+            "spe": 20
+          }
+        },
+        {
+          "num": 682,
+          "species": "슈쁘",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 25,
+            "def": 25,
+            "spa": 21,
+            "spd": 18,
+            "spe": 16
+          }
+        },
+        {
+          "num": 712,
+          "species": "꽁어름",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 18,
+            "def": 22,
+            "spa": 21,
+            "spd": 22,
+            "spe": 23
+          }
+        },
+        {
+          "num": 701,
+          "species": "루차불",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 18,
+            "def": 25,
+            "spa": 21,
+            "spd": 21,
+            "spe": 26
+          }
+        }
+      ]
+    },
+    {
+      "region": 5,
+      "region_name": "칼로스",
+      "role": "T",
+      "name": "에이스 트레이너 다온",
+      "canon": false,
+      "mons": [
+        {
+          "num": 666,
+          "species": "비비용",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 25,
+            "def": 22,
+            "spa": 21,
+            "spd": 24,
+            "spe": 20
+          }
+        },
+        {
+          "num": 682,
+          "species": "슈쁘",
+          "form": null,
+          "canon": false,
+          "level": 22,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 26,
+            "def": 22,
+            "spa": 26,
+            "spd": 21,
+            "spe": 20
+          }
+        },
+        {
+          "num": 757,
+          "species": "야도뇽",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 23,
+            "def": 24,
+            "spa": 19,
+            "spd": 17,
+            "spe": 23
+          }
+        },
+        {
+          "num": 677,
+          "species": "냐스퍼",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 17,
+            "def": 19,
+            "spa": 26,
+            "spd": 20,
+            "spe": 24
+          }
+        }
+      ]
+    },
+    {
+      "region": 5,
+      "region_name": "칼로스",
+      "role": "T",
+      "name": "베테랑 트레이너 세아",
+      "canon": false,
+      "mons": [
+        {
+          "num": 838,
+          "species": "탄차곤",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 24,
+            "def": 24,
+            "spa": 21,
+            "spd": 20,
+            "spe": 16
+          }
+        },
+        {
+          "num": 660,
+          "species": "파르토",
+          "form": null,
+          "canon": false,
+          "level": 28,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 25,
+            "def": 17,
+            "spa": 19,
+            "spd": 20,
+            "spe": 23
+          }
+        },
+        {
+          "num": 690,
+          "species": "수레기",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 23,
+            "def": 20,
+            "spa": 16,
+            "spd": 19,
+            "spe": 22
+          }
+        },
+        {
+          "num": 698,
+          "species": "아마루스",
+          "form": null,
+          "canon": false,
+          "level": 27,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 26,
+            "def": 26,
+            "spa": 25,
+            "spd": 18,
+            "spe": 20
+          }
+        },
+        {
+          "num": 677,
+          "species": "냐스퍼",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 21,
+            "def": 20,
+            "spa": 19,
+            "spd": 26,
+            "spe": 17
+          }
+        }
+      ]
+    },
+    {
+      "region": 6,
+      "region_name": "알로라",
+      "role": "G1",
+      "name": "일리마",
+      "canon": true,
+      "mons": [
+        {
+          "num": 775,
+          "species": "자말라",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 24,
+            "atk": 24,
+            "def": 27,
+            "spa": 26,
+            "spd": 24,
+            "spe": 29
+          }
+        }
+      ]
+    },
+    {
+      "region": 6,
+      "region_name": "알로라",
+      "role": "G2",
+      "name": "스이렌",
+      "canon": true,
+      "mons": [
+        {
+          "num": 747,
+          "species": "시마사리",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 4,
+          "iv": {
+            "hp": 28,
+            "atk": 26,
+            "def": 25,
+            "spa": 26,
+            "spd": 26,
+            "spe": 21
+          }
+        }
+      ]
+    },
+    {
+      "region": 6,
+      "region_name": "알로라",
+      "role": "T",
+      "name": "플루메리",
+      "canon": true,
+      "mons": [
+        {
+          "num": 747,
+          "species": "시마사리",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 26,
+            "def": 20,
+            "spa": 26,
+            "spd": 17,
+            "spe": 23
+          }
+        }
+      ]
+    },
+    {
+      "region": 6,
+      "region_name": "알로라",
+      "role": "T",
+      "name": "리리에",
+      "canon": true,
+      "mons": [
+        {
+          "num": 755,
+          "species": "자마슈",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 4,
+          "iv": {
+            "hp": 27,
+            "atk": 23,
+            "def": 30,
+            "spa": 29,
+            "spd": 27,
+            "spe": 22
+          }
+        }
+      ]
+    },
+    {
+      "region": 6,
+      "region_name": "알로라",
+      "role": "T",
+      "name": "에이스 트레이너 윤슬",
+      "canon": false,
+      "mons": [
+        {
+          "num": 751,
+          "species": "물거미",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 26,
+            "def": 23,
+            "spa": 19,
+            "spd": 19,
+            "spe": 23
+          }
+        },
+        {
+          "num": 742,
+          "species": "에블리",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 21,
+            "def": 21,
+            "spa": 23,
+            "spd": 18,
+            "spe": 16
+          }
+        },
+        {
+          "num": 938,
+          "species": "빈나두",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 23,
+            "def": 19,
+            "spa": 25,
+            "spd": 17,
+            "spe": 24
+          }
+        },
+        {
+          "num": 759,
+          "species": "포곰곰",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 19,
+            "def": 20,
+            "spa": 17,
+            "spd": 16,
+            "spe": 18
+          }
+        }
+      ]
+    },
+    {
+      "region": 7,
+      "region_name": "가라르",
+      "role": "G1",
+      "name": "야로",
+      "canon": true,
+      "mons": [
+        {
+          "num": 840,
+          "species": "과사삭벌레",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 29,
+            "atk": 30,
+            "def": 27,
+            "spa": 24,
+            "spd": 21,
+            "spe": 21
+          }
+        }
+      ]
+    },
+    {
+      "region": 7,
+      "region_name": "가라르",
+      "role": "T",
+      "name": "베테랑 트레이너 민재",
+      "canon": false,
+      "mons": [
+        {
+          "num": 86,
+          "species": "쥬쥬",
+          "form": null,
+          "canon": false,
+          "level": 30,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 22,
+            "def": 21,
+            "spa": 17,
+            "spd": 18,
+            "spe": 25
+          }
+        },
+        {
+          "num": 866,
+          "species": "마임꽁꽁",
+          "form": null,
+          "canon": false,
+          "level": 35,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 22,
+            "def": 23,
+            "spa": 25,
+            "spd": 24,
+            "spe": 25
+          }
+        },
+        {
+          "num": 817,
+          "species": "누겔레온",
+          "form": null,
+          "canon": false,
+          "level": 33,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 20,
+            "def": 21,
+            "spa": 23,
+            "spd": 23,
+            "spe": 17
+          }
+        },
+        {
+          "num": 849,
+          "species": "스트린더(로우한 모습)",
+          "form": "lowkey",
+          "canon": false,
+          "level": 33,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 25,
+            "def": 16,
+            "spa": 16,
+            "spd": 16,
+            "spe": 22
+          }
+        }
+      ]
+    },
+    {
+      "region": 7,
+      "region_name": "가라르",
+      "role": "T",
+      "name": "에이스 트레이너 한별",
+      "canon": false,
+      "mons": [
+        {
+          "num": 868,
+          "species": "마빌크",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 24,
+            "def": 25,
+            "spa": 18,
+            "spd": 19,
+            "spe": 18
+          }
+        },
+        {
+          "num": 819,
+          "species": "탐리스",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 18,
+            "def": 16,
+            "spa": 16,
+            "spd": 18,
+            "spe": 20
+          }
+        },
+        {
+          "num": 870,
+          "species": "대여르",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 26,
+            "def": 21,
+            "spa": 20,
+            "spd": 23,
+            "spe": 18
+          }
+        },
+        {
+          "num": 866,
+          "species": "마임꽁꽁",
+          "form": null,
+          "canon": false,
+          "level": 20,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 26,
+            "def": 23,
+            "spa": 20,
+            "spd": 22,
+            "spe": 19
+          }
+        },
+        {
+          "num": 843,
+          "species": "모래뱀",
+          "form": null,
+          "canon": false,
+          "level": 23,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 21,
+            "def": 17,
+            "spa": 22,
+            "spd": 16,
+            "spe": 25
+          }
+        }
+      ]
+    },
+    {
+      "region": 7,
+      "region_name": "가라르",
+      "role": "T",
+      "name": "베테랑 트레이너 태오",
+      "canon": false,
+      "mons": [
+        {
+          "num": 904,
+          "species": "장침바루",
+          "form": null,
+          "canon": false,
+          "level": 29,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 26,
+            "def": 18,
+            "spa": 23,
+            "spd": 20,
+            "spe": 26
+          }
+        },
+        {
+          "num": 880,
+          "species": "파치래곤",
+          "form": null,
+          "canon": false,
+          "level": 30,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 24,
+            "def": 26,
+            "spa": 16,
+            "spd": 24,
+            "spe": 19
+          }
+        },
+        {
+          "num": 841,
+          "species": "애프룡",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 18,
+            "def": 22,
+            "spa": 21,
+            "spd": 18,
+            "spe": 19
+          }
+        },
+        {
+          "num": 419,
+          "species": "플로젤",
+          "form": null,
+          "canon": false,
+          "level": 29,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 24,
+            "def": 19,
+            "spa": 18,
+            "spd": 23,
+            "spe": 17
+          }
+        },
+        {
+          "num": 820,
+          "species": "요씽리스",
+          "form": null,
+          "canon": false,
+          "level": 27,
+          "stars": 3,
+          "iv": {
+            "hp": 24,
+            "atk": 21,
+            "def": 25,
+            "spa": 16,
+            "spd": 23,
+            "spe": 26
+          }
+        }
+      ]
+    },
+    {
+      "region": 7,
+      "region_name": "가라르",
+      "role": "T",
+      "name": "축구 선수 강민",
+      "canon": false,
+      "mons": [
+        {
+          "num": 829,
+          "species": "꼬모카",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 17,
+            "def": 26,
+            "spa": 20,
+            "spd": 23,
+            "spe": 26
+          }
+        },
+        {
+          "num": 840,
+          "species": "과사삭벌레",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 19,
+            "def": 24,
+            "spa": 25,
+            "spd": 18,
+            "spe": 24
+          }
+        },
+        {
+          "num": 819,
+          "species": "탐리스",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 23,
+            "atk": 23,
+            "def": 26,
+            "spa": 20,
+            "spd": 18,
+            "spe": 19
+          }
+        },
+        {
+          "num": 852,
+          "species": "때때무노",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 18,
+            "def": 22,
+            "spa": 26,
+            "spd": 16,
+            "spe": 16
+          }
+        }
+      ]
+    },
+    {
+      "region": 7,
+      "region_name": "가라르",
+      "role": "T",
+      "name": "라이더 이안",
+      "canon": false,
+      "mons": [
+        {
+          "num": 865,
+          "species": "창파나이트",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 24,
+            "def": 18,
+            "spa": 16,
+            "spd": 22,
+            "spe": 20
+          }
+        },
+        {
+          "num": 676,
+          "species": "트리미앙",
+          "form": null,
+          "canon": false,
+          "level": 15,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 21,
+            "def": 23,
+            "spa": 25,
+            "spd": 20,
+            "spe": 20
+          }
+        },
+        {
+          "num": 876,
+          "species": "에써르",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 18,
+            "def": 16,
+            "spa": 22,
+            "spd": 20,
+            "spe": 22
+          }
+        },
+        {
+          "num": 868,
+          "species": "마빌크",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 22,
+            "def": 22,
+            "spa": 25,
+            "spd": 16,
+            "spe": 19
+          }
+        },
+        {
+          "num": 819,
+          "species": "탐리스",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 18,
+            "def": 24,
+            "spa": 17,
+            "spd": 21,
+            "spe": 16
+          }
+        }
+      ]
+    },
+    {
+      "region": 8,
+      "region_name": "팔데아",
+      "role": "G1",
+      "name": "단풍",
+      "canon": true,
+      "mons": [
+        {
+          "num": 928,
+          "species": "미니브",
+          "form": null,
+          "canon": false,
+          "level": 10,
+          "stars": 4,
+          "iv": {
+            "hp": 28,
+            "atk": 26,
+            "def": 30,
+            "spa": 22,
+            "spd": 27,
+            "spe": 29
+          }
+        }
+      ]
+    },
+    {
+      "region": 8,
+      "region_name": "팔데아",
+      "role": "T",
+      "name": "에이스 트레이너 새벽",
+      "canon": false,
+      "mons": [
+        {
+          "num": 919,
+          "species": "콩알뚜기",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 18,
+            "atk": 16,
+            "def": 17,
+            "spa": 25,
+            "spd": 21,
+            "spe": 17
+          }
+        },
+        {
+          "num": 926,
+          "species": "쫀도기",
+          "form": null,
+          "canon": false,
+          "level": 18,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 18,
+            "def": 16,
+            "spa": 21,
+            "spd": 16,
+            "spe": 25
+          }
+        },
+        {
+          "num": 953,
+          "species": "구르데",
+          "form": null,
+          "canon": false,
+          "level": 21,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 21,
+            "def": 20,
+            "spa": 26,
+            "spd": 17,
+            "spe": 24
+          }
+        },
+        {
+          "num": 950,
+          "species": "절벼게",
+          "form": null,
+          "canon": false,
+          "level": 17,
+          "stars": 3,
+          "iv": {
+            "hp": 21,
+            "atk": 25,
+            "def": 25,
+            "spa": 25,
+            "spd": 22,
+            "spe": 21
+          }
+        },
+        {
+          "num": 968,
+          "species": "꿈트렁",
+          "form": null,
+          "canon": false,
+          "level": 20,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 23,
+            "def": 17,
+            "spa": 19,
+            "spd": 24,
+            "spe": 16
+          }
+        }
+      ]
+    },
+    {
+      "region": 8,
+      "region_name": "팔데아",
+      "role": "T",
+      "name": "베테랑 트레이너 가람",
+      "canon": false,
+      "mons": [
+        {
+          "num": 943,
+          "species": "마피티프",
+          "form": null,
+          "canon": false,
+          "level": 30,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 22,
+            "def": 22,
+            "spa": 25,
+            "spd": 26,
+            "spe": 23
+          }
+        },
+        {
+          "num": 916,
+          "species": "퍼퓨돈",
+          "form": null,
+          "canon": false,
+          "level": 27,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 24,
+            "def": 25,
+            "spa": 22,
+            "spd": 22,
+            "spe": 17
+          }
+        },
+        {
+          "num": 971,
+          "species": "망망이",
+          "form": null,
+          "canon": false,
+          "level": 24,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 16,
+            "def": 25,
+            "spa": 21,
+            "spd": 20,
+            "spe": 26
+          }
+        },
+        {
+          "num": 927,
+          "species": "바우첼",
+          "form": null,
+          "canon": false,
+          "level": 27,
+          "stars": 3,
+          "iv": {
+            "hp": 17,
+            "atk": 25,
+            "def": 24,
+            "spa": 26,
+            "spd": 22,
+            "spe": 21
+          }
+        },
+        {
+          "num": 907,
+          "species": "나로테",
+          "form": null,
+          "canon": false,
+          "level": 25,
+          "stars": 3,
+          "iv": {
+            "hp": 19,
+            "atk": 25,
+            "def": 21,
+            "spa": 23,
+            "spd": 24,
+            "spe": 22
+          }
+        }
+      ]
+    },
+    {
+      "region": 8,
+      "region_name": "팔데아",
+      "role": "T",
+      "name": "미술부 학생 채원",
+      "canon": false,
+      "mons": [
+        {
+          "num": 955,
+          "species": "하느라기",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 3,
+          "iv": {
+            "hp": 22,
+            "atk": 22,
+            "def": 22,
+            "spa": 22,
+            "spd": 20,
+            "spe": 26
+          }
+        },
+        {
+          "num": 950,
+          "species": "절벼게",
+          "form": null,
+          "canon": false,
+          "level": 19,
+          "stars": 3,
+          "iv": {
+            "hp": 26,
+            "atk": 16,
+            "def": 23,
+            "spa": 26,
+            "spd": 22,
+            "spe": 24
+          }
+        },
+        {
+          "num": 337,
+          "species": "루나톤",
+          "form": null,
+          "canon": false,
+          "level": 13,
+          "stars": 3,
+          "iv": {
+            "hp": 20,
+            "atk": 18,
+            "def": 20,
+            "spa": 17,
+            "spd": 25,
+            "spe": 21
+          }
+        },
+        {
+          "num": 98,
+          "species": "크랩",
+          "form": null,
+          "canon": false,
+          "level": 16,
+          "stars": 3,
+          "iv": {
+            "hp": 16,
+            "atk": 20,
+            "def": 23,
+            "spa": 21,
+            "spd": 23,
+            "spe": 20
+          }
+        },
+        {
+          "num": 965,
+          "species": "부르롱",
+          "form": null,
+          "canon": false,
+          "level": 14,
+          "stars": 3,
+          "iv": {
+            "hp": 25,
+            "atk": 24,
+            "def": 24,
+            "spa": 21,
+            "spd": 19,
+            "spe": 19
+          }
+        }
+      ]
+    }
+  ]
+}
