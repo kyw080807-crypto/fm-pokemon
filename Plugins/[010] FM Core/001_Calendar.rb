@@ -1,6 +1,10 @@
 #===============================================================================
 # FM::Calendar — in-game day counter. Pure Ruby: no RGSS / Essentials symbols,
 # so tools/test can require this file with system Ruby.
+# A year is 365 days with real month lengths and no leap years; matches are
+# scheduled on dates (some weeks have two). Weeks run Monday to Sunday and
+# continue across years, so each year starts one weekday later.
+# Dates passed around are [year, month, day] arrays.
 #===============================================================================
 module FM
   class Calendar
@@ -23,6 +27,46 @@ module FM
 
     def weekday
       WEEKDAYS[@elapsed_days % 7]
+    end
+
+    def date
+      [@year, @month, @day]
+    end
+
+    def days_in_year
+      @month_lengths.sum
+    end
+
+    def day_of_year
+      @month_lengths[0, @month - 1].sum + @day
+    end
+
+    # Day number counted from year 1, month 1, day 1 (= 0).
+    def ordinal(date)
+      y, m, d = date
+      (y - 1) * days_in_year + @month_lengths[0, m - 1].sum + d - 1
+    end
+
+    def date_from_ordinal(n)
+      y, rest = n.divmod(days_in_year)
+      m = 0
+      while rest >= @month_lengths[m]
+        rest -= @month_lengths[m]
+        m += 1
+      end
+      [y + 1, m + 1, rest + 1]
+    end
+
+    def date_after(date, days)
+      date_from_ordinal(ordinal(date) + days)
+    end
+
+    def days_between(from, to)
+      ordinal(to) - ordinal(from)
+    end
+
+    def days_until(date)
+      days_between(self.date, date)
     end
 
     # Advances the date and returns the boundary events crossed, in order,

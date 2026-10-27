@@ -21,7 +21,7 @@ module FM
     end
 
     def date
-      [@calendar.year, @calendar.month, @calendar.day]
+      @calendar.date
     end
 
     # Moves time forward and routes calendar boundary events to the systems
