@@ -32,6 +32,9 @@ ehthumbs.db
 Thumbs.db
 [Dd]esktop.ini
 
+# --- 외부 원본에서 추출한 작업 파일 (tools/pokemanager 로 재생성) ---
+import/
+
 # --- 배포 빌드 ---
 dist/
 Release/
