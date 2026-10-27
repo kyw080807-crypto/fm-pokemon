@@ -375,10 +375,15 @@ module FM
       @cities.each_value.filter_map do |c|
         p = c.project
         next unless p && @calendar.days_until(p[:done]) <= 0
+        c.project = nil
+        if p[:kind] == :building
+          b = c.buildings.find { |x, *| x == p[:target] }
+          b ? b[1] = p[:to] : c.buildings << [p[:target], p[:to]]
+          next { kind: :city_built, city: c.id, what: p[:target], level: p[:to], date: date }
+        end
         c.free_plots += Civic.public_plots(p[:to]) - Civic.public_plots(c.size)
         c.size = p[:to]
         c.club_ids.each { |id| @clubs[id].city_size = c.size }
-        c.project = nil
         { kind: :city_grown, city: c.id, size: c.size, date: date }
       end
     end

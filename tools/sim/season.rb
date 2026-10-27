@@ -133,9 +133,13 @@ puts "funds: start total #{won.(start_funds)} -> end total #{won.(balances.sum)}
 puts "start: #{start_growth}"
 puts "end:   #{growth.call}"
 puts "city sizes: start #{start_cities} -> end #{city_sizes.call}"
-reasons = meetings.flat_map { |m| m[:votes].values.map { |v| v[:reason] } }.compact.tally
-puts "expansion meetings: #{meetings.size}, passed #{meetings.count { |m| m[:passed] }}; " \
-     "no-vote reasons #{reasons}; total unrest #{world.cities.values.sum(&:unrest)}"
+meetings.group_by { |m| m[:agenda] }.each do |agenda, ms|
+  reasons = ms.flat_map { |m| m[:votes].values.map { |v| v[:reason] } }.compact.tally
+  puts "#{agenda} meetings: #{ms.size}, passed #{ms.count { |m| m[:passed] }}; no-vote reasons #{reasons}"
+end
+puts "total unrest #{world.cities.values.sum(&:unrest)}"
+ordinary = world.cities.values.reject(&:capital?)
+puts "ordinary cities transport #{ordinary.map(&:transport).tally.sort.to_h}, hotel #{ordinary.map(&:hotel).tally.sort.to_h}"
 budgets = world.cities.values.map { |c| c.budget.balance }.sort
 puts "city budgets: median #{won.(budgets[budgets.size / 2])}, negative #{budgets.count(&:negative?)} of #{budgets.size}"
 cs = world.clubs.values

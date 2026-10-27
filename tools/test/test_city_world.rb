@@ -70,3 +70,45 @@ class TestCityWorld < Minitest::Test
     assert_equal 5, w.cities["CAP"].size
   end
 end
+
+class TestInfrastructure < Minitest::Test
+  def club(id, city)
+    { id: id, name: id, region: "KANTO", city: city, role: "G1", canon: true, level: 30, potential: 3,
+      type: "NORMAL", stadium: 1, clubhouse: 1, facilities: { TRAINING: 1 },
+      pokemon: Array.new(3) { { bst: 450, level: 30, stars: 3 } } }
+  end
+
+  def city(id, form:, size: 2, free: 1, buildings: [[:RESIDENTIAL, 1], [:TRANSPORT, 1]])
+    { id: id, name: id, region: "KANTO", form: form, size: size, free_plots: free, buildings: buildings }
+  end
+
+  def test_infra_step_rules
+    c = FM::City.new(city("A", form: "SOLO", size: 2))
+    step = FM::Civic.infra_step(c)
+    assert_equal :HOTEL, step[:target], "the lower one first: hotel Lv0 (inn) before transport Lv1"
+    assert_equal 0, step[:from]
+    full = FM::City.new(city("B", form: "SOLO", size: 1, free: 0, buildings: [[:TRANSPORT, 2]]))
+    assert_nil FM::Civic.infra_step(full), "size 1 caps at Lv2 and no plot for a hotel"
+    big = FM::City.new(city("C", form: "SOLO", size: 4, buildings: [[:TRANSPORT, 4], [:HOTEL, 4]]))
+    assert_equal :HOTEL, FM::Civic.infra_step(big)[:target], "transport Lv5 (airport) is capitals only"
+  end
+
+  def test_solo_city_builds_a_hotel_and_it_completes
+    w = FM::World.new_game([club("S1", "S"), club("X1", "X"), club("X2", "X"), club("X3", "X")], seed: 3,
+                           cities: [city("S", form: "SOLO"), city("X", form: "LONDON")])
+    w.clubs["S1"].wallet.record(10_000_000, category: :grant, date: [1, 1, 1])
+    events = w.advance_days(200)
+    m = events.find { |e| e[:kind] == :meeting && e[:agenda] == :infrastructure && e[:city] == "S" && e[:passed] }
+    refute_nil m
+    assert w.cities["S"].hotel >= 1
+    assert_equal 0, w.cities["S"].free_plots
+    assert events.any? { |e| e[:kind] == :city_built && e[:city] == "S" }
+  end
+
+  def test_capitals_do_not_hold_infrastructure_meetings
+    w = FM::World.new_game([club("K1", "K"), club("K2", "K"), club("K3", "K"), club("K4", "K")], seed: 3,
+                           cities: [city("K", form: "LEAGUE", size: 5)])
+    events = w.advance_days(120)
+    assert events.none? { |e| e[:kind] == :meeting }
+  end
+end

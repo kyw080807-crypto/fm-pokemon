@@ -52,6 +52,25 @@ module FM
       { fans: base - wanting + lodging, lodging: lodging }
     end
 
+    # Infrastructure the meeting can build: those with an effect so far.
+    INFRA = %i[TRANSPORT HOTEL].freeze
+    CAPITAL_ONLY_LEVEL = { TRANSPORT: 5 }.freeze   # design 05: Lv5 (airport) needs size 5
+
+    # Next public building step for a city, or nil: the lowest of INFRA
+    # (transport first on a tie), under the size's public cap, a free plot
+    # for a new one. Cost and weeks follow club buildings (draft).
+    def infra_step(city)
+      cap = public_cap(city.size)
+      steps = INFRA.filter_map do |b|
+        lv = city.level(b)
+        next if lv >= cap
+        next if CAPITAL_ONLY_LEVEL[b] && lv + 1 >= CAPITAL_ONLY_LEVEL[b] && city.size < 5
+        next if lv.zero? && city.free_plots < 1   # a new building takes a plot (the inn is free)
+        { target: b, from: lv, cost: Build.building_cost(lv), weeks: Build.build_weeks(:building, lv) }
+      end
+      steps.min_by { |s| [s[:from], INFRA.index(s[:target])] }
+    end
+
     def population(size)  = POPULATION.fetch(size - 1)
     def public_plots(size) = PUBLIC_PLOTS.fetch(size - 1)
     def public_cap(size)  = PUBLIC_CAP.fetch(size - 1)
@@ -137,13 +156,24 @@ module FM
 
     def expansion_score(v, share:)
       t = v[:traits]
-      fit  = 0.5 * t[:civic] + 0.2 * t[:commercial] + 0.2 * t[:cooperative]
-      gain = v[:blocked] ? 1.0 : 0.3
+      fit = 0.5 * t[:civic] + 0.2 * t[:commercial] + 0.2 * t[:cooperative]
+      score(fit: fit, gain: v[:blocked] ? 1.0 : 0.3, share: share, spare: v[:spare], relation: v.fetch(:relation, 0.0))
+    end
+
+    # Transport and hotels bring away fans and tourism: commercial and
+    # city-minded trainers like them (draft weights).
+    def infrastructure_yes?(v, share:)
+      t = v[:traits]
+      fit = 0.3 * t[:civic] + 0.4 * t[:commercial] + 0.2 * t[:cooperative]
+      score(fit: fit, gain: 0.5, share: share, spare: v[:spare], relation: v.fetch(:relation, 0.0)).positive?
+    end
+
+    def score(fit:, gain:, share:, spare:, relation:)
       cost = if share.zero? then 0.0
-             elsif v[:spare] <= 0 then 3.0
-             else [share * 2.0 / v[:spare], 3.0].min
+             elsif spare <= 0 then 3.0
+             else [share * 2.0 / spare, 3.0].min
              end
-      fit + gain - cost + v.fetch(:relation, 0.0)
+      fit + gain - cost + relation
     end
 
     def expansion_yes?(v, share:)
