@@ -138,7 +138,7 @@ module FM
       end
       rows << _INTL("— 스쿼드 {1}마리 —", c[:squad].size)
       c[:squad].each do |m|
-        rest = m[:resting] ? _INTL(" · 휴식") : ""
+        rest = injury_tag(m[:injury], m[:rehab]) || (m[:resting] ? _INTL(" · 휴식") : "")
         rows << _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · 컨디션 {6}{7}", species_name(m[:species]), m[:level], m[:stars],
                       m[:age] + 1, m[:rating], m[:cond], rest)
       end
@@ -339,8 +339,27 @@ module FM
       show_list(_INTL("대회"), rows)
     end
 
+    INJURY_NAMES = { bruise: "타박상", cramp: "근육 경련", sprain: "다리 염좌", muscle: "근육 파열", concussion: "뇌진탕",
+                     burnout: "번아웃", ligament: "인대 손상", fracture: "골절" }.freeze
+
+    def injury_name(kind) = _INTL(INJURY_NAMES.fetch(kind, "부상"))
+
+    # " · 🟡 타박상 1주" (can play) / " · 부상 골절 6주" (out) / " · 재활 2주", or nil.
+    def injury_tag(injury, rehab)
+      if injury
+        if injury[:sev] == 1
+          _INTL(" · 가벼운 부상({1}) {2}주", injury_name(injury[:kind]), injury[:weeks])
+        else
+          _INTL(" · 부상({1}) {2}주 결장", injury_name(injury[:kind]), injury[:weeks])
+        end
+      elsif rehab
+        _INTL(" · 재활 {1}주", rehab)
+      end
+    end
+
     def mon_line(m)
-      rest = m.resting ? _INTL(" · 휴식") : ""
+      inj = m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj } : nil
+      rest = injury_tag(inj, m.rehab) || (m.resting ? _INTL(" · 휴식") : "")
       _INTL("{1} Lv{2} ★{3} · 전력 {4} · 컨디션 {5}{6}", species_name(m.species), m.level, m.stars, m.rating.round,
             m.cond, rest)
     end
@@ -389,7 +408,13 @@ module FM
           when :auto then FM::Battle.fight(me, opp, auto: true, fast: fast)
           else return nil
           end
-      home.id == mine ? r : { res: -r[:res], ko_a: r[:ko_b], ko_b: r[:ko_a] }
+      home.id == mine ? r : flip(r)
+    end
+
+    # A result from the player's side as the home side's view.
+    def flip(r)
+      { res: -r[:res], ko_a: r[:ko_b], ko_b: r[:ko_a], lineup_a: r[:lineup_b], lineup_b: r[:lineup_a],
+        fainted_a: r[:fainted_b], fainted_b: r[:fainted_a] }
     end
 
     # Poké Manager: both entries of six are shown, then each side picks
@@ -446,6 +471,22 @@ module FM
           _INTL("{1} 완공", facility_name(e[:what])) if e[:club] == id
         when :signed
           _INTL("영입: {1} ({2})", species_name(e[:species]), money(e[:cost])) if e[:club] == id
+        when :injured
+          next unless e[:club] == id
+          cause = e[:cause] == :train ? _INTL("훈련 중") : _INTL("경기 중")
+          if e[:sev] == 1
+            _INTL("가벼운 부상: {1} {2}({3}), {4}주 · 출전은 가능", species_name(e[:species]), injury_name(e[:injury]), cause,
+                  e[:weeks])
+          else
+            _INTL("부상: {1} {2}({3}), {4}주 결장", species_name(e[:species]), injury_name(e[:injury]), cause, e[:weeks])
+          end
+        when :recovered
+          next unless e[:club] == id
+          if e[:rehab]
+            _INTL("복귀: {1} (재활 {2}주, 재부상 주의)", species_name(e[:species]), e[:rehab])
+          else
+            _INTL("회복: {1}", species_name(e[:species]))
+          end
         when :cup_champion
           _INTL("{1} 우승: {2}", e[:cup].to_s.upcase, world.clubs[e[:club]].name)
         when :city_grown

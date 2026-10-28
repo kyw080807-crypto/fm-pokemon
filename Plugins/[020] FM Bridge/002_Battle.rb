@@ -55,8 +55,9 @@ module FM
 
     # Fights with the player's chosen three (`picks`, FM::Mon; default the
     # best three) against the opponent's best three. Returns
-    # { res:, ko_a:, ko_b: } from the player's side (a = player).
-    # The match prompt and the pick screen are in FM UI.
+    # { res:, ko_a:, ko_b: } from the player's side (a = player), plus who
+    # played and who fainted (FM::Mon) for fatigue and injuries
+    # (World#after_match). The match prompt and the pick screen are in FM UI.
     def fight(me, opp, picks: nil, auto: false, fast: false)
       picks ||= me.lineup
       Battle.auto = auto
@@ -64,17 +65,17 @@ module FM
       saved = $player.party
       $player.party = picks.map { |m| to_pokemon(m, $player) }
       foe = trainer_for(opp)
+      theirs = opp.lineup   # trainer_for builds the party from this, in order
       setBattleRule("canLose")
       setBattleRule("noExp")
       setBattleRule("noMoney")
       outcome = TrainerBattle.start_core(foe)
-      foe_down = foe.party.count(&:fainted?)
-      mine_down = $player.party.count(&:fainted?)   # healed after a loss, see below
-      case outcome
-      when 1 then { res: 1, ko_a: foe_down, ko_b: mine_down }
-      when 2 then { res: -1, ko_a: foe_down, ko_b: picks.size }   # after_battle heals a losing party
-      else { res: 0, ko_a: foe_down, ko_b: mine_down }
-      end
+      fainted_b = theirs.select.with_index { |_, i| foe.party[i]&.fainted? }
+      # after_battle heals a losing party, so on a loss all three fainted.
+      fainted_a = outcome == 2 ? picks : picks.select.with_index { |_, i| $player.party[i]&.fainted? }
+      res = { 1 => 1, 2 => -1 }.fetch(outcome, 0)
+      { res: res, ko_a: fainted_b.size, ko_b: fainted_a.size,
+        lineup_a: picks, lineup_b: theirs, fainted_a: fainted_a, fainted_b: fainted_b }
     ensure
       Battle.auto = Battle.fast = false
       $player.party = saved if saved

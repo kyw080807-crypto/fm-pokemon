@@ -82,6 +82,7 @@ city_sizes = -> { world.cities.values.map(&:size).tally.sort.to_h }
 start_cities = city_sizes.call
 meetings = []
 squad_events = Hash.new(0)
+injuries = []
 cup_champs = []
 start_funds = world.clubs.values.sum { |c| c.wallet.balance }
 growth = lambda do
@@ -101,6 +102,7 @@ time = Benchmark.realtime do
       results.concat(e[:results]) if e[:kind] == :league_round
       meetings << e if e[:kind] == :meeting
       squad_events[e[:kind]] += 1 if %i[signed released youth].include?(e[:kind])
+      injuries << e if e[:kind] == :injured
       cup_champs << e.merge(year: e[:date][0]) if e[:kind] == :cup_champion
     end
   end
@@ -156,6 +158,16 @@ cs = world.clubs.values
 puts "squads: mean size #{(cs.sum { |c| c.squad.size }.fdiv(cs.size)).round(1)}, " \
      "signing events #{squad_events.sort.to_h}, retired or released mons #{cs.sum { |c| c.retired.size }}, " \
      "empty squads #{cs.count { |c| c.squad.empty? }}"
+unless injuries.empty?
+  per = injuries.size.fdiv(cs.size * years)
+  by_med = injuries.group_by { |e| world.clubs[e[:club]].facilities.fetch(:MEDICAL, 0) }
+                   .transform_values(&:size).sort.to_h
+  puts format("injuries: %.1f per club-season (%s), by severity %s, mean %.1f weeks; out now %d, " \
+              "mean fatigue %.1f; by end MEDICAL level %s",
+              per, injuries.map { |e| e[:cause] }.tally.sort.to_h, injuries.map { |e| e[:sev] }.tally.sort.to_h,
+              injuries.sum { |e| e[:weeks] }.fdiv(injuries.size), cs.sum { |c| c.squad.count(&:out?) },
+              cs.flat_map(&:squad).sum(&:fat).fdiv(cs.sum { |c| c.squad.size }), by_med)
+end
 # Does investment show up in strength? Compare rating change by end training level.
 by_train = cs.group_by { |c| c.facilities.fetch(:TRAINING, 0) }.sort.map do |lv, g|
   delta = g.sum { |c| c.rating - start_rating[c.id] }.fdiv(g.size)

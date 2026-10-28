@@ -28,7 +28,7 @@ module FM
     # Mean of the best three after condition (each side picks 3 of its 6;
     # topMons ranks by OVR x condition); missing slots are 0.
     def team(mons)
-      best = mons.map { |m| mon(m) * cond_mul(m[:cond]) }.max(3)
+      best = mons.map { |m| mon(m) * cond_mul(m[:cond]) * (m[:mul] || 1) }.max(3)
       best.sum / 3.0
     end
   end

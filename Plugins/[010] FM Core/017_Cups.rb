@@ -58,10 +58,11 @@ module FM
 
     def game(world, rng, important: false)
       lambda do |a, b|
-        r = world.play_match(world.clubs[a], world.clubs[b], rng: rng, neutral: true, important: important)
-        world.clubs[a].drain_lineup(Growth::MATCH_COND)
-        world.clubs[b].drain_lineup(Growth::MATCH_COND)
-        r
+        home, away = world.clubs[a], world.clubs[b]
+        lineups = [home.lineup, away.lineup]
+        r = world.play_match(home, away, rng: rng, neutral: true, important: important)
+        world.after_match(home, away, r, lineups)
+        r.slice(:res, :ko_a, :ko_b)   # brackets keep results (saved): no Mons
       end
     end
 

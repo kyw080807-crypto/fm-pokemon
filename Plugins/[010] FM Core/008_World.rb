@@ -63,20 +63,22 @@ module FM
     # The entry both sides reveal before a match (Poké Manager PARTY = 6);
     # each then picks 3 (PICK) of it.
     ENTRY_SIZE = 6
+    # Mons out injured (FM::Injury, severity 2-3) are not in it.
     def entry(n = ENTRY_SIZE)
-      @squad.max_by(n) { |m| m.rating * Rating.cond_mul(m.cond) }
+      @squad.reject(&:out?).max_by(n) { |m| m.rating * Rating.cond_mul(m.cond) * (m.yellow? ? Injury::YELLOW_MUL : 1) }
     end
 
-    def drain_lineup(amount)
-      lineup.each do |m|
-        Growth.drain(m, amount)
+    # Travel (match: false) or a match played (Growth.match_drain: fatigue).
+    def drain_lineup(amount, mons: lineup, match: false)
+      mons.each do |m|
+        match ? Growth.match_drain(m, amount) : Growth.drain(m, amount)
         m.played = true
       end
       refresh_rating
     end
 
     def refresh_rating
-      @rating = Rating.team(@squad.map(&:to_rating))
+      @rating = Rating.team(@squad.reject(&:out?).map(&:to_rating))
     end
 
     def mon_ratings = @squad.map(&:rating)
@@ -212,7 +214,7 @@ module FM
             cm.weekly(self, date)
             (e = cm.finish(self, date)) && events << e
           end
-          condition_week
+          events.concat(condition_week)
           events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) }
         when :new_month
@@ -232,7 +234,32 @@ module FM
       end
       events.concat(Cups.setup(self, rng: @rng)) if @cups.nil? && @leagues.values.all?(&:done?)
       events.concat(Cups.play_day(self, rng: @rng)) if @cups
+      events.concat(@match_events) if @match_events
+      @match_events = nil
       events
+    end
+
+    # After any match (league or cup): both sides that played lose
+    # condition and gain fatigue, and those knocked out may be hurt
+    # (FM::Injury). `lineups` are the mons that played, taken before the
+    # match; a real battle's result may name them (:lineup_a/:lineup_b)
+    # and who fainted (:fainted_a/:fainted_b). Injury events are added to
+    # the day's events.
+    def after_match(home, away, r, lineups)
+      la = r[:lineup_a] || lineups[0]
+      lb = r[:lineup_b] || lineups[1]
+      [[home, la, r[:fainted_a], r[:ko_b]], [away, lb, r[:fainted_b], r[:ko_a]]].each do |club, mons, fainted, ko|
+        fainted ||= mons.sample([ko.to_i, mons.size].min, random: @rng)
+        club.drain_lineup(Growth::MATCH_COND, mons: mons, match: true)
+        Injury.after_match(fainted, club.facilities[:MEDICAL], @rng).each do |m, info|
+          (@match_events ||= []) << injury_event(club, m, info)
+        end
+        club.refresh_rating
+      end
+    end
+
+    def injury_event(club, mon, info)
+      { kind: :injured, club: club.id, species: mon.species, date: date }.merge(info)
     end
 
     # Region strength for PWT places: mean PWT points of its clubs over the
@@ -300,11 +327,11 @@ module FM
         contribute(home, gate[:revenue])
         travel = travel_fatigue(away, home)
         away.drain_lineup(travel) if travel.positive?
+        lineups = [home.lineup, away.lineup]
         r = play_match(home, away, rng: @rng)
-        home.drain_lineup(Growth::MATCH_COND)
-        away.drain_lineup(Growth::MATCH_COND)
+        after_match(home, away, r, lineups)
         settle(r, home, away, ranking)
-        r.merge(attendance: gate[:attendance])
+        r.slice(:res, :ko_a, :ko_b).merge(attendance: gate[:attendance])
       end
       { kind: :league_round, region: region, round: round + 1, date: date, results: results }
     end
@@ -393,11 +420,22 @@ module FM
       days.zero? ? 0 : days * TRAVEL_COND_PER_DAY + ARRIVE_DAY_BEFORE_COND
     end
 
+    # Monday: injuries heal (medical center), condition and fatigue move,
+    # then a training week may hurt. -> :injured / :recovered events.
     def condition_week
+      events = []
       @clubs.each_value do |c|
-        c.squad.each { |m| Growth.condition_week(m) }
+        med = c.facilities[:MEDICAL]
+        c.squad.each do |m|
+          if Injury.heal_week(m, med, @rng)
+            events << { kind: :recovered, club: c.id, species: m.species, rehab: m.rehab, date: date }
+          end
+          Growth.condition_week(m)
+          (info = Injury.train_week(m, @rng)) && events << injury_event(c, m, info)
+        end
         c.refresh_rating
       end
+      events
     end
 
     def squad_week

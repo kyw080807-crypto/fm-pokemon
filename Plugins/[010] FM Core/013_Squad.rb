@@ -19,6 +19,26 @@ module FM
     # Condition 20-100 (Poké Manager cond); older saves have none = 100.
     def cond = @cond || 100
 
+    # Hidden fatigue 0-100 (fatOf): builds up with matches played, slows
+    # rest and raises injury risk. Not shown to the player.
+    attr_writer :fat
+    def fat = @fat || 0
+
+    # FM::Injury: weeks left, { k:, sev:, w0:, cause: }, rehab weeks left.
+    attr_accessor :inj, :injd, :rehab
+    def hurt? = @inj.to_i.positive?
+    def out? = hurt? && @injd && @injd[:sev] >= 2   # 빨간 부상: not in the entry
+    def yellow? = hurt? && !out?
+
+    # injProne: fixed hidden injury proneness 0.7-1.5, from a stable hash
+    # (String#hash changes between runs).
+    def prone
+      @prone ||= begin
+        h = "#{@species}/#{@stars}/#{@life}/#{@branch}/#{@level}".bytes.reduce(7) { |a, b| (a * 31 + b) & 0xffffffff }
+        (0.7 + ((h * 2_654_435_761) % 1000) / 1000.0 * 0.8).round(2)
+      end
+    end
+
     # ev nil = what makeMon's pretrain gives a mon of this level.
     def initialize(species:, bst:, level:, stars:, ev: nil, age: 0, life: Growth::LIFE, canon: false, branch: 0)
       @species, @bst, @level, @stars = species, bst, level, stars
@@ -27,7 +47,7 @@ module FM
     end
 
     def to_rating
-      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond }
+      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond, mul: yellow? ? Injury::YELLOW_MUL : 1 }
     end
 
     def rating = Rating.mon(to_rating)
@@ -53,27 +73,39 @@ module FM
 
     # Weekly condition and focus (weekGrowth/condGain, AI rule): rest below
     # 60 and keep resting until 85; resting recovers 10 + 20% of what's
-    # missing (half if it played last week); training costs 3.
+    # missing (half if it played last week, less with fatigue, x0.8 while
+    # out injured); training costs 3. Fatigue then eases (fatWeek): 2 if it
+    # played, 14 resting, 9 training.
     def condition_week(mon)
       played = mon.played
       mon.played = false
-      mon.resting = mon.cond < 60 || (mon.resting && mon.cond < 85)
+      mon.resting = mon.out? || mon.cond < 60 || (mon.resting && mon.cond < 85)
       if mon.resting
-        gain = [((10 + (100 - mon.cond) * 0.2) * (played ? 0.5 : 1)).round, 1].max
-        mon.cond = [mon.cond + gain, 100].min
+        g = (10 + (100 - mon.cond) * 0.2) * (1 - mon.fat / 200.0) * (played ? 0.5 : 1) * (mon.out? ? 0.8 : 1)
+        mon.cond = [mon.cond + [g.round, 1].max, 100].min
       else
         mon.cond = [mon.cond - TRAIN_COND, COND_MIN].max
       end
+      mon.fat = [mon.fat - (played ? 2 : mon.resting ? 14 : 9), 0].max
     end
 
     def drain(mon, amount)
       mon.cond = [mon.cond - amount, COND_MIN].max
     end
 
+    # A match played (drainCond): costs more with fatigue, and 70% of it
+    # becomes fatigue.
+    def match_drain(mon, amount)
+      d = amount * (1 + mon.fat / 150.0)
+      mon.cond = [(mon.cond - d).round, COND_MIN].max
+      mon.fat = [mon.fat + d * 0.7, 100].min
+    end
+
     # One week of growth after condition_week: resting gives half the level
     # progress and no EVs; tired mons (under 40) train at half effect.
     # train_level is the club's TRAINING design level.
     def week(mon, train_level:, species:)
+      return mon if mon.hurt?   # injured: recovery only, no training
       t = original_level(train_level)
       g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t)
       tired = mon.cond < 40
