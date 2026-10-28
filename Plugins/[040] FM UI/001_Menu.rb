@@ -355,7 +355,7 @@ module FM
         st = FM.state
         rows = [_INTL("기본 방식: {1}", mode_names[st.match_mode]),
                 _INTL("빠른 진행(연출 생략): {1}", st.match_fast ? _INTL("켜짐") : _INTL("꺼짐")), _INTL("닫기")]
-        case pbMessage(_INTL("관장전과 결승은 기본 방식과 상관없이 항상 묻습니다."), rows, rows.size)
+        case pbMessage(_INTL("대회 결승은 기본 방식과 상관없이 항상 묻습니다."), rows, rows.size)
         when 0
           names = State::MATCH_MODES.map { |m| mode_names[m] }
           i = pbMessage(_INTL("경기를 어떻게 진행할까요?"), names + [_INTL("취소")], names.size + 1)
@@ -375,7 +375,7 @@ module FM
       me, opp = home.id == mine ? [home, away] : [away, home]
       mode = FM.state.match_mode
       if important || mode == :ask
-        tag = important ? (neutral ? _INTL("결승") : _INTL("관장전")) : (neutral ? _INTL("대회") : _INTL("리그"))
+        tag = important ? _INTL("결승") : (neutral ? _INTL("대회") : _INTL("리그"))
         modes = %i[direct auto skip]
         i = pbMessage(_INTL("{1}: {2} (전력 {3}) vs {4} (전력 {5})", tag, me.name, me.rating.round, opp.name,
                             opp.rating.round), modes.map { |m| mode_names[m] }, modes.size)

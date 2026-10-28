@@ -9,7 +9,8 @@
 #   (Data/Scripts/012_Overworld/002_Battle triggering/001_Overworld_BattleStarting.rb:492)
 # 자동 진행 (design 06): the same battle with Battle#controlPlayer on, so the
 # battle AI plays the player's side too (as the Battle Frontier sim does);
-# its skill is the player's trainer type's. 빠른 진행: animations off.
+# its skill is the player's trainer type's. Battle style is Set, so the
+# "switch your Pokémon?" prompt never comes up. 빠른 진행: animations off.
 #===============================================================================
 module FM
   module Battle
@@ -86,7 +87,10 @@ module BattleCreationHelperMethods
     alias __fm_prepare_battle prepare_battle
     def prepare_battle(battle)
       __fm_prepare_battle(battle)
-      battle.controlPlayer = true if FM::Battle.auto
+      if FM::Battle.auto
+        battle.controlPlayer = true
+        battle.switchStyle = false   # no "Will you switch?" when the foe sends out a new one
+      end
       battle.showAnims = false if FM::Battle.fast
     end
   end

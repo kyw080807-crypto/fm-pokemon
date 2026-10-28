@@ -111,7 +111,7 @@ module FM
       attr_accessor :player_match
     end
 
-    # `important`: finals and 관장전 (design 06: always asked, whatever the
+    # `important`: cup finals (design 06: always asked, whatever the
     # player's default match mode).
     def play_match(home, away, rng:, neutral: false, important: false)
       hook = World.player_match
@@ -300,18 +300,13 @@ module FM
         contribute(home, gate[:revenue])
         travel = travel_fatigue(away, home)
         away.drain_lineup(travel) if travel.positive?
-        r = play_match(home, away, rng: @rng, important: gym_match?(home, away))
+        r = play_match(home, away, rng: @rng)
         home.drain_lineup(Growth::MATCH_COND)
         away.drain_lineup(Growth::MATCH_COND)
         settle(r, home, away, ranking)
         r.merge(attendance: gate[:attendance])
       end
       { kind: :league_round, region: region, round: round + 1, date: date, results: results }
-    end
-
-    # 관장전: a league match against a gym leader's club (role G1–G8).
-    def gym_match?(home, away)
-      [home, away].any? { |c| c.id != @player_club && c.role.start_with?("G") }
     end
 
     def settle(r, home, away, ranking)

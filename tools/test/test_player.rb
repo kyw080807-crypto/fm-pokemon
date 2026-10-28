@@ -93,21 +93,17 @@ class TestPlayerMatchHook < Minitest::Test
     FM::World.player_match = nil
   end
 
-  # Design 06: 관장전 (vs a gym leader's club) are important; others not.
-  def test_gym_matches_are_important
-    t = TestPlayer.new("x")
-    w = FM::World.new_game([t.club("P", role: "T"), t.club("A"), t.club("B", role: "T"), t.club("C", role: "E1")],
-                           seed: 4, species: TestPlayer::SPECIES)
-    w.player_club = "P"
-    seen = Hash.new { |h, k| h[k] = [] }
-    FM::World.player_match = lambda do |home, away, _world, important:, **|
-      seen[home.id == "P" ? away.id : home.id] << important
+  # League matches are never "important" (only cup finals always ask).
+  def test_league_matches_follow_the_default_mode
+    w = TestPlayer.new("x").world
+    seen = []
+    FM::World.player_match = lambda do |_home, _away, _world, neutral:, important:|
+      seen << important unless neutral
       nil
     end
     w.advance_days(200)
-    assert_equal [true], seen["A"].uniq
-    assert_equal [false], seen["B"].uniq
-    assert_equal [false], seen["C"].uniq
+    refute_empty seen
+    assert_equal [false], seen.uniq
   ensure
     FM::World.player_match = nil
   end
