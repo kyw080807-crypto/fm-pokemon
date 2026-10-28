@@ -166,6 +166,9 @@ end
 # Evolution levels are Poké Manager's (it turns every evolution into a level);
 # FinalBST is the best base stat total reachable by evolving, which scouting
 # aims at (SP[].fb). Region is the dex range of the species' generation.
+# Types and Prev (what it evolves from) are for the original's roster rules:
+# type preference (aiCandScore), one per evolution family (famOf/famDup)
+# and homegrown (isHome).
 dex_path = File.join(ROOT, "import", "pokemanager", "data", "dex.json")
 die "#{dex_path} missing: run tools/pokemanager/export.rb" unless File.exist?(dex_path)
 dex = JSON.parse(File.read(dex_path, encoding: "utf-8"))
@@ -183,6 +186,8 @@ dex.each do |d|
   species_txt << "Dex = #{d['num']}\nBST = #{bst_of.(d)}\nFinalBST = #{final_bst.(d['num'])}\n"
   species_txt << "Tier = #{d['tier']}\nRegion = #{REGIONS[ranges.index { |r| d['num'] <= r }]}\n"
   species_txt << "Basic = #{d['prev'] ? 'false' : 'true'}\n"
+  species_txt << "Types = #{d['types'].map(&:upcase).join(',')}\n"
+  species_txt << "Prev = #{ids[d['prev'] - 1]}\n" if d["prev"]
   d["evo"].each { |e| species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}\n" }
 end
 

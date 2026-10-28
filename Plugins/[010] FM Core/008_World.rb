@@ -13,7 +13,7 @@ module FM
   class Club
     attr_reader :id, :name, :region, :city, :role, :canon, :level, :potential,
                 :facilities, :rating, :wallet, :form, :stadium_shared,
-                :home_fill, :traits, :squad, :retired, :sponsor_bans, :history
+                :home_fill, :traits, :squad, :retired, :sponsor_bans, :history, :type
     attr_accessor :fame, :stadium, :clubhouse, :project, :city_size, :sponsor
 
     def initialize(data)
@@ -26,7 +26,8 @@ module FM
       @facilities  = (data[:facilities] || {}).dup
       @project   = nil   # { kind:, target:, to:, done: [y, m, d] }
       @home_fill = []    # attendance / capacity, last 5 home games
-      @traits    = Traits.generate(name: @name, role: @role, type: data.fetch(:type, "NORMAL"))
+      @type      = data.fetch(:type, "NORMAL")
+      @traits    = Traits.generate(name: @name, role: @role, type: @type)
       @squad = data[:pokemon].map do |m|
         Mon.new(species: m[:species], bst: m[:bst], level: m[:level], stars: m[:stars], ev: m[:ev],
                 age: m.fetch(:age, 0), canon: @canon)
@@ -75,9 +76,14 @@ module FM
     # The entry both sides reveal before a match (Poké Manager PARTY = 6);
     # each then picks 3 (PICK) of it.
     ENTRY_SIZE = 6
-    # Mons out injured (FM::Injury, severity 2-3) are not in it.
+    # Mons out injured (FM::Injury, severity 2-3) are not in it. Gyms and
+    # typed Elite Four keep it to their specialty (FM::Specialty.party).
     def entry(n = ENTRY_SIZE)
-      @squad.reject(&:out?).max_by(n) { |m| m.rating * m.strength_mul }
+      avail = @squad.reject(&:out?)
+      str = avail.to_h { |m| [m, m.rating * m.strength_mul] }.compare_by_identity
+      six = avail.max_by(ENTRY_SIZE) { |m| str[m] }
+      six = Specialty.party(self, six, avail, Scout.pool, strength: str) if Specialty.of(self)
+      six.max_by(n) { |m| str[m] }
     end
 
     # Travel (match: false) or a match played (Growth.match_drain: fatigue).
@@ -114,8 +120,10 @@ module FM
       refresh_rating
     end
 
+    # The best three of the entry (topMons).
     def refresh_rating
-      @rating = Rating.team(@squad.reject(&:out?).map(&:to_rating))
+      mons = Specialty.of(self) ? entry : @squad.reject(&:out?)
+      @rating = Rating.team(mons.map(&:to_rating))
     end
 
     def mon_ratings = @squad.map(&:rating)
@@ -141,6 +149,18 @@ module FM
     attr_accessor :player_club
 
     def ai?(club) = club.id != @player_club
+
+    # Static data a save keeps its own copy of (species pool, club types),
+    # brought up to date from the game's compiled data on load: saves
+    # made before a field existed (e.g. species :types / :prev) get it.
+    def refresh_static(species:, club_types:)
+      @species = species if species && !species.empty?
+      Scout.pool = @species
+      @clubs.each do |id, c|
+        t = club_types[id]
+        c.instance_variable_set(:@type, t) if t && c.type.nil?
+      end
+    end
 
     # { region => its capital City }, for tournament trips.
     def capitals
@@ -190,6 +210,7 @@ module FM
       @clubs    = clubs.to_h { |c| [c.id, c] }
       @cities   = cities.to_h { |c| [c.id, c] }
       @species  = species
+      Scout.pool = species if species
       @sponsors = sponsors
       @clubs.each_value do |c|
         city = @cities[c.city] or next

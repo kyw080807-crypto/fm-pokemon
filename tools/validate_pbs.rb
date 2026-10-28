@@ -52,7 +52,9 @@ SCHEMAS = {
     "Tier"      => { required: true, check: /\A[0-5]\z/ },
     "Region"    => { required: true, check: REGIONS },
     "Basic"     => { required: true, check: %w[true false] },
-    "Evolution" => { repeat: true, check: :evolution }
+    "Evolution" => { repeat: true, check: :evolution },
+    "Types"     => { required: true, check: /\A[A-Z]+(,[A-Z]+)?\z/ },
+    "Prev"      => { check: :species_id }
   }
 }.freeze
 
@@ -104,6 +106,8 @@ def bad_value(rule, value)
     sp, lv = value.split(",")
     return "#{value.inspect} must be SPECIES,LEVEL" unless lv&.match?(INT)
     "unknown species #{sp}" unless SPECIES.key?(sp)
+  when :species_id
+    "unknown species #{value}" unless SPECIES.key?(value)
   when :species
     sp, lv, stars = value.split(",")
     return "#{value.inspect} must be SPECIES,LEVEL,STARS" unless lv&.match?(INT) && stars&.match?(/\A[1-5]\z/)

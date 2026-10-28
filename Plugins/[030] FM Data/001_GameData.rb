@@ -88,7 +88,8 @@ module GameData
   end
 
   class FmSpecies
-    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :pbs_file_suffix
+    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :types, :prev,
+                :pbs_file_suffix
 
     DATA = {}
     DATA_FILENAME = "fm_species.dat"
@@ -102,7 +103,9 @@ module GameData
       "Tier"        => [:tier,       "u"],
       "Region"      => [:region,     "m"],
       "Basic"       => [:basic,      "b"],
-      "Evolution"   => [:evolutions, "^mu"]
+      "Evolution"   => [:evolutions, "^mu"],
+      "Types"       => [:types,      "*m"],   # Poké Manager's (lower-case there)
+      "Prev"        => [:prev,       "m"]
     }
 
     extend ClassMethodsSymbols
@@ -118,6 +121,8 @@ module GameData
       @region     = hash[:region]
       @basic      = hash[:basic] || false
       @evolutions = hash[:evolutions] || []
+      @types      = hash[:types] || []
+      @prev       = hash[:prev]
       @pbs_file_suffix = hash[:pbs_file_suffix] || ""
     end
   end

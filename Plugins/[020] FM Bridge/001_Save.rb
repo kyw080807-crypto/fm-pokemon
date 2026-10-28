@@ -31,7 +31,8 @@ module FM
       species = {}
       GameData::FmSpecies.each do |s|
         species[s.id] = { bst: s.bst, fb: s.final_bst, tier: s.tier, region: s.region.to_s,
-                          basic: s.basic, evo: s.evolutions.map { |to, lv| [to, lv] } }
+                          basic: s.basic, evo: s.evolutions.map { |to, lv| [to, lv] },
+                          types: s.types.map(&:to_s), prev: s.prev&.to_s }
       end
       cities = []
       forms = {}
@@ -58,6 +59,12 @@ module FM
                       min_fame: s.min_fame }
       end
       { clubs: clubs, cities: cities, species: species, sponsors: sponsors }
+    end
+
+    def refresh_static(world)
+      return unless world && world_available?
+      d = world_data
+      world.refresh_static(species: d[:species], club_types: d[:clubs].to_h { |c| [c[:id], c[:type]] })
     end
 
     def build_world(seed:)
@@ -100,6 +107,9 @@ end
 SaveData.register(:fm_state) do
   ensure_class :Hash
   save_value { FM::Bridge.state.to_h }
-  load_value { |value| FM::Bridge.state = FM::State.from_h(value) }
+  load_value do |value|
+    FM::Bridge.state = FM::State.from_h(value)
+    FM::Bridge.refresh_static(FM::Bridge.state.world)
+  end
   new_game_value { FM::Bridge.new_state.to_h }
 end

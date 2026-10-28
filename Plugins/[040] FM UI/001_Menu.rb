@@ -140,7 +140,12 @@ module FM
       if c[:sponsor]
         rows << _INTL("스폰서: {1} (연 {2})", c[:sponsor][:name], money(c[:sponsor][:base]))
       end
-      rows << _INTL("— 스쿼드 {1}마리 —", c[:squad].size)
+      if (sp = c[:specialty])
+        rows << _INTL("{1} 전문 · 다른 타입 스쿼드 {2}/{3} · 엔트리 {4}/{5}", type_name(sp[:type]), sp[:others], sp[:cap],
+                      sp[:entry_others], sp[:entry_cap])
+      end
+      rows << _INTL("— 스쿼드 {1}마리 · 홈그로운 {2} (최소 {3}) · 외부 {4}/{5} —", c[:squad].size, c[:homegrown],
+                    Recruit::HG_MIN, c[:squad].size - c[:homegrown], c[:foreign_cap])
       c[:squad].each do |m|
         rest = injury_tag(m[:injury], m[:rehab]) || (m[:resting] ? _INTL(" · 휴식") : "")
         rest += debuff_tag(m[:species], m[:debuffs])
@@ -242,6 +247,28 @@ module FM
 
     # Scouting stays in the home region for now (design 05: travel level sets
     # the range; travel isn't built yet).
+    TYPE_NAMES = {
+      "NORMAL" => "노말", "FIRE" => "불꽃", "WATER" => "물", "ELECTRIC" => "전기", "GRASS" => "풀", "ICE" => "얼음",
+      "FIGHTING" => "격투", "POISON" => "독", "GROUND" => "땅", "FLYING" => "비행", "PSYCHIC" => "에스퍼", "BUG" => "벌레",
+      "ROCK" => "바위", "GHOST" => "고스트", "DRAGON" => "드래곤", "DARK" => "악", "STEEL" => "강철", "FAIRY" => "페어리"
+    }.freeze
+
+    def type_name(t) = _INTL(TYPE_NAMES.fetch(t.to_s, t.to_s))
+
+    # signBlock texts (Poké Manager).
+    def sign_block_text(why, club)
+      case why
+      when :homegrown
+        _INTL("홈그로운 규정: 다른 지방 출신은 {1}마리까지입니다 (스쿼드의 {2}마리 이상이 {3} 출신). 다른 지방 출신을 내보내면 영입할 수 있습니다.",
+              Recruit.foreign_cap(club), Recruit::HG_MIN, region_name(club.region))
+      when :family then _INTL("같은 진화 계열의 포켓몬이 이미 스쿼드에 있습니다.")
+      when :sub_legend then _INTL("준전설은 1마리만 둘 수 있습니다.")
+      when :specialty
+        _INTL("전문 타입 규정: {1} 타입이 아닌 포켓몬은 스쿼드에 {2}마리까지입니다.", type_name(Specialty.of(club)),
+              Specialty.other_cap(club))
+      end
+    end
+
     def scout
       c = player_club or return
       return if austerity_blocked?(c)
@@ -287,7 +314,11 @@ module FM
         return if j >= c.squad.size
         release = c.squad[j]
       end
-      e = Recruit.sign(c, cand, date: world.calendar.date, release: release)
+      if (why = Recruit.sign_block(c, cand, world.species, release: release))
+        pbMessage(sign_block_text(why, c))
+        return
+      end
+      e = Recruit.sign(c, cand, date: world.calendar.date, release: release, pool: world.species)
       msg = _INTL("{1}을 영입했습니다 ({2}).", species_name(e[:species]), money(e[:cost]))
       msg += " " + _INTL("{1}은 팀을 떠났습니다.", species_name(e[:released])) if e[:released]
       pbMessage(msg)

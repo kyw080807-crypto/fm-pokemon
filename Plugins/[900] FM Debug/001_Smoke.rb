@@ -141,6 +141,9 @@ FM::Smoke.register("fm_menu_render") do
     bitmap.to_file("logs/fm_menu.png")
     bitmap.dispose
     FM::Log.info("smoke: menu rows for #{club.name}: #{rows.size}")
+    spec = FM::UI.my_club_rows(club.id).find { |t| t.include?("전문") }
+    raise "no specialty row for #{club.name} (#{club.role})" if FM::Specialty.of(club) && !spec
+    FM::Log.info("smoke: #{spec}") if spec
     # Player actions the new menu items call.
     opts = FM::Invest.options(club)
     raise "no build options" if opts.empty?
@@ -167,6 +170,7 @@ FM::Smoke.register("fm_menu_render") do
     # stage drops that a switch-in or Haze puts back.
     fresh = Marshal.load(Marshal.dump(club.entry.first))
     fresh.cond = 100
+    fresh.inj = fresh.injd = nil   # a light injury would add a stage
     tired = Marshal.load(Marshal.dump(fresh))
     tired.cond = 30
     pf = FM::Battle.to_pokemon(fresh, foe)

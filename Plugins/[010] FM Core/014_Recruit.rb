@@ -5,19 +5,81 @@
 # scouting), 75% from the club's own region. A short squad signs the best
 # affordable one; a full squad only swaps out its weakest non-canon mon for a
 # candidate worth 5% more. Squad size comes from the clubhouse (design 01).
+# Candidates are judged as the original does (aiCandOk / aiCandScore): never
+# a second of one evolution family or a second 준전설; gym leaders and canon
+# trainers want their type (x1.25, other types x0.6 for gyms, x0.95 for the
+# rest), types the squad already has count x0.92, and seasons left count
+# (remainF). Not carried over: finalVia (the original's usage-based battle
+# viability, from data we don't have). 홈그로운 (HG_MIN): at least HG_MIN
+# of a squad come from the club's own region, so outsiders fill at most
+# squad size - HG_MIN places (player and AI; mons already there stay).
 #===============================================================================
 module FM
   module Recruit
+    HG_MIN = 4
+
     module_function
+
+    def home?(club, mon, pool) = Scout.home?(pool, mon.species, club.region)
+
+    def foreign_cap(club) = [Build.squad_size(club.clubhouse) - HG_MIN, 0].max
+    def foreign_count(club, pool, except: nil) = club.squad.count { |m| !m.equal?(except) && !home?(club, m, pool) }
+
+    # hgBlock: signing `mon` would break the homegrown rule.
+    def hg_block?(club, mon, pool, replacing: nil)
+      !home?(club, mon, pool) && foreign_count(club, pool, except: replacing) >= foreign_cap(club)
+    end
+
+    # famDup
+    def fam_dup?(club, species, pool)
+      f = Scout.family(pool, species)
+      club.squad.any? { |m| Scout.family(pool, m.species) == f }
+    end
+
+    def second_sub_legend?(club, species, pool)
+      pool.dig(species, :tier) == 1 && club.squad.any? { |m| pool.dig(m.species, :tier) == 1 }
+    end
+
+    # aiCandOk
+    def cand_ok?(club, cand, pool)
+      !fam_dup?(club, cand[:mon].species, pool) && !second_sub_legend?(club, cand[:mon].species, pool) &&
+        !Specialty.block?(club, cand[:mon], pool)
+    end
+
+    # aiCandScore (without finalVia).
+    def cand_score(club, cand, pool)
+      m = cand[:mon]
+      types = pool.dig(m.species, :types) || []
+      v = (pool.dig(m.species, :fb) || m.bst) * (0.75 + 0.1 * m.stars)
+      if (ty = club_type(club))
+        v *= types.include?(ty) ? 1.25 : (club.role.start_with?("G") ? 0.6 : 0.95)
+      end
+      have = club.squad.flat_map { |x| pool.dig(x.species, :types) || [] }
+      v *= 0.92 if !types.empty? && types.all? { |t| have.include?(t) }
+      if (sig = Specialty.of(club))
+        v *= Specialty.mon?(pool, m.species, sig) ? Specialty::SCORE_SIG : Specialty::SCORE_OTHER
+      end
+      v * Scout.remain_f(m.age)
+    end
+
+    # The type a club builds around: its specialty (sigSync sets T.type to
+    # it), else a gym leader's or canon trainer's PBS Type.
+    def club_type(club)
+      Specialty.of(club) || ((club.canon || club.role.start_with?("G")) ? club.type : nil)
+    end
 
     # aiEmergency: below 3 mons a club gets free youth players, at least ★3
     # and 60% of the region's average level.
     def emergency(club, pool:, avg_level:, rng:)
       added = []
-      while club.squad.size < 3
+      tries = 0
+      sig = Specialty.of(club)
+      while club.squad.size < 3 && (tries += 1) <= 20
+        type = sig && rng.rand < Specialty::SCOUT_SHARE ? sig : nil
         c = Scout.candidate(pool, region: club.region, scout_level: club.facilities.fetch(:SCOUTING, 0),
-                                  avg_level: avg_level, rng: rng)
+                                  avg_level: avg_level, rng: rng, type: type)
         m = c[:mon]
+        next if fam_dup?(club, m.species, pool)
         m.stars = [m.stars, 3].max
         m.level = [m.level, (avg_level * 0.6).round].max
         Growth.evolve(m, pool)
@@ -34,8 +96,8 @@ module FM
       6.times do
         break if club.squad.size <= 4 || club.wallet.balance >= club.weekly_cost * Invest::RESERVE_WEEKS
         top = club.squad.max_by(3, &:rating)
-        out = (club.squad - top).min_by do |m|
-          Scout.value(m, pool) / Economy.food(ovr: Economy.ovr(m.rating), fame: club.fame)
+        out = (club.squad - top).reject { |m| Scout.legend?(pool, m.species) }.min_by do |m|
+          Scout.mon_value(m, pool) / Economy.food(ovr: Economy.ovr(m.rating), fame: club.fame)
         end
         break unless out
         club.squad.delete(out)
@@ -79,10 +141,12 @@ module FM
     def candidates(club, n, pool:, avg_level:, rng:, year:)
       bonus = scout_bonus(club, year)
       mul = recovery_mul(club, year)
+      sig = Specialty.of(club)
       Array.new(n) do
         region = yield
+        type = sig && rng.rand < Specialty::SCOUT_SHARE ? sig : nil
         c = Scout.candidate(pool, region: region, scout_level: club.facilities.fetch(:SCOUTING, 0),
-                                  avg_level: avg_level, rng: rng, bonus: bonus)
+                                  avg_level: avg_level, rng: rng, bonus: bonus, type: type)
         mul < 1 ? c.merge(full: c[:cost], cost: disc_cost(c[:cost], mul)) : c
       end
     end
@@ -112,14 +176,19 @@ module FM
         rng.rand < 0.75 ? club.region : regions[rng.rand(regions.size)]
       end
       floor = urgent ? 0 : reserve * 0.6
-      ok = cands.select { |c| club.wallet.balance - c[:cost] >= floor }
-      ok.sort_by! { |c| urgent ? [c[:cost], -Scout.value(c[:mon], pool)] : [-Scout.value(c[:mon], pool)] }
+      ok = cands.select { |c| cand_ok?(club, c, pool) && club.wallet.balance - c[:cost] >= floor }
+      ok.sort_by! { |c| urgent ? [c[:cost], -cand_score(club, c, pool)] : [-cand_score(club, c, pool)] }
       pick = ok.first or return
+      need_home = hg_block?(club, pick[:mon], pool)
+      return if short && need_home
 
       out = nil
       unless short || size < cap
-        weakest = club.squad.reject(&:canon).min_by { |m| Scout.value(m, pool) }
-        return if weakest.nil? || Scout.value(pick[:mon], pool) <= Scout.value(weakest, pool) * 1.05
+        av = ->(m) { Scout.mon_value(m, pool) * Scout.remain_f(m.age) }
+        weakest = club.squad.reject do |m|
+          m.canon || Scout.legend?(pool, m.species) || (need_home && home?(club, m, pool))
+        end.min_by(&av)
+        return if weakest.nil? || av.(pick[:mon]) <= av.(weakest) * 1.05
         club.squad.delete(weakest)
         club.retired << weakest
         out = weakest.species
@@ -138,15 +207,40 @@ module FM
       club.wallet.record(-Scout::FEE, category: :scout, date: date)
       q = Growth.original_level(club.facilities.fetch(:SCOUTING, 0))
       n = 3 + (q >= 7 ? 1 : 0) + (q >= 10 ? 1 : 0)
-      candidates(club, n, pool: pool, avg_level: avg_level, rng: rng, year: date[0]) { region }
+      out = []
+      n.times do
+        c = nil
+        7.times do
+          c = candidates(club, 1, pool: pool, avg_level: avg_level, rng: rng, year: date[0]) { region }.first
+          f = Scout.family(pool, c[:mon].species)
+          break unless fam_dup?(club, c[:mon].species, pool) || out.any? { |o| Scout.family(pool, o[:mon].species) == f }
+        end
+        out << c
+      end
+      out
     end
 
     # Signs a candidate; with a full squad, `release` (a Mon in the squad)
     # makes room.
     class LimitReached < StandardError; end
+    class Blocked < StandardError; end   # signBlock: homegrown rule, family, 준전설
 
-    def sign(club, cand, date:, release: nil)
+    # Why the player can't sign `cand` (signBlock), or nil.
+    def sign_block(club, cand, pool, release: nil)
+      sp = cand[:mon].species
+      others = release ? club.squad - [release] : club.squad
+      return :homegrown if hg_block?(club, cand[:mon], pool, replacing: release)
+      return :specialty if Specialty.block?(club, cand[:mon], pool, replacing: release)
+      return :family if others.any? { |m| Scout.family(pool, m.species) == Scout.family(pool, sp) }
+      return :sub_legend if pool.dig(sp, :tier) == 1 && others.any? { |m| pool.dig(m.species, :tier) == 1 }
+      nil
+    end
+
+    def sign(club, cand, date:, release: nil, pool: nil)
       raise LimitReached, "signing limit for #{date[0]}" if signs_left(club, date[0]) <= 0
+      if pool && (why = sign_block(club, cand, pool, release: release))
+        raise Blocked, why.to_s
+      end
       raise Finance::InsufficientFunds, "need #{cand[:cost]}" if club.wallet.balance < cand[:cost]
       if club.squad.size >= Build.squad_size(club.clubhouse)
         raise ArgumentError, "squad full: choose a mon to release" unless release && club.squad.include?(release)

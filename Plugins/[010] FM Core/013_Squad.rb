@@ -184,6 +184,32 @@ module FM
     SUB_TIERS = [1, 4, 5].freeze              # sub-legendary, ultra beast, paradox
     LEGEND_TIERS = [2, 3].freeze
 
+    # The world's species pool, for rules that need a mon's types
+    # (FM::Specialty); World sets it when built or loaded.
+    class << self
+      attr_accessor :pool
+    end
+
+    # finalTypes: its types and those of the first evolution line (cached
+    # per pool, like the original's FT_CACHE; not saved).
+    def self.final_types(pool, species)
+      @ft_cache = {} unless @ft_pool.equal?(pool)
+      @ft_pool = pool
+      @ft_cache[species] ||= final_types_uncached(pool, species)
+    end
+
+    def self.final_types_uncached(pool, species)
+      out = []
+      s = species
+      5.times do
+        d = pool[s] or break
+        out.concat(d[:types] || [])
+        nxt = d[:evo]&.first or break
+        s = nxt.first
+      end
+      out.uniq
+    end
+
     module_function
 
     def weighted(items, rng)
@@ -199,8 +225,19 @@ module FM
     def ri(rng, a, b) = a + rng.rand(b - a + 1)
 
     # pickSpecies: basic forms of the region, weighted toward a final BST.
-    def pick_species(pool, region, target, sub_weight, rng)
+    # type: only species of that type now or after evolving (PICK_TYPE),
+    # from every region when the region has fewer than 4.
+    def pick_species(pool, region, target, sub_weight, rng, type: nil)
       basics = pool.select { |_, s| s[:basic] && s[:region] == region && !LEGEND_TIERS.include?(s[:tier]) }
+      if type
+        typed = basics.select { |id, _| Scout.final_types(pool, id).include?(type) }
+        if typed.size < 4
+          typed = pool.select do |id, s|
+            s[:basic] && !LEGEND_TIERS.include?(s[:tier]) && Scout.final_types(pool, id).include?(type)
+          end
+        end
+        basics = typed unless typed.empty?
+      end
       weighted(basics.keys, rng) do |id|
         s = pool[id]
         d = (s[:fb] - target) / 70.0
@@ -216,12 +253,12 @@ module FM
     # genCand. scout_level is the club's SCOUTING design level.
     # bonus: genCand's scoutBonus (Recruit.scout_bonus), added to the
     # quality level for the target strength and stars only.
-    def candidate(pool, region:, scout_level:, avg_level:, rng:, bonus: 0)
+    def candidate(pool, region:, scout_level:, avg_level:, rng:, bonus: 0, type: nil)
       q = Growth.original_level(scout_level)
       ql = q + bonus
       target = 455 + ql * 8 + ri(rng, -50, 50)
       sub_weight = q >= 5 ? 0.05 * (q - 4) : 0
-      base = pick_species(pool, region, target, sub_weight, rng)
+      base = pick_species(pool, region, target, sub_weight, rng, type: type)
       stars = roll_stars(2.3 + ql * 0.17, rng)
       vet = rng.rand < 0.15
       level = vet ? (avg_level * (0.45 + rng.rand * 0.25)).round : ri(rng, 5, 10) + q
@@ -236,6 +273,38 @@ module FM
              (0.85 + rng.rand * 0.3) * 12
       { base: base, mon: mon, cost: [(cost / 500).round * 500, 500].max }
     end
+
+    # monValue: what a mon is worth, life left aside.
+    def mon_value(mon, pool)
+      fb = pool.dig(mon.species, :fb) || mon.bst
+      fb * (0.75 + 0.1 * mon.stars) * (0.8 + 0.4 * mon.ev / Growth::EV_MAX)
+    end
+
+    # remainF: seasons left, weighing the last six.
+    def remain_f(age) = 0.5 + 0.5 * [1.0, (Growth::LIFE - age) / 6.0].min
+
+    # famOf: the first stage of its evolution family (via Prev).
+    def family(pool, species)
+      s = species
+      5.times do
+        prev = pool.dig(s, :prev) or break
+        s = prev
+      end
+      s
+    end
+
+    # isHome: it or an earlier stage comes from `region` (dex range).
+    def home?(pool, species, region)
+      s = species
+      6.times do
+        return true if pool.dig(s, :region) == region
+        s = pool.dig(s, :prev) or return false
+      end
+      false
+    end
+
+    # LEGT: legendary / mythical (tier 2, 3); SUBT tier 1 = 준전설.
+    def legend?(pool, species) = [2, 3].include?(pool.dig(species, :tier))
 
     # monValue x share of life left: how much a mon is worth keeping.
     def value(mon, pool)

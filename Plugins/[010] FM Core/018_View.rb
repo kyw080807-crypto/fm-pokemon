@@ -32,7 +32,12 @@ module FM
         end,
         last_year: c.history[world.calendar.year - 1],
         signs: { used: c.signs_used(world.calendar.year), limit: Recruit.sign_limit(c, world.calendar.year) },
-        loan: c.loan && c.loan.slice(:owed, :part), crisis: c.crisis, credit_limit: Credit.limit(c) }
+        loan: c.loan && c.loan.slice(:owed, :part), crisis: c.crisis, credit_limit: Credit.limit(c),
+        homegrown: world.species ? c.squad.count { |m| Recruit.home?(c, m, world.species) } : c.squad.size,
+        foreign_cap: Recruit.foreign_cap(c),
+        specialty: (t = Specialty.of(c)) && { type: t, others: Specialty.others(c, world.species), cap: Specialty.other_cap(c),
+                                              entry_others: Specialty.others(c, world.species, c.entry),
+                                              entry_cap: Specialty.entry_other_cap } }
     end
 
     # Where we are in the season and what comes next.

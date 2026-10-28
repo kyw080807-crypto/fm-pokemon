@@ -36,7 +36,8 @@ def species_data
   pbs_sections("fm_species.txt").to_h do |id, s|
     [id, { bst: s["BST"].first.to_i, fb: s["FinalBST"].first.to_i, tier: s["Tier"].first.to_i,
            region: s["Region"].first, basic: s["Basic"].first == "true",
-           evo: s["Evolution"].map { |e| to, lv = e.split(","); [to, lv.to_i] } }]
+           evo: s["Evolution"].map { |e| to, lv = e.split(","); [to, lv.to_i] },
+           types: (s["Types"].first || "").split(","), prev: s["Prev"].first }]
   end
 end
 
