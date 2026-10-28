@@ -286,11 +286,40 @@ module FM
     # Meeting.player_hook: the meeting scene for the player's city. Shows
     # the agenda, each club's share and leaning (with its reason), and lets
     # the player take on more of the others' shares, pay it all, or vote.
+    # 대가 제안: pick a club voting no and what to offer it.
+    def make_offer(me, against, offers)
+      names = against.map(&:name)
+      i = pbMessage(_INTL("누구에게 제안할까요?"), names + [_INTL("취소")], names.size + 1)
+      return if i >= against.size
+      club = against[i]
+      rel = world.relations.get(me.id, club.id)
+      kinds = [[:loan, _INTL("선수 임대 ({1}주)", World::LOAN_WEEKS)], [:support, _INTL("다음 회의 지지 약속")]]
+      kinds << [:favor, _INTL("관계로 부탁 (관계 {1})", relation_text(rel))] if rel >= Meeting::FAVOR_MIN
+      j = pbMessage(_INTL("무엇을 제안할까요?"), kinds.map(&:last) + [_INTL("취소")], kinds.size + 1)
+      return if j >= kinds.size
+      kind = kinds[j].first
+      return { club: club, kind: kind } unless kind == :loan
+      pool = me.squad.reject { |m| m.out? || m.on_loan? || offers.any? { |o| o[:mon].equal?(m) } }
+      k = pbMessage(_INTL("누구를 빌려줄까요? (그동안 내 경기에 못 나온다)"), pool.map { |m| mon_line(m) } + [_INTL("취소")],
+                    pool.size + 1)
+      return if k >= pool.size
+      { club: club, kind: :loan, mon: pool[k] }
+    end
+
+    def offer_text(o)
+      case o[:kind]
+      when :loan then _INTL("{1}에 {2} 임대", o[:club].name, species_name(o[:mon].species))
+      when :support then _INTL("{1}에 다음 회의 지지 약속", o[:club].name)
+      else _INTL("{1}에 부탁", o[:club].name)
+      end
+    end
+
     def player_meeting(p)
       me = p.player
       extra = 0
+      offers = []
       loop do
-        shares, votes = p.evaluate.call(extra)
+        shares, votes = p.evaluate.call(extra, offers)
         rows = [_INTL("{1} 회의: {2}", p.city.name, agenda_text(p.agenda, p.target))]
         if p.cost.positive?
           rows << _INTL("비용 {1} · 도시 예산 {2} · 클럽 분담 {3}", money(p.cost), money(p.city_part), money(p.full_cost))
@@ -303,6 +332,7 @@ module FM
           rows << _INTL("{1}: 분담 {2} · {3}{4}", c.name, money(shares[c.id]), lean, why)
         end
         rows << _INTL("나({1}): 분담 {2}", me.name, money(shares[me.id]))
+        offers.each { |o| rows << _INTL("제안: {1}", offer_text(o)) }
         show_list(_INTL("도시 회의"), rows)
         cmds = [_INTL("찬성"), _INTL("반대")]
         others = shares.reject { |id, _| id == me.id }.values.sum
@@ -310,11 +340,22 @@ module FM
         can_full = p.cost.positive? && p.full_cost.positive? && me.wallet.balance >= p.full_cost
         cmds << _INTL("분담 더 맡기") if can_shift
         cmds << _INTL("전액 부담 ({1})", money(p.full_cost)) if can_full
+        against = p.members.reject { |c| c.equal?(me) || votes[c.id][:yes] }
+        cmds << _INTL("대가 제안") unless against.empty?
         yes_now = votes.count { |id, v| id != me.id && v[:yes] }
         i = pbMessage(_INTL("찬성 쪽 {1}/{2}곳. 어떻게 할까요?", yes_now, p.members.size - 1), cmds, 2)   # cancel = 반대
         case cmds[i]
-        when _INTL("찬성") then return { vote: true, extra: extra }
-        when _INTL("반대"), nil then return { vote: false, extra: extra }
+        when _INTL("찬성") then return { vote: true, extra: extra, offers: offers }
+        when _INTL("반대"), nil then return { vote: false, extra: extra, offers: offers }
+        when _INTL("대가 제안")
+          o = make_offer(me, against, offers) or next
+          _, after = p.evaluate.call(extra, offers + [o])
+          if after[o[:club].id][:yes]
+            offers << o
+            pbMessage(_INTL("{1}: \"좋다, 그렇다면 찬성하겠다.\"", o[:club].name))
+          else
+            pbMessage(_INTL("{1}: \"그것만으로는 안 된다. {2}\"", o[:club].name, reason_line(after[o[:club].id][:reason])))
+          end
         when _INTL("분담 더 맡기")
           steps = [25, 50, 100].map { |pct| (others * pct / 100.0).round }
           labels = [25, 50, 100].zip(steps).map { |pct, amt| _INTL("다른 클럽 몫의 {1}% ({2})", pct, money(amt)) }
@@ -340,6 +381,10 @@ module FM
       v[:clubs].each do |cl|
         rel = cl[:relation].nil? ? _INTL("(나)") : _INTL("관계 {1} ({2})", relation_text(cl[:relation]), format("%+.2f", cl[:relation]))
         rows << _INTL("{1} · 명성 {2} · {3}", cl[:name], cl[:fame], rel)
+      end
+      v[:promises].each { |pr| rows << _INTL("약속: 다음 회의에서 찬성 ({1}에게, {2})", pr[:to], date_text(pr[:made])) }
+      v[:loans].each do |l|
+        rows << _INTL("임대 중: {1} → {2} ({3} 복귀)", species_name(l[:species]), l[:to], date_text(l[:back]))
       end
       rows << _INTL("— 최근 도시 회의 —")
       rows << _INTL("(아직 없음)") if v[:log].empty?
@@ -569,7 +614,19 @@ module FM
           next unless id && e[:votes].key?(id)
           result = e[:passed] ? _INTL("통과") : _INTL("부결")
           how = e[:full] ? _INTL(" (전액 부담)") : _INTL(" ({1}/{2})", e[:votes].count { |_, v| v[:yes] }, e[:votes].size)
-          _INTL("도시 회의 {1}: {2}{3}", agenda_text(e[:agenda], e[:target]), result, how)
+          line = _INTL("도시 회의 {1}: {2}{3}", agenda_text(e[:agenda], e[:target]), result, how)
+          (e[:promises] || []).each do |pr|
+            name = world.clubs[pr[:to]].name
+            line += pr[:kept] ? _INTL(" · {1}와의 약속을 지켰다", name) : _INTL(" · {1}와의 약속을 어겼다 (평판 하락)", name)
+          end
+          line
+        when :loan_back
+          next unless e[:club] == id
+          if e[:returned]
+            _INTL("임대 복귀: {1} ({2}에서)", species_name(e[:species]), world.clubs[e[:to]].name)
+          else
+            _INTL("임대 중 은퇴: {1}", species_name(e[:species]))
+          end
         when :signed
           _INTL("영입: {1} ({2})", species_name(e[:species]), money(e[:cost])) if e[:club] == id
         when :injured

@@ -4,8 +4,9 @@
 # the same city) and by meetings (협의 성공·실패: a passed agenda warms
 # every pair at the table, a failed one cools them; voting differently
 # cools a little more); each season it relaxes toward 0. In a vote a
-# club's mood toward the rest of the meeting shifts its score. Promise
-# keeping (also in the design) needs promises first. All numbers are drafts.
+# club's mood toward the rest of the meeting shifts its score. Promises
+# kept or broken move it too (FM::Meeting.settle_promises). All numbers
+# are drafts.
 #===============================================================================
 module FM
   class Relations

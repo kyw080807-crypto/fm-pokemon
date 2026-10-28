@@ -26,6 +26,10 @@ module FM
 
     # FM::Injury: weeks left, { k:, sev:, w0:, cause: }, rehab weeks left.
     attr_accessor :inj, :injd, :rehab
+
+    # Club id that lent it (World#loan); nil when it plays for its own club.
+    attr_accessor :loan_from
+    def on_loan? = !@loan_from.nil?
     def hurt? = @inj.to_i.positive?
     def out? = hurt? && @injd && @injd[:sev] >= 2   # 빨간 부상: not in the entry
     def yellow? = hurt? && !out?

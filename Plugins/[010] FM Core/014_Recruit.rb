@@ -34,7 +34,7 @@ module FM
       6.times do
         break if club.squad.size <= 4 || club.wallet.balance >= club.weekly_cost * Invest::RESERVE_WEEKS
         top = club.squad.max_by(3, &:rating)
-        out = (club.squad - top).min_by do |m|
+        out = (club.squad - top).reject(&:on_loan?).min_by do |m|
           Scout.value(m, pool) / Economy.food(ovr: Economy.ovr(m.rating), fame: club.fame)
         end
         break unless out
@@ -77,7 +77,7 @@ module FM
 
       out = nil
       unless short || size < cap
-        weakest = club.squad.reject(&:canon).min_by { |m| Scout.value(m, pool) }
+        weakest = club.squad.reject { |m| m.canon || m.on_loan? }.min_by { |m| Scout.value(m, pool) }
         return if weakest.nil? || Scout.value(pick[:mon], pool) <= Scout.value(weakest, pool) * 1.05
         club.squad.delete(weakest)
         club.retired << weakest

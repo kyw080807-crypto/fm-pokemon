@@ -214,9 +214,16 @@ FM::Smoke.register("meeting_player") do
         v = votes[c.id]
         "#{c.name} #{FM::UI.money(shares[c.id])} " + (v[:yes] ? "찬성" : FM::UI.reason_line(v[:reason]))
       end.join(" / ")
-      { vote: true, extra: p.full_cost / 4 }
+      other = p.members.find { |c| !c.equal?(me) }
+      offers = [{ club: other, kind: :loan, mon: me.squad.min_by(&:rating) }, { club: other, kind: :support }]
+      _, with = p.evaluate.call(0, offers)
+      seen << "offers: " + offers.map { |o| FM::UI.offer_text(o) }.join(", ") + " -> " + (with[other.id][:yes] ? "찬성" : "반대")
+      { vote: true, extra: p.full_cost / 4, offers: offers }
     end
     FM.advance_days(200)
+    rows = FM::UI.city_rows(city.id, me.id)
+    FM::Log.info("smoke: city rows " + rows.grep(/약속|임대/).join(" | "))
+    FM::Log.info("smoke: " + seen.grep(/offers/).first.to_s)
     raise "player never asked at #{city.name}" if seen.empty?
     FM::Log.info("smoke: #{city.name} meetings asked #{seen.size}x; e.g. #{FM::UI.agenda_text(:infrastructure, :HOTEL)}: #{seen.first}")
     FM::Log.info("smoke: petitions " + opts.map { |o| FM::UI.agenda_text(o[:agenda], o[:target]) }.join(", "))

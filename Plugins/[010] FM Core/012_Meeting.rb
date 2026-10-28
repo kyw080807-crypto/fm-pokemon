@@ -17,20 +17,40 @@
 # reward the contribution). A club may also petition the next meeting's
 # agenda (petition / petition_options); otherwise the agenda is chosen as
 # above.
+#
+# 대가 제안 (design 02): the player can offer one club something for its
+# yes, which adds to that club's vote score; it is carried out only if
+# that club ends up voting yes:
+#   :loan    — lend it one of the player's mons for World::LOAN_WEEKS
+#              (worth more if the mon would make its top three);
+#   :support — promise to vote yes at the city's next meeting
+#              (World#promises: kept warms the pair, broken cools it and
+#              the player's standing with the whole table);
+#   :favor   — ask on good relations (우호, 0.2+): the relation itself is
+#              the bonus, and FAVOR_COST of it is spent.
 #===============================================================================
 module FM
   module Meeting
     FULL_PAY_RELATION = 0.08     # with every other club at the table
     FULL_PAY_FAME_PER = 50_000   # +1 fame per this much paid...
     FULL_PAY_FAME_MAX = 6        # ...at most
+    OFFER_LOAN = 0.4             # vote-score bonus for a loan...
+    OFFER_LOAN_TOP3 = 1.0        # ...of a mon that would play for them
+    OFFER_SUPPORT = 0.3
+    FAVOR_MIN = 0.2
+    FAVOR_COST = 0.1
+    PROMISE_KEPT = 0.05
+    PROMISE_BROKEN = -0.15       # with the club promised...
+    PROMISE_BROKEN_TABLE = -0.05 # ...and with every other club at the table
 
-    # What the player hook is given. evaluate.(extra) -> [shares, votes]
-    # with the player paying `extra` more, taken from the others pro rata.
+    # What the player hook is given. evaluate.(extra, offers = []) ->
+    # [shares, votes] with the player paying `extra` more, taken from the
+    # others pro rata, and these offers ({ club:, kind:, mon: }) made.
     Proposal = Struct.new(:city, :agenda, :target, :cost, :city_part, :members, :player, :evaluate, :full_cost,
                           keyword_init: true)
 
     class << self
-      # hook.(Proposal) -> { vote: true/false, extra: Integer } / { full: true } / nil (AI votes)
+      # hook.(Proposal) -> { vote: true/false, extra: Integer, offers: [...] } / { full: true } / nil (AI votes)
       attr_accessor :player_hook
     end
 
@@ -79,6 +99,57 @@ module FM
       city.petition = { agenda: option[:agenda], target: option[:target], by: by }
     end
 
+    # Vote-score bonus an offer gives `club`; 0 when it can't be made.
+    def offer_bonus(world, me, club, offer)
+      case offer[:kind]
+      when :loan
+        mon = offer[:mon]
+        return 0.0 unless mon && me.squad.include?(mon) && !mon.out?
+        third = club.lineup[2]
+        third.nil? || mon.rating * mon.strength_mul > third.rating * third.strength_mul ? OFFER_LOAN_TOP3 : OFFER_LOAN
+      when :support then OFFER_SUPPORT
+      when :favor
+        r = world.relations.get(me.id, club.id)
+        r >= FAVOR_MIN ? r : 0.0
+      else 0.0
+      end
+    end
+
+    def bonuses(world, me, offers)
+      (offers || []).each_with_object(Hash.new(0.0)) do |o, h|
+        h[o[:club].id] += offer_bonus(world, me, o[:club], o)
+      end
+    end
+
+    # Offers to clubs that voted yes are carried out.
+    def carry_out(world, me, city, offers, votes, date)
+      (offers || []).filter_map do |o|
+        c = o[:club]
+        next unless votes[c.id] && votes[c.id][:yes] && offer_bonus(world, me, c, o).positive?
+        case o[:kind]
+        when :loan then world.loan(o[:mon], from: me, to: c)
+        when :support then world.promises << { by: me.id, to: c.id, city: city.id, kind: :support, made: date }
+        when :favor then world.relations.change(me.id, c.id, -FAVOR_COST)
+        end
+        { club: c.id, kind: o[:kind], species: o[:mon]&.species }
+      end
+    end
+
+    # The player's promises to vote yes at this city's next meeting.
+    def settle_promises(world, me, city, members, yes, date)
+      due, rest = world.promises.partition { |pr| pr[:by] == me.id && pr[:city] == city.id && pr[:made] != date }
+      world.promises.replace(rest)
+      due.map do |pr|
+        if yes
+          world.relations.change(me.id, pr[:to], PROMISE_KEPT)
+        else
+          world.relations.change(me.id, pr[:to], PROMISE_BROKEN)
+          members.each { |c| world.relations.change(me.id, c.id, PROMISE_BROKEN_TABLE) unless c.id == pr[:to] }
+        end
+        { to: pr[:to], kept: yes }
+      end
+    end
+
     # Agenda 3 (design 02 공공 예산 배분과 세율): cut tax when citizens are
     # unhappy, raise it when the budget can't pay for the next public step.
     def tax(world, city, members, date, want: nil)
@@ -94,8 +165,9 @@ module FM
                  end
       return nil if raise_it.nil?
       target = raise_it ? :raise : :lower
-      hold(world, city, members, date, agenda: :tax, cost: 0, target: target) do |c, _|
-        yes = Vote.tax_yes?(c.traits, raise: raise_it, relation: world.relations.vote_term(c.id, city.club_ids))
+      hold(world, city, members, date, agenda: :tax, cost: 0, target: target) do |c, _, bonus|
+        yes = Vote.tax_yes?(c.traits, raise: raise_it,
+                                      relation: world.relations.vote_term(c.id, city.club_ids) + bonus.to_f)
         [yes, yes ? nil : (raise_it ? :prefers_team : :no_need)]
       end.tap do |e|
         next unless e && e[:passed]
@@ -112,9 +184,9 @@ module FM
     def expansion(world, city, members, date, forced: false)
       cost = Civic.expansion_cost(city.size) or return nil
       return nil unless forced || members.any? { |c| blocked?(c, city) }
-      hold(world, city, members, date, agenda: :expansion, cost: cost) do |c, share|
+      hold(world, city, members, date, agenda: :expansion, cost: cost) do |c, share, bonus|
         v = { traits: c.traits, spare: c.spare, blocked: blocked?(c, city),
-              relation: world.relations.vote_term(c.id, city.club_ids) }
+              relation: world.relations.vote_term(c.id, city.club_ids) + bonus.to_f }
         [Vote.expansion_yes?(v, share: share), Vote.expansion_reason(v, share: share)]
       end.tap do |e|
         next unless e && e[:passed]
@@ -125,8 +197,8 @@ module FM
 
     def infrastructure(world, city, members, date, only: nil)
       step = Civic.infra_step(city, only: only) or return nil
-      hold(world, city, members, date, agenda: :infrastructure, cost: step[:cost], target: step[:target]) do |c, share|
-        v = { traits: c.traits, spare: c.spare, relation: world.relations.vote_term(c.id, city.club_ids) }
+      hold(world, city, members, date, agenda: :infrastructure, cost: step[:cost], target: step[:target]) do |c, share, bonus|
+        v = { traits: c.traits, spare: c.spare, relation: world.relations.vote_term(c.id, city.club_ids) + bonus.to_f }
         yes = Vote.infrastructure_yes?(v, share: share)
         reason = if yes then nil
                  elsif c.spare <= share then :no_money
@@ -150,18 +222,18 @@ module FM
       city_part = available.clamp(0, cost)
       return nil if city_part + members.sum { |c| [c.spare, 0].max } < cost
       base = split(cost - city_part, members)
-      ballot = lambda do |sh|
+      ballot = lambda do |sh, bonus = {}|
         members.to_h do |c|
-          yes, reason = vote.call(c, sh[c.id])
+          yes, reason = vote.call(c, sh[c.id], bonus.fetch(c.id, 0.0))
           [c.id, { yes: yes, share: sh[c.id], reason: reason }]
         end
       end
       me = world.player_club && members.find { |c| c.id == world.player_club }
       decision = nil
       if me && player_hook
-        evaluate = lambda do |extra|
+        evaluate = lambda do |extra, offers = []|
           sh = shift(base, me, extra)
-          [sh, ballot.call(sh)]
+          [sh, ballot.call(sh, bonuses(world, me, offers))]
         end
         decision = player_hook.call(Proposal.new(city: city, agenda: agenda, target: target, cost: cost,
                                                  city_part: city_part, members: members, player: me,
@@ -176,11 +248,14 @@ module FM
         me.fame = Economy.add_fame(me.fame, [shares[me.id] / FULL_PAY_FAME_PER, FULL_PAY_FAME_MAX].min)
       else
         shares = decision ? shift(base, me, decision[:extra].to_i) : base
-        votes = ballot.call(shares)
+        offers = decision && decision[:offers]
+        votes = ballot.call(shares, me ? bonuses(world, me, offers) : {})
         votes[me.id] = votes[me.id].merge(yes: decision[:vote] ? true : false, reason: nil) if decision
         passed = votes.count { |_, v| v[:yes] } * 2 > members.size
         world.relations.meeting(votes.transform_values { |v| v[:yes] }, passed: passed) if members.size > 1
+        deals = me ? carry_out(world, me, city, offers, votes, date) : []
       end
+      promises = me ? settle_promises(world, me, city, members, votes[me.id][:yes], date) : []
       if passed
         city.budget.record(-city_part, category: agenda, date: date) if city_part.positive?
         members.each do |c|
@@ -191,7 +266,8 @@ module FM
         city.vote_failed
       end
       city.record({ kind: :meeting, agenda: agenda, target: target, city: city.id, date: date, cost: cost,
-                    city_part: city_part, passed: passed, votes: votes, full: full ? me.id : nil })
+                    city_part: city_part, passed: passed, votes: votes, full: full ? me.id : nil,
+                    deals: deals || [], promises: promises })
     end
 
     # The player takes `extra` more (capped at the others' total), taken
