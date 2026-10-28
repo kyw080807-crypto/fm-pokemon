@@ -83,47 +83,47 @@ class TestMeetingPlayer < Minitest::Test
     l2
   end
 
-  def test_offers_raise_the_vote_score_and_loan_counts_more_if_it_plays
+  def test_offer_bonuses
     l1, l2 = @w.clubs["L1"], @w.clubs["L2"]
-    strong = l1.squad.max_by(&:rating)
-    strong.bst = 620
-    weak = l1.squad.min_by(&:rating)
-    weak.level = 2
-    weak.cond = 20
-    assert_equal FM::Meeting::OFFER_LOAN_TOP3, FM::Meeting.offer_bonus(@w, l1, l2, { kind: :loan, mon: strong })
-    assert_equal FM::Meeting::OFFER_LOAN, FM::Meeting.offer_bonus(@w, l1, l2, { kind: :loan, mon: weak })
+    assert_equal FM::Meeting::OFFER_SUPPORT, FM::Meeting.offer_bonus(@w, l1, l2, { kind: :support })
     assert_equal 0.0, FM::Meeting.offer_bonus(@w, l1, l2, { kind: :favor })   # not on good terms
     @w.relations.change("L1", "L2", 0.5)
     assert_in_delta 0.5, FM::Meeting.offer_bonus(@w, l1, l2, { kind: :favor }), 1e-9
   end
 
-  # The bonus sizes are tested above; here a forced big bonus checks what
-  # happens once an offer has won the vote.
-  def test_a_loan_that_wins_the_vote_is_carried_out_and_comes_back
-    l1, l2 = @w.clubs["L1"], broke_l2
-    star = l1.squad.max_by(&:rating)
-    FM::Meeting.player_hook = ->(_) { { vote: true, extra: 0, offers: [{ club: l2, kind: :loan, mon: star }] } }
+  # A forced big bonus checks what happens once an offer has won the vote.
+  def test_a_favor_that_wins_the_vote_spends_relation
+    l2 = broke_l2
+    @w.relations.change("L1", "L2", 0.5)
+    FM::Meeting.player_hook = ->(_) { { vote: true, extra: 0, offers: [{ club: l2, kind: :favor }] } }
     m = FM::Meeting.stub(:offer_bonus, 5.0) { meetings(@w.advance_days(40)).first }
-    FM::Meeting.player_hook = nil
     assert m[:votes]["L2"][:yes]
-    assert_equal [{ club: "L2", kind: :loan, species: star.species }], m[:deals]
-    assert_includes l2.squad, star
-    refute_includes l1.squad, star
-    assert star.on_loan?
-    back = @w.advance_days(7 * FM::World::LOAN_WEEKS + 7).find { |e| e[:kind] == :loan_back }
-    assert back
-    assert_includes l1.squad, star
-    refute star.on_loan?
+    assert_equal [{ club: "L2", kind: :favor }], m[:deals]
+    # +PASSED for the agenda, -FAVOR_COST for the favor (a derby may cool it more)
+    assert_operator @w.relations.get("L1", "L2"), :<=, 0.5 + FM::Relations::PASSED - FM::Meeting::FAVOR_COST + 1e-9   # derbies only cool
   end
 
   def test_no_deal_without_a_yes
-    l1, l2 = @w.clubs["L1"], broke_l2
-    star = l1.squad.max_by(&:rating)
-    FM::Meeting.player_hook = ->(_) { { vote: true, extra: 0, offers: [{ club: l2, kind: :loan, mon: star }] } }
+    l2 = broke_l2
+    FM::Meeting.player_hook = ->(_) { { vote: true, extra: 0, offers: [{ club: l2, kind: :support }] } }
     m = FM::Meeting.stub(:offer_bonus, 0.01) { meetings(@w.advance_days(40)).first }
     refute m[:votes]["L2"][:yes]
     assert_empty m[:deals]
-    assert_includes l1.squad, star
+    assert_empty @w.promises
+  end
+
+  def test_saves_with_loans_send_the_mons_home
+    l1, l2 = @w.clubs["L1"], @w.clubs["L2"]
+    mon = l1.squad.first
+    l1.squad.delete(mon)
+    l2.squad << mon
+    mon.instance_variable_set(:@loan_from, "L1")
+    @w.instance_variable_set(:@loans, [{ mon: mon, from: "L1", to: "L2", back: [1, 3, 1] }])
+    @w.advance_days(7)
+    assert_includes l1.squad, mon
+    refute_includes l2.squad, mon
+    refute @w.instance_variable_defined?(:@loans)
+    refute mon.instance_variable_defined?(:@loan_from)
   end
 
   def test_promises_kept_and_broken

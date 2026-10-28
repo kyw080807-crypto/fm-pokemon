@@ -21,8 +21,6 @@
 # 대가 제안 (design 02): the player can offer one club something for its
 # yes, which adds to that club's vote score; it is carried out only if
 # that club ends up voting yes:
-#   :loan    — lend it one of the player's mons for World::LOAN_WEEKS
-#              (worth more if the mon would make its top three);
 #   :support — promise to vote yes at the city's next meeting
 #              (World#promises: kept warms the pair, broken cools it and
 #              the player's standing with the whole table);
@@ -34,9 +32,7 @@ module FM
     FULL_PAY_RELATION = 0.08     # with every other club at the table
     FULL_PAY_FAME_PER = 50_000   # +1 fame per this much paid...
     FULL_PAY_FAME_MAX = 6        # ...at most
-    OFFER_LOAN = 0.4             # vote-score bonus for a loan...
-    OFFER_LOAN_TOP3 = 1.0        # ...of a mon that would play for them
-    OFFER_SUPPORT = 0.3
+    OFFER_SUPPORT = 0.3          # vote-score bonus
     FAVOR_MIN = 0.2
     FAVOR_COST = 0.1
     PROMISE_KEPT = 0.05
@@ -102,11 +98,6 @@ module FM
     # Vote-score bonus an offer gives `club`; 0 when it can't be made.
     def offer_bonus(world, me, club, offer)
       case offer[:kind]
-      when :loan
-        mon = offer[:mon]
-        return 0.0 unless mon && me.squad.include?(mon) && !mon.out?
-        third = club.lineup[2]
-        third.nil? || mon.rating * mon.strength_mul > third.rating * third.strength_mul ? OFFER_LOAN_TOP3 : OFFER_LOAN
       when :support then OFFER_SUPPORT
       when :favor
         r = world.relations.get(me.id, club.id)
@@ -127,11 +118,10 @@ module FM
         c = o[:club]
         next unless votes[c.id] && votes[c.id][:yes] && offer_bonus(world, me, c, o).positive?
         case o[:kind]
-        when :loan then world.loan(o[:mon], from: me, to: c)
         when :support then world.promises << { by: me.id, to: c.id, city: city.id, kind: :support, made: date }
         when :favor then world.relations.change(me.id, c.id, -FAVOR_COST)
         end
-        { club: c.id, kind: o[:kind], species: o[:mon]&.species }
+        { club: c.id, kind: o[:kind] }
       end
     end
 

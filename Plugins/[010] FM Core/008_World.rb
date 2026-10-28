@@ -214,7 +214,7 @@ module FM
             cm.weekly(self, date)
             (e = cm.finish(self, date)) && events << e
           end
-          events.concat(return_loans)
+          undo_loans if @loans
           events.concat(condition_week)
           events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) }
@@ -259,35 +259,20 @@ module FM
       end
     end
 
-    # Loans (design 02 선수 임대, offered at a meeting): the mon plays for
-    # `to` until `back`, then returns (unless it retired meanwhile).
-    LOAN_WEEKS = 8
-    def loans = @loans ||= []
     # Player promises from meetings (FM::Meeting.settle_promises).
     def promises = @promises ||= []
 
-    def loan(mon, from:, to:, weeks: LOAN_WEEKS)
-      from.squad.delete(mon) or return
-      to.squad << mon
-      mon.loan_from = from.id
-      loans << { mon: mon, from: from.id, to: to.id, back: @calendar.date_after(date, 7 * weeks) }
-      from.refresh_rating
-      to.refresh_rating
-    end
-
-    def return_loans
-      due, @loans = loans.partition { |l| (l[:back] <=> date) <= 0 }
-      due.map do |l|
-        from, to = @clubs[l[:from]], @clubs[l[:to]]
-        back = to.squad.delete(l[:mon])
-        if back
-          l[:mon].loan_from = nil
-          from.squad << l[:mon]
-          from.refresh_rating
-          to.refresh_rating
-        end
-        { kind: :loan_back, club: l[:from], to: l[:to], species: l[:mon].species, returned: !back.nil?, date: date }
+    # A brief build had meeting loans, which Poké Manager has no such thing
+    # as; saves from it send every lent mon home at the next Monday.
+    def undo_loans
+      @loans.each do |l|
+        mon = l[:mon]
+        mon.remove_instance_variable(:@loan_from) if mon.instance_variable_defined?(:@loan_from)
+        next unless @clubs[l[:to]].squad.delete(mon)
+        @clubs[l[:from]].squad << mon
       end
+      @clubs.each_value(&:refresh_rating)
+      remove_instance_variable(:@loans)
     end
 
     def injury_event(club, mon, info)

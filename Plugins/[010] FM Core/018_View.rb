@@ -62,8 +62,7 @@ module FM
           { id: cid, name: club.name, fame: club.fame.round, relation: viewer && cid != viewer ? world.relations.get(viewer, cid).round(2) : nil }
         end,
         log: c.log.map { |e| e.slice(:agenda, :target, :date, :cost, :passed).merge(yes: e[:votes].count { |_, v| v[:yes] }, members: e[:votes].size) },
-        promises: world.promises.select { |pr| pr[:by] == viewer && pr[:city] == id }.map { |pr| { to: world.clubs[pr[:to]].name, made: pr[:made] } },
-        loans: world.loans.select { |l| l[:from] == viewer }.map { |l| { to: world.clubs[l[:to]].name, species: l[:mon].species, back: l[:back] } } }
+        promises: world.promises.select { |pr| pr[:by] == viewer && pr[:city] == id }.map { |pr| { to: world.clubs[pr[:to]].name, made: pr[:made] } } }
     end
 
     def committee(world, region)

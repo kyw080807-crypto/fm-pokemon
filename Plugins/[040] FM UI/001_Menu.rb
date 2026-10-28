@@ -293,22 +293,20 @@ module FM
       return if i >= against.size
       club = against[i]
       rel = world.relations.get(me.id, club.id)
-      kinds = [[:loan, _INTL("선수 임대 ({1}주)", World::LOAN_WEEKS)], [:support, _INTL("다음 회의 지지 약속")]]
+      kinds = [[:support, _INTL("다음 회의 지지 약속")]]
       kinds << [:favor, _INTL("관계로 부탁 (관계 {1})", relation_text(rel))] if rel >= Meeting::FAVOR_MIN
+      kinds.reject! { |k, _| offers.any? { |o| o[:club].equal?(club) && o[:kind] == k } }
+      if kinds.empty?
+        pbMessage(_INTL("{1}에게 더 제안할 것이 없습니다.", club.name))
+        return
+      end
       j = pbMessage(_INTL("무엇을 제안할까요?"), kinds.map(&:last) + [_INTL("취소")], kinds.size + 1)
       return if j >= kinds.size
-      kind = kinds[j].first
-      return { club: club, kind: kind } unless kind == :loan
-      pool = me.squad.reject { |m| m.out? || m.on_loan? || offers.any? { |o| o[:mon].equal?(m) } }
-      k = pbMessage(_INTL("누구를 빌려줄까요? (그동안 내 경기에 못 나온다)"), pool.map { |m| mon_line(m) } + [_INTL("취소")],
-                    pool.size + 1)
-      return if k >= pool.size
-      { club: club, kind: :loan, mon: pool[k] }
+      { club: club, kind: kinds[j].first }
     end
 
     def offer_text(o)
       case o[:kind]
-      when :loan then _INTL("{1}에 {2} 임대", o[:club].name, species_name(o[:mon].species))
       when :support then _INTL("{1}에 다음 회의 지지 약속", o[:club].name)
       else _INTL("{1}에 부탁", o[:club].name)
       end
@@ -383,9 +381,6 @@ module FM
         rows << _INTL("{1} · 명성 {2} · {3}", cl[:name], cl[:fame], rel)
       end
       v[:promises].each { |pr| rows << _INTL("약속: 다음 회의에서 찬성 ({1}에게, {2})", pr[:to], date_text(pr[:made])) }
-      v[:loans].each do |l|
-        rows << _INTL("임대 중: {1} → {2} ({3} 복귀)", species_name(l[:species]), l[:to], date_text(l[:back]))
-      end
       rows << _INTL("— 최근 도시 회의 —")
       rows << _INTL("(아직 없음)") if v[:log].empty?
       v[:log].each do |e|
@@ -620,13 +615,6 @@ module FM
             line += pr[:kept] ? _INTL(" · {1}와의 약속을 지켰다", name) : _INTL(" · {1}와의 약속을 어겼다 (평판 하락)", name)
           end
           line
-        when :loan_back
-          next unless e[:club] == id
-          if e[:returned]
-            _INTL("임대 복귀: {1} ({2}에서)", species_name(e[:species]), world.clubs[e[:to]].name)
-          else
-            _INTL("임대 중 은퇴: {1}", species_name(e[:species]))
-          end
         when :signed
           _INTL("영입: {1} ({2})", species_name(e[:species]), money(e[:cost])) if e[:club] == id
         when :injured
