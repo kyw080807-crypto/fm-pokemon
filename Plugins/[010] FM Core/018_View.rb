@@ -30,7 +30,8 @@ module FM
             injury: m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj } : nil,
             rehab: m.rehab, debuffs: m.debuffs }
         end,
-        last_year: c.history[world.calendar.year - 1] }
+        last_year: c.history[world.calendar.year - 1],
+        signs: { used: c.signs_used(world.calendar.year), limit: Recruit.sign_limit(c, world.calendar.year) } }
     end
 
     # Where we are in the season and what comes next.

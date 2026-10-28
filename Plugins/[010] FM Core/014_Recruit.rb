@@ -45,7 +45,48 @@ module FM
       released
     end
 
+    # --- by last season's league position (Poké Manager, player and AI) ---
+    # signLimit: signings a season, top 4 -> 2, 5-10 -> 3, 11 or lower -> 4,
+    # no position yet -> 3 (free youth call-ups don't count).
+    def prev_pos(club, year) = club.history.dig(year - 1, :pos)
+
+    def sign_limit(club, year)
+      p = prev_pos(club, year)
+      p.nil? ? 3 : p <= 4 ? 2 : p <= 10 ? 3 : 4
+    end
+
+    def signs_left(club, year) = sign_limit(club, year) - club.signs_used(year)
+
+    # scoutBonus: 11th or lower scouts at +2 quality.
+    def scout_bonus(club, year)
+      p = prev_pos(club, year)
+      p && p >= 11 ? 2 : 0
+    end
+
+    # recoveryMul: 15th or lower signs at 40% off, 11-14th 20% off, and a
+    # club in the red at least 20% off. discCost rounds to ₽500, min ₽500.
+    def recovery_mul(club, year)
+      p = prev_pos(club, year)
+      m = p && p >= 15 ? 0.6 : p && p >= 11 ? 0.8 : 1.0
+      club.wallet.balance.negative? ? [m, 0.8].min : m
+    end
+
+    def disc_cost(cost, mul) = [(cost * mul / 500.0).round * 500, 500].max
+
+    # Candidates for `club` as genCand + recoveryMul make them.
+    def candidates(club, n, pool:, avg_level:, rng:, year:)
+      bonus = scout_bonus(club, year)
+      mul = recovery_mul(club, year)
+      Array.new(n) do
+        region = yield
+        c = Scout.candidate(pool, region: region, scout_level: club.facilities.fetch(:SCOUTING, 0),
+                                  avg_level: avg_level, rng: rng, bonus: bonus)
+        mul < 1 ? c.merge(full: c[:cost], cost: disc_cost(c[:cost], mul)) : c
+      end
+    end
+
     def weekly(club, pool:, regions:, avg_level:, window:, date:, rng:)
+      return if signs_left(club, date[0]) <= 0
       cap = Build.squad_size(club.clubhouse)
       size = club.squad.size
       soon = club.squad.count { |m| m.age >= m.life - 1 }
@@ -65,10 +106,8 @@ module FM
 
       q = Growth.original_level(club.facilities.fetch(:SCOUTING, 0))
       n = 3 + (q >= 7 ? 1 : 0) + (q >= 10 ? 1 : 0)
-      cands = Array.new(n) do
-        region = rng.rand < 0.75 ? club.region : regions[rng.rand(regions.size)]
-        Scout.candidate(pool, region: region, scout_level: club.facilities.fetch(:SCOUTING, 0),
-                              avg_level: avg_level, rng: rng)
+      cands = candidates(club, n, pool: pool, avg_level: avg_level, rng: rng, year: date[0]) do
+        rng.rand < 0.75 ? club.region : regions[rng.rand(regions.size)]
       end
       floor = urgent ? 0 : reserve * 0.6
       ok = cands.select { |c| club.wallet.balance - c[:cost] >= floor }
@@ -84,6 +123,7 @@ module FM
         out = weakest.species
       end
       club.wallet.record(-pick[:cost], category: :sign, date: date, memo: pick[:mon].species)
+      club.sign_use(date[0])
       club.squad << pick[:mon]
       { kind: :signed, club: club.id, species: pick[:mon].species, cost: pick[:cost], released: out, date: date }
     end
@@ -96,15 +136,15 @@ module FM
       club.wallet.record(-Scout::FEE, category: :scout, date: date)
       q = Growth.original_level(club.facilities.fetch(:SCOUTING, 0))
       n = 3 + (q >= 7 ? 1 : 0) + (q >= 10 ? 1 : 0)
-      Array.new(n) do
-        Scout.candidate(pool, region: region, scout_level: club.facilities.fetch(:SCOUTING, 0),
-                              avg_level: avg_level, rng: rng)
-      end
+      candidates(club, n, pool: pool, avg_level: avg_level, rng: rng, year: date[0]) { region }
     end
 
     # Signs a candidate; with a full squad, `release` (a Mon in the squad)
     # makes room.
+    class LimitReached < StandardError; end
+
     def sign(club, cand, date:, release: nil)
+      raise LimitReached, "signing limit for #{date[0]}" if signs_left(club, date[0]) <= 0
       raise Finance::InsufficientFunds, "need #{cand[:cost]}" if club.wallet.balance < cand[:cost]
       if club.squad.size >= Build.squad_size(club.clubhouse)
         raise ArgumentError, "squad full: choose a mon to release" unless release && club.squad.include?(release)
@@ -112,6 +152,7 @@ module FM
         club.retired << release
       end
       club.wallet.record(-cand[:cost], category: :sign, date: date, memo: cand[:mon].species)
+      club.sign_use(date[0])
       club.squad << cand[:mon]
       club.refresh_rating
       { kind: :signed, club: club.id, species: cand[:mon].species, cost: cand[:cost],

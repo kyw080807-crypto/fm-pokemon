@@ -214,12 +214,15 @@ module FM
     end
 
     # genCand. scout_level is the club's SCOUTING design level.
-    def candidate(pool, region:, scout_level:, avg_level:, rng:)
+    # bonus: genCand's scoutBonus (Recruit.scout_bonus), added to the
+    # quality level for the target strength and stars only.
+    def candidate(pool, region:, scout_level:, avg_level:, rng:, bonus: 0)
       q = Growth.original_level(scout_level)
-      target = 455 + q * 8 + ri(rng, -50, 50)
+      ql = q + bonus
+      target = 455 + ql * 8 + ri(rng, -50, 50)
       sub_weight = q >= 5 ? 0.05 * (q - 4) : 0
       base = pick_species(pool, region, target, sub_weight, rng)
-      stars = roll_stars(2.3 + q * 0.17, rng)
+      stars = roll_stars(2.3 + ql * 0.17, rng)
       vet = rng.rand < 0.15
       level = vet ? (avg_level * (0.45 + rng.rand * 0.25)).round : ri(rng, 5, 10) + q
       age = vet ? ri(rng, 3, 8) : weighted((0..4).to_a, rng) { |a| AGE_WEIGHTS[a] }

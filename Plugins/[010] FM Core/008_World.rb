@@ -41,6 +41,13 @@ module FM
       @form    = []
     end
 
+    # Signings this season (Recruit.sign_limit). Older saves: none yet.
+    def signs_used(year) = @signs && @signs[:year] == year ? @signs[:n] : 0
+
+    def sign_use(year)
+      @signs = { year: year, n: signs_used(year) + 1 }
+    end
+
     def push_form(result)
       @form << result
       @form.shift while @form.size > 5

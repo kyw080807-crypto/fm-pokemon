@@ -127,7 +127,8 @@ module FM
       rows << _INTL("{1} · {2} · 순위 {3}위", c[:name], region_name(c[:region]), c[:position] || "-")
       rows << _INTL("잔고 {1} · 명성 {2} · 전력 {3}", money(c[:balance]), c[:fame], c[:rating])
       fac = c[:facilities].map { |k, lv| "#{facility_name(k)} Lv#{lv}" }.join(" · ")
-      rows << _INTL("클럽하우스 Lv{1} · 경기장 Lv{2}", c[:clubhouse], c[:stadium])
+      rows << _INTL("클럽하우스 Lv{1} · 경기장 Lv{2} · 이번 시즌 영입 {3}/{4}", c[:clubhouse], c[:stadium], c[:signs][:used],
+                    c[:signs][:limit])
       rows << fac unless fac.empty?
       if c[:project]
         rows << _INTL("공사 중: {1} Lv{2} ({3} 완공)", facility_name(c[:project][:target]), c[:project][:to],
@@ -187,7 +188,20 @@ module FM
     # the range; travel isn't built yet).
     def scout
       c = player_club or return
-      unless pbConfirmMessage(_INTL("{1}에 스카우트를 보낼까요? (비용 {2})", region_name(c.region), money(Scout::FEE)))
+      year = world.calendar.year
+      left = Recruit.signs_left(c, year)
+      limit = Recruit.sign_limit(c, year)
+      if left <= 0
+        pbMessage(_INTL("이번 시즌 영입 한도({1}마리)를 다 썼습니다. 지난 시즌 순위가 낮을수록 한도가 큽니다.", limit))
+        return
+      end
+      extra = []
+      mul = Recruit.recovery_mul(c, year)
+      extra << _INTL("하위권 영입 할인 {1}%", ((1 - mul) * 100).round) if mul < 1
+      extra << _INTL("하위권 스카우트 보너스") if Recruit.scout_bonus(c, year).positive?
+      note = extra.empty? ? "" : "\n" + extra.join(" · ")
+      unless pbConfirmMessage(_INTL("{1}에 스카우트를 보낼까요? (비용 {2})\n이번 시즌 영입 {3}/{4}{5}", region_name(c.region),
+                                    money(Scout::FEE), limit - left, limit, note))
         return
       end
       cands = world.player_scout(c.region)
@@ -197,8 +211,9 @@ module FM
       end
       labels = cands.map do |cand|
         m = cand[:mon]
+        price = cand[:full] ? _INTL("{1} (정가 {2})", money(cand[:cost]), money(cand[:full])) : money(cand[:cost])
         _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · {6}", species_name(m.species), m.level, m.stars,
-              m.age + 1, m.rating.round, money(cand[:cost]))
+              m.age + 1, m.rating.round, price)
       end
       i = pbMessage(_INTL("스카우트 보고서입니다. 영입할 포켓몬을 고르세요."), labels + [_INTL("영입 안 함")],
                     labels.size + 1)

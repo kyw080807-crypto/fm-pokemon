@@ -147,7 +147,9 @@ FM::Smoke.register("fm_menu_render") do
     cands = FM.world.player_scout(club.region)
     raise "scout returned nothing" if cands.nil? || cands.empty?
     names = cands.map { |cd| FM::UI.species_name(cd[:mon].species) }
-    FM::Log.info("smoke: #{opts.size} build options; scouted #{names.join(', ')}")
+    year = FM.world.calendar.year
+    FM::Log.info("smoke: #{opts.size} build options; scouted #{names.join(', ')}; " \
+                 "signs #{club.signs_used(year)}/#{FM::Recruit.sign_limit(club, year)}")
     # Battle parties can be built for real species (no battle is started:
     # that needs the map scene).
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })
