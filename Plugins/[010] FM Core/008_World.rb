@@ -166,9 +166,58 @@ module FM
     def refresh_static(species:, club_types:)
       @species = species if species && !species.empty?
       Scout.pool = @species
+      Morale.week = @week_key
       @clubs.each do |id, c|
         t = club_types[id]
         c.instance_variable_set(:@type, t) if t && c.type.nil?
+      end
+    end
+
+    # Before a match (morPreMatch): each side's entry gets a talk unless it
+    # had one this week. -> { club id => expected win, :big_after => bool }
+    def pre_match(home, away, cup:)
+      week = @week_key || date
+      out = { big_after: cup }
+      [[home, away], [away, home]].each do |c, o|
+        pe = Morale.win_p(c, o)
+        out[c.id] = pe
+        mons = c.entry
+        next if mons.empty? || mons.any? { |m| m.mood(week) }
+        ctx = { f: pe - 0.5, big: big_match?(c, o, cup) }
+        hook = Morale.player_talk
+        tid = (!ai?(c) && hook && hook.call(c, o, ctx, mons)) || Morale.coach_pick(mons, ctx, @rng)
+        rep = 1
+        if !ai?(c)
+          (@talk_hist ||= []).reverse_each { |t| t == tid ? rep += 1 : break }
+          @talk_hist = (@talk_hist + [tid]).last(3)
+        end
+        moods = Morale.apply(mons, tid, ctx, week, @rng, rep: rep)
+        (@match_events ||= []) << { kind: :talk, club: c.id, talk: tid, moods: moods.values.tally, date: date } unless ai?(c)
+      end
+      out
+    end
+
+    # morBig: the PWT, or a late-season meeting near the top of the table.
+    def big_match?(club, other, cup)
+      return cup == :pwt if cup
+      league = @leagues[club.region] or return false
+      return false unless league.next_round >= league.rounds - 6
+      a, b = league.position(club.id), league.position(other.id)
+      (a <= 4 && b <= 6) || (b <= 4 && a <= 6)
+    rescue StandardError
+      false
+    end
+
+    # morWeek: morale toward the team's mood, bond with time; new mons get
+    # their starting bond (bondInit).
+    def morale_week
+      year = @calendar.year
+      @clubs.each_value do |c|
+        c.squad.each do |m|
+          m.bond_year ||= year
+          m.bond = Morale.bond_init(m, year, ai: ai?(c)) unless m.bond?
+        end
+        Morale.weekly(c, c.form)
       end
     end
 
@@ -362,6 +411,8 @@ module FM
           @legend_gift = nil if @legend_gift && (@legend_gift[:until] <=> date) .negative?
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
+          @week_key = date
+          Morale.week = date
           weekly_economy
           @clubs.each_value { |c| events.concat(Credit.week(c, date: date, calendar: @calendar)) }
           city_economy
@@ -377,6 +428,7 @@ module FM
           end
           events.concat(tour_week)
           events.concat(condition_week)
+          morale_week
           events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) && !Credit.austerity?(c) }
         when :new_month
@@ -407,7 +459,7 @@ module FM
     # match; a real battle's result may name them (:lineup_a/:lineup_b)
     # and who fainted (:fainted_a/:fainted_b). Injury events are added to
     # the day's events.
-    def after_match(home, away, r, lineups, league: false)
+    def after_match(home, away, r, lineups, league: false, talk: nil)
       la = r[:lineup_a] || lineups[0]
       lb = r[:lineup_b] || lineups[1]
       [[home, la, r[:fainted_a], r[:ko_b], r[:ko_a]], [away, lb, r[:fainted_b], r[:ko_a], r[:ko_b]]].each do |club, mons, fainted, ko, scored|
@@ -416,11 +468,17 @@ module FM
           m.gp += 1
           m.sgp += 1 if league
         end
+        kos = {}.compare_by_identity
         scored.to_i.times do   # who scored isn't known: a random mon that played
           next if mons.empty?
           m = mons[@rng.rand(mons.size)]
           m.ko += 1
           m.sko += 1 if league
+          kos[m] = (kos[m] || 0) + 1
+        end
+        if talk
+          won = club.equal?(home) ? r[:res].positive? : r[:res].negative?
+          Morale.after_match(club, mons, fainted, kos, won: won, pe: talk[club.id], big: talk[:big_after])
         end
         club.drain_lineup(Growth::MATCH_COND, mons: mons, match: true)
         Injury.after_match(mons, fainted, club.facilities[:MEDICAL], @rng).each do |m, info|
@@ -517,8 +575,9 @@ module FM
         away.travel(go, date: date)
         away.stay_night(hc, date: date) if go[:days].positive?   # arrived the day before
         lineups = [home.lineup, away.lineup]
+        talk = pre_match(home, away, cup: false)
         r = play_match(home, away, rng: @rng)
-        after_match(home, away, r, lineups, league: true)
+        after_match(home, away, r, lineups, league: true, talk: talk)
         away.travel(Travel.land(hc, ac, arrive_before: false, hub: hub(ac)), date: date)   # home again (귀환)
         settle(r, home, away, ranking)
         r.slice(:res, :ko_a, :ko_b).merge(attendance: gate[:attendance])

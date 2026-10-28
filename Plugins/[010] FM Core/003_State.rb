@@ -22,6 +22,9 @@ module FM
     def match_mode = @match_mode || :ask
     # 속도 옵션: battle animations off in FM battles.
     def match_fast = @match_fast || false
+    # 라커룸 토크 (FM::Morale): the player gives it, or leaves it to the coach.
+    attr_writer :talk_auto
+    def talk_auto = @talk_auto || false
 
     def player_club=(id)
       @player_club = id
@@ -65,6 +68,7 @@ module FM
       h[:player_club] = @player_club if @player_club
       h[:match_mode] = @match_mode if @match_mode
       h[:match_fast] = @match_fast if @match_fast
+      h[:talk_auto] = @talk_auto if @talk_auto
       h
     end
 
@@ -75,6 +79,7 @@ module FM
       s.player_club = h[:player_club]
       s.match_mode = h[:match_mode]   # absent in older saves: default :ask
       s.match_fast = h[:match_fast]
+      s.talk_auto = h[:talk_auto]
       s
     end
   end

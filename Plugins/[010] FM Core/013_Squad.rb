@@ -42,6 +42,21 @@ module FM
     # declineMul: the last two seasons of its life play at x0.96, then x0.92.
     def decline_mul = @age >= @life - 1 ? 0.92 : @age >= @life - 2 ? 0.96 : 1.0
 
+    # FM::Morale: morale 0-100, bond 0-255 (set by World when it first
+    # sees the mon), the season it joined, this week's mood, recent KOs.
+    attr_writer :mor, :bond, :form_ko
+    attr_accessor :bond_year
+    def mor = @mor || 60
+    def bond = @bond || Morale::BOND_START
+    def bond? = !@bond.nil?
+    def form_ko = @form_ko || 0
+
+    def set_mood(kind, week)
+      @md = [kind, week]
+    end
+
+    def mood(week) = @md && @md[1] == week ? @md[0] : nil
+
     # On a friendly tour this week (FM::Tour): no training or rest.
     attr_accessor :tour
 
@@ -91,13 +106,14 @@ module FM
     def strength_mul = Rating.cond_mul(cond) * Rating.debuff_mul(debuffs) * decline_mul
 
     def to_rating
-      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond, mul: Rating.debuff_mul(debuffs) * decline_mul }
+      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond,
+        mul: Rating.debuff_mul(debuffs) * decline_mul * Morale.mor_mul(self) * Morale.mood_mul(self, Morale.week) }
     end
 
     # Rating.mon of to_rating, kept until something it reads changes (it
     # is asked for constantly: entry, food, running costs).
     def rating
-      key = [@species, @bst, @level, @stars, @ev, @cond, @inj, @injd, @age]
+      key = [@species, @bst, @level, @stars, @ev, @age].hash   # (cond and injuries don't change Rating.mon)
       return @rating_v if @rating_k == key
       @rating_k = key
       @rating_v = Rating.mon(to_rating)

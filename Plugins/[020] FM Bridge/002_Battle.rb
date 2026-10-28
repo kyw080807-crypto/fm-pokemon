@@ -34,8 +34,7 @@ module FM
     # defence, special defence, defence; 252 each at most.
     def to_pokemon(mon, owner)
       pkmn = Pokemon.new(mon.species.to_sym, LEVEL, owner)
-      natures = GameData::Nature.keys
-      pkmn.nature = natures[mon.nature_index % natures.size]
+      pkmn.nature = Morale.nature(mon)   # the same list the temperament comes from
       iv = Rating::IV_MID.fetch(mon.stars - 1).round
       GameData::Stat.each_main { |s| pkmn.iv[s.id] = iv }
       base = GameData::Species.get(pkmn.species).base_stats
@@ -47,7 +46,10 @@ module FM
         pkmn.ev[s] = give
         left -= give
       end
-      pkmn.fm_cond_mul = Rating.cond_mul(mon.cond) * mon.decline_mul   # setOf: condMul x declineMul
+      # setOf: condMul x declineMul x morMul x moodMul; friendship = bond.
+      pkmn.fm_cond_mul = Rating.cond_mul(mon.cond) * mon.decline_mul * Morale.mor_mul(mon) *
+                         Morale.mood_mul(mon, Morale.week)
+      pkmn.happiness = mon.bond.round.clamp(0, 255)
       pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
       pkmn.calc_stats
       pkmn.heal

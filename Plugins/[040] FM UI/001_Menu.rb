@@ -772,7 +772,8 @@ module FM
 
     def mon_line(m)
       inj = m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj, ptp: m.ptp } : nil
-      rest = (injury_tag(inj, m.rehab) || (m.resting ? _INTL(" · 휴식") : "")) + debuff_tag(m.species, m.debuffs)
+      rest = (injury_tag(inj, m.rehab) || (m.resting ? _INTL(" · 휴식") : "")) + debuff_tag(m.species, m.debuffs) +
+             _INTL(" · 사기 {1}", morale_name(m))
       _INTL("{1} Lv{2} ★{3} · 전력 {4} · 컨디션 {5}{6}", species_name(m.species), m.level, m.stars, m.rating.round,
             m.cond, rest)
     end
@@ -782,17 +783,52 @@ module FM
     end
 
     # Design 06 기본값 설정 and 속도 옵션.
+    TALK_TEXT = {
+      win: ["우리가 이긴다!", "오늘은 우리가 이긴다! 자신 있게 가자!"],
+      easy: ["부담 갖지 마", "결과는 신경 쓰지 마. 우리 배틀만 하면 돼."],
+      fire: ["열정을 보여 줘!", "가진 힘을 전부 쏟아붓자! 열정을 보여 줘!"],
+      focus: ["작전대로 침착하게", "준비한 대로만 하면 된다. 침착하게 가자."],
+      fun: ["즐기고 오자!", "긴장 풀고, 신나게 즐기고 오자!"],
+      trust: ["너희를 믿는다", "나는 너희를 믿는다. 너희라면 할 수 있어."],
+      demand: ["실망시키지 마라", "오늘 지면 용납 못 한다. 실망시키지 마라."]
+    }.freeze
+    MOOD_NAMES = { fire: "투지 폭발", mot: "의욕적", calm: "평온", nerv: "긴장", comp: "자만", off: "시큰둥" }.freeze
+    TEMPER_NAMES = { fiery: "열혈", easy: "느긋", cool: "냉철", sens: "섬세", free: "자유분방" }.freeze
+    MORALE_NAMES = { best: "최상", good: "좋음", ok: "양호", bad: "나쁨", worst: "최악" }.freeze
+
+    def morale_name(mon) = _INTL(MORALE_NAMES[Morale.tier(mon.mor)[1]])
+
+    # Morale.player_talk: the locker room before the player's match. The
+    # entry and each one's temperament are shown; the reactions come in the
+    # week's summary. nil (cancel) leaves it to the coach.
+    def locker_room(club, opp, ctx, mons)
+      return nil if FM.state.match_mode == :skip   # matches it only hears about: the coach talks
+      rows = mons.map do |m|
+        _INTL("{1} · {2} · 사기 {3} · 유대 {4}", species_name(m.species), _INTL(TEMPER_NAMES[Morale.temper(m)]), morale_name(m),
+              m.bond.round)
+      end
+      show_list(_INTL("라커룸: {1}전 (승리 기대 {2}%)", opp.name, ((ctx[:f] + 0.5) * 100).round), rows)
+      talks = Morale::TALKS
+      i = pbMessage(_INTL("경기 전 한마디: 무슨 말을 할까요? (같은 말을 연달아 하면 효과가 떨어집니다)"),
+                    talks.map { |t| _INTL(TALK_TEXT[t][0]) } + [_INTL("코치에게 맡기기")], talks.size + 1)
+      return nil if i >= talks.size
+      pbMessage(_INTL("\"{1}\"", _INTL(TALK_TEXT[talks[i]][1])))
+      talks[i]
+    end
+
     def match_settings
       loop do
         st = FM.state
         rows = [_INTL("기본 방식: {1}", mode_names[st.match_mode]),
-                _INTL("빠른 진행(연출 생략): {1}", st.match_fast ? _INTL("켜짐") : _INTL("꺼짐")), _INTL("닫기")]
+                _INTL("빠른 진행(연출 생략): {1}", st.match_fast ? _INTL("켜짐") : _INTL("꺼짐")),
+                _INTL("라커룸 토크: {1}", st.talk_auto ? _INTL("코치에게 맡기기") : _INTL("직접")), _INTL("닫기")]
         case pbMessage(_INTL("대회 결승은 기본 방식과 상관없이 항상 묻습니다."), rows, rows.size)
         when 0
           names = State::MATCH_MODES.map { |m| mode_names[m] }
           i = pbMessage(_INTL("경기를 어떻게 진행할까요?"), names + [_INTL("취소")], names.size + 1)
           st.match_mode = State::MATCH_MODES[i] if i < names.size
         when 1 then st.match_fast = !st.match_fast
+        when 2 then st.talk_auto = !st.talk_auto
         else break
         end
       end
@@ -865,12 +901,14 @@ module FM
       if id
         FM::World.player_match = method(:player_match)
         Meeting.player_hook = method(:player_meeting)
+        Morale.player_talk = method(:locker_room) unless FM.state.talk_auto
       end
       events = begin
         FM.advance_days(7)
       ensure
         FM::World.player_match = nil
         Meeting.player_hook = nil
+        Morale.player_talk = nil
       end
       lines = events.filter_map do |e|
         case e[:kind]
@@ -899,6 +937,10 @@ module FM
           elsif e[:type] then _INTL("{1} 타입 스카우트 보고({2}): {3}", type_name(e[:type]), e[:region] ? region_name(e[:region]) : _INTL("전체 지방"), names)
           else _INTL("스카우트 보고({1}): {2}", region_name(e[:region]), names)
           end
+        when :talk
+          next unless e[:club] == id
+          moods = e[:moods].map { |k, n| _INTL("{1} {2}", _INTL(MOOD_NAMES[k]), n) }.join(" · ")
+          _INTL("라커룸 토크 \"{1}\": {2}", _INTL(TALK_TEXT[e[:talk]][0]), moods)
         when :tour
           _INTL("원정 친선 투어: 출전료 {1} · 엔트리 컨디션 −{2}, 이번 주 훈련 쉼", money(e[:pay]), Tour::COND) if e[:club] == id
         when :crisis
