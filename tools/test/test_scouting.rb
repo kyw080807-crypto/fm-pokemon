@@ -34,7 +34,8 @@ class TestScouting < Minitest::Test
     w = world(transport: 2)
     assert_equal ["KANTO"], FM::Scouting.regions(w, w.clubs["P"])
     assert_equal :region, w.send_scout("JOHTO")
-    assert_equal :region, w.send_scout(nil, type: "ROCK"), "anywhere needs world range"
+    assert_nil w.send_scout(nil, type: "ROCK")
+    assert_equal "KANTO", FM::Scouting.state(w)[:assign].last[:region], "a type scout stays home below the world range"
     assert_nil world(transport: 3).send_scout("JOHTO")
   end
 
@@ -54,7 +55,8 @@ class TestScouting < Minitest::Test
 
   def test_type_scout_brings_that_type
     w = world
-    assert_nil w.send_scout(nil, type: "ROCK")
+    assert_nil w.send_scout("JOHTO", type: "ROCK")
+    assert_nil FM::Scouting.state(w)[:assign].last[:region], "everywhere: no region to choose"
     assert_equal(-FM::Scouting::TYPE_FEE, w.clubs["P"].wallet.totals[:scout])
     events = w.advance_days(14)
     rep = events.find { |e| e[:kind] == :scout_report && e[:type] }

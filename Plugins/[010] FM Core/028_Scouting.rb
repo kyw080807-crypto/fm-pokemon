@@ -6,8 +6,9 @@
 # - A scout (₽3,000) goes to a region and reports next week: 3-5
 #   candidates, kept 4 weeks. Scouts in the field at once: 1 + original
 #   scouting level / 3 (+1 at 10).
-# - A type scout (₽8,000) looks for one type (now or after evolving) in a
-#   region or everywhere: 3-5 candidates next week, kept 6 weeks.
+# - A type scout (₽8,000) looks for one type (now or after evolving)
+#   everywhere (no region to choose; the home region only below the world
+#   range): 3-5 candidates next week, kept 6 weeks.
 # - A regular report comes free every max(2, 5 - (level - 1) / 3) weeks:
 #   2 candidates (3 from level 7) from anywhere, scouted 2 levels lower,
 #   kept 6 weeks.
@@ -43,12 +44,13 @@ module FM
 
     def state(world) = world.scouting ||= { assign: [], cands: [], next_passive: nil }
 
+    # region: where a regional scout goes; ignored for a type scout.
     def send(world, club, region, type: nil, date:)
       st = state(world)
       fee = type ? TYPE_FEE : FEE
+      region = regions(world, club).size == 1 ? club.region : nil if type
       return :busy if st[:assign].size >= max_scouts(club)
-      return :region if region && !regions(world, club).include?(region)
-      return :region if region.nil? && regions(world, club).size == 1   # anywhere needs world range
+      return :region if !type && !regions(world, club).include?(region)
       return :money if club.wallet.balance < fee
       club.wallet.record(-fee, category: :scout, date: date)
       st[:assign] << { region: region, type: type, due: world.calendar.date_after(date, 7) }

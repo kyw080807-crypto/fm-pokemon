@@ -396,16 +396,24 @@ module FM
         return if i >= types.size
         type = types[i]
       end
-      opts = regions.map { |r| [r, region_name(r)] }
-      opts.unshift([nil, _INTL("전체 지방")]) if typed && regions.size > 1
-      j = pbMessage(regions.size == 1 ? _INTL("교통 Lv3부터 다른 지방에도 보낼 수 있습니다. 어디로 보낼까요?") : _INTL("어디로 보낼까요?"),
-                    opts.map(&:last) + [_INTL("취소")], opts.size + 1)
-      return if j >= opts.size
-      case world.send_scout(opts[j][0], type: type)
+      if typed
+        where = regions.size == 1 ? region_name(c.region) : _INTL("전체 지방")
+        where_note = regions.size == 1 ? _INTL(" (교통 Lv3부터 전체 지방)") : ""
+        return unless pbConfirmMessage(_INTL("{1} 타입 스카우트를 {2}{3}에 보낼까요? ({4})", type_name(type), where, where_note,
+                                             money(Scouting::TYPE_FEE)))
+        target = [nil, where]
+      else
+        opts = regions.map { |r| [r, region_name(r)] }
+        j = pbMessage(regions.size == 1 ? _INTL("교통 Lv3부터 다른 지방에도 보낼 수 있습니다. 어디로 보낼까요?") : _INTL("어디로 보낼까요?"),
+                      opts.map(&:last) + [_INTL("취소")], opts.size + 1)
+        return if j >= opts.size
+        target = opts[j]
+      end
+      case world.send_scout(target[0], type: type)
       when :busy then pbMessage(_INTL("파견할 스카우트가 없습니다 (스카우팅 시설을 올리면 늘어납니다)."))
       when :money then pbMessage(_INTL("파견 비용이 모자랍니다."))
       when :region then pbMessage(_INTL("교통이 Lv3 이상이어야 다른 지방으로 보낼 수 있습니다."))
-      else pbMessage(_INTL("{1}에 스카우트를 보냈습니다. 다음 주에 보고서가 옵니다.", opts[j][1]))
+      else pbMessage(_INTL("{1}에 스카우트를 보냈습니다. 다음 주에 보고서가 옵니다.", target[1]))
       end
     end
 
