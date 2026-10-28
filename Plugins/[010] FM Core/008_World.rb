@@ -267,6 +267,7 @@ module FM
 
     def settle(r, home, away, ranking)
       if r[:res].zero?
+        relations.derby(home.id, away.id, draw: true) if home.city == away.city
         [home, away].each do |c|
           c.wallet.record(Economy::DRAW_BONUS, category: :bonus, date: date)
           c.push_form(:d)
@@ -274,6 +275,7 @@ module FM
         return
       end
       winner, loser = r[:res].positive? ? [home, away] : [away, home]
+      relations.derby(winner.id, loser.id) if home.city == away.city
       gap = [ranking.index(winner.id) - ranking.index(loser.id), 0].max
       winner.wallet.record(Economy::WIN_BONUS + gap * Economy::UPSET_PER_RANK, category: :bonus, date: date)
       upset = loser.fame > winner.fame + 15 ? 0.25 : 0
@@ -323,6 +325,7 @@ module FM
 
     def season_rollover
       events = []
+      relations.season_decay
       @clubs.each_value do |c|
         c.fame = Growth.fame_drift(c.fame)
         next unless @species
@@ -434,6 +437,10 @@ module FM
 
     # One per region with a capital (form LEAGUE). Built on first use, so
     # worlds saved before committees existed get them on load.
+    def relations
+      @relations ||= Relations.new   # older saves get an empty one
+    end
+
     def committees
       @committees ||= @cities.values.select(&:capital?).to_h do |c|
         [c.region, Committee.new(region: c.region, city_id: c.id)]

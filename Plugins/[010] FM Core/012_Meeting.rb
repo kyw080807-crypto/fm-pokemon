@@ -34,7 +34,7 @@ module FM
       return nil if raise_it.nil?
       target = raise_it ? :raise : :lower
       hold(world, city, members, date, agenda: :tax, cost: 0, target: target) do |c, _|
-        yes = Vote.tax_yes?(c.traits, raise: raise_it)
+        yes = Vote.tax_yes?(c.traits, raise: raise_it, relation: world.relations.vote_term(c.id, city.club_ids))
         [yes, yes ? nil : (raise_it ? :prefers_team : :no_need)]
       end.tap do |e|
         next unless e && e[:passed]
@@ -51,7 +51,8 @@ module FM
       cost = Civic.expansion_cost(city.size) or return nil
       return nil unless members.any? { |c| blocked?(c, city) }
       hold(world, city, members, date, agenda: :expansion, cost: cost) do |c, share|
-        v = { traits: c.traits, spare: c.spare, blocked: blocked?(c, city), relation: 0.0 }
+        v = { traits: c.traits, spare: c.spare, blocked: blocked?(c, city),
+              relation: world.relations.vote_term(c.id, city.club_ids) }
         [Vote.expansion_yes?(v, share: share), Vote.expansion_reason(v, share: share)]
       end.tap do |e|
         next unless e && e[:passed]
@@ -63,7 +64,7 @@ module FM
     def infrastructure(world, city, members, date)
       step = Civic.infra_step(city) or return nil
       hold(world, city, members, date, agenda: :infrastructure, cost: step[:cost], target: step[:target]) do |c, share|
-        v = { traits: c.traits, spare: c.spare, relation: 0.0 }
+        v = { traits: c.traits, spare: c.spare, relation: world.relations.vote_term(c.id, city.club_ids) }
         yes = Vote.infrastructure_yes?(v, share: share)
         reason = if yes then nil
                  elsif c.spare <= share then :no_money
@@ -92,6 +93,7 @@ module FM
         [c.id, { yes: yes, share: shares[c.id], reason: reason }]
       end
       passed = votes.count { |_, v| v[:yes] } * 2 > members.size
+      world.relations.meeting(votes.transform_values { |v| v[:yes] }, passed: passed) if members.size > 1
       if passed
         city.budget.record(-city_part, category: agenda, date: date) if city_part.positive?
         members.each do |c|

@@ -75,6 +75,7 @@ years = (ARGV[0] || 1).to_i
 seed = (ARGV[1] || 1).to_i
 data = club_data
 world = FM::World.new_game(data, seed: seed, cities: city_data, species: species_data, sponsors: sponsor_data)
+$sim_world = world   # for ad-hoc probes that load this script
 puts "year-1 sponsors: " + world.clubs.values.map { |c| c.sponsor && c.sponsor[:kind] }.tally.sort_by { |_, n| -n }.to_h.to_s
 start_rating = world.clubs.transform_values(&:rating)
 city_sizes = -> { world.cities.values.map(&:size).tally.sort.to_h }
@@ -138,6 +139,8 @@ meetings.group_by { |m| m[:agenda] }.each do |agenda, ms|
   puts "#{agenda} meetings: #{ms.size}, passed #{ms.count { |m| m[:passed] }}; no-vote reasons #{reasons}"
 end
 puts "total unrest #{world.cities.values.sum(&:unrest)}"
+rv = world.relations.values
+puts "relations: #{rv.size} pairs, " + (rv.empty? ? "none" : format("min %.2f max %.2f mean %.3f", rv.min, rv.max, rv.sum / rv.size))
 cms = world.committees.values
 puts "committees: " + FM::Committee::START.keys.map { |f|
   "#{f} #{cms.map { |c| c.facilities[f] }.tally.sort.to_h}" }.join(", ")

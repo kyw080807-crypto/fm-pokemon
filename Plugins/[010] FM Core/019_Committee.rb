@@ -82,10 +82,12 @@ module FM
       ids = members(world).uniq
       votes = ids.to_h do |id|
         club = world.clubs[id]
-        [id, Vote.infrastructure_yes?({ traits: club.traits, spare: club.spare }, share: 0)]
+        [id, Vote.infrastructure_yes?({ traits: club.traits, spare: club.spare,
+                                         relation: world.relations.vote_term(id, ids) }, share: 0)]
       end
       yes = votes.values.count(true)
       passed = yes * 2 > ids.size || (yes * 2 == ids.size)   # tie: the chair decides, and backs the agenda
+      world.relations.meeting(votes, passed: passed) if ids.size > 1
       if passed
         c.budget.record(-step[:cost], category: :committee, date: date)
         @project = step.merge(to: step[:from] + 1, done: world.calendar.date_after(date, 7 * step[:weeks]))

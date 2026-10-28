@@ -202,12 +202,12 @@ module FM
     # Raising tax funds the city but cools crowds; lowering it the reverse.
     # City-minded, cooperative trainers back raises; commercial ones back cuts
     # (draft weights).
-    def tax_yes?(traits, raise:)
+    def tax_yes?(traits, raise:, relation: 0.0)
       t = traits
       score = if raise then 0.1 + 0.4 * t[:civic] + 0.2 * t[:cooperative] - 0.3 * t[:commercial]
               else 0.2 + 0.3 * t[:commercial] - 0.2 * t[:civic]
               end
-      score.positive?
+      (score + relation).positive?
     end
 
     def score(fit:, gain:, share:, spare:, relation:)
