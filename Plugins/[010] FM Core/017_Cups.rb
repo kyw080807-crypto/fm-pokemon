@@ -71,10 +71,35 @@ module FM
         club = world.clubs[id]
         from = %i[pet pent].find { |s| world.cups[s][:ko]&.champion == id } if cup == :pwt
         trip = if from then Travel.to_cup(caps[world.cups[from][:host]], world.cups[from][:host], host, caps)
-               else Travel.to_cup(world.cities[club.city], club.region, host, caps)
+               else Travel.to_cup(world.cities[club.city], club.region, host, caps, hub: world.hub(caps[club.region]))
                end
         club.travel(trip, date: date)
       end
+    end
+
+    # { club id => host capital } for clubs still in a tournament that has
+    # started: they stay there (organisers pay; the hotel's rest
+    # multiplier applies, design 05 체류).
+    def staying(world)
+      cups = world.cups or return {}
+      d = world.calendar.date
+      caps = world.capitals
+      out = {}
+      started = ->(dates) { dates && !dates.empty? && (dates.first <=> d) <= 0 }
+      %i[pet pent].each do |cup|
+        ko = cups[cup][:ko]
+        next unless ko && !ko.done? && started.(cups[:dates][:pet])
+        ko.bracket.last.each { |id| out[id] = caps[cups[cup][:host]] }
+      end
+      pwt = cups[:pwt]
+      if started.(cups[:dates][:pwt_swiss])
+        if pwt[:ko]
+          pwt[:ko].bracket.last.each { |id| out[id] = caps[pwt[:host]] } unless pwt[:ko].done?
+        elsif (sw = pwt[:swiss])
+          sw.players.each { |id| out[id] = caps[pwt[:host]] if sw.losses[id] < Tournament::SWISS_GOAL }
+        end
+      end
+      out.compact
     end
 
     def game(world, rng, important: false)

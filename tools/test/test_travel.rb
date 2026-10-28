@@ -2,7 +2,9 @@ require_relative "test_helper"
 require_relative "test_squad"   # TestSquad::SPECIES
 
 class TestTravel < Minitest::Test
-  City = Struct.new(:id, :transport, :region)
+  City = Struct.new(:id, :transport, :region, :cap) do
+    def capital? = cap ? true : false
+  end
 
   def test_land_trip_follows_the_departing_city
     far = City.new("FAR", 0, "KANTO")
@@ -27,7 +29,7 @@ class TestTravel < Minitest::Test
   # plus arriving the day before.
   def test_cup_trip_matches_the_design_example
     town = City.new("LAVENDER", 0, "KANTO")
-    caps = { "KANTO" => City.new("KCAP", 5, "KANTO"), "UNOVA" => City.new("UCAP", 5, "UNOVA") }
+    caps = { "KANTO" => City.new("KCAP", 5, "KANTO", true), "UNOVA" => City.new("UCAP", 5, "UNOVA", true) }
     t = FM::Travel.to_cup(town, "KANTO", "UNOVA", caps)
     assert_equal 6, t[:days]
     assert_equal 12 + FM::Travel::ARRIVE_BEFORE_COND, t[:cond]
@@ -67,4 +69,38 @@ class TestTravel < Minitest::Test
     assert paid.negative?, "someone travelled"
     assert(w.clubs.values.flat_map(&:squad).any? { |m| m.fat.positive? })
   end
+  def test_hub_cuts_days_to_the_capital
+    town = City.new("T", 0, "KANTO")
+    cap = City.new("C", 5, "KANTO", true)
+    other = City.new("O", 3, "KANTO")
+    assert_equal 3, FM::Travel.land(town, cap)[:days]
+    assert_equal 2, FM::Travel.land(town, cap, hub: 2)[:days], "Lv2 hub: -1 day"
+    assert_equal 1, FM::Travel.land(town, cap, hub: 5)[:days]
+    assert_equal 3, FM::Travel.land(town, other, hub: 4)[:days], "only trips to the capital"
+    assert_equal 0, FM::Travel.land(other, cap, hub: 4)[:days]
+  end
+
+  def test_a_night_at_a_better_hotel_rests_more_and_costs_more
+    w = FM::World.new_game([club("F", "FAR"), club("N", "NEAR")], seed: 1, cities: cities)
+    f, n = w.clubs["F"], w.clubs["N"]
+    [f, n].each { |c| c.squad.each { |m| m.cond = 50 } }
+    inn = w.cities["FAR"]
+    hotel = w.cities["NEAR"]
+    hotel.buildings << [:HOTEL, 5]
+    f.stay_night(inn, date: [1, 2, 1])
+    n.stay_night(hotel, date: [1, 2, 1])
+    assert_operator n.entry.first.cond, :>, f.entry.first.cond
+    assert_equal(-FM::Travel::HOTEL_FEE[0], f.wallet.totals[:travel])
+    assert_equal(-FM::Travel::HOTEL_FEE[5], n.wallet.totals[:travel])
+  end
+
+  def test_rest_multiplier_scales_a_resting_week
+    a = FM::Mon.new(species: "PIDGEY", bst: 251, level: 20, stars: 3)
+    a.cond = 40
+    b = Marshal.load(Marshal.dump(a))
+    FM::Growth.condition_week(a)
+    FM::Growth.condition_week(b, rest_mul: 1.4)
+    assert_operator b.cond, :>, a.cond
+  end
+
 end

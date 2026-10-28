@@ -97,17 +97,24 @@ module FM
     # missing (half if it played last week, less with fatigue, x0.8 while
     # out injured); training costs 3. Fatigue then eases (fatWeek): 2 if it
     # played, 14 resting, 9 training.
-    def condition_week(mon)
+    # rest_mul: the hotel's rest multiplier while staying at a tournament.
+    def condition_week(mon, rest_mul: 1.0)
       played = mon.played
       mon.played = false
       mon.resting = mon.out? || mon.cond < 60 || (mon.resting && mon.cond < 85)
       if mon.resting
-        g = (10 + (100 - mon.cond) * 0.2) * (1 - mon.fat / 200.0) * (played ? 0.5 : 1) * (mon.out? ? 0.8 : 1)
+        g = rest_gain(mon, played: played) * (mon.out? ? 0.8 : 1) * rest_mul
         mon.cond = [mon.cond + [g.round, 1].max, 100].min
       else
         mon.cond = [mon.cond - TRAIN_COND, COND_MIN].max
       end
       mon.fat = [mon.fat - (played ? 2 : mon.resting ? 14 : 9), 0].max
+    end
+
+    # A week's rest (condGain): 10 + 20% of what's missing, less with
+    # fatigue, half if it played last week.
+    def rest_gain(mon, played: false)
+      (10 + (100 - mon.cond) * 0.2) * (1 - mon.fat / 200.0) * (played ? 0.5 : 1)
     end
 
     def drain(mon, amount)

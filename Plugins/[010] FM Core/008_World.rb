@@ -72,6 +72,17 @@ module FM
     # A trip (FM::Travel) for the travelling party, the entry of six:
     # condition and hidden fatigue, days without training this week, and
     # the fare.
+    # One night at `city`'s hotel before a match (design 05 호텔 숙박):
+    # the fee and a day's rest x the hotel's multiplier, for the party.
+    def stay_night(city, date:)
+      lv = city.hotel
+      entry.each do |m|
+        m.cond = [m.cond + (Growth.rest_gain(m) / 7.0 * Travel::HOTEL_REST[lv]).round, 100].min
+      end
+      @wallet.record(-Travel::HOTEL_FEE[lv], category: :travel, date: date)
+      refresh_rating
+    end
+
     def travel(trip, date:)
       return if trip[:days].zero? && trip[:cond].zero?
       entry.each do |m|
@@ -122,6 +133,11 @@ module FM
     # { region => its capital City }, for tournament trips.
     def capitals
       @cities.values.select(&:capital?).to_h { |c| [c.region, c] }
+    end
+
+    # The transport hub level of `city`'s region (its league committee).
+    def hub(city)
+      city && committees[city.region]&.facilities&.fetch(:HUB, 0).to_i
     end
 
     # Optional hook for the player's own matches: called as
@@ -361,11 +377,13 @@ module FM
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
         home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
         contribute(home, gate[:revenue])
-        away.travel(Travel.land(ac, hc), date: date)
+        go = Travel.land(ac, hc, hub: hub(hc))
+        away.travel(go, date: date)
+        away.stay_night(hc, date: date) if go[:days].positive?   # arrived the day before
         lineups = [home.lineup, away.lineup]
         r = play_match(home, away, rng: @rng)
         after_match(home, away, r, lineups)
-        away.travel(Travel.land(hc, ac, arrive_before: false), date: date)   # home again (귀환)
+        away.travel(Travel.land(hc, ac, arrive_before: false, hub: hub(ac)), date: date)   # home again (귀환)
         settle(r, home, away, ranking)
         r.slice(:res, :ko_a, :ko_b).merge(attendance: gate[:attendance])
       end
@@ -455,13 +473,15 @@ module FM
     # then a training week may hurt. -> :injured / :recovered events.
     def condition_week
       events = []
+      staying = Cups.staying(self)
       @clubs.each_value do |c|
         med = c.facilities[:MEDICAL]
+        rest = staying[c.id] ? Travel::HOTEL_REST[staying[c.id].hotel] : 1.0
         c.squad.each do |m|
           if Injury.heal_week(m, med, @rng)
             events << { kind: :recovered, club: c.id, species: m.species, rehab: m.rehab, date: date }
           end
-          Growth.condition_week(m)
+          Growth.condition_week(m, rest_mul: rest)
           (info = Injury.train_week(m, @rng)) && events << injury_event(c, m, info)
         end
         c.refresh_rating
