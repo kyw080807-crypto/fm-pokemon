@@ -187,6 +187,7 @@ dex.each do |d|
   species_txt << "Tier = #{d['tier']}\nRegion = #{REGIONS[ranges.index { |r| d['num'] <= r }]}\n"
   species_txt << "Basic = #{d['prev'] ? 'false' : 'true'}\n"
   species_txt << "Types = #{d['types'].map(&:upcase).join(',')}\n"
+  species_txt << "BaseStats = #{d['base'].join(',')}\n"   # HP, Atk, Def, SpA, SpD, Spe (coachSpec)
   species_txt << "Prev = #{ids[d['prev'] - 1]}\n" if d["prev"]
   d["evo"].each { |e| species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}\n" }
 end

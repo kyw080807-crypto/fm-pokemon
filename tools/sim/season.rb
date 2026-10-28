@@ -37,7 +37,8 @@ def species_data
     [id, { bst: s["BST"].first.to_i, fb: s["FinalBST"].first.to_i, tier: s["Tier"].first.to_i,
            region: s["Region"].first, basic: s["Basic"].first == "true",
            evo: s["Evolution"].map { |e| to, lv = e.split(","); [to, lv.to_i] },
-           types: (s["Types"].first || "").split(","), prev: s["Prev"].first }]
+           types: (s["Types"].first || "").split(","), prev: s["Prev"].first,
+           base: (s["BaseStats"].first || "").split(",").map(&:to_i) }]
   end
 end
 

@@ -158,6 +158,15 @@ FM::Smoke.register("fm_menu_render") do
     loan_row = FM::UI.my_club_rows(club.id).find { |t| t.include?("대출") }
     raise "no loan row" unless loan_row
     FM::Log.info("smoke: #{loan_row}; crisis label #{FM::UI.crisis_name(:austerity)}")
+    # Coaches: base stats compiled (coachSpec), a retired mon coaching.
+    old = Marshal.load(Marshal.dump(club.squad.first))
+    club.retire(old)
+    old.coach = true
+    raise "no base stats compiled" if FM.world.species.dig(old.species, :base).to_a.size != 6
+    fx = FM::Coach.staff(club, FM.world.species)
+    FM::Log.info("smoke: coach #{FM::UI.species_name(old.species)} #{FM::Coach.grade(FM::Coach.quality(old))} " \
+                 "#{FM::UI::STAT_NAMES[FM::Coach.spec(FM.world.species, old)]}, slots #{FM::Coach.slots(club)}, " \
+                 "lv x#{fx[:lv].round(3)} ev x#{fx[:ev].round(3)}")
     # Battle parties can be built for real species (no battle is started:
     # that needs the map scene).
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })

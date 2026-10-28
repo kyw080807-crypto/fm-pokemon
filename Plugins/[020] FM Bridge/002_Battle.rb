@@ -47,7 +47,7 @@ module FM
         pkmn.ev[s] = give
         left -= give
       end
-      pkmn.fm_cond_mul = Rating.cond_mul(mon.cond)
+      pkmn.fm_cond_mul = Rating.cond_mul(mon.cond) * mon.decline_mul   # setOf: condMul x declineMul
       pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
       pkmn.calc_stats
       pkmn.heal

@@ -32,7 +32,7 @@ module FM
       GameData::FmSpecies.each do |s|
         species[s.id] = { bst: s.bst, fb: s.final_bst, tier: s.tier, region: s.region.to_s,
                           basic: s.basic, evo: s.evolutions.map { |to, lv| [to, lv] },
-                          types: s.types.map(&:to_s), prev: s.prev&.to_s }
+                          types: s.types.map(&:to_s), prev: s.prev&.to_s, base: s.base_stats.dup }
       end
       cities = []
       forms = {}

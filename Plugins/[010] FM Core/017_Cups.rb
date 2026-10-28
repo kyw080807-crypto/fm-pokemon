@@ -172,6 +172,7 @@ module FM
         champ = world.clubs[ko.champion]
         champ.wallet.record(Tournament::CHAMPION_PRIZE, category: :prize, date: date)
         champ.fame = Economy.add_fame(champ.fame, 10)
+        champ.lineup.each { |m| m.titles << [world.calendar.year, :pwt] if m.sgp >= Coach::TITLE_GAMES }
         hist(world, ko.champion)[:pwt] = :champion
         events << { kind: :cup_champion, cup: :pwt, club: ko.champion, date: date }
       end

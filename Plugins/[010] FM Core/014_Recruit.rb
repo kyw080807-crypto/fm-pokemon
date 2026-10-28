@@ -100,10 +100,10 @@ module FM
           Scout.mon_value(m, pool) / Economy.food(ovr: Economy.ovr(m.rating), fame: club.fame)
         end
         break unless out
-        club.squad.delete(out)
-        club.retired << out
+        club.squad.delete(out)   # aiBudget: let go, not retired
         released << out.species
       end
+      Coach.dismiss(club, keep: 1) if club.wallet.balance.negative?   # aiBudget
       released
     end
 
@@ -165,6 +165,8 @@ module FM
           end
       return if p.zero? || rng.rand > p
       urgent = size < 4
+      # Urgent: let the coaches go to find the money (aiScoutWeek).
+      Coach.dismiss(club) if urgent && club.wallet.balance < club.weekly_cost * 6 + 20_000
       weekly = club.weekly_cost
       reserve = urgent ? weekly * 2 : weekly * 6 + 20_000
       return if club.wallet.balance - Scout::FEE < reserve
@@ -190,7 +192,7 @@ module FM
         end.min_by(&av)
         return if weakest.nil? || av.(pick[:mon]) <= av.(weakest) * 1.05
         club.squad.delete(weakest)
-        club.retired << weakest
+        club.retire(weakest)
         out = weakest.species
       end
       club.wallet.record(-pick[:cost], category: :sign, date: date, memo: pick[:mon].species)
@@ -245,7 +247,7 @@ module FM
       if club.squad.size >= Build.squad_size(club.clubhouse)
         raise ArgumentError, "squad full: choose a mon to release" unless release && club.squad.include?(release)
         club.squad.delete(release)
-        club.retired << release
+        club.retire(release)
       end
       club.wallet.record(-cand[:cost], category: :sign, date: date, memo: cand[:mon].species)
       club.sign_use(date[0])

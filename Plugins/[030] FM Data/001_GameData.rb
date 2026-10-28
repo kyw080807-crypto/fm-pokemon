@@ -88,7 +88,7 @@ module GameData
   end
 
   class FmSpecies
-    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :types, :prev,
+    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :types, :prev, :base_stats,
                 :pbs_file_suffix
 
     DATA = {}
@@ -105,7 +105,8 @@ module GameData
       "Basic"       => [:basic,      "b"],
       "Evolution"   => [:evolutions, "^mu"],
       "Types"       => [:types,      "*m"],   # Poké Manager's (lower-case there)
-      "Prev"        => [:prev,       "m"]
+      "Prev"        => [:prev,       "m"],
+      "BaseStats"   => [:base_stats, "*u"]   # HP, Atk, Def, SpA, SpD, Spe
     }
 
     extend ClassMethodsSymbols
@@ -123,6 +124,7 @@ module GameData
       @evolutions = hash[:evolutions] || []
       @types      = hash[:types] || []
       @prev       = hash[:prev]
+      @base_stats = hash[:base_stats] || []
       @pbs_file_suffix = hash[:pbs_file_suffix] || ""
     end
   end

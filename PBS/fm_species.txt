@@ -10,6 +10,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GRASS,POISON
+BaseStats = 45,49,49,65,65,45
 Evolution = IVYSAUR,16
 #-------------------------------
 [IVYSAUR]
@@ -21,6 +22,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,POISON
+BaseStats = 60,62,63,80,80,60
 Prev = BULBASAUR
 Evolution = VENUSAUR,32
 #-------------------------------
@@ -33,6 +35,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,POISON
+BaseStats = 80,82,83,100,100,80
 Prev = IVYSAUR
 #-------------------------------
 [CHARMANDER]
@@ -44,6 +47,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = FIRE
+BaseStats = 39,52,43,60,50,65
 Evolution = CHARMELEON,16
 #-------------------------------
 [CHARMELEON]
@@ -55,6 +59,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE
+BaseStats = 58,64,58,80,65,80
 Prev = CHARMANDER
 Evolution = CHARIZARD,36
 #-------------------------------
@@ -67,6 +72,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE,FLYING
+BaseStats = 78,84,78,109,85,100
 Prev = CHARMELEON
 #-------------------------------
 [SQUIRTLE]
@@ -78,6 +84,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 44,48,65,50,64,43
 Evolution = WARTORTLE,16
 #-------------------------------
 [WARTORTLE]
@@ -89,6 +96,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 59,63,80,65,80,58
 Prev = SQUIRTLE
 Evolution = BLASTOISE,36
 #-------------------------------
@@ -101,6 +109,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 79,83,100,85,105,78
 Prev = WARTORTLE
 #-------------------------------
 [CATERPIE]
@@ -112,6 +121,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = BUG
+BaseStats = 45,30,35,20,20,45
 Evolution = METAPOD,7
 #-------------------------------
 [METAPOD]
@@ -123,6 +133,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = BUG
+BaseStats = 50,20,55,25,25,30
 Prev = CATERPIE
 Evolution = BUTTERFREE,10
 #-------------------------------
@@ -135,6 +146,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = BUG,FLYING
+BaseStats = 60,45,50,90,80,70
 Prev = METAPOD
 #-------------------------------
 [WEEDLE]
@@ -146,6 +158,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = BUG,POISON
+BaseStats = 40,35,30,20,20,50
 Evolution = KAKUNA,7
 #-------------------------------
 [KAKUNA]
@@ -157,6 +170,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = BUG,POISON
+BaseStats = 45,25,50,25,25,35
 Prev = WEEDLE
 Evolution = BEEDRILL,10
 #-------------------------------
@@ -169,6 +183,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = BUG,POISON
+BaseStats = 65,90,40,45,80,75
 Prev = KAKUNA
 #-------------------------------
 [PIDGEY]
@@ -180,6 +195,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 40,45,40,35,35,56
 Evolution = PIDGEOTTO,18
 #-------------------------------
 [PIDGEOTTO]
@@ -191,6 +207,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 63,60,55,50,50,71
 Prev = PIDGEY
 Evolution = PIDGEOT,36
 #-------------------------------
@@ -203,6 +220,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 83,80,75,70,70,101
 Prev = PIDGEOTTO
 #-------------------------------
 [RATTATA]
@@ -214,6 +232,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 30,56,35,25,35,72
 Evolution = RATICATE,20
 #-------------------------------
 [RATICATE]
@@ -225,6 +244,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL
+BaseStats = 55,81,60,50,70,97
 Prev = RATTATA
 #-------------------------------
 [SPEAROW]
@@ -236,6 +256,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 40,60,30,31,31,70
 Evolution = FEAROW,20
 #-------------------------------
 [FEAROW]
@@ -247,6 +268,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 65,90,65,61,61,100
 Prev = SPEAROW
 #-------------------------------
 [EKANS]
@@ -258,6 +280,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = POISON
+BaseStats = 35,60,44,40,54,55
 Evolution = ARBOK,22
 #-------------------------------
 [ARBOK]
@@ -269,6 +292,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON
+BaseStats = 60,95,69,65,79,80
 Prev = EKANS
 #-------------------------------
 [PIKACHU]
@@ -280,6 +304,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 35,55,40,50,50,90
 Prev = PICHU
 Evolution = RAICHU,27
 #-------------------------------
@@ -292,6 +317,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 60,90,55,90,80,110
 Prev = PIKACHU
 #-------------------------------
 [SANDSHREW]
@@ -303,6 +329,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GROUND
+BaseStats = 50,75,85,20,30,40
 Evolution = SANDSLASH,22
 #-------------------------------
 [SANDSLASH]
@@ -314,6 +341,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GROUND
+BaseStats = 75,100,110,45,55,65
 Prev = SANDSHREW
 #-------------------------------
 [NIDORANfE]
@@ -325,6 +353,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = POISON
+BaseStats = 55,47,52,40,40,41
 Evolution = NIDORINA,16
 #-------------------------------
 [NIDORINA]
@@ -336,6 +365,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON
+BaseStats = 70,62,67,55,55,56
 Prev = NIDORANfE
 Evolution = NIDOQUEEN,30
 #-------------------------------
@@ -348,6 +378,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON,GROUND
+BaseStats = 90,92,87,75,85,76
 Prev = NIDORINA
 #-------------------------------
 [NIDORANmA]
@@ -359,6 +390,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = POISON
+BaseStats = 46,57,40,40,40,50
 Evolution = NIDORINO,16
 #-------------------------------
 [NIDORINO]
@@ -370,6 +402,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON
+BaseStats = 61,72,57,55,55,65
 Prev = NIDORANmA
 Evolution = NIDOKING,30
 #-------------------------------
@@ -382,6 +415,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON,GROUND
+BaseStats = 81,102,77,85,75,85
 Prev = NIDORINO
 #-------------------------------
 [CLEFAIRY]
@@ -393,6 +427,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FAIRY
+BaseStats = 70,45,48,60,65,35
 Prev = CLEFFA
 Evolution = CLEFABLE,27
 #-------------------------------
@@ -405,6 +440,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FAIRY
+BaseStats = 95,70,73,95,90,60
 Prev = CLEFAIRY
 #-------------------------------
 [VULPIX]
@@ -416,6 +452,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = FIRE
+BaseStats = 38,41,40,50,65,65
 Evolution = NINETALES,25
 #-------------------------------
 [NINETALES]
@@ -427,6 +464,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE
+BaseStats = 73,76,75,81,100,100
 Prev = VULPIX
 #-------------------------------
 [JIGGLYPUFF]
@@ -438,6 +476,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL,FAIRY
+BaseStats = 115,45,20,45,25,20
 Prev = IGGLYBUFF
 Evolution = WIGGLYTUFF,24
 #-------------------------------
@@ -450,6 +489,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL,FAIRY
+BaseStats = 140,70,45,85,50,45
 Prev = JIGGLYPUFF
 #-------------------------------
 [ZUBAT]
@@ -461,6 +501,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = POISON,FLYING
+BaseStats = 40,45,35,30,40,55
 Evolution = GOLBAT,22
 #-------------------------------
 [GOLBAT]
@@ -472,6 +513,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON,FLYING
+BaseStats = 75,80,70,65,75,90
 Prev = ZUBAT
 Evolution = CROBAT,38
 #-------------------------------
@@ -484,6 +526,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GRASS,POISON
+BaseStats = 45,50,55,75,65,30
 Evolution = GLOOM,21
 #-------------------------------
 [GLOOM]
@@ -495,6 +538,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,POISON
+BaseStats = 60,65,70,85,75,40
 Prev = ODDISH
 Evolution = VILEPLUME,33
 Evolution = BELLOSSOM,33
@@ -508,6 +552,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,POISON
+BaseStats = 75,80,85,110,90,50
 Prev = GLOOM
 #-------------------------------
 [PARAS]
@@ -519,6 +564,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = BUG,GRASS
+BaseStats = 35,70,55,45,55,25
 Evolution = PARASECT,24
 #-------------------------------
 [PARASECT]
@@ -530,6 +576,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = BUG,GRASS
+BaseStats = 60,95,80,60,80,30
 Prev = PARAS
 #-------------------------------
 [VENONAT]
@@ -541,6 +588,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = BUG,POISON
+BaseStats = 60,55,50,40,55,45
 Evolution = VENOMOTH,31
 #-------------------------------
 [VENOMOTH]
@@ -552,6 +600,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = BUG,POISON
+BaseStats = 70,65,60,90,75,90
 Prev = VENONAT
 #-------------------------------
 [DIGLETT]
@@ -563,6 +612,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GROUND
+BaseStats = 10,55,25,35,45,95
 Evolution = DUGTRIO,26
 #-------------------------------
 [DUGTRIO]
@@ -574,6 +624,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GROUND
+BaseStats = 35,100,50,50,70,120
 Prev = DIGLETT
 #-------------------------------
 [MEOWTH]
@@ -585,6 +636,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 40,45,35,40,40,90
 Evolution = PERSIAN,28
 #-------------------------------
 [PERSIAN]
@@ -596,6 +648,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL
+BaseStats = 65,70,60,65,65,115
 Prev = MEOWTH
 #-------------------------------
 [PSYDUCK]
@@ -607,6 +660,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 50,52,48,65,50,55
 Evolution = GOLDUCK,33
 #-------------------------------
 [GOLDUCK]
@@ -618,6 +672,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 80,82,78,95,80,85
 Prev = PSYDUCK
 #-------------------------------
 [MANKEY]
@@ -629,6 +684,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = FIGHTING
+BaseStats = 40,80,35,35,45,70
 Evolution = PRIMEAPE,28
 #-------------------------------
 [PRIMEAPE]
@@ -640,6 +696,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIGHTING
+BaseStats = 65,105,60,60,70,95
 Prev = MANKEY
 Evolution = ANNIHILAPE,38
 #-------------------------------
@@ -652,6 +709,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = FIRE
+BaseStats = 55,70,45,70,50,60
 Evolution = ARCANINE,29
 #-------------------------------
 [ARCANINE]
@@ -663,6 +721,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE
+BaseStats = 90,110,80,100,80,95
 Prev = GROWLITHE
 #-------------------------------
 [POLIWAG]
@@ -674,6 +733,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 40,50,40,40,40,90
 Evolution = POLIWHIRL,25
 #-------------------------------
 [POLIWHIRL]
@@ -685,6 +745,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 65,65,65,50,50,90
 Prev = POLIWAG
 Evolution = POLIWRATH,32
 Evolution = POLITOED,32
@@ -698,6 +759,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,FIGHTING
+BaseStats = 90,95,95,70,90,70
 Prev = POLIWHIRL
 #-------------------------------
 [ABRA]
@@ -709,6 +771,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = PSYCHIC
+BaseStats = 25,20,15,105,55,90
 Evolution = KADABRA,16
 #-------------------------------
 [KADABRA]
@@ -720,6 +783,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = PSYCHIC
+BaseStats = 40,35,30,120,70,105
 Prev = ABRA
 Evolution = ALAKAZAM,33
 #-------------------------------
@@ -732,6 +796,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = PSYCHIC
+BaseStats = 55,50,45,135,95,120
 Prev = KADABRA
 #-------------------------------
 [MACHOP]
@@ -743,6 +808,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = FIGHTING
+BaseStats = 70,80,50,35,35,35
 Evolution = MACHOKE,28
 #-------------------------------
 [MACHOKE]
@@ -754,6 +820,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIGHTING
+BaseStats = 80,100,70,50,60,45
 Prev = MACHOP
 Evolution = MACHAMP,34
 #-------------------------------
@@ -766,6 +833,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIGHTING
+BaseStats = 90,130,80,65,85,55
 Prev = MACHOKE
 #-------------------------------
 [BELLSPROUT]
@@ -777,6 +845,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GRASS,POISON
+BaseStats = 50,75,35,70,30,40
 Evolution = WEEPINBELL,21
 #-------------------------------
 [WEEPINBELL]
@@ -788,6 +857,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,POISON
+BaseStats = 65,90,50,85,45,55
 Prev = BELLSPROUT
 Evolution = VICTREEBEL,33
 #-------------------------------
@@ -800,6 +870,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,POISON
+BaseStats = 80,105,65,100,70,70
 Prev = WEEPINBELL
 #-------------------------------
 [TENTACOOL]
@@ -811,6 +882,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER,POISON
+BaseStats = 40,40,35,50,100,70
 Evolution = TENTACRUEL,30
 #-------------------------------
 [TENTACRUEL]
@@ -822,6 +894,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,POISON
+BaseStats = 80,70,65,80,120,100
 Prev = TENTACOOL
 #-------------------------------
 [GEODUDE]
@@ -833,6 +906,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ROCK,GROUND
+BaseStats = 40,80,100,30,30,20
 Evolution = GRAVELER,25
 #-------------------------------
 [GRAVELER]
@@ -844,6 +918,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ROCK,GROUND
+BaseStats = 55,95,115,45,45,35
 Prev = GEODUDE
 Evolution = GOLEM,33
 #-------------------------------
@@ -856,6 +931,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ROCK,GROUND
+BaseStats = 80,120,130,55,65,45
 Prev = GRAVELER
 #-------------------------------
 [PONYTA]
@@ -867,6 +943,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = FIRE
+BaseStats = 50,85,55,65,65,90
 Evolution = RAPIDASH,40
 #-------------------------------
 [RAPIDASH]
@@ -878,6 +955,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE
+BaseStats = 65,100,70,80,80,105
 Prev = PONYTA
 #-------------------------------
 [SLOWPOKE]
@@ -889,6 +967,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER,PSYCHIC
+BaseStats = 90,65,65,40,40,15
 Evolution = SLOWBRO,37
 Evolution = SLOWKING,26
 #-------------------------------
@@ -901,6 +980,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,PSYCHIC
+BaseStats = 95,75,110,100,80,30
 Prev = SLOWPOKE
 #-------------------------------
 [MAGNEMITE]
@@ -912,6 +992,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ELECTRIC,STEEL
+BaseStats = 25,35,70,95,55,45
 Evolution = MAGNETON,30
 #-------------------------------
 [MAGNETON]
@@ -923,6 +1004,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ELECTRIC,STEEL
+BaseStats = 50,60,95,120,70,70
 Prev = MAGNEMITE
 Evolution = MAGNEZONE,39
 #-------------------------------
@@ -935,6 +1017,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 52,90,55,58,62,60
 #-------------------------------
 [DODUO]
 Name = 두두
@@ -945,6 +1028,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 35,85,45,35,35,75
 Evolution = DODRIO,31
 #-------------------------------
 [DODRIO]
@@ -956,6 +1040,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 60,110,70,60,60,110
 Prev = DODUO
 #-------------------------------
 [SEEL]
@@ -967,6 +1052,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 65,45,55,45,70,45
 Evolution = DEWGONG,34
 #-------------------------------
 [DEWGONG]
@@ -978,6 +1064,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,ICE
+BaseStats = 90,70,80,70,95,70
 Prev = SEEL
 #-------------------------------
 [GRIMER]
@@ -989,6 +1076,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = POISON
+BaseStats = 80,80,50,40,50,25
 Evolution = MUK,38
 #-------------------------------
 [MUK]
@@ -1000,6 +1088,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON
+BaseStats = 105,105,75,65,100,50
 Prev = GRIMER
 #-------------------------------
 [SHELLDER]
@@ -1011,6 +1100,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 30,65,100,45,25,40
 Evolution = CLOYSTER,25
 #-------------------------------
 [CLOYSTER]
@@ -1022,6 +1112,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,ICE
+BaseStats = 50,95,180,85,45,70
 Prev = SHELLDER
 #-------------------------------
 [GASTLY]
@@ -1033,6 +1124,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GHOST,POISON
+BaseStats = 30,35,30,100,35,80
 Evolution = HAUNTER,25
 #-------------------------------
 [HAUNTER]
@@ -1044,6 +1136,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GHOST,POISON
+BaseStats = 45,50,45,115,55,95
 Prev = GASTLY
 Evolution = GENGAR,34
 #-------------------------------
@@ -1056,6 +1149,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GHOST,POISON
+BaseStats = 60,65,60,130,75,110
 Prev = HAUNTER
 #-------------------------------
 [ONIX]
@@ -1067,6 +1161,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ROCK,GROUND
+BaseStats = 35,45,160,30,45,70
 Evolution = STEELIX,32
 #-------------------------------
 [DROWZEE]
@@ -1078,6 +1173,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = PSYCHIC
+BaseStats = 60,48,45,43,90,42
 Evolution = HYPNO,26
 #-------------------------------
 [HYPNO]
@@ -1089,6 +1185,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = PSYCHIC
+BaseStats = 85,73,70,73,115,67
 Prev = DROWZEE
 #-------------------------------
 [KRABBY]
@@ -1100,6 +1197,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 30,105,90,25,25,50
 Evolution = KINGLER,28
 #-------------------------------
 [KINGLER]
@@ -1111,6 +1209,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 55,130,115,50,50,75
 Prev = KRABBY
 #-------------------------------
 [VOLTORB]
@@ -1122,6 +1221,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ELECTRIC
+BaseStats = 40,30,50,55,55,100
 Evolution = ELECTRODE,30
 #-------------------------------
 [ELECTRODE]
@@ -1133,6 +1233,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 60,50,70,80,80,150
 Prev = VOLTORB
 #-------------------------------
 [EXEGGCUTE]
@@ -1144,6 +1245,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GRASS,PSYCHIC
+BaseStats = 60,40,80,60,45,40
 Evolution = EXEGGUTOR,27
 #-------------------------------
 [EXEGGUTOR]
@@ -1155,6 +1257,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GRASS,PSYCHIC
+BaseStats = 95,95,85,125,75,55
 Prev = EXEGGCUTE
 #-------------------------------
 [CUBONE]
@@ -1166,6 +1269,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GROUND
+BaseStats = 50,50,95,40,50,35
 Evolution = MAROWAK,28
 #-------------------------------
 [MAROWAK]
@@ -1177,6 +1281,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GROUND
+BaseStats = 60,80,110,50,80,45
 Prev = CUBONE
 #-------------------------------
 [HITMONLEE]
@@ -1188,6 +1293,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIGHTING
+BaseStats = 50,120,53,35,110,87
 Prev = TYROGUE
 #-------------------------------
 [HITMONCHAN]
@@ -1199,6 +1305,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIGHTING
+BaseStats = 50,105,79,35,110,76
 Prev = TYROGUE
 #-------------------------------
 [LICKITUNG]
@@ -1210,6 +1317,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 90,55,75,60,75,30
 Evolution = LICKILICKY,32
 #-------------------------------
 [KOFFING]
@@ -1221,6 +1329,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = POISON
+BaseStats = 40,65,95,60,45,35
 Evolution = WEEZING,35
 #-------------------------------
 [WEEZING]
@@ -1232,6 +1341,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = POISON
+BaseStats = 65,90,120,85,70,60
 Prev = KOFFING
 #-------------------------------
 [RHYHORN]
@@ -1243,6 +1353,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GROUND,ROCK
+BaseStats = 80,85,95,30,30,25
 Evolution = RHYDON,42
 #-------------------------------
 [RHYDON]
@@ -1254,6 +1365,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = GROUND,ROCK
+BaseStats = 105,130,120,45,45,40
 Prev = RHYHORN
 Evolution = RHYPERIOR,48
 #-------------------------------
@@ -1266,6 +1378,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL
+BaseStats = 250,5,5,35,105,50
 Prev = HAPPINY
 Evolution = BLISSEY,38
 #-------------------------------
@@ -1278,6 +1391,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = GRASS
+BaseStats = 65,55,115,100,40,60
 Evolution = TANGROWTH,36
 #-------------------------------
 [KANGASKHAN]
@@ -1289,6 +1403,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 105,95,80,40,80,90
 #-------------------------------
 [HORSEA]
 Name = 쏘드라
@@ -1299,6 +1414,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 30,40,70,70,25,60
 Evolution = SEADRA,32
 #-------------------------------
 [SEADRA]
@@ -1310,6 +1426,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 55,65,95,95,45,85
 Prev = HORSEA
 Evolution = KINGDRA,38
 #-------------------------------
@@ -1322,6 +1439,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 45,67,60,35,50,63
 Evolution = SEAKING,33
 #-------------------------------
 [SEAKING]
@@ -1333,6 +1451,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 80,92,65,65,80,68
 Prev = GOLDEEN
 #-------------------------------
 [STARYU]
@@ -1344,6 +1463,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 30,45,55,70,55,85
 Evolution = STARMIE,28
 #-------------------------------
 [STARMIE]
@@ -1355,6 +1475,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,PSYCHIC
+BaseStats = 60,75,85,100,85,115
 Prev = STARYU
 #-------------------------------
 [MRMIME]
@@ -1366,6 +1487,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = PSYCHIC,FAIRY
+BaseStats = 40,45,65,100,120,90
 Prev = MIMEJR
 #-------------------------------
 [SCYTHER]
@@ -1377,6 +1499,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = BUG,FLYING
+BaseStats = 70,110,80,55,80,105
 Evolution = SCIZOR,40
 Evolution = KLEAVOR,40
 #-------------------------------
@@ -1389,6 +1512,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ICE,PSYCHIC
+BaseStats = 65,50,35,115,95,95
 Prev = SMOOCHUM
 #-------------------------------
 [ELECTABUZZ]
@@ -1400,6 +1524,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 65,83,57,95,85,105
 Prev = ELEKID
 Evolution = ELECTIVIRE,40
 #-------------------------------
@@ -1412,6 +1537,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE
+BaseStats = 65,95,57,100,85,93
 Prev = MAGBY
 Evolution = MAGMORTAR,40
 #-------------------------------
@@ -1424,6 +1550,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = BUG
+BaseStats = 65,125,100,55,70,85
 #-------------------------------
 [TAUROS]
 Name = 켄타로스
@@ -1434,6 +1561,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 75,100,95,40,70,110
 #-------------------------------
 [MAGIKARP]
 Name = 잉어킹
@@ -1444,6 +1572,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER
+BaseStats = 20,10,55,15,20,80
 Evolution = GYARADOS,20
 #-------------------------------
 [GYARADOS]
@@ -1455,6 +1584,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER,FLYING
+BaseStats = 95,125,79,60,100,81
 Prev = MAGIKARP
 #-------------------------------
 [LAPRAS]
@@ -1466,6 +1596,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = WATER,ICE
+BaseStats = 130,85,80,85,95,60
 #-------------------------------
 [DITTO]
 Name = 메타몽
@@ -1476,6 +1607,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 48,48,48,48,48,48
 #-------------------------------
 [EEVEE]
 Name = 이브이
@@ -1486,6 +1618,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 55,55,50,45,65,55
 Evolution = VAPOREON,27
 Evolution = JOLTEON,27
 Evolution = FLAREON,27
@@ -1504,6 +1637,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = WATER
+BaseStats = 130,65,60,110,95,65
 Prev = EEVEE
 #-------------------------------
 [JOLTEON]
@@ -1515,6 +1649,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 65,65,60,110,95,130
 Prev = EEVEE
 #-------------------------------
 [FLAREON]
@@ -1526,6 +1661,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = FIRE
+BaseStats = 65,130,60,95,110,65
 Prev = EEVEE
 #-------------------------------
 [PORYGON]
@@ -1537,6 +1673,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = NORMAL
+BaseStats = 65,60,70,85,75,40
 Evolution = PORYGON2,33
 #-------------------------------
 [OMANYTE]
@@ -1548,6 +1685,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ROCK,WATER
+BaseStats = 35,40,100,90,55,35
 Evolution = OMASTAR,40
 #-------------------------------
 [OMASTAR]
@@ -1559,6 +1697,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ROCK,WATER
+BaseStats = 70,60,125,115,70,55
 Prev = OMANYTE
 #-------------------------------
 [KABUTO]
@@ -1570,6 +1709,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ROCK,WATER
+BaseStats = 30,80,90,55,45,55
 Evolution = KABUTOPS,40
 #-------------------------------
 [KABUTOPS]
@@ -1581,6 +1721,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = ROCK,WATER
+BaseStats = 60,115,105,65,70,80
 Prev = KABUTO
 #-------------------------------
 [AERODACTYL]
@@ -1592,6 +1733,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = ROCK,FLYING
+BaseStats = 80,105,65,60,75,130
 #-------------------------------
 [SNORLAX]
 Name = 잠만보
@@ -1602,6 +1744,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = NORMAL
+BaseStats = 160,110,65,65,110,30
 Prev = MUNCHLAX
 #-------------------------------
 [ARTICUNO]
@@ -1613,6 +1756,7 @@ Tier = 1
 Region = KANTO
 Basic = true
 Types = ICE,FLYING
+BaseStats = 90,85,100,95,125,85
 #-------------------------------
 [ZAPDOS]
 Name = 썬더
@@ -1623,6 +1767,7 @@ Tier = 1
 Region = KANTO
 Basic = true
 Types = ELECTRIC,FLYING
+BaseStats = 90,90,85,125,90,100
 #-------------------------------
 [MOLTRES]
 Name = 파이어
@@ -1633,6 +1778,7 @@ Tier = 1
 Region = KANTO
 Basic = true
 Types = FIRE,FLYING
+BaseStats = 90,100,90,125,85,90
 #-------------------------------
 [DRATINI]
 Name = 미뇽
@@ -1643,6 +1789,7 @@ Tier = 0
 Region = KANTO
 Basic = true
 Types = DRAGON
+BaseStats = 41,64,45,50,50,50
 Evolution = DRAGONAIR,30
 #-------------------------------
 [DRAGONAIR]
@@ -1654,6 +1801,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = DRAGON
+BaseStats = 61,84,65,70,70,70
 Prev = DRATINI
 Evolution = DRAGONITE,55
 #-------------------------------
@@ -1666,6 +1814,7 @@ Tier = 0
 Region = KANTO
 Basic = false
 Types = DRAGON,FLYING
+BaseStats = 91,134,95,100,100,80
 Prev = DRAGONAIR
 #-------------------------------
 [MEWTWO]
@@ -1677,6 +1826,7 @@ Tier = 2
 Region = KANTO
 Basic = true
 Types = PSYCHIC
+BaseStats = 106,110,90,154,90,130
 #-------------------------------
 [MEW]
 Name = 뮤
@@ -1687,6 +1837,7 @@ Tier = 3
 Region = KANTO
 Basic = true
 Types = PSYCHIC
+BaseStats = 100,100,100,100,100,100
 #-------------------------------
 [CHIKORITA]
 Name = 치코리타
@@ -1697,6 +1848,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = GRASS
+BaseStats = 45,49,65,49,65,45
 Evolution = BAYLEEF,16
 #-------------------------------
 [BAYLEEF]
@@ -1708,6 +1860,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GRASS
+BaseStats = 60,62,80,63,80,60
 Prev = CHIKORITA
 Evolution = MEGANIUM,32
 #-------------------------------
@@ -1720,6 +1873,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GRASS
+BaseStats = 80,82,100,83,100,80
 Prev = BAYLEEF
 #-------------------------------
 [CYNDAQUIL]
@@ -1731,6 +1885,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FIRE
+BaseStats = 39,52,43,60,50,65
 Evolution = QUILAVA,14
 #-------------------------------
 [QUILAVA]
@@ -1742,6 +1897,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = FIRE
+BaseStats = 58,64,58,80,65,80
 Prev = CYNDAQUIL
 Evolution = TYPHLOSION,36
 #-------------------------------
@@ -1754,6 +1910,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = FIRE
+BaseStats = 78,84,78,109,85,100
 Prev = QUILAVA
 #-------------------------------
 [TOTODILE]
@@ -1765,6 +1922,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = WATER
+BaseStats = 50,65,64,44,48,43
 Evolution = CROCONAW,18
 #-------------------------------
 [CROCONAW]
@@ -1776,6 +1934,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER
+BaseStats = 65,80,80,59,63,58
 Prev = TOTODILE
 Evolution = FERALIGATR,30
 #-------------------------------
@@ -1788,6 +1947,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER
+BaseStats = 85,105,100,79,83,78
 Prev = CROCONAW
 #-------------------------------
 [SENTRET]
@@ -1799,6 +1959,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 35,46,34,35,45,20
 Evolution = FURRET,15
 #-------------------------------
 [FURRET]
@@ -1810,6 +1971,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = NORMAL
+BaseStats = 85,76,64,45,55,90
 Prev = SENTRET
 #-------------------------------
 [HOOTHOOT]
@@ -1821,6 +1983,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 60,30,30,36,56,50
 Evolution = NOCTOWL,20
 #-------------------------------
 [NOCTOWL]
@@ -1832,6 +1995,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 100,50,50,86,96,70
 Prev = HOOTHOOT
 #-------------------------------
 [LEDYBA]
@@ -1843,6 +2007,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = BUG,FLYING
+BaseStats = 40,20,30,40,80,55
 Evolution = LEDIAN,18
 #-------------------------------
 [LEDIAN]
@@ -1854,6 +2019,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = BUG,FLYING
+BaseStats = 55,35,50,55,110,85
 Prev = LEDYBA
 #-------------------------------
 [SPINARAK]
@@ -1865,6 +2031,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = BUG,POISON
+BaseStats = 40,60,40,40,40,30
 Evolution = ARIADOS,22
 #-------------------------------
 [ARIADOS]
@@ -1876,6 +2043,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = BUG,POISON
+BaseStats = 70,90,70,60,70,40
 Prev = SPINARAK
 #-------------------------------
 [CROBAT]
@@ -1887,6 +2055,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = POISON,FLYING
+BaseStats = 85,90,80,70,80,130
 Prev = GOLBAT
 #-------------------------------
 [CHINCHOU]
@@ -1898,6 +2067,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = WATER,ELECTRIC
+BaseStats = 75,38,38,56,56,67
 Evolution = LANTURN,27
 #-------------------------------
 [LANTURN]
@@ -1909,6 +2079,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,ELECTRIC
+BaseStats = 125,58,58,76,76,67
 Prev = CHINCHOU
 #-------------------------------
 [PICHU]
@@ -1920,6 +2091,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ELECTRIC
+BaseStats = 20,40,15,35,35,60
 Evolution = PIKACHU,17
 #-------------------------------
 [CLEFFA]
@@ -1931,6 +2103,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FAIRY
+BaseStats = 50,25,28,45,55,15
 Evolution = CLEFAIRY,18
 #-------------------------------
 [IGGLYBUFF]
@@ -1942,6 +2115,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL,FAIRY
+BaseStats = 90,30,15,40,20,15
 Evolution = JIGGLYPUFF,18
 #-------------------------------
 [TOGEPI]
@@ -1953,6 +2127,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FAIRY
+BaseStats = 35,20,65,40,65,20
 Evolution = TOGETIC,20
 #-------------------------------
 [TOGETIC]
@@ -1964,6 +2139,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = FAIRY,FLYING
+BaseStats = 55,40,85,80,105,40
 Prev = TOGEPI
 Evolution = TOGEKISS,34
 #-------------------------------
@@ -1976,6 +2152,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = PSYCHIC,FLYING
+BaseStats = 40,50,45,70,45,70
 Evolution = XATU,25
 #-------------------------------
 [XATU]
@@ -1987,6 +2164,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = PSYCHIC,FLYING
+BaseStats = 65,75,70,95,70,95
 Prev = NATU
 #-------------------------------
 [MAREEP]
@@ -1998,6 +2176,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ELECTRIC
+BaseStats = 55,40,40,65,45,35
 Evolution = FLAAFFY,15
 #-------------------------------
 [FLAAFFY]
@@ -2009,6 +2188,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 70,55,55,80,60,45
 Prev = MAREEP
 Evolution = AMPHAROS,30
 #-------------------------------
@@ -2021,6 +2201,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = ELECTRIC
+BaseStats = 90,75,85,115,90,55
 Prev = FLAAFFY
 #-------------------------------
 [BELLOSSOM]
@@ -2032,6 +2213,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GRASS
+BaseStats = 75,80,95,90,100,50
 Prev = GLOOM
 #-------------------------------
 [MARILL]
@@ -2043,6 +2225,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,FAIRY
+BaseStats = 70,20,50,20,50,40
 Prev = AZURILL
 Evolution = AZUMARILL,18
 #-------------------------------
@@ -2055,6 +2238,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,FAIRY
+BaseStats = 100,50,80,60,80,50
 Prev = MARILL
 #-------------------------------
 [SUDOWOODO]
@@ -2066,6 +2250,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = ROCK
+BaseStats = 70,100,115,30,65,30
 Prev = BONSLY
 #-------------------------------
 [POLITOED]
@@ -2077,6 +2262,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER
+BaseStats = 90,75,75,90,100,70
 Prev = POLIWHIRL
 #-------------------------------
 [HOPPIP]
@@ -2088,6 +2274,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = GRASS,FLYING
+BaseStats = 35,35,40,35,55,50
 Evolution = SKIPLOOM,18
 #-------------------------------
 [SKIPLOOM]
@@ -2099,6 +2286,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GRASS,FLYING
+BaseStats = 55,45,50,45,65,80
 Prev = HOPPIP
 Evolution = JUMPLUFF,27
 #-------------------------------
@@ -2111,6 +2299,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GRASS,FLYING
+BaseStats = 75,55,70,55,95,110
 Prev = SKIPLOOM
 #-------------------------------
 [AIPOM]
@@ -2122,6 +2311,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 55,70,55,40,55,85
 Evolution = AMBIPOM,30
 #-------------------------------
 [SUNKERN]
@@ -2133,6 +2323,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = GRASS
+BaseStats = 30,30,30,30,30,30
 Evolution = SUNFLORA,16
 #-------------------------------
 [SUNFLORA]
@@ -2144,6 +2335,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GRASS
+BaseStats = 75,75,55,105,85,30
 Prev = SUNKERN
 #-------------------------------
 [YANMA]
@@ -2155,6 +2347,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = BUG,FLYING
+BaseStats = 65,65,45,75,45,95
 Evolution = YANMEGA,33
 #-------------------------------
 [WOOPER]
@@ -2166,6 +2359,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = WATER,GROUND
+BaseStats = 55,45,45,25,25,15
 Evolution = QUAGSIRE,20
 #-------------------------------
 [QUAGSIRE]
@@ -2177,6 +2371,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,GROUND
+BaseStats = 95,85,85,65,65,35
 Prev = WOOPER
 #-------------------------------
 [ESPEON]
@@ -2188,6 +2383,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = PSYCHIC
+BaseStats = 65,65,60,130,95,110
 Prev = EEVEE
 #-------------------------------
 [UMBREON]
@@ -2199,6 +2395,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = DARK
+BaseStats = 95,65,110,60,130,65
 Prev = EEVEE
 #-------------------------------
 [MURKROW]
@@ -2210,6 +2407,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = DARK,FLYING
+BaseStats = 60,85,42,85,42,91
 Evolution = HONCHKROW,34
 #-------------------------------
 [SLOWKING]
@@ -2221,6 +2419,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,PSYCHIC
+BaseStats = 95,75,80,100,110,30
 Prev = SLOWPOKE
 #-------------------------------
 [MISDREAVUS]
@@ -2232,6 +2431,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = GHOST
+BaseStats = 60,60,60,85,85,85
 Evolution = MISMAGIUS,36
 #-------------------------------
 [UNOWN]
@@ -2243,6 +2443,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = PSYCHIC
+BaseStats = 48,72,48,72,48,48
 #-------------------------------
 [WOBBUFFET]
 Name = 마자용
@@ -2253,6 +2454,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = PSYCHIC
+BaseStats = 190,33,58,33,58,33
 Prev = WYNAUT
 #-------------------------------
 [GIRAFARIG]
@@ -2264,6 +2466,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL,PSYCHIC
+BaseStats = 70,80,65,90,65,85
 Evolution = FARIGIRAF,38
 #-------------------------------
 [PINECO]
@@ -2275,6 +2478,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = BUG
+BaseStats = 50,65,90,35,35,15
 Evolution = FORRETRESS,31
 #-------------------------------
 [FORRETRESS]
@@ -2286,6 +2490,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = BUG,STEEL
+BaseStats = 75,90,140,60,60,40
 Prev = PINECO
 #-------------------------------
 [DUNSPARCE]
@@ -2297,6 +2502,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 100,70,70,65,65,45
 Evolution = DUDUNSPARCE,35
 #-------------------------------
 [GLIGAR]
@@ -2308,6 +2514,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = GROUND,FLYING
+BaseStats = 65,75,105,35,65,85
 Evolution = GLISCOR,36
 #-------------------------------
 [STEELIX]
@@ -2319,6 +2526,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = STEEL,GROUND
+BaseStats = 75,85,200,55,65,30
 Prev = ONIX
 #-------------------------------
 [SNUBBULL]
@@ -2330,6 +2538,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FAIRY
+BaseStats = 60,80,50,40,40,30
 Evolution = GRANBULL,23
 #-------------------------------
 [GRANBULL]
@@ -2341,6 +2550,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = FAIRY
+BaseStats = 90,120,75,60,60,45
 Prev = SNUBBULL
 #-------------------------------
 [QWILFISH]
@@ -2352,6 +2562,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = WATER,POISON
+BaseStats = 65,95,85,55,55,85
 #-------------------------------
 [SCIZOR]
 Name = 핫삼
@@ -2362,6 +2573,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = BUG,STEEL
+BaseStats = 70,130,100,55,80,65
 Prev = SCYTHER
 #-------------------------------
 [SHUCKLE]
@@ -2373,6 +2585,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = BUG,ROCK
+BaseStats = 20,10,230,10,230,5
 #-------------------------------
 [HERACROSS]
 Name = 헤라크로스
@@ -2383,6 +2596,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = BUG,FIGHTING
+BaseStats = 80,125,75,40,95,85
 #-------------------------------
 [SNEASEL]
 Name = 포푸니
@@ -2393,6 +2607,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = DARK,ICE
+BaseStats = 55,95,55,35,75,115
 Evolution = WEAVILE,36
 #-------------------------------
 [TEDDIURSA]
@@ -2404,6 +2619,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 60,80,50,50,50,40
 Evolution = URSARING,30
 #-------------------------------
 [URSARING]
@@ -2415,6 +2631,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = NORMAL
+BaseStats = 90,130,75,75,75,55
 Prev = TEDDIURSA
 Evolution = URSALUNA,40
 #-------------------------------
@@ -2427,6 +2644,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FIRE
+BaseStats = 40,40,40,70,40,20
 Evolution = MAGCARGO,38
 #-------------------------------
 [MAGCARGO]
@@ -2438,6 +2656,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = FIRE,ROCK
+BaseStats = 60,50,120,90,80,30
 Prev = SLUGMA
 #-------------------------------
 [SWINUB]
@@ -2449,6 +2668,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ICE,GROUND
+BaseStats = 50,50,40,30,30,50
 Evolution = PILOSWINE,33
 #-------------------------------
 [PILOSWINE]
@@ -2460,6 +2680,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = ICE,GROUND
+BaseStats = 100,100,80,60,60,50
 Prev = SWINUB
 Evolution = MAMOSWINE,39
 #-------------------------------
@@ -2472,6 +2693,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = WATER,ROCK
+BaseStats = 65,55,95,65,95,35
 #-------------------------------
 [REMORAID]
 Name = 총어
@@ -2482,6 +2704,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = WATER
+BaseStats = 35,65,35,65,35,65
 Evolution = OCTILLERY,25
 #-------------------------------
 [OCTILLERY]
@@ -2493,6 +2716,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER
+BaseStats = 75,105,75,105,75,45
 Prev = REMORAID
 #-------------------------------
 [DELIBIRD]
@@ -2504,6 +2728,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ICE,FLYING
+BaseStats = 45,55,45,65,45,75
 #-------------------------------
 [MANTINE]
 Name = 만타인
@@ -2514,6 +2739,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,FLYING
+BaseStats = 85,40,70,80,140,70
 Prev = MANTYKE
 #-------------------------------
 [SKARMORY]
@@ -2525,6 +2751,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = STEEL,FLYING
+BaseStats = 65,80,140,40,70,70
 #-------------------------------
 [HOUNDOUR]
 Name = 델빌
@@ -2535,6 +2762,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = DARK,FIRE
+BaseStats = 45,60,30,80,50,65
 Evolution = HOUNDOOM,24
 #-------------------------------
 [HOUNDOOM]
@@ -2546,6 +2774,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = DARK,FIRE
+BaseStats = 75,90,50,110,80,95
 Prev = HOUNDOUR
 #-------------------------------
 [KINGDRA]
@@ -2557,6 +2786,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = WATER,DRAGON
+BaseStats = 75,95,95,95,95,85
 Prev = SEADRA
 #-------------------------------
 [PHANPY]
@@ -2568,6 +2798,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = GROUND
+BaseStats = 90,60,60,40,40,40
 Evolution = DONPHAN,25
 #-------------------------------
 [DONPHAN]
@@ -2579,6 +2810,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = GROUND
+BaseStats = 90,120,120,60,60,50
 Prev = PHANPY
 #-------------------------------
 [PORYGON2]
@@ -2590,6 +2822,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = NORMAL
+BaseStats = 85,80,90,105,95,60
 Prev = PORYGON
 Evolution = PORYGONZ,40
 #-------------------------------
@@ -2602,6 +2835,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 73,95,62,85,65,85
 Evolution = WYRDEER,39
 #-------------------------------
 [SMEARGLE]
@@ -2613,6 +2847,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 55,20,35,20,45,75
 #-------------------------------
 [TYROGUE]
 Name = 배루키
@@ -2623,6 +2858,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FIGHTING
+BaseStats = 35,35,35,35,35,35
 Evolution = HITMONLEE,20
 Evolution = HITMONCHAN,20
 Evolution = HITMONTOP,20
@@ -2636,6 +2872,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = FIGHTING
+BaseStats = 50,95,95,35,110,70
 Prev = TYROGUE
 #-------------------------------
 [SMOOCHUM]
@@ -2647,6 +2884,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ICE,PSYCHIC
+BaseStats = 45,30,15,85,65,65
 Evolution = JYNX,30
 #-------------------------------
 [ELEKID]
@@ -2658,6 +2896,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ELECTRIC
+BaseStats = 45,63,37,65,55,95
 Evolution = ELECTABUZZ,30
 #-------------------------------
 [MAGBY]
@@ -2669,6 +2908,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = FIRE
+BaseStats = 45,75,37,70,55,83
 Evolution = MAGMAR,30
 #-------------------------------
 [MILTANK]
@@ -2680,6 +2920,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = NORMAL
+BaseStats = 95,80,105,40,70,100
 #-------------------------------
 [BLISSEY]
 Name = 해피너스
@@ -2690,6 +2931,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = NORMAL
+BaseStats = 255,10,10,75,135,55
 Prev = CHANSEY
 #-------------------------------
 [RAIKOU]
@@ -2701,6 +2943,7 @@ Tier = 1
 Region = JOHTO
 Basic = true
 Types = ELECTRIC
+BaseStats = 90,85,75,115,100,115
 #-------------------------------
 [ENTEI]
 Name = 앤테이
@@ -2711,6 +2954,7 @@ Tier = 1
 Region = JOHTO
 Basic = true
 Types = FIRE
+BaseStats = 115,115,85,90,75,100
 #-------------------------------
 [SUICUNE]
 Name = 스이쿤
@@ -2721,6 +2965,7 @@ Tier = 1
 Region = JOHTO
 Basic = true
 Types = WATER
+BaseStats = 100,75,115,90,115,85
 #-------------------------------
 [LARVITAR]
 Name = 애버라스
@@ -2731,6 +2976,7 @@ Tier = 0
 Region = JOHTO
 Basic = true
 Types = ROCK,GROUND
+BaseStats = 50,64,50,45,50,41
 Evolution = PUPITAR,30
 #-------------------------------
 [PUPITAR]
@@ -2742,6 +2988,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = ROCK,GROUND
+BaseStats = 70,84,70,65,70,51
 Prev = LARVITAR
 Evolution = TYRANITAR,55
 #-------------------------------
@@ -2754,6 +3001,7 @@ Tier = 0
 Region = JOHTO
 Basic = false
 Types = ROCK,DARK
+BaseStats = 100,134,110,95,100,61
 Prev = PUPITAR
 #-------------------------------
 [LUGIA]
@@ -2765,6 +3013,7 @@ Tier = 2
 Region = JOHTO
 Basic = true
 Types = PSYCHIC,FLYING
+BaseStats = 106,90,130,90,154,110
 #-------------------------------
 [HOOH]
 Name = 칠색조
@@ -2775,6 +3024,7 @@ Tier = 2
 Region = JOHTO
 Basic = true
 Types = FIRE,FLYING
+BaseStats = 106,130,90,110,154,90
 #-------------------------------
 [CELEBI]
 Name = 세레비
@@ -2785,6 +3035,7 @@ Tier = 3
 Region = JOHTO
 Basic = true
 Types = PSYCHIC,GRASS
+BaseStats = 100,100,100,100,100,100
 #-------------------------------
 [TREECKO]
 Name = 나무지기
@@ -2795,6 +3046,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GRASS
+BaseStats = 40,45,35,65,55,70
 Evolution = GROVYLE,16
 #-------------------------------
 [GROVYLE]
@@ -2806,6 +3058,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS
+BaseStats = 50,65,45,85,65,95
 Prev = TREECKO
 Evolution = SCEPTILE,36
 #-------------------------------
@@ -2818,6 +3071,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS
+BaseStats = 70,85,65,105,85,120
 Prev = GROVYLE
 #-------------------------------
 [TORCHIC]
@@ -2829,6 +3083,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = FIRE
+BaseStats = 45,60,40,70,50,45
 Evolution = COMBUSKEN,16
 #-------------------------------
 [COMBUSKEN]
@@ -2840,6 +3095,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = FIRE,FIGHTING
+BaseStats = 60,85,60,85,60,55
 Prev = TORCHIC
 Evolution = BLAZIKEN,36
 #-------------------------------
@@ -2852,6 +3108,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = FIRE,FIGHTING
+BaseStats = 80,120,70,110,70,80
 Prev = COMBUSKEN
 #-------------------------------
 [MUDKIP]
@@ -2863,6 +3120,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 50,70,50,50,50,40
 Evolution = MARSHTOMP,16
 #-------------------------------
 [MARSHTOMP]
@@ -2874,6 +3132,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,GROUND
+BaseStats = 70,85,70,60,70,50
 Prev = MUDKIP
 Evolution = SWAMPERT,36
 #-------------------------------
@@ -2886,6 +3145,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,GROUND
+BaseStats = 100,110,90,85,90,60
 Prev = MARSHTOMP
 #-------------------------------
 [POOCHYENA]
@@ -2897,6 +3157,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = DARK
+BaseStats = 35,55,35,30,30,35
 Evolution = MIGHTYENA,18
 #-------------------------------
 [MIGHTYENA]
@@ -2908,6 +3169,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = DARK
+BaseStats = 70,90,70,60,60,70
 Prev = POOCHYENA
 #-------------------------------
 [ZIGZAGOON]
@@ -2919,6 +3181,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 38,30,41,30,41,60
 Evolution = LINOONE,20
 #-------------------------------
 [LINOONE]
@@ -2930,6 +3193,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL
+BaseStats = 78,70,61,50,61,100
 Prev = ZIGZAGOON
 #-------------------------------
 [WURMPLE]
@@ -2941,6 +3205,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = BUG
+BaseStats = 45,45,35,20,30,20
 Evolution = SILCOON,7
 Evolution = CASCOON,7
 #-------------------------------
@@ -2953,6 +3218,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG
+BaseStats = 50,35,55,25,25,15
 Prev = WURMPLE
 Evolution = BEAUTIFLY,10
 #-------------------------------
@@ -2965,6 +3231,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG,FLYING
+BaseStats = 60,70,50,100,50,65
 Prev = SILCOON
 #-------------------------------
 [CASCOON]
@@ -2976,6 +3243,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG
+BaseStats = 50,35,55,25,25,15
 Prev = WURMPLE
 Evolution = DUSTOX,10
 #-------------------------------
@@ -2988,6 +3256,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG,POISON
+BaseStats = 60,50,70,50,90,65
 Prev = CASCOON
 #-------------------------------
 [LOTAD]
@@ -2999,6 +3268,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER,GRASS
+BaseStats = 40,30,30,40,50,30
 Evolution = LOMBRE,14
 #-------------------------------
 [LOMBRE]
@@ -3010,6 +3280,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,GRASS
+BaseStats = 60,50,50,60,70,50
 Prev = LOTAD
 Evolution = LUDICOLO,28
 #-------------------------------
@@ -3022,6 +3293,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,GRASS
+BaseStats = 80,70,70,90,100,70
 Prev = LOMBRE
 #-------------------------------
 [SEEDOT]
@@ -3033,6 +3305,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GRASS
+BaseStats = 40,40,50,30,30,30
 Evolution = NUZLEAF,14
 #-------------------------------
 [NUZLEAF]
@@ -3044,6 +3317,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS,DARK
+BaseStats = 70,70,40,60,40,60
 Prev = SEEDOT
 Evolution = SHIFTRY,28
 #-------------------------------
@@ -3056,6 +3330,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS,DARK
+BaseStats = 90,100,60,90,60,80
 Prev = NUZLEAF
 #-------------------------------
 [TAILLOW]
@@ -3067,6 +3342,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 40,55,30,30,30,85
 Evolution = SWELLOW,22
 #-------------------------------
 [SWELLOW]
@@ -3078,6 +3354,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 60,85,60,75,50,125
 Prev = TAILLOW
 #-------------------------------
 [WINGULL]
@@ -3089,6 +3366,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER,FLYING
+BaseStats = 40,30,30,55,30,85
 Evolution = PELIPPER,25
 #-------------------------------
 [PELIPPER]
@@ -3100,6 +3378,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,FLYING
+BaseStats = 60,50,100,95,70,65
 Prev = WINGULL
 #-------------------------------
 [RALTS]
@@ -3111,6 +3390,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = PSYCHIC,FAIRY
+BaseStats = 28,25,25,45,35,40
 Evolution = KIRLIA,20
 #-------------------------------
 [KIRLIA]
@@ -3122,6 +3402,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = PSYCHIC,FAIRY
+BaseStats = 38,35,35,65,55,50
 Prev = RALTS
 Evolution = GARDEVOIR,30
 Evolution = GALLADE,26
@@ -3135,6 +3416,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = PSYCHIC,FAIRY
+BaseStats = 68,65,65,125,115,80
 Prev = KIRLIA
 #-------------------------------
 [SURSKIT]
@@ -3146,6 +3428,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = BUG,WATER
+BaseStats = 40,30,32,50,52,65
 Evolution = MASQUERAIN,22
 #-------------------------------
 [MASQUERAIN]
@@ -3157,6 +3440,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG,FLYING
+BaseStats = 70,60,62,100,82,80
 Prev = SURSKIT
 #-------------------------------
 [SHROOMISH]
@@ -3168,6 +3452,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GRASS
+BaseStats = 60,40,60,40,60,35
 Evolution = BRELOOM,23
 #-------------------------------
 [BRELOOM]
@@ -3179,6 +3464,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS,FIGHTING
+BaseStats = 60,130,80,60,60,70
 Prev = SHROOMISH
 #-------------------------------
 [SLAKOTH]
@@ -3190,6 +3476,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 60,60,60,35,35,30
 Evolution = VIGOROTH,18
 #-------------------------------
 [VIGOROTH]
@@ -3201,6 +3488,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL
+BaseStats = 80,80,80,55,55,90
 Prev = SLAKOTH
 Evolution = SLAKING,36
 #-------------------------------
@@ -3213,6 +3501,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL
+BaseStats = 150,160,100,95,65,100
 Prev = VIGOROTH
 #-------------------------------
 [NINCADA]
@@ -3224,6 +3513,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = BUG,GROUND
+BaseStats = 31,45,90,30,30,40
 Evolution = NINJASK,20
 Evolution = SHEDINJA,20
 #-------------------------------
@@ -3236,6 +3526,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG,FLYING
+BaseStats = 61,90,45,50,50,160
 Prev = NINCADA
 #-------------------------------
 [SHEDINJA]
@@ -3247,6 +3538,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = BUG,GHOST
+BaseStats = 1,90,45,30,30,40
 Prev = NINCADA
 #-------------------------------
 [WHISMUR]
@@ -3258,6 +3550,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 64,51,23,51,23,28
 Evolution = LOUDRED,20
 #-------------------------------
 [LOUDRED]
@@ -3269,6 +3562,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL
+BaseStats = 84,71,43,71,43,48
 Prev = WHISMUR
 Evolution = EXPLOUD,40
 #-------------------------------
@@ -3281,6 +3575,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL
+BaseStats = 104,91,63,91,73,68
 Prev = LOUDRED
 #-------------------------------
 [MAKUHITA]
@@ -3292,6 +3587,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = FIGHTING
+BaseStats = 72,60,30,20,30,25
 Evolution = HARIYAMA,24
 #-------------------------------
 [HARIYAMA]
@@ -3303,6 +3599,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = FIGHTING
+BaseStats = 144,120,60,40,60,50
 Prev = MAKUHITA
 #-------------------------------
 [AZURILL]
@@ -3314,6 +3611,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL,FAIRY
+BaseStats = 50,20,40,20,40,20
 Evolution = MARILL,16
 #-------------------------------
 [NOSEPASS]
@@ -3325,6 +3623,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ROCK
+BaseStats = 30,45,135,45,90,30
 Evolution = PROBOPASS,31
 #-------------------------------
 [SKITTY]
@@ -3336,6 +3635,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 50,45,45,35,35,50
 Evolution = DELCATTY,22
 #-------------------------------
 [DELCATTY]
@@ -3347,6 +3647,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = NORMAL
+BaseStats = 70,65,65,55,55,90
 Prev = SKITTY
 #-------------------------------
 [SABLEYE]
@@ -3358,6 +3659,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = DARK,GHOST
+BaseStats = 50,75,75,65,65,50
 #-------------------------------
 [MAWILE]
 Name = 입치트
@@ -3368,6 +3670,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = STEEL,FAIRY
+BaseStats = 50,85,85,55,55,50
 #-------------------------------
 [ARON]
 Name = 가보리
@@ -3378,6 +3681,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = STEEL,ROCK
+BaseStats = 50,70,100,40,40,30
 Evolution = LAIRON,32
 #-------------------------------
 [LAIRON]
@@ -3389,6 +3693,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = STEEL,ROCK
+BaseStats = 60,90,140,50,50,40
 Prev = ARON
 Evolution = AGGRON,42
 #-------------------------------
@@ -3401,6 +3706,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = STEEL,ROCK
+BaseStats = 70,110,180,60,60,50
 Prev = LAIRON
 #-------------------------------
 [MEDITITE]
@@ -3412,6 +3718,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = FIGHTING,PSYCHIC
+BaseStats = 30,40,55,40,55,60
 Evolution = MEDICHAM,37
 #-------------------------------
 [MEDICHAM]
@@ -3423,6 +3730,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = FIGHTING,PSYCHIC
+BaseStats = 60,60,75,60,75,80
 Prev = MEDITITE
 #-------------------------------
 [ELECTRIKE]
@@ -3434,6 +3742,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ELECTRIC
+BaseStats = 40,45,40,65,40,65
 Evolution = MANECTRIC,26
 #-------------------------------
 [MANECTRIC]
@@ -3445,6 +3754,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = ELECTRIC
+BaseStats = 70,75,60,105,60,105
 Prev = ELECTRIKE
 #-------------------------------
 [PLUSLE]
@@ -3456,6 +3766,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ELECTRIC
+BaseStats = 60,50,40,85,75,95
 #-------------------------------
 [MINUN]
 Name = 마이농
@@ -3466,6 +3777,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ELECTRIC
+BaseStats = 60,40,50,75,85,95
 #-------------------------------
 [VOLBEAT]
 Name = 볼비트
@@ -3476,6 +3788,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = BUG
+BaseStats = 65,73,75,47,85,85
 #-------------------------------
 [ILLUMISE]
 Name = 네오비트
@@ -3486,6 +3799,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = BUG
+BaseStats = 65,47,75,73,85,85
 #-------------------------------
 [ROSELIA]
 Name = 로젤리아
@@ -3496,6 +3810,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS,POISON
+BaseStats = 50,60,45,100,80,65
 Prev = BUDEW
 Evolution = ROSERADE,33
 #-------------------------------
@@ -3508,6 +3823,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = POISON
+BaseStats = 70,43,53,43,53,40
 Evolution = SWALOT,26
 #-------------------------------
 [SWALOT]
@@ -3519,6 +3835,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = POISON
+BaseStats = 100,73,83,73,83,55
 Prev = GULPIN
 #-------------------------------
 [CARVANHA]
@@ -3530,6 +3847,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER,DARK
+BaseStats = 45,90,20,65,20,65
 Evolution = SHARPEDO,30
 #-------------------------------
 [SHARPEDO]
@@ -3541,6 +3859,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,DARK
+BaseStats = 70,120,40,95,40,95
 Prev = CARVANHA
 #-------------------------------
 [WAILMER]
@@ -3552,6 +3871,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 130,70,35,70,35,60
 Evolution = WAILORD,40
 #-------------------------------
 [WAILORD]
@@ -3563,6 +3883,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER
+BaseStats = 170,90,45,90,45,60
 Prev = WAILMER
 #-------------------------------
 [NUMEL]
@@ -3574,6 +3895,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = FIRE,GROUND
+BaseStats = 60,60,40,65,45,35
 Evolution = CAMERUPT,33
 #-------------------------------
 [CAMERUPT]
@@ -3585,6 +3907,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = FIRE,GROUND
+BaseStats = 70,100,70,105,75,40
 Prev = NUMEL
 #-------------------------------
 [TORKOAL]
@@ -3596,6 +3919,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = FIRE
+BaseStats = 70,85,140,85,70,20
 #-------------------------------
 [SPOINK]
 Name = 피그점프
@@ -3606,6 +3930,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = PSYCHIC
+BaseStats = 60,25,35,70,80,60
 Evolution = GRUMPIG,32
 #-------------------------------
 [GRUMPIG]
@@ -3617,6 +3942,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = PSYCHIC
+BaseStats = 80,45,65,90,110,80
 Prev = SPOINK
 #-------------------------------
 [SPINDA]
@@ -3628,6 +3954,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 60,60,60,60,60,60
 #-------------------------------
 [TRAPINCH]
 Name = 톱치
@@ -3638,6 +3965,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GROUND
+BaseStats = 45,100,45,45,45,10
 Evolution = VIBRAVA,35
 #-------------------------------
 [VIBRAVA]
@@ -3649,6 +3977,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GROUND,DRAGON
+BaseStats = 50,70,50,50,50,70
 Prev = TRAPINCH
 Evolution = FLYGON,45
 #-------------------------------
@@ -3661,6 +3990,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GROUND,DRAGON
+BaseStats = 80,100,80,80,80,100
 Prev = VIBRAVA
 #-------------------------------
 [CACNEA]
@@ -3672,6 +4002,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GRASS
+BaseStats = 50,85,40,85,40,35
 Evolution = CACTURNE,32
 #-------------------------------
 [CACTURNE]
@@ -3683,6 +4014,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GRASS,DARK
+BaseStats = 70,115,60,115,60,55
 Prev = CACNEA
 #-------------------------------
 [SWABLU]
@@ -3694,6 +4026,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 45,40,60,40,75,50
 Evolution = ALTARIA,35
 #-------------------------------
 [ALTARIA]
@@ -3705,6 +4038,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = DRAGON,FLYING
+BaseStats = 75,70,90,70,105,80
 Prev = SWABLU
 #-------------------------------
 [ZANGOOSE]
@@ -3716,6 +4050,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 73,115,60,60,60,90
 #-------------------------------
 [SEVIPER]
 Name = 세비퍼
@@ -3726,6 +4061,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = POISON
+BaseStats = 73,100,60,100,60,65
 #-------------------------------
 [LUNATONE]
 Name = 루나톤
@@ -3736,6 +4072,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ROCK,PSYCHIC
+BaseStats = 90,55,65,95,85,70
 #-------------------------------
 [SOLROCK]
 Name = 솔록
@@ -3746,6 +4083,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ROCK,PSYCHIC
+BaseStats = 90,95,85,55,65,70
 #-------------------------------
 [BARBOACH]
 Name = 미꾸리
@@ -3756,6 +4094,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER,GROUND
+BaseStats = 50,48,43,46,41,60
 Evolution = WHISCASH,30
 #-------------------------------
 [WHISCASH]
@@ -3767,6 +4106,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,GROUND
+BaseStats = 110,78,73,76,71,60
 Prev = BARBOACH
 #-------------------------------
 [CORPHISH]
@@ -3778,6 +4118,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 43,80,65,50,35,35
 Evolution = CRAWDAUNT,30
 #-------------------------------
 [CRAWDAUNT]
@@ -3789,6 +4130,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER,DARK
+BaseStats = 63,120,85,90,55,55
 Prev = CORPHISH
 #-------------------------------
 [BALTOY]
@@ -3800,6 +4142,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GROUND,PSYCHIC
+BaseStats = 40,40,55,40,70,55
 Evolution = CLAYDOL,36
 #-------------------------------
 [CLAYDOL]
@@ -3811,6 +4154,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GROUND,PSYCHIC
+BaseStats = 60,70,105,70,120,75
 Prev = BALTOY
 #-------------------------------
 [LILEEP]
@@ -3822,6 +4166,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ROCK,GRASS
+BaseStats = 66,41,77,61,87,23
 Evolution = CRADILY,40
 #-------------------------------
 [CRADILY]
@@ -3833,6 +4178,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = ROCK,GRASS
+BaseStats = 86,81,97,81,107,43
 Prev = LILEEP
 #-------------------------------
 [ANORITH]
@@ -3844,6 +4190,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ROCK,BUG
+BaseStats = 45,95,50,40,50,75
 Evolution = ARMALDO,40
 #-------------------------------
 [ARMALDO]
@@ -3855,6 +4202,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = ROCK,BUG
+BaseStats = 75,125,100,70,80,45
 Prev = ANORITH
 #-------------------------------
 [FEEBAS]
@@ -3866,6 +4214,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 20,15,20,10,55,80
 Evolution = MILOTIC,17
 #-------------------------------
 [MILOTIC]
@@ -3877,6 +4226,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER
+BaseStats = 95,60,79,100,125,81
 Prev = FEEBAS
 #-------------------------------
 [CASTFORM]
@@ -3888,6 +4238,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 70,70,70,70,70,70
 #-------------------------------
 [KECLEON]
 Name = 켈리몬
@@ -3898,6 +4249,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = NORMAL
+BaseStats = 60,90,70,60,120,40
 #-------------------------------
 [SHUPPET]
 Name = 어둠대신
@@ -3908,6 +4260,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GHOST
+BaseStats = 44,75,35,63,33,45
 Evolution = BANETTE,37
 #-------------------------------
 [BANETTE]
@@ -3919,6 +4272,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GHOST
+BaseStats = 64,115,65,83,63,65
 Prev = SHUPPET
 #-------------------------------
 [DUSKULL]
@@ -3930,6 +4284,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GHOST
+BaseStats = 20,40,90,30,90,25
 Evolution = DUSCLOPS,37
 #-------------------------------
 [DUSCLOPS]
@@ -3941,6 +4296,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = GHOST
+BaseStats = 40,70,130,60,130,25
 Prev = DUSKULL
 Evolution = DUSKNOIR,43
 #-------------------------------
@@ -3953,6 +4309,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = GRASS,FLYING
+BaseStats = 99,68,83,72,87,51
 #-------------------------------
 [CHIMECHO]
 Name = 치렁
@@ -3963,6 +4320,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = PSYCHIC
+BaseStats = 75,50,80,95,90,65
 Prev = CHINGLING
 #-------------------------------
 [ABSOL]
@@ -3974,6 +4332,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = DARK
+BaseStats = 65,130,60,75,60,75
 #-------------------------------
 [WYNAUT]
 Name = 마자
@@ -3984,6 +4343,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = PSYCHIC
+BaseStats = 95,23,48,23,48,23
 Evolution = WOBBUFFET,15
 #-------------------------------
 [SNORUNT]
@@ -3995,6 +4355,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ICE
+BaseStats = 50,50,50,50,50,50
 Evolution = GLALIE,42
 Evolution = FROSLASS,25
 #-------------------------------
@@ -4007,6 +4368,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = ICE
+BaseStats = 80,80,80,80,80,80
 Prev = SNORUNT
 #-------------------------------
 [SPHEAL]
@@ -4018,6 +4380,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = ICE,WATER
+BaseStats = 70,40,50,55,50,25
 Evolution = SEALEO,32
 #-------------------------------
 [SEALEO]
@@ -4029,6 +4392,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = ICE,WATER
+BaseStats = 90,60,70,75,70,45
 Prev = SPHEAL
 Evolution = WALREIN,44
 #-------------------------------
@@ -4041,6 +4405,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = ICE,WATER
+BaseStats = 110,80,90,95,90,65
 Prev = SEALEO
 #-------------------------------
 [CLAMPERL]
@@ -4052,6 +4417,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 35,64,85,74,55,32
 Evolution = HUNTAIL,29
 Evolution = GOREBYSS,29
 #-------------------------------
@@ -4064,6 +4430,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER
+BaseStats = 55,104,105,94,75,52
 Prev = CLAMPERL
 #-------------------------------
 [GOREBYSS]
@@ -4075,6 +4442,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = WATER
+BaseStats = 55,84,105,114,75,52
 Prev = CLAMPERL
 #-------------------------------
 [RELICANTH]
@@ -4086,6 +4454,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER,ROCK
+BaseStats = 100,90,130,45,65,55
 #-------------------------------
 [LUVDISC]
 Name = 사랑동이
@@ -4096,6 +4465,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 43,30,55,40,65,97
 #-------------------------------
 [BAGON]
 Name = 아공이
@@ -4106,6 +4476,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = DRAGON
+BaseStats = 45,75,60,40,30,50
 Evolution = SHELGON,30
 #-------------------------------
 [SHELGON]
@@ -4117,6 +4488,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = DRAGON
+BaseStats = 65,95,100,60,50,50
 Prev = BAGON
 Evolution = SALAMENCE,50
 #-------------------------------
@@ -4129,6 +4501,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = DRAGON,FLYING
+BaseStats = 95,135,80,110,80,100
 Prev = SHELGON
 #-------------------------------
 [BELDUM]
@@ -4140,6 +4513,7 @@ Tier = 0
 Region = HOENN
 Basic = true
 Types = STEEL,PSYCHIC
+BaseStats = 40,55,80,35,60,30
 Evolution = METANG,20
 #-------------------------------
 [METANG]
@@ -4151,6 +4525,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = STEEL,PSYCHIC
+BaseStats = 60,75,100,55,80,50
 Prev = BELDUM
 Evolution = METAGROSS,45
 #-------------------------------
@@ -4163,6 +4538,7 @@ Tier = 0
 Region = HOENN
 Basic = false
 Types = STEEL,PSYCHIC
+BaseStats = 80,135,130,95,90,70
 Prev = METANG
 #-------------------------------
 [REGIROCK]
@@ -4174,6 +4550,7 @@ Tier = 1
 Region = HOENN
 Basic = true
 Types = ROCK
+BaseStats = 80,100,200,50,100,50
 #-------------------------------
 [REGICE]
 Name = 레지아이스
@@ -4184,6 +4561,7 @@ Tier = 1
 Region = HOENN
 Basic = true
 Types = ICE
+BaseStats = 80,50,100,100,200,50
 #-------------------------------
 [REGISTEEL]
 Name = 레지스틸
@@ -4194,6 +4572,7 @@ Tier = 1
 Region = HOENN
 Basic = true
 Types = STEEL
+BaseStats = 80,75,150,75,150,50
 #-------------------------------
 [LATIAS]
 Name = 라티아스
@@ -4204,6 +4583,7 @@ Tier = 1
 Region = HOENN
 Basic = true
 Types = DRAGON,PSYCHIC
+BaseStats = 80,80,90,110,130,110
 #-------------------------------
 [LATIOS]
 Name = 라티오스
@@ -4214,6 +4594,7 @@ Tier = 1
 Region = HOENN
 Basic = true
 Types = DRAGON,PSYCHIC
+BaseStats = 80,90,80,130,110,110
 #-------------------------------
 [KYOGRE]
 Name = 가이오가
@@ -4224,6 +4605,7 @@ Tier = 2
 Region = HOENN
 Basic = true
 Types = WATER
+BaseStats = 100,100,90,150,140,90
 #-------------------------------
 [GROUDON]
 Name = 그란돈
@@ -4234,6 +4616,7 @@ Tier = 2
 Region = HOENN
 Basic = true
 Types = GROUND
+BaseStats = 100,150,140,100,90,90
 #-------------------------------
 [RAYQUAZA]
 Name = 레쿠쟈
@@ -4244,6 +4627,7 @@ Tier = 2
 Region = HOENN
 Basic = true
 Types = DRAGON,FLYING
+BaseStats = 105,150,90,150,90,95
 #-------------------------------
 [JIRACHI]
 Name = 지라치
@@ -4254,6 +4638,7 @@ Tier = 3
 Region = HOENN
 Basic = true
 Types = STEEL,PSYCHIC
+BaseStats = 100,100,100,100,100,100
 #-------------------------------
 [DEOXYS]
 Name = 테오키스
@@ -4264,6 +4649,7 @@ Tier = 3
 Region = HOENN
 Basic = true
 Types = PSYCHIC
+BaseStats = 50,150,50,150,50,150
 #-------------------------------
 [TURTWIG]
 Name = 모부기
@@ -4274,6 +4660,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GRASS
+BaseStats = 55,68,64,45,55,31
 Evolution = GROTLE,18
 #-------------------------------
 [GROTLE]
@@ -4285,6 +4672,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS
+BaseStats = 75,89,85,55,65,36
 Prev = TURTWIG
 Evolution = TORTERRA,32
 #-------------------------------
@@ -4297,6 +4685,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS,GROUND
+BaseStats = 95,109,105,75,85,56
 Prev = GROTLE
 #-------------------------------
 [CHIMCHAR]
@@ -4308,6 +4697,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = FIRE
+BaseStats = 44,58,44,58,44,61
 Evolution = MONFERNO,14
 #-------------------------------
 [MONFERNO]
@@ -4319,6 +4709,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = FIRE,FIGHTING
+BaseStats = 64,78,52,78,52,81
 Prev = CHIMCHAR
 Evolution = INFERNAPE,36
 #-------------------------------
@@ -4331,6 +4722,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = FIRE,FIGHTING
+BaseStats = 76,104,71,104,71,108
 Prev = MONFERNO
 #-------------------------------
 [PIPLUP]
@@ -4342,6 +4734,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = WATER
+BaseStats = 53,51,53,61,56,40
 Evolution = PRINPLUP,16
 #-------------------------------
 [PRINPLUP]
@@ -4353,6 +4746,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = WATER
+BaseStats = 64,66,68,81,76,50
 Prev = PIPLUP
 Evolution = EMPOLEON,36
 #-------------------------------
@@ -4365,6 +4759,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = WATER,STEEL
+BaseStats = 84,86,88,111,101,60
 Prev = PRINPLUP
 #-------------------------------
 [STARLY]
@@ -4376,6 +4771,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 40,55,30,30,30,60
 Evolution = STARAVIA,14
 #-------------------------------
 [STARAVIA]
@@ -4387,6 +4783,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 55,75,50,40,40,80
 Prev = STARLY
 Evolution = STARAPTOR,34
 #-------------------------------
@@ -4399,6 +4796,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 85,120,70,50,60,100
 Prev = STARAVIA
 #-------------------------------
 [BIDOOF]
@@ -4410,6 +4808,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 59,45,40,35,40,31
 Evolution = BIBAREL,15
 #-------------------------------
 [BIBAREL]
@@ -4421,6 +4820,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL,WATER
+BaseStats = 79,85,60,55,60,71
 Prev = BIDOOF
 #-------------------------------
 [KRICKETOT]
@@ -4432,6 +4832,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = BUG
+BaseStats = 37,25,41,25,41,25
 Evolution = KRICKETUNE,10
 #-------------------------------
 [KRICKETUNE]
@@ -4443,6 +4844,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = BUG
+BaseStats = 77,85,51,55,51,65
 Prev = KRICKETOT
 #-------------------------------
 [SHINX]
@@ -4454,6 +4856,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = ELECTRIC
+BaseStats = 45,65,34,40,34,45
 Evolution = LUXIO,15
 #-------------------------------
 [LUXIO]
@@ -4465,6 +4868,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ELECTRIC
+BaseStats = 60,85,49,60,49,60
 Prev = SHINX
 Evolution = LUXRAY,30
 #-------------------------------
@@ -4477,6 +4881,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ELECTRIC
+BaseStats = 80,120,79,95,79,70
 Prev = LUXIO
 #-------------------------------
 [BUDEW]
@@ -4488,6 +4893,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GRASS,POISON
+BaseStats = 40,30,35,50,70,55
 Evolution = ROSELIA,23
 #-------------------------------
 [ROSERADE]
@@ -4499,6 +4905,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS,POISON
+BaseStats = 60,70,65,125,105,90
 Prev = ROSELIA
 #-------------------------------
 [CRANIDOS]
@@ -4510,6 +4917,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = ROCK
+BaseStats = 67,125,40,30,30,58
 Evolution = RAMPARDOS,30
 #-------------------------------
 [RAMPARDOS]
@@ -4521,6 +4929,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ROCK
+BaseStats = 97,165,60,65,50,58
 Prev = CRANIDOS
 #-------------------------------
 [SHIELDON]
@@ -4532,6 +4941,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = ROCK,STEEL
+BaseStats = 30,42,118,42,88,30
 Evolution = BASTIODON,30
 #-------------------------------
 [BASTIODON]
@@ -4543,6 +4953,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ROCK,STEEL
+BaseStats = 60,52,168,47,138,30
 Prev = SHIELDON
 #-------------------------------
 [BURMY]
@@ -4554,6 +4965,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = BUG
+BaseStats = 40,29,45,29,45,36
 Evolution = WORMADAM,20
 Evolution = MOTHIM,20
 #-------------------------------
@@ -4566,6 +4978,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = BUG,GRASS
+BaseStats = 60,59,85,79,105,36
 Prev = BURMY
 #-------------------------------
 [MOTHIM]
@@ -4577,6 +4990,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = BUG,FLYING
+BaseStats = 70,94,50,94,50,66
 Prev = BURMY
 #-------------------------------
 [COMBEE]
@@ -4588,6 +5002,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = BUG,FLYING
+BaseStats = 30,30,42,30,42,70
 Evolution = VESPIQUEN,21
 #-------------------------------
 [VESPIQUEN]
@@ -4599,6 +5014,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = BUG,FLYING
+BaseStats = 70,80,102,80,102,40
 Prev = COMBEE
 #-------------------------------
 [PACHIRISU]
@@ -4610,6 +5026,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = ELECTRIC
+BaseStats = 60,45,70,45,90,95
 #-------------------------------
 [BUIZEL]
 Name = 브이젤
@@ -4620,6 +5037,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = WATER
+BaseStats = 55,65,35,60,30,85
 Evolution = FLOATZEL,26
 #-------------------------------
 [FLOATZEL]
@@ -4631,6 +5049,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = WATER
+BaseStats = 85,105,55,85,50,115
 Prev = BUIZEL
 #-------------------------------
 [CHERUBI]
@@ -4642,6 +5061,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GRASS
+BaseStats = 45,35,45,62,53,35
 Evolution = CHERRIM,25
 #-------------------------------
 [CHERRIM]
@@ -4653,6 +5073,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS
+BaseStats = 70,60,70,87,78,85
 Prev = CHERUBI
 #-------------------------------
 [SHELLOS]
@@ -4664,6 +5085,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = WATER
+BaseStats = 76,48,48,57,62,34
 Evolution = GASTRODON,30
 #-------------------------------
 [GASTRODON]
@@ -4675,6 +5097,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = WATER,GROUND
+BaseStats = 111,83,68,92,82,39
 Prev = SHELLOS
 #-------------------------------
 [AMBIPOM]
@@ -4686,6 +5109,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL
+BaseStats = 75,100,66,60,66,115
 Prev = AIPOM
 #-------------------------------
 [DRIFLOON]
@@ -4697,6 +5121,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GHOST,FLYING
+BaseStats = 90,50,34,60,44,70
 Evolution = DRIFBLIM,28
 #-------------------------------
 [DRIFBLIM]
@@ -4708,6 +5133,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GHOST,FLYING
+BaseStats = 150,80,44,90,54,80
 Prev = DRIFLOON
 #-------------------------------
 [BUNEARY]
@@ -4719,6 +5145,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 55,66,44,44,56,85
 Evolution = LOPUNNY,29
 #-------------------------------
 [LOPUNNY]
@@ -4730,6 +5157,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL
+BaseStats = 65,76,84,54,96,105
 Prev = BUNEARY
 #-------------------------------
 [MISMAGIUS]
@@ -4741,6 +5169,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GHOST
+BaseStats = 60,60,60,105,105,105
 Prev = MISDREAVUS
 #-------------------------------
 [HONCHKROW]
@@ -4752,6 +5181,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = DARK,FLYING
+BaseStats = 100,125,52,105,52,71
 Prev = MURKROW
 #-------------------------------
 [GLAMEOW]
@@ -4763,6 +5193,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 49,55,42,42,37,85
 Evolution = PURUGLY,38
 #-------------------------------
 [PURUGLY]
@@ -4774,6 +5205,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL
+BaseStats = 71,82,64,64,59,112
 Prev = GLAMEOW
 #-------------------------------
 [CHINGLING]
@@ -4785,6 +5217,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = PSYCHIC
+BaseStats = 45,30,50,65,50,45
 Evolution = CHIMECHO,24
 #-------------------------------
 [STUNKY]
@@ -4796,6 +5229,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = POISON,DARK
+BaseStats = 63,63,47,41,41,74
 Evolution = SKUNTANK,34
 #-------------------------------
 [SKUNTANK]
@@ -4807,6 +5241,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = POISON,DARK
+BaseStats = 103,93,67,71,61,84
 Prev = STUNKY
 #-------------------------------
 [BRONZOR]
@@ -4818,6 +5253,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = STEEL,PSYCHIC
+BaseStats = 57,24,86,24,86,23
 Evolution = BRONZONG,33
 #-------------------------------
 [BRONZONG]
@@ -4829,6 +5265,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = STEEL,PSYCHIC
+BaseStats = 67,89,116,79,116,33
 Prev = BRONZOR
 #-------------------------------
 [BONSLY]
@@ -4840,6 +5277,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = ROCK
+BaseStats = 50,80,95,10,45,10
 Evolution = SUDOWOODO,24
 #-------------------------------
 [MIMEJR]
@@ -4851,6 +5289,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = PSYCHIC,FAIRY
+BaseStats = 20,25,45,70,90,60
 Evolution = MRMIME,26
 #-------------------------------
 [HAPPINY]
@@ -4862,6 +5301,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 100,5,5,15,65,30
 Evolution = CHANSEY,18
 #-------------------------------
 [CHATOT]
@@ -4873,6 +5313,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 76,65,45,92,42,91
 #-------------------------------
 [SPIRITOMB]
 Name = 화강돌
@@ -4883,6 +5324,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GHOST,DARK
+BaseStats = 50,92,108,92,108,35
 #-------------------------------
 [GIBLE]
 Name = 딥상어동
@@ -4893,6 +5335,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = DRAGON,GROUND
+BaseStats = 58,70,45,40,45,42
 Evolution = GABITE,24
 #-------------------------------
 [GABITE]
@@ -4904,6 +5347,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = DRAGON,GROUND
+BaseStats = 68,90,65,50,55,82
 Prev = GIBLE
 Evolution = GARCHOMP,48
 #-------------------------------
@@ -4916,6 +5360,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = DRAGON,GROUND
+BaseStats = 108,130,95,80,85,102
 Prev = GABITE
 #-------------------------------
 [MUNCHLAX]
@@ -4927,6 +5372,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 135,85,40,40,85,5
 Evolution = SNORLAX,33
 #-------------------------------
 [RIOLU]
@@ -4938,6 +5384,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = FIGHTING
+BaseStats = 40,70,40,35,40,60
 Evolution = LUCARIO,24
 #-------------------------------
 [LUCARIO]
@@ -4949,6 +5396,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = FIGHTING,STEEL
+BaseStats = 70,110,70,115,70,90
 Prev = RIOLU
 #-------------------------------
 [HIPPOPOTAS]
@@ -4960,6 +5408,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GROUND
+BaseStats = 68,72,78,38,42,32
 Evolution = HIPPOWDON,34
 #-------------------------------
 [HIPPOWDON]
@@ -4971,6 +5420,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GROUND
+BaseStats = 108,112,118,68,72,47
 Prev = HIPPOPOTAS
 #-------------------------------
 [SKORUPI]
@@ -4982,6 +5432,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = POISON,BUG
+BaseStats = 40,50,90,30,55,65
 Evolution = DRAPION,40
 #-------------------------------
 [DRAPION]
@@ -4993,6 +5444,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = POISON,DARK
+BaseStats = 70,90,110,60,75,95
 Prev = SKORUPI
 #-------------------------------
 [CROAGUNK]
@@ -5004,6 +5456,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = POISON,FIGHTING
+BaseStats = 48,61,40,61,40,50
 Evolution = TOXICROAK,37
 #-------------------------------
 [TOXICROAK]
@@ -5015,6 +5468,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = POISON,FIGHTING
+BaseStats = 83,106,65,86,65,85
 Prev = CROAGUNK
 #-------------------------------
 [CARNIVINE]
@@ -5026,6 +5480,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GRASS
+BaseStats = 74,100,72,90,72,46
 #-------------------------------
 [FINNEON]
 Name = 형광어
@@ -5036,6 +5491,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = WATER
+BaseStats = 49,49,56,49,61,66
 Evolution = LUMINEON,31
 #-------------------------------
 [LUMINEON]
@@ -5047,6 +5503,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = WATER
+BaseStats = 69,69,76,69,86,91
 Prev = FINNEON
 #-------------------------------
 [MANTYKE]
@@ -5058,6 +5515,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = WATER,FLYING
+BaseStats = 45,20,50,60,120,50
 Evolution = MANTINE,29
 #-------------------------------
 [SNOVER]
@@ -5069,6 +5527,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = GRASS,ICE
+BaseStats = 60,62,50,62,60,40
 Evolution = ABOMASNOW,40
 #-------------------------------
 [ABOMASNOW]
@@ -5080,6 +5539,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS,ICE
+BaseStats = 90,92,75,92,85,60
 Prev = SNOVER
 #-------------------------------
 [WEAVILE]
@@ -5091,6 +5551,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = DARK,ICE
+BaseStats = 70,120,65,45,85,125
 Prev = SNEASEL
 #-------------------------------
 [MAGNEZONE]
@@ -5102,6 +5563,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ELECTRIC,STEEL
+BaseStats = 70,70,115,130,90,60
 Prev = MAGNETON
 #-------------------------------
 [LICKILICKY]
@@ -5113,6 +5575,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL
+BaseStats = 110,85,95,80,95,50
 Prev = LICKITUNG
 #-------------------------------
 [RHYPERIOR]
@@ -5124,6 +5587,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GROUND,ROCK
+BaseStats = 115,140,130,55,55,40
 Prev = RHYDON
 #-------------------------------
 [TANGROWTH]
@@ -5135,6 +5599,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS
+BaseStats = 100,100,125,110,50,50
 Prev = TANGELA
 #-------------------------------
 [ELECTIVIRE]
@@ -5146,6 +5611,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ELECTRIC
+BaseStats = 75,123,67,95,85,95
 Prev = ELECTABUZZ
 #-------------------------------
 [MAGMORTAR]
@@ -5157,6 +5623,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = FIRE
+BaseStats = 75,95,67,125,95,83
 Prev = MAGMAR
 #-------------------------------
 [TOGEKISS]
@@ -5168,6 +5635,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = FAIRY,FLYING
+BaseStats = 85,50,95,120,115,80
 Prev = TOGETIC
 #-------------------------------
 [YANMEGA]
@@ -5179,6 +5647,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = BUG,FLYING
+BaseStats = 86,76,86,116,56,95
 Prev = YANMA
 #-------------------------------
 [LEAFEON]
@@ -5190,6 +5659,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GRASS
+BaseStats = 65,110,130,60,65,95
 Prev = EEVEE
 #-------------------------------
 [GLACEON]
@@ -5201,6 +5671,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ICE
+BaseStats = 65,60,110,130,95,65
 Prev = EEVEE
 #-------------------------------
 [GLISCOR]
@@ -5212,6 +5683,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GROUND,FLYING
+BaseStats = 75,95,125,45,75,95
 Prev = GLIGAR
 #-------------------------------
 [MAMOSWINE]
@@ -5223,6 +5695,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ICE,GROUND
+BaseStats = 110,130,80,70,60,80
 Prev = PILOSWINE
 #-------------------------------
 [PORYGONZ]
@@ -5234,6 +5707,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = NORMAL
+BaseStats = 85,80,70,135,75,90
 Prev = PORYGON2
 #-------------------------------
 [GALLADE]
@@ -5245,6 +5719,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = PSYCHIC,FIGHTING
+BaseStats = 68,125,65,65,115,80
 Prev = KIRLIA
 #-------------------------------
 [PROBOPASS]
@@ -5256,6 +5731,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ROCK,STEEL
+BaseStats = 60,55,145,75,150,40
 Prev = NOSEPASS
 #-------------------------------
 [DUSKNOIR]
@@ -5267,6 +5743,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = GHOST
+BaseStats = 45,100,135,65,135,45
 Prev = DUSCLOPS
 #-------------------------------
 [FROSLASS]
@@ -5278,6 +5755,7 @@ Tier = 0
 Region = SINNOH
 Basic = false
 Types = ICE,GHOST
+BaseStats = 70,80,70,80,70,110
 Prev = SNORUNT
 #-------------------------------
 [ROTOM]
@@ -5289,6 +5767,7 @@ Tier = 0
 Region = SINNOH
 Basic = true
 Types = ELECTRIC,GHOST
+BaseStats = 50,50,77,95,77,91
 #-------------------------------
 [UXIE]
 Name = 유크시
@@ -5299,6 +5778,7 @@ Tier = 1
 Region = SINNOH
 Basic = true
 Types = PSYCHIC
+BaseStats = 75,75,130,75,130,95
 #-------------------------------
 [MESPRIT]
 Name = 엠라이트
@@ -5309,6 +5789,7 @@ Tier = 1
 Region = SINNOH
 Basic = true
 Types = PSYCHIC
+BaseStats = 80,105,105,105,105,80
 #-------------------------------
 [AZELF]
 Name = 아그놈
@@ -5319,6 +5800,7 @@ Tier = 1
 Region = SINNOH
 Basic = true
 Types = PSYCHIC
+BaseStats = 75,125,70,125,70,115
 #-------------------------------
 [DIALGA]
 Name = 디아루가
@@ -5329,6 +5811,7 @@ Tier = 2
 Region = SINNOH
 Basic = true
 Types = STEEL,DRAGON
+BaseStats = 100,120,120,150,100,90
 #-------------------------------
 [PALKIA]
 Name = 펄기아
@@ -5339,6 +5822,7 @@ Tier = 2
 Region = SINNOH
 Basic = true
 Types = WATER,DRAGON
+BaseStats = 90,120,100,150,120,100
 #-------------------------------
 [HEATRAN]
 Name = 히드런
@@ -5349,6 +5833,7 @@ Tier = 1
 Region = SINNOH
 Basic = true
 Types = FIRE,STEEL
+BaseStats = 91,90,106,130,106,77
 #-------------------------------
 [REGIGIGAS]
 Name = 레지기가스
@@ -5359,6 +5844,7 @@ Tier = 1
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 110,160,110,80,110,100
 #-------------------------------
 [GIRATINA]
 Name = 기라티나
@@ -5369,6 +5855,7 @@ Tier = 2
 Region = SINNOH
 Basic = true
 Types = GHOST,DRAGON
+BaseStats = 150,100,120,100,120,90
 #-------------------------------
 [CRESSELIA]
 Name = 크레세리아
@@ -5379,6 +5866,7 @@ Tier = 1
 Region = SINNOH
 Basic = true
 Types = PSYCHIC
+BaseStats = 120,70,110,75,120,85
 #-------------------------------
 [PHIONE]
 Name = 피오네
@@ -5389,6 +5877,7 @@ Tier = 3
 Region = SINNOH
 Basic = true
 Types = WATER
+BaseStats = 80,80,80,80,80,80
 #-------------------------------
 [MANAPHY]
 Name = 마나피
@@ -5399,6 +5888,7 @@ Tier = 3
 Region = SINNOH
 Basic = true
 Types = WATER
+BaseStats = 100,100,100,100,100,100
 #-------------------------------
 [DARKRAI]
 Name = 다크라이
@@ -5409,6 +5899,7 @@ Tier = 3
 Region = SINNOH
 Basic = true
 Types = DARK
+BaseStats = 70,90,90,135,90,125
 #-------------------------------
 [SHAYMIN]
 Name = 쉐이미
@@ -5419,6 +5910,7 @@ Tier = 3
 Region = SINNOH
 Basic = true
 Types = GRASS
+BaseStats = 100,100,100,100,100,100
 #-------------------------------
 [ARCEUS]
 Name = 아르세우스
@@ -5429,6 +5921,7 @@ Tier = 3
 Region = SINNOH
 Basic = true
 Types = NORMAL
+BaseStats = 120,120,120,120,120,120
 #-------------------------------
 [VICTINI]
 Name = 비크티니
@@ -5439,6 +5932,7 @@ Tier = 3
 Region = UNOVA
 Basic = true
 Types = PSYCHIC,FIRE
+BaseStats = 100,100,100,100,100,100
 #-------------------------------
 [SNIVY]
 Name = 주리비얀
@@ -5449,6 +5943,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS
+BaseStats = 45,45,55,45,55,63
 Evolution = SERVINE,17
 #-------------------------------
 [SERVINE]
@@ -5460,6 +5955,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS
+BaseStats = 60,60,75,60,75,83
 Prev = SNIVY
 Evolution = SERPERIOR,36
 #-------------------------------
@@ -5472,6 +5968,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS
+BaseStats = 75,75,95,75,95,113
 Prev = SERVINE
 #-------------------------------
 [TEPIG]
@@ -5483,6 +5980,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIRE
+BaseStats = 65,63,45,45,45,45
 Evolution = PIGNITE,17
 #-------------------------------
 [PIGNITE]
@@ -5494,6 +5992,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIRE,FIGHTING
+BaseStats = 90,93,55,70,55,55
 Prev = TEPIG
 Evolution = EMBOAR,36
 #-------------------------------
@@ -5506,6 +6005,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIRE,FIGHTING
+BaseStats = 110,123,65,100,65,65
 Prev = PIGNITE
 #-------------------------------
 [OSHAWOTT]
@@ -5517,6 +6017,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER
+BaseStats = 55,55,45,63,45,45
 Evolution = DEWOTT,17
 #-------------------------------
 [DEWOTT]
@@ -5528,6 +6029,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER
+BaseStats = 75,75,60,83,60,60
 Prev = OSHAWOTT
 Evolution = SAMUROTT,36
 #-------------------------------
@@ -5540,6 +6042,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER
+BaseStats = 95,100,85,108,70,70
 Prev = DEWOTT
 #-------------------------------
 [PATRAT]
@@ -5551,6 +6054,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL
+BaseStats = 45,55,39,35,39,42
 Evolution = WATCHOG,20
 #-------------------------------
 [WATCHOG]
@@ -5562,6 +6066,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL
+BaseStats = 60,85,69,60,69,77
 Prev = PATRAT
 #-------------------------------
 [LILLIPUP]
@@ -5573,6 +6078,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL
+BaseStats = 45,60,45,25,45,55
 Evolution = HERDIER,16
 #-------------------------------
 [HERDIER]
@@ -5584,6 +6090,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL
+BaseStats = 65,80,65,35,65,60
 Prev = LILLIPUP
 Evolution = STOUTLAND,32
 #-------------------------------
@@ -5596,6 +6103,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL
+BaseStats = 85,110,90,45,90,80
 Prev = HERDIER
 #-------------------------------
 [PURRLOIN]
@@ -5607,6 +6115,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DARK
+BaseStats = 41,50,37,50,37,66
 Evolution = LIEPARD,20
 #-------------------------------
 [LIEPARD]
@@ -5618,6 +6127,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK
+BaseStats = 64,88,50,88,50,106
 Prev = PURRLOIN
 #-------------------------------
 [PANSAGE]
@@ -5629,6 +6139,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS
+BaseStats = 50,53,48,53,48,64
 Evolution = SIMISAGE,26
 #-------------------------------
 [SIMISAGE]
@@ -5640,6 +6151,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS
+BaseStats = 75,98,63,98,63,101
 Prev = PANSAGE
 #-------------------------------
 [PANSEAR]
@@ -5651,6 +6163,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIRE
+BaseStats = 50,53,48,53,48,64
 Evolution = SIMISEAR,26
 #-------------------------------
 [SIMISEAR]
@@ -5662,6 +6175,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIRE
+BaseStats = 75,98,63,98,63,101
 Prev = PANSEAR
 #-------------------------------
 [PANPOUR]
@@ -5673,6 +6187,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER
+BaseStats = 50,53,48,53,48,64
 Evolution = SIMIPOUR,26
 #-------------------------------
 [SIMIPOUR]
@@ -5684,6 +6199,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER
+BaseStats = 75,98,63,98,63,101
 Prev = PANPOUR
 #-------------------------------
 [MUNNA]
@@ -5695,6 +6211,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = PSYCHIC
+BaseStats = 76,25,45,67,55,24
 Evolution = MUSHARNA,24
 #-------------------------------
 [MUSHARNA]
@@ -5706,6 +6223,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC
+BaseStats = 116,55,85,107,95,29
 Prev = MUNNA
 #-------------------------------
 [PIDOVE]
@@ -5717,6 +6235,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 50,55,50,36,30,43
 Evolution = TRANQUILL,21
 #-------------------------------
 [TRANQUILL]
@@ -5728,6 +6247,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 62,77,62,50,42,65
 Prev = PIDOVE
 Evolution = UNFEZANT,32
 #-------------------------------
@@ -5740,6 +6260,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 80,115,80,65,55,93
 Prev = TRANQUILL
 #-------------------------------
 [BLITZLE]
@@ -5751,6 +6272,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ELECTRIC
+BaseStats = 45,60,32,50,32,76
 Evolution = ZEBSTRIKA,27
 #-------------------------------
 [ZEBSTRIKA]
@@ -5762,6 +6284,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ELECTRIC
+BaseStats = 75,100,63,80,63,116
 Prev = BLITZLE
 #-------------------------------
 [ROGGENROLA]
@@ -5773,6 +6296,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ROCK
+BaseStats = 55,75,85,25,25,15
 Evolution = BOLDORE,25
 #-------------------------------
 [BOLDORE]
@@ -5784,6 +6308,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ROCK
+BaseStats = 70,105,105,50,40,20
 Prev = ROGGENROLA
 Evolution = GIGALITH,33
 #-------------------------------
@@ -5796,6 +6321,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ROCK
+BaseStats = 85,135,130,60,80,25
 Prev = BOLDORE
 #-------------------------------
 [WOOBAT]
@@ -5807,6 +6333,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = PSYCHIC,FLYING
+BaseStats = 65,45,43,55,43,72
 Evolution = SWOOBAT,27
 #-------------------------------
 [SWOOBAT]
@@ -5818,6 +6345,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC,FLYING
+BaseStats = 67,57,55,77,55,114
 Prev = WOOBAT
 #-------------------------------
 [DRILBUR]
@@ -5829,6 +6357,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GROUND
+BaseStats = 60,85,40,30,45,68
 Evolution = EXCADRILL,31
 #-------------------------------
 [EXCADRILL]
@@ -5840,6 +6369,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GROUND,STEEL
+BaseStats = 110,135,60,50,65,88
 Prev = DRILBUR
 #-------------------------------
 [AUDINO]
@@ -5851,6 +6381,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL
+BaseStats = 103,60,86,60,86,50
 #-------------------------------
 [TIMBURR]
 Name = 으랏차
@@ -5861,6 +6392,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIGHTING
+BaseStats = 75,80,55,25,35,35
 Evolution = GURDURR,25
 #-------------------------------
 [GURDURR]
@@ -5872,6 +6404,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIGHTING
+BaseStats = 85,105,85,40,50,40
 Prev = TIMBURR
 Evolution = CONKELDURR,34
 #-------------------------------
@@ -5884,6 +6417,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIGHTING
+BaseStats = 105,140,95,55,65,45
 Prev = GURDURR
 #-------------------------------
 [TYMPOLE]
@@ -5895,6 +6429,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER
+BaseStats = 50,50,40,50,40,64
 Evolution = PALPITOAD,25
 #-------------------------------
 [PALPITOAD]
@@ -5906,6 +6441,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER,GROUND
+BaseStats = 75,65,55,65,55,69
 Prev = TYMPOLE
 Evolution = SEISMITOAD,36
 #-------------------------------
@@ -5918,6 +6454,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER,GROUND
+BaseStats = 105,95,75,85,75,74
 Prev = PALPITOAD
 #-------------------------------
 [THROH]
@@ -5929,6 +6466,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIGHTING
+BaseStats = 120,100,85,30,85,45
 #-------------------------------
 [SAWK]
 Name = 타격귀
@@ -5939,6 +6477,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIGHTING
+BaseStats = 75,125,75,30,75,85
 #-------------------------------
 [SEWADDLE]
 Name = 두르보
@@ -5949,6 +6488,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG,GRASS
+BaseStats = 45,53,70,40,60,42
 Evolution = SWADLOON,20
 #-------------------------------
 [SWADLOON]
@@ -5960,6 +6500,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,GRASS
+BaseStats = 55,63,90,50,80,42
 Prev = SEWADDLE
 Evolution = LEAVANNY,32
 #-------------------------------
@@ -5972,6 +6513,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,GRASS
+BaseStats = 75,103,80,70,80,92
 Prev = SWADLOON
 #-------------------------------
 [VENIPEDE]
@@ -5983,6 +6525,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG,POISON
+BaseStats = 30,45,59,30,39,57
 Evolution = WHIRLIPEDE,22
 #-------------------------------
 [WHIRLIPEDE]
@@ -5994,6 +6537,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,POISON
+BaseStats = 40,55,99,40,79,47
 Prev = VENIPEDE
 Evolution = SCOLIPEDE,30
 #-------------------------------
@@ -6006,6 +6550,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,POISON
+BaseStats = 60,100,89,55,69,112
 Prev = WHIRLIPEDE
 #-------------------------------
 [COTTONEE]
@@ -6017,6 +6562,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS,FAIRY
+BaseStats = 40,27,60,37,50,66
 Evolution = WHIMSICOTT,23
 #-------------------------------
 [WHIMSICOTT]
@@ -6028,6 +6574,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS,FAIRY
+BaseStats = 60,67,85,77,75,116
 Prev = COTTONEE
 #-------------------------------
 [PETILIL]
@@ -6039,6 +6586,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS
+BaseStats = 45,35,50,70,50,30
 Evolution = LILLIGANT,23
 #-------------------------------
 [LILLIGANT]
@@ -6050,6 +6598,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS
+BaseStats = 70,60,75,110,75,90
 Prev = PETILIL
 #-------------------------------
 [BASCULIN]
@@ -6061,6 +6610,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER
+BaseStats = 70,92,65,80,55,98
 #-------------------------------
 [SANDILE]
 Name = 깜눈크
@@ -6071,6 +6621,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GROUND,DARK
+BaseStats = 50,72,35,35,35,65
 Evolution = KROKOROK,29
 #-------------------------------
 [KROKOROK]
@@ -6082,6 +6633,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GROUND,DARK
+BaseStats = 60,82,45,45,45,74
 Prev = SANDILE
 Evolution = KROOKODILE,40
 #-------------------------------
@@ -6094,6 +6646,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GROUND,DARK
+BaseStats = 95,117,80,65,70,92
 Prev = KROKOROK
 #-------------------------------
 [DARUMAKA]
@@ -6105,6 +6658,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIRE
+BaseStats = 70,90,45,15,45,50
 Evolution = DARMANITAN,35
 #-------------------------------
 [DARMANITAN]
@@ -6116,6 +6670,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIRE
+BaseStats = 105,140,55,30,55,95
 Prev = DARUMAKA
 #-------------------------------
 [MARACTUS]
@@ -6127,6 +6682,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS
+BaseStats = 75,86,67,106,67,60
 #-------------------------------
 [DWEBBLE]
 Name = 돌살이
@@ -6137,6 +6693,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG,ROCK
+BaseStats = 50,65,85,35,35,55
 Evolution = CRUSTLE,34
 #-------------------------------
 [CRUSTLE]
@@ -6148,6 +6705,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,ROCK
+BaseStats = 70,105,125,65,75,45
 Prev = DWEBBLE
 #-------------------------------
 [SCRAGGY]
@@ -6159,6 +6717,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DARK,FIGHTING
+BaseStats = 50,75,70,35,70,48
 Evolution = SCRAFTY,39
 #-------------------------------
 [SCRAFTY]
@@ -6170,6 +6729,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK,FIGHTING
+BaseStats = 65,90,115,45,115,58
 Prev = SCRAGGY
 #-------------------------------
 [SIGILYPH]
@@ -6181,6 +6741,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = PSYCHIC,FLYING
+BaseStats = 72,58,80,103,80,97
 #-------------------------------
 [YAMASK]
 Name = 데스마스
@@ -6191,6 +6752,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GHOST
+BaseStats = 38,30,85,55,65,30
 Evolution = COFAGRIGUS,34
 #-------------------------------
 [COFAGRIGUS]
@@ -6202,6 +6764,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GHOST
+BaseStats = 58,50,145,95,105,30
 Prev = YAMASK
 #-------------------------------
 [TIRTOUGA]
@@ -6213,6 +6776,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER,ROCK
+BaseStats = 54,78,103,53,45,22
 Evolution = CARRACOSTA,37
 #-------------------------------
 [CARRACOSTA]
@@ -6224,6 +6788,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER,ROCK
+BaseStats = 74,108,133,83,65,32
 Prev = TIRTOUGA
 #-------------------------------
 [ARCHEN]
@@ -6235,6 +6800,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ROCK,FLYING
+BaseStats = 55,112,45,74,45,70
 Evolution = ARCHEOPS,37
 #-------------------------------
 [ARCHEOPS]
@@ -6246,6 +6812,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ROCK,FLYING
+BaseStats = 75,140,65,112,65,110
 Prev = ARCHEN
 #-------------------------------
 [TRUBBISH]
@@ -6257,6 +6824,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = POISON
+BaseStats = 50,50,62,40,62,65
 Evolution = GARBODOR,36
 #-------------------------------
 [GARBODOR]
@@ -6268,6 +6836,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = POISON
+BaseStats = 80,95,82,60,82,75
 Prev = TRUBBISH
 #-------------------------------
 [ZORUA]
@@ -6279,6 +6848,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DARK
+BaseStats = 40,65,40,80,40,65
 Evolution = ZOROARK,30
 #-------------------------------
 [ZOROARK]
@@ -6290,6 +6860,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK
+BaseStats = 60,105,60,120,60,105
 Prev = ZORUA
 #-------------------------------
 [MINCCINO]
@@ -6301,6 +6872,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL
+BaseStats = 55,50,40,40,40,75
 Evolution = CINCCINO,25
 #-------------------------------
 [CINCCINO]
@@ -6312,6 +6884,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL
+BaseStats = 75,95,60,65,60,115
 Prev = MINCCINO
 #-------------------------------
 [GOTHITA]
@@ -6323,6 +6896,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = PSYCHIC
+BaseStats = 45,30,50,55,65,45
 Evolution = GOTHORITA,32
 #-------------------------------
 [GOTHORITA]
@@ -6334,6 +6908,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC
+BaseStats = 60,45,70,75,85,55
 Prev = GOTHITA
 Evolution = GOTHITELLE,41
 #-------------------------------
@@ -6346,6 +6921,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC
+BaseStats = 70,55,95,95,110,65
 Prev = GOTHORITA
 #-------------------------------
 [SOLOSIS]
@@ -6357,6 +6933,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = PSYCHIC
+BaseStats = 45,30,40,105,50,20
 Evolution = DUOSION,32
 #-------------------------------
 [DUOSION]
@@ -6368,6 +6945,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC
+BaseStats = 65,40,50,125,60,30
 Prev = SOLOSIS
 Evolution = REUNICLUS,41
 #-------------------------------
@@ -6380,6 +6958,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC
+BaseStats = 110,65,75,125,85,30
 Prev = DUOSION
 #-------------------------------
 [DUCKLETT]
@@ -6391,6 +6970,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER,FLYING
+BaseStats = 62,44,50,44,50,55
 Evolution = SWANNA,35
 #-------------------------------
 [SWANNA]
@@ -6402,6 +6982,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER,FLYING
+BaseStats = 75,87,63,87,63,98
 Prev = DUCKLETT
 #-------------------------------
 [VANILLITE]
@@ -6413,6 +6994,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ICE
+BaseStats = 36,50,50,65,60,44
 Evolution = VANILLISH,35
 #-------------------------------
 [VANILLISH]
@@ -6424,6 +7006,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ICE
+BaseStats = 51,65,65,80,75,59
 Prev = VANILLITE
 Evolution = VANILLUXE,47
 #-------------------------------
@@ -6436,6 +7019,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ICE
+BaseStats = 71,95,85,110,95,79
 Prev = VANILLISH
 #-------------------------------
 [DEERLING]
@@ -6447,6 +7031,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL,GRASS
+BaseStats = 60,60,50,40,50,75
 Evolution = SAWSBUCK,34
 #-------------------------------
 [SAWSBUCK]
@@ -6458,6 +7043,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL,GRASS
+BaseStats = 80,100,70,60,70,95
 Prev = DEERLING
 #-------------------------------
 [EMOLGA]
@@ -6469,6 +7055,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ELECTRIC,FLYING
+BaseStats = 55,75,60,75,60,103
 #-------------------------------
 [KARRABLAST]
 Name = 딱정곤
@@ -6479,6 +7066,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG
+BaseStats = 50,75,45,40,45,60
 Evolution = ESCAVALIER,26
 #-------------------------------
 [ESCAVALIER]
@@ -6490,6 +7078,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,STEEL
+BaseStats = 70,135,105,60,105,20
 Prev = KARRABLAST
 #-------------------------------
 [FOONGUS]
@@ -6501,6 +7090,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS,POISON
+BaseStats = 69,55,45,55,55,15
 Evolution = AMOONGUSS,39
 #-------------------------------
 [AMOONGUSS]
@@ -6512,6 +7102,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS,POISON
+BaseStats = 114,85,70,85,80,30
 Prev = FOONGUS
 #-------------------------------
 [FRILLISH]
@@ -6523,6 +7114,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER,GHOST
+BaseStats = 55,40,50,65,85,40
 Evolution = JELLICENT,40
 #-------------------------------
 [JELLICENT]
@@ -6534,6 +7126,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = WATER,GHOST
+BaseStats = 100,60,70,85,105,60
 Prev = FRILLISH
 #-------------------------------
 [ALOMOMOLA]
@@ -6545,6 +7138,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = WATER
+BaseStats = 165,75,80,40,45,65
 #-------------------------------
 [JOLTIK]
 Name = 파쪼옥
@@ -6555,6 +7149,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG,ELECTRIC
+BaseStats = 50,47,50,57,50,65
 Evolution = GALVANTULA,36
 #-------------------------------
 [GALVANTULA]
@@ -6566,6 +7161,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,ELECTRIC
+BaseStats = 70,77,60,97,60,108
 Prev = JOLTIK
 #-------------------------------
 [FERROSEED]
@@ -6577,6 +7173,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GRASS,STEEL
+BaseStats = 44,50,91,24,86,10
 Evolution = FERROTHORN,40
 #-------------------------------
 [FERROTHORN]
@@ -6588,6 +7185,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GRASS,STEEL
+BaseStats = 74,94,131,54,116,20
 Prev = FERROSEED
 #-------------------------------
 [KLINK]
@@ -6599,6 +7197,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = STEEL
+BaseStats = 40,55,70,45,60,30
 Evolution = KLANG,38
 #-------------------------------
 [KLANG]
@@ -6610,6 +7209,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = STEEL
+BaseStats = 60,80,95,70,85,50
 Prev = KLINK
 Evolution = KLINKLANG,49
 #-------------------------------
@@ -6622,6 +7222,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = STEEL
+BaseStats = 60,100,115,70,85,90
 Prev = KLANG
 #-------------------------------
 [TYNAMO]
@@ -6633,6 +7234,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ELECTRIC
+BaseStats = 35,55,40,45,40,60
 Evolution = EELEKTRIK,39
 #-------------------------------
 [EELEKTRIK]
@@ -6644,6 +7246,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ELECTRIC
+BaseStats = 65,85,70,75,70,40
 Prev = TYNAMO
 Evolution = EELEKTROSS,45
 #-------------------------------
@@ -6656,6 +7259,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ELECTRIC
+BaseStats = 85,115,80,105,80,50
 Prev = EELEKTRIK
 #-------------------------------
 [ELGYEM]
@@ -6667,6 +7271,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = PSYCHIC
+BaseStats = 55,55,55,85,55,30
 Evolution = BEHEEYEM,42
 #-------------------------------
 [BEHEEYEM]
@@ -6678,6 +7283,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = PSYCHIC
+BaseStats = 75,75,75,125,95,40
 Prev = ELGYEM
 #-------------------------------
 [LITWICK]
@@ -6689,6 +7295,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GHOST,FIRE
+BaseStats = 50,30,55,65,55,20
 Evolution = LAMPENT,41
 #-------------------------------
 [LAMPENT]
@@ -6700,6 +7307,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GHOST,FIRE
+BaseStats = 60,40,60,95,60,55
 Prev = LITWICK
 Evolution = CHANDELURE,47
 #-------------------------------
@@ -6712,6 +7320,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GHOST,FIRE
+BaseStats = 60,55,90,145,90,80
 Prev = LAMPENT
 #-------------------------------
 [AXEW]
@@ -6723,6 +7332,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DRAGON
+BaseStats = 46,87,60,30,40,57
 Evolution = FRAXURE,38
 #-------------------------------
 [FRAXURE]
@@ -6734,6 +7344,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DRAGON
+BaseStats = 66,117,70,40,50,67
 Prev = AXEW
 Evolution = HAXORUS,48
 #-------------------------------
@@ -6746,6 +7357,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DRAGON
+BaseStats = 76,147,90,60,70,97
 Prev = FRAXURE
 #-------------------------------
 [CUBCHOO]
@@ -6757,6 +7369,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ICE
+BaseStats = 55,70,40,60,40,40
 Evolution = BEARTIC,37
 #-------------------------------
 [BEARTIC]
@@ -6768,6 +7381,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = ICE
+BaseStats = 95,130,80,70,80,50
 Prev = CUBCHOO
 #-------------------------------
 [CRYOGONAL]
@@ -6779,6 +7393,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = ICE
+BaseStats = 80,50,50,95,135,105
 #-------------------------------
 [SHELMET]
 Name = 쪼마리
@@ -6789,6 +7404,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG
+BaseStats = 50,40,85,40,65,25
 Evolution = ACCELGOR,25
 #-------------------------------
 [ACCELGOR]
@@ -6800,6 +7416,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG
+BaseStats = 80,70,40,100,60,145
 Prev = SHELMET
 #-------------------------------
 [STUNFISK]
@@ -6811,6 +7428,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GROUND,ELECTRIC
+BaseStats = 109,66,84,81,99,32
 #-------------------------------
 [MIENFOO]
 Name = 비조푸
@@ -6821,6 +7439,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIGHTING
+BaseStats = 45,85,50,55,50,65
 Evolution = MIENSHAO,50
 #-------------------------------
 [MIENSHAO]
@@ -6832,6 +7451,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = FIGHTING
+BaseStats = 65,125,60,95,60,105
 Prev = MIENFOO
 #-------------------------------
 [DRUDDIGON]
@@ -6843,6 +7463,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DRAGON
+BaseStats = 77,120,90,60,90,48
 #-------------------------------
 [GOLETT]
 Name = 골비람
@@ -6853,6 +7474,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = GROUND,GHOST
+BaseStats = 59,74,50,35,50,35
 Evolution = GOLURK,43
 #-------------------------------
 [GOLURK]
@@ -6864,6 +7486,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = GROUND,GHOST
+BaseStats = 89,124,80,55,80,55
 Prev = GOLETT
 #-------------------------------
 [PAWNIARD]
@@ -6875,6 +7498,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DARK,STEEL
+BaseStats = 45,85,70,40,40,60
 Evolution = BISHARP,52
 #-------------------------------
 [BISHARP]
@@ -6886,6 +7510,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK,STEEL
+BaseStats = 65,125,100,60,70,70
 Prev = PAWNIARD
 Evolution = KINGAMBIT,58
 #-------------------------------
@@ -6898,6 +7523,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL
+BaseStats = 95,110,95,40,95,55
 #-------------------------------
 [RUFFLET]
 Name = 수리둥보
@@ -6908,6 +7534,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 70,83,50,37,50,60
 Evolution = BRAVIARY,54
 #-------------------------------
 [BRAVIARY]
@@ -6919,6 +7546,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 100,123,75,57,75,80
 Prev = RUFFLET
 #-------------------------------
 [VULLABY]
@@ -6930,6 +7558,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DARK,FLYING
+BaseStats = 70,55,75,45,65,60
 Evolution = MANDIBUZZ,54
 #-------------------------------
 [MANDIBUZZ]
@@ -6941,6 +7570,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK,FLYING
+BaseStats = 110,65,105,55,95,80
 Prev = VULLABY
 #-------------------------------
 [HEATMOR]
@@ -6952,6 +7582,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = FIRE
+BaseStats = 85,97,66,105,66,65
 #-------------------------------
 [DURANT]
 Name = 아이앤트
@@ -6962,6 +7593,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG,STEEL
+BaseStats = 58,109,112,48,48,109
 #-------------------------------
 [DEINO]
 Name = 모노두
@@ -6972,6 +7604,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = DARK,DRAGON
+BaseStats = 52,65,50,45,50,38
 Evolution = ZWEILOUS,50
 #-------------------------------
 [ZWEILOUS]
@@ -6983,6 +7616,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK,DRAGON
+BaseStats = 72,85,70,65,70,58
 Prev = DEINO
 Evolution = HYDREIGON,64
 #-------------------------------
@@ -6995,6 +7629,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = DARK,DRAGON
+BaseStats = 92,105,90,125,90,98
 Prev = ZWEILOUS
 #-------------------------------
 [LARVESTA]
@@ -7006,6 +7641,7 @@ Tier = 0
 Region = UNOVA
 Basic = true
 Types = BUG,FIRE
+BaseStats = 55,85,55,50,55,60
 Evolution = VOLCARONA,59
 #-------------------------------
 [VOLCARONA]
@@ -7017,6 +7653,7 @@ Tier = 0
 Region = UNOVA
 Basic = false
 Types = BUG,FIRE
+BaseStats = 85,60,65,135,105,100
 Prev = LARVESTA
 #-------------------------------
 [COBALION]
@@ -7028,6 +7665,7 @@ Tier = 1
 Region = UNOVA
 Basic = true
 Types = STEEL,FIGHTING
+BaseStats = 91,90,129,90,72,108
 #-------------------------------
 [TERRAKION]
 Name = 테라키온
@@ -7038,6 +7676,7 @@ Tier = 1
 Region = UNOVA
 Basic = true
 Types = ROCK,FIGHTING
+BaseStats = 91,129,90,72,90,108
 #-------------------------------
 [VIRIZION]
 Name = 비리디온
@@ -7048,6 +7687,7 @@ Tier = 1
 Region = UNOVA
 Basic = true
 Types = GRASS,FIGHTING
+BaseStats = 91,90,72,90,129,108
 #-------------------------------
 [TORNADUS]
 Name = 토네로스
@@ -7058,6 +7698,7 @@ Tier = 1
 Region = UNOVA
 Basic = true
 Types = FLYING
+BaseStats = 79,115,70,125,80,111
 #-------------------------------
 [THUNDURUS]
 Name = 볼트로스
@@ -7068,6 +7709,7 @@ Tier = 1
 Region = UNOVA
 Basic = true
 Types = ELECTRIC,FLYING
+BaseStats = 79,115,70,125,80,111
 #-------------------------------
 [RESHIRAM]
 Name = 레시라무
@@ -7078,6 +7720,7 @@ Tier = 2
 Region = UNOVA
 Basic = true
 Types = DRAGON,FIRE
+BaseStats = 100,120,100,150,120,90
 #-------------------------------
 [ZEKROM]
 Name = 제크로무
@@ -7088,6 +7731,7 @@ Tier = 2
 Region = UNOVA
 Basic = true
 Types = DRAGON,ELECTRIC
+BaseStats = 100,150,120,120,100,90
 #-------------------------------
 [LANDORUS]
 Name = 랜드로스
@@ -7098,6 +7742,7 @@ Tier = 1
 Region = UNOVA
 Basic = true
 Types = GROUND,FLYING
+BaseStats = 89,125,90,115,80,101
 #-------------------------------
 [KYUREM]
 Name = 큐레무
@@ -7108,6 +7753,7 @@ Tier = 2
 Region = UNOVA
 Basic = true
 Types = DRAGON,ICE
+BaseStats = 125,130,90,130,90,95
 #-------------------------------
 [KELDEO]
 Name = 케르디오
@@ -7118,6 +7764,7 @@ Tier = 3
 Region = UNOVA
 Basic = true
 Types = WATER,FIGHTING
+BaseStats = 91,72,90,129,90,108
 #-------------------------------
 [MELOETTA]
 Name = 메로엣타
@@ -7128,6 +7775,7 @@ Tier = 3
 Region = UNOVA
 Basic = true
 Types = NORMAL,PSYCHIC
+BaseStats = 100,77,77,128,128,90
 #-------------------------------
 [GENESECT]
 Name = 게노세크트
@@ -7138,6 +7786,7 @@ Tier = 3
 Region = UNOVA
 Basic = true
 Types = BUG,STEEL
+BaseStats = 71,120,95,120,95,99
 #-------------------------------
 [CHESPIN]
 Name = 도치마론
@@ -7148,6 +7797,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = GRASS
+BaseStats = 56,61,65,48,45,38
 Evolution = QUILLADIN,16
 #-------------------------------
 [QUILLADIN]
@@ -7159,6 +7809,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = GRASS
+BaseStats = 61,78,95,56,58,57
 Prev = CHESPIN
 Evolution = CHESNAUGHT,36
 #-------------------------------
@@ -7171,6 +7822,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = GRASS,FIGHTING
+BaseStats = 88,107,122,74,75,64
 Prev = QUILLADIN
 #-------------------------------
 [FENNEKIN]
@@ -7182,6 +7834,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FIRE
+BaseStats = 40,45,40,62,60,60
 Evolution = BRAIXEN,16
 #-------------------------------
 [BRAIXEN]
@@ -7193,6 +7846,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FIRE
+BaseStats = 59,59,58,90,70,73
 Prev = FENNEKIN
 Evolution = DELPHOX,36
 #-------------------------------
@@ -7205,6 +7859,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FIRE,PSYCHIC
+BaseStats = 75,69,72,114,100,104
 Prev = BRAIXEN
 #-------------------------------
 [FROAKIE]
@@ -7216,6 +7871,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = WATER
+BaseStats = 41,56,40,62,44,71
 Evolution = FROGADIER,16
 #-------------------------------
 [FROGADIER]
@@ -7227,6 +7883,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = WATER
+BaseStats = 54,63,52,83,56,97
 Prev = FROAKIE
 Evolution = GRENINJA,36
 #-------------------------------
@@ -7239,6 +7896,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = WATER,DARK
+BaseStats = 72,95,67,103,71,122
 Prev = FROGADIER
 #-------------------------------
 [BUNNELBY]
@@ -7250,6 +7908,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = NORMAL
+BaseStats = 38,36,38,32,36,57
 Evolution = DIGGERSBY,20
 #-------------------------------
 [DIGGERSBY]
@@ -7261,6 +7920,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = NORMAL,GROUND
+BaseStats = 85,56,77,50,77,78
 Prev = BUNNELBY
 #-------------------------------
 [FLETCHLING]
@@ -7272,6 +7932,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 45,50,43,40,38,62
 Evolution = FLETCHINDER,17
 #-------------------------------
 [FLETCHINDER]
@@ -7283,6 +7944,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FIRE,FLYING
+BaseStats = 62,73,55,56,52,84
 Prev = FLETCHLING
 Evolution = TALONFLAME,35
 #-------------------------------
@@ -7295,6 +7957,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FIRE,FLYING
+BaseStats = 78,81,71,74,69,126
 Prev = FLETCHINDER
 #-------------------------------
 [SCATTERBUG]
@@ -7306,6 +7969,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = BUG
+BaseStats = 38,35,40,27,25,35
 Evolution = SPEWPA,9
 #-------------------------------
 [SPEWPA]
@@ -7317,6 +7981,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = BUG
+BaseStats = 45,22,60,27,30,29
 Prev = SCATTERBUG
 Evolution = VIVILLON,12
 #-------------------------------
@@ -7329,6 +7994,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = BUG,FLYING
+BaseStats = 80,52,50,90,50,89
 Prev = SPEWPA
 #-------------------------------
 [LITLEO]
@@ -7340,6 +8006,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FIRE,NORMAL
+BaseStats = 62,50,58,73,54,72
 Evolution = PYROAR,35
 #-------------------------------
 [PYROAR]
@@ -7351,6 +8018,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FIRE,NORMAL
+BaseStats = 86,68,72,109,66,106
 Prev = LITLEO
 #-------------------------------
 [FLABEBE]
@@ -7362,6 +8030,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FAIRY
+BaseStats = 44,38,39,61,79,42
 Evolution = FLOETTE,19
 #-------------------------------
 [FLOETTE]
@@ -7373,6 +8042,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FAIRY
+BaseStats = 54,45,47,75,98,52
 Prev = FLABEBE
 Evolution = FLORGES,31
 #-------------------------------
@@ -7385,6 +8055,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FAIRY
+BaseStats = 78,65,68,112,154,75
 Prev = FLOETTE
 #-------------------------------
 [SKIDDO]
@@ -7396,6 +8067,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = GRASS
+BaseStats = 66,65,48,62,57,52
 Evolution = GOGOAT,32
 #-------------------------------
 [GOGOAT]
@@ -7407,6 +8079,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = GRASS
+BaseStats = 123,100,62,97,81,68
 Prev = SKIDDO
 #-------------------------------
 [PANCHAM]
@@ -7418,6 +8091,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FIGHTING
+BaseStats = 67,82,62,46,48,43
 Evolution = PANGORO,32
 #-------------------------------
 [PANGORO]
@@ -7429,6 +8103,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FIGHTING,DARK
+BaseStats = 95,124,78,69,71,58
 Prev = PANCHAM
 #-------------------------------
 [FURFROU]
@@ -7440,6 +8115,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = NORMAL
+BaseStats = 75,80,60,65,90,102
 #-------------------------------
 [ESPURR]
 Name = 냐스퍼
@@ -7450,6 +8126,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = PSYCHIC
+BaseStats = 62,48,54,63,60,68
 Evolution = MEOWSTIC,25
 #-------------------------------
 [MEOWSTIC]
@@ -7461,6 +8138,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = PSYCHIC
+BaseStats = 74,48,76,83,81,104
 Prev = ESPURR
 #-------------------------------
 [HONEDGE]
@@ -7472,6 +8150,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = STEEL,GHOST
+BaseStats = 45,80,100,35,37,28
 Evolution = DOUBLADE,35
 #-------------------------------
 [DOUBLADE]
@@ -7483,6 +8162,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = STEEL,GHOST
+BaseStats = 59,110,150,45,49,35
 Prev = HONEDGE
 Evolution = AEGISLASH,41
 #-------------------------------
@@ -7495,6 +8175,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = STEEL,GHOST
+BaseStats = 60,50,140,50,140,60
 Prev = DOUBLADE
 #-------------------------------
 [SPRITZEE]
@@ -7506,6 +8187,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FAIRY
+BaseStats = 78,52,60,63,65,23
 Evolution = AROMATISSE,28
 #-------------------------------
 [AROMATISSE]
@@ -7517,6 +8199,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FAIRY
+BaseStats = 101,72,72,99,89,29
 Prev = SPRITZEE
 #-------------------------------
 [SWIRLIX]
@@ -7528,6 +8211,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FAIRY
+BaseStats = 62,48,66,59,57,49
 Evolution = SLURPUFF,28
 #-------------------------------
 [SLURPUFF]
@@ -7539,6 +8223,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FAIRY
+BaseStats = 82,80,86,85,75,72
 Prev = SWIRLIX
 #-------------------------------
 [INKAY]
@@ -7550,6 +8235,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = DARK,PSYCHIC
+BaseStats = 53,54,53,37,46,45
 Evolution = MALAMAR,30
 #-------------------------------
 [MALAMAR]
@@ -7561,6 +8247,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = DARK,PSYCHIC
+BaseStats = 86,92,88,68,75,73
 Prev = INKAY
 #-------------------------------
 [BINACLE]
@@ -7572,6 +8259,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ROCK,WATER
+BaseStats = 42,52,67,39,56,50
 Evolution = BARBARACLE,39
 #-------------------------------
 [BARBARACLE]
@@ -7583,6 +8271,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = ROCK,WATER
+BaseStats = 72,105,115,54,86,68
 Prev = BINACLE
 #-------------------------------
 [SKRELP]
@@ -7594,6 +8283,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = POISON,WATER
+BaseStats = 50,60,60,60,60,30
 Evolution = DRAGALGE,48
 #-------------------------------
 [DRAGALGE]
@@ -7605,6 +8295,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = POISON,DRAGON
+BaseStats = 65,75,90,97,123,44
 Prev = SKRELP
 #-------------------------------
 [CLAUNCHER]
@@ -7616,6 +8307,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = WATER
+BaseStats = 50,53,62,58,63,44
 Evolution = CLAWITZER,37
 #-------------------------------
 [CLAWITZER]
@@ -7627,6 +8319,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = WATER
+BaseStats = 71,73,88,120,89,59
 Prev = CLAUNCHER
 #-------------------------------
 [HELIOPTILE]
@@ -7638,6 +8331,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ELECTRIC,NORMAL
+BaseStats = 44,38,33,61,43,70
 Evolution = HELIOLISK,24
 #-------------------------------
 [HELIOLISK]
@@ -7649,6 +8343,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = ELECTRIC,NORMAL
+BaseStats = 62,55,52,109,94,109
 Prev = HELIOPTILE
 #-------------------------------
 [TYRUNT]
@@ -7660,6 +8355,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ROCK,DRAGON
+BaseStats = 58,89,77,45,45,48
 Evolution = TYRANTRUM,39
 #-------------------------------
 [TYRANTRUM]
@@ -7671,6 +8367,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = ROCK,DRAGON
+BaseStats = 82,121,119,69,59,71
 Prev = TYRUNT
 #-------------------------------
 [AMAURA]
@@ -7682,6 +8379,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ROCK,ICE
+BaseStats = 77,59,50,67,63,46
 Evolution = AURORUS,39
 #-------------------------------
 [AURORUS]
@@ -7693,6 +8391,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = ROCK,ICE
+BaseStats = 123,77,72,99,92,58
 Prev = AMAURA
 #-------------------------------
 [SYLVEON]
@@ -7704,6 +8403,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FAIRY
+BaseStats = 95,65,65,110,130,60
 Prev = EEVEE
 #-------------------------------
 [HAWLUCHA]
@@ -7715,6 +8415,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FIGHTING,FLYING
+BaseStats = 78,92,75,74,63,118
 #-------------------------------
 [DEDENNE]
 Name = 데덴네
@@ -7725,6 +8426,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ELECTRIC,FAIRY
+BaseStats = 67,58,57,81,67,101
 #-------------------------------
 [CARBINK]
 Name = 멜리시
@@ -7735,6 +8437,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ROCK,FAIRY
+BaseStats = 50,50,150,50,150,50
 #-------------------------------
 [GOOMY]
 Name = 미끄메라
@@ -7745,6 +8448,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = DRAGON
+BaseStats = 45,50,35,55,75,40
 Evolution = SLIGGOO,40
 #-------------------------------
 [SLIGGOO]
@@ -7756,6 +8460,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = DRAGON
+BaseStats = 68,75,53,83,113,60
 Prev = GOOMY
 Evolution = GOODRA,50
 #-------------------------------
@@ -7768,6 +8473,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = DRAGON
+BaseStats = 90,100,70,110,150,80
 Prev = SLIGGOO
 #-------------------------------
 [KLEFKI]
@@ -7779,6 +8485,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = STEEL,FAIRY
+BaseStats = 57,80,91,80,87,75
 #-------------------------------
 [PHANTUMP]
 Name = 나목령
@@ -7789,6 +8496,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = GHOST,GRASS
+BaseStats = 43,70,48,50,60,38
 Evolution = TREVENANT,26
 #-------------------------------
 [TREVENANT]
@@ -7800,6 +8508,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = GHOST,GRASS
+BaseStats = 85,110,76,65,82,56
 Prev = PHANTUMP
 #-------------------------------
 [PUMPKABOO]
@@ -7811,6 +8520,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = GHOST,GRASS
+BaseStats = 49,66,70,44,55,51
 Evolution = GOURGEIST,28
 #-------------------------------
 [GOURGEIST]
@@ -7822,6 +8532,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = GHOST,GRASS
+BaseStats = 65,90,122,58,75,84
 Prev = PUMPKABOO
 #-------------------------------
 [BERGMITE]
@@ -7833,6 +8544,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = ICE
+BaseStats = 55,69,85,32,35,28
 Evolution = AVALUGG,37
 #-------------------------------
 [AVALUGG]
@@ -7844,6 +8556,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = ICE
+BaseStats = 95,117,184,44,46,28
 Prev = BERGMITE
 #-------------------------------
 [NOIBAT]
@@ -7855,6 +8568,7 @@ Tier = 0
 Region = KALOS
 Basic = true
 Types = FLYING,DRAGON
+BaseStats = 40,30,35,45,40,55
 Evolution = NOIVERN,48
 #-------------------------------
 [NOIVERN]
@@ -7866,6 +8580,7 @@ Tier = 0
 Region = KALOS
 Basic = false
 Types = FLYING,DRAGON
+BaseStats = 85,70,80,97,80,123
 Prev = NOIBAT
 #-------------------------------
 [XERNEAS]
@@ -7877,6 +8592,7 @@ Tier = 2
 Region = KALOS
 Basic = true
 Types = FAIRY
+BaseStats = 126,131,95,131,98,99
 #-------------------------------
 [YVELTAL]
 Name = 이벨타르
@@ -7887,6 +8603,7 @@ Tier = 2
 Region = KALOS
 Basic = true
 Types = DARK,FLYING
+BaseStats = 126,131,95,131,98,99
 #-------------------------------
 [ZYGARDE]
 Name = 지가르데
@@ -7897,6 +8614,7 @@ Tier = 2
 Region = KALOS
 Basic = true
 Types = DRAGON,GROUND
+BaseStats = 108,100,121,81,95,95
 #-------------------------------
 [DIANCIE]
 Name = 디안시
@@ -7907,6 +8625,7 @@ Tier = 3
 Region = KALOS
 Basic = true
 Types = ROCK,FAIRY
+BaseStats = 50,100,150,100,150,50
 #-------------------------------
 [HOOPA]
 Name = 후파
@@ -7917,6 +8636,7 @@ Tier = 3
 Region = KALOS
 Basic = true
 Types = PSYCHIC,GHOST
+BaseStats = 80,110,60,150,130,70
 #-------------------------------
 [VOLCANION]
 Name = 볼케니온
@@ -7927,6 +8647,7 @@ Tier = 3
 Region = KALOS
 Basic = true
 Types = FIRE,WATER
+BaseStats = 80,110,120,130,90,70
 #-------------------------------
 [ROWLET]
 Name = 나몰빼미
@@ -7937,6 +8658,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GRASS,FLYING
+BaseStats = 68,55,55,50,50,42
 Evolution = DARTRIX,17
 #-------------------------------
 [DARTRIX]
@@ -7948,6 +8670,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GRASS,FLYING
+BaseStats = 78,75,75,70,70,52
 Prev = ROWLET
 Evolution = DECIDUEYE,34
 #-------------------------------
@@ -7960,6 +8683,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GRASS,GHOST
+BaseStats = 78,107,75,100,100,70
 Prev = DARTRIX
 #-------------------------------
 [LITTEN]
@@ -7971,6 +8695,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = FIRE
+BaseStats = 45,65,40,60,40,70
 Evolution = TORRACAT,17
 #-------------------------------
 [TORRACAT]
@@ -7982,6 +8707,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = FIRE
+BaseStats = 65,85,50,80,50,90
 Prev = LITTEN
 Evolution = INCINEROAR,34
 #-------------------------------
@@ -7994,6 +8720,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = FIRE,DARK
+BaseStats = 95,115,90,80,90,60
 Prev = TORRACAT
 #-------------------------------
 [POPPLIO]
@@ -8005,6 +8732,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = WATER
+BaseStats = 50,54,54,66,56,40
 Evolution = BRIONNE,17
 #-------------------------------
 [BRIONNE]
@@ -8016,6 +8744,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = WATER
+BaseStats = 60,69,69,91,81,50
 Prev = POPPLIO
 Evolution = PRIMARINA,34
 #-------------------------------
@@ -8028,6 +8757,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = WATER,FAIRY
+BaseStats = 80,74,74,126,116,60
 Prev = BRIONNE
 #-------------------------------
 [PIKIPEK]
@@ -8039,6 +8769,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 35,75,30,30,30,65
 Evolution = TRUMBEAK,14
 #-------------------------------
 [TRUMBEAK]
@@ -8050,6 +8781,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 55,85,50,40,50,75
 Prev = PIKIPEK
 Evolution = TOUCANNON,28
 #-------------------------------
@@ -8062,6 +8794,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = NORMAL,FLYING
+BaseStats = 80,120,75,75,75,60
 Prev = TRUMBEAK
 #-------------------------------
 [YUNGOOS]
@@ -8073,6 +8806,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = NORMAL
+BaseStats = 48,70,30,30,30,45
 Evolution = GUMSHOOS,20
 #-------------------------------
 [GUMSHOOS]
@@ -8084,6 +8818,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = NORMAL
+BaseStats = 88,110,60,55,60,45
 Prev = YUNGOOS
 #-------------------------------
 [GRUBBIN]
@@ -8095,6 +8830,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = BUG
+BaseStats = 47,62,45,55,45,46
 Evolution = CHARJABUG,20
 #-------------------------------
 [CHARJABUG]
@@ -8106,6 +8842,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = BUG,ELECTRIC
+BaseStats = 57,82,95,55,75,36
 Prev = GRUBBIN
 Evolution = VIKAVOLT,33
 #-------------------------------
@@ -8118,6 +8855,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = BUG,ELECTRIC
+BaseStats = 77,70,90,145,75,43
 Prev = CHARJABUG
 #-------------------------------
 [CRABRAWLER]
@@ -8129,6 +8867,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = FIGHTING
+BaseStats = 47,82,57,42,47,63
 Evolution = CRABOMINABLE,28
 #-------------------------------
 [CRABOMINABLE]
@@ -8140,6 +8879,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = FIGHTING,ICE
+BaseStats = 97,132,77,62,67,43
 Prev = CRABRAWLER
 #-------------------------------
 [ORICORIO]
@@ -8151,6 +8891,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = FIRE,FLYING
+BaseStats = 75,70,70,98,70,93
 #-------------------------------
 [CUTIEFLY]
 Name = 에블리
@@ -8161,6 +8902,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = BUG,FAIRY
+BaseStats = 40,45,40,55,40,84
 Evolution = RIBOMBEE,25
 #-------------------------------
 [RIBOMBEE]
@@ -8172,6 +8914,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = BUG,FAIRY
+BaseStats = 60,55,60,95,70,124
 Prev = CUTIEFLY
 #-------------------------------
 [ROCKRUFF]
@@ -8183,6 +8926,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = ROCK
+BaseStats = 45,65,40,30,40,60
 Evolution = LYCANROC,25
 #-------------------------------
 [LYCANROC]
@@ -8194,6 +8938,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = ROCK
+BaseStats = 75,115,65,55,65,112
 Prev = ROCKRUFF
 #-------------------------------
 [WISHIWASHI]
@@ -8205,6 +8950,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = WATER
+BaseStats = 45,20,20,25,25,40
 #-------------------------------
 [MAREANIE]
 Name = 시마사리
@@ -8215,6 +8961,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = POISON,WATER
+BaseStats = 50,53,62,43,52,45
 Evolution = TOXAPEX,38
 #-------------------------------
 [TOXAPEX]
@@ -8226,6 +8973,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = POISON,WATER
+BaseStats = 50,63,152,53,142,35
 Prev = MAREANIE
 #-------------------------------
 [MUDBRAY]
@@ -8237,6 +8985,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GROUND
+BaseStats = 70,100,70,45,55,45
 Evolution = MUDSDALE,30
 #-------------------------------
 [MUDSDALE]
@@ -8248,6 +8997,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GROUND
+BaseStats = 100,125,100,55,85,35
 Prev = MUDBRAY
 #-------------------------------
 [DEWPIDER]
@@ -8259,6 +9009,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = WATER,BUG
+BaseStats = 38,40,52,40,72,27
 Evolution = ARAQUANID,22
 #-------------------------------
 [ARAQUANID]
@@ -8270,6 +9021,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = WATER,BUG
+BaseStats = 68,70,92,50,132,42
 Prev = DEWPIDER
 #-------------------------------
 [FOMANTIS]
@@ -8281,6 +9033,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GRASS
+BaseStats = 40,55,35,50,35,35
 Evolution = LURANTIS,34
 #-------------------------------
 [LURANTIS]
@@ -8292,6 +9045,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GRASS
+BaseStats = 70,105,90,80,90,45
 Prev = FOMANTIS
 #-------------------------------
 [MORELULL]
@@ -8303,6 +9057,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GRASS,FAIRY
+BaseStats = 40,35,55,65,75,15
 Evolution = SHIINOTIC,24
 #-------------------------------
 [SHIINOTIC]
@@ -8314,6 +9069,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GRASS,FAIRY
+BaseStats = 60,45,80,90,100,30
 Prev = MORELULL
 #-------------------------------
 [SALANDIT]
@@ -8325,6 +9081,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = POISON,FIRE
+BaseStats = 48,44,40,71,40,77
 Evolution = SALAZZLE,33
 #-------------------------------
 [SALAZZLE]
@@ -8336,6 +9093,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = POISON,FIRE
+BaseStats = 68,64,60,111,60,117
 Prev = SALANDIT
 #-------------------------------
 [STUFFUL]
@@ -8347,6 +9105,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = NORMAL,FIGHTING
+BaseStats = 70,75,50,45,50,50
 Evolution = BEWEAR,27
 #-------------------------------
 [BEWEAR]
@@ -8358,6 +9117,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = NORMAL,FIGHTING
+BaseStats = 120,125,80,55,60,60
 Prev = STUFFUL
 #-------------------------------
 [BOUNSWEET]
@@ -8369,6 +9129,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GRASS
+BaseStats = 42,30,38,30,38,32
 Evolution = STEENEE,18
 #-------------------------------
 [STEENEE]
@@ -8380,6 +9141,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GRASS
+BaseStats = 52,40,48,40,48,62
 Prev = BOUNSWEET
 Evolution = TSAREENA,24
 #-------------------------------
@@ -8392,6 +9154,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GRASS
+BaseStats = 72,120,98,50,98,72
 Prev = STEENEE
 #-------------------------------
 [COMFEY]
@@ -8403,6 +9166,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = FAIRY
+BaseStats = 51,52,90,82,110,100
 #-------------------------------
 [ORANGURU]
 Name = 하랑우탄
@@ -8413,6 +9177,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = NORMAL,PSYCHIC
+BaseStats = 90,60,80,90,110,60
 #-------------------------------
 [PASSIMIAN]
 Name = 내던숭이
@@ -8423,6 +9188,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = FIGHTING
+BaseStats = 100,120,90,40,60,80
 #-------------------------------
 [WIMPOD]
 Name = 꼬시레
@@ -8433,6 +9199,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = BUG,WATER
+BaseStats = 25,35,40,20,30,80
 Evolution = GOLISOPOD,30
 #-------------------------------
 [GOLISOPOD]
@@ -8444,6 +9211,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = BUG,WATER
+BaseStats = 75,125,140,60,90,40
 Prev = WIMPOD
 #-------------------------------
 [SANDYGAST]
@@ -8455,6 +9223,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GHOST,GROUND
+BaseStats = 55,55,80,70,45,15
 Evolution = PALOSSAND,42
 #-------------------------------
 [PALOSSAND]
@@ -8466,6 +9235,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = GHOST,GROUND
+BaseStats = 85,75,110,100,75,35
 Prev = SANDYGAST
 #-------------------------------
 [PYUKUMUKU]
@@ -8477,6 +9247,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = WATER
+BaseStats = 55,60,130,30,130,5
 #-------------------------------
 [TYPENULL]
 Name = 타입:널
@@ -8487,6 +9258,7 @@ Tier = 1
 Region = ALOLA
 Basic = true
 Types = NORMAL
+BaseStats = 95,95,95,95,95,59
 Evolution = SILVALLY,40
 #-------------------------------
 [SILVALLY]
@@ -8498,6 +9270,7 @@ Tier = 1
 Region = ALOLA
 Basic = false
 Types = NORMAL
+BaseStats = 95,95,95,95,95,95
 Prev = TYPENULL
 #-------------------------------
 [MINIOR]
@@ -8509,6 +9282,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = ROCK,FLYING
+BaseStats = 60,100,60,100,60,120
 #-------------------------------
 [KOMALA]
 Name = 자말라
@@ -8519,6 +9293,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = NORMAL
+BaseStats = 65,115,65,75,95,65
 #-------------------------------
 [TURTONATOR]
 Name = 폭거북스
@@ -8529,6 +9304,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = FIRE,DRAGON
+BaseStats = 60,78,135,91,85,36
 #-------------------------------
 [TOGEDEMARU]
 Name = 토게데마루
@@ -8539,6 +9315,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = ELECTRIC,STEEL
+BaseStats = 65,98,63,40,73,96
 #-------------------------------
 [MIMIKYU]
 Name = 따라큐
@@ -8549,6 +9326,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GHOST,FAIRY
+BaseStats = 55,90,80,50,105,96
 #-------------------------------
 [BRUXISH]
 Name = 치갈기
@@ -8559,6 +9337,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = WATER,PSYCHIC
+BaseStats = 68,105,70,70,70,92
 #-------------------------------
 [DRAMPA]
 Name = 할비롱
@@ -8569,6 +9348,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = NORMAL,DRAGON
+BaseStats = 78,60,85,135,91,36
 #-------------------------------
 [DHELMISE]
 Name = 타타륜
@@ -8579,6 +9359,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = GHOST,GRASS
+BaseStats = 70,131,100,86,90,40
 #-------------------------------
 [JANGMOO]
 Name = 짜랑꼬
@@ -8589,6 +9370,7 @@ Tier = 0
 Region = ALOLA
 Basic = true
 Types = DRAGON
+BaseStats = 45,55,65,45,45,45
 Evolution = HAKAMOO,35
 #-------------------------------
 [HAKAMOO]
@@ -8600,6 +9382,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = DRAGON,FIGHTING
+BaseStats = 55,75,90,65,70,65
 Prev = JANGMOO
 Evolution = KOMMOO,45
 #-------------------------------
@@ -8612,6 +9395,7 @@ Tier = 0
 Region = ALOLA
 Basic = false
 Types = DRAGON,FIGHTING
+BaseStats = 75,110,125,100,105,85
 Prev = HAKAMOO
 #-------------------------------
 [TAPUKOKO]
@@ -8623,6 +9407,7 @@ Tier = 1
 Region = ALOLA
 Basic = true
 Types = ELECTRIC,FAIRY
+BaseStats = 70,115,85,95,75,130
 #-------------------------------
 [TAPULELE]
 Name = 카푸나비나
@@ -8633,6 +9418,7 @@ Tier = 1
 Region = ALOLA
 Basic = true
 Types = PSYCHIC,FAIRY
+BaseStats = 70,85,75,130,115,95
 #-------------------------------
 [TAPUBULU]
 Name = 카푸브루루
@@ -8643,6 +9429,7 @@ Tier = 1
 Region = ALOLA
 Basic = true
 Types = GRASS,FAIRY
+BaseStats = 70,130,115,85,95,75
 #-------------------------------
 [TAPUFINI]
 Name = 카푸느지느
@@ -8653,6 +9440,7 @@ Tier = 1
 Region = ALOLA
 Basic = true
 Types = WATER,FAIRY
+BaseStats = 70,75,115,95,130,85
 #-------------------------------
 [COSMOG]
 Name = 코스모그
@@ -8663,6 +9451,7 @@ Tier = 2
 Region = ALOLA
 Basic = true
 Types = PSYCHIC
+BaseStats = 43,29,31,29,31,37
 Evolution = COSMOEM,43
 #-------------------------------
 [COSMOEM]
@@ -8674,6 +9463,7 @@ Tier = 2
 Region = ALOLA
 Basic = false
 Types = PSYCHIC
+BaseStats = 43,29,131,29,131,37
 Prev = COSMOG
 Evolution = SOLGALEO,53
 Evolution = LUNALA,53
@@ -8687,6 +9477,7 @@ Tier = 2
 Region = ALOLA
 Basic = false
 Types = PSYCHIC,STEEL
+BaseStats = 137,137,107,113,89,97
 Prev = COSMOEM
 #-------------------------------
 [LUNALA]
@@ -8698,6 +9489,7 @@ Tier = 2
 Region = ALOLA
 Basic = false
 Types = PSYCHIC,GHOST
+BaseStats = 137,113,89,137,107,97
 Prev = COSMOEM
 #-------------------------------
 [NIHILEGO]
@@ -8709,6 +9501,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = ROCK,POISON
+BaseStats = 109,53,47,127,131,103
 #-------------------------------
 [BUZZWOLE]
 Name = 매시붕
@@ -8719,6 +9512,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = BUG,FIGHTING
+BaseStats = 107,139,139,53,53,79
 #-------------------------------
 [PHEROMOSA]
 Name = 페로코체
@@ -8729,6 +9523,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = BUG,FIGHTING
+BaseStats = 71,137,37,137,37,151
 #-------------------------------
 [XURKITREE]
 Name = 전수목
@@ -8739,6 +9534,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = ELECTRIC
+BaseStats = 83,89,71,173,71,83
 #-------------------------------
 [CELESTEELA]
 Name = 철화구야
@@ -8749,6 +9545,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = STEEL,FLYING
+BaseStats = 97,101,103,107,101,61
 #-------------------------------
 [KARTANA]
 Name = 종이신도
@@ -8759,6 +9556,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = GRASS,STEEL
+BaseStats = 59,181,131,59,31,109
 #-------------------------------
 [GUZZLORD]
 Name = 악식킹
@@ -8769,6 +9567,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = DARK,DRAGON
+BaseStats = 223,101,53,97,53,43
 #-------------------------------
 [NECROZMA]
 Name = 네크로즈마
@@ -8779,6 +9578,7 @@ Tier = 2
 Region = ALOLA
 Basic = true
 Types = PSYCHIC
+BaseStats = 97,107,101,127,89,79
 #-------------------------------
 [MAGEARNA]
 Name = 마기아나
@@ -8789,6 +9589,7 @@ Tier = 3
 Region = ALOLA
 Basic = true
 Types = STEEL,FAIRY
+BaseStats = 80,95,115,130,115,65
 #-------------------------------
 [MARSHADOW]
 Name = 마샤도
@@ -8799,6 +9600,7 @@ Tier = 3
 Region = ALOLA
 Basic = true
 Types = FIGHTING,GHOST
+BaseStats = 90,125,80,90,90,125
 #-------------------------------
 [POIPOLE]
 Name = 베베놈
@@ -8809,6 +9611,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = POISON
+BaseStats = 67,73,67,73,67,73
 Evolution = NAGANADEL,35
 #-------------------------------
 [NAGANADEL]
@@ -8820,6 +9623,7 @@ Tier = 4
 Region = ALOLA
 Basic = false
 Types = POISON,DRAGON
+BaseStats = 73,73,73,127,73,121
 Prev = POIPOLE
 #-------------------------------
 [STAKATAKA]
@@ -8831,6 +9635,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = ROCK,STEEL
+BaseStats = 61,131,211,53,101,13
 #-------------------------------
 [BLACEPHALON]
 Name = 두파팡
@@ -8841,6 +9646,7 @@ Tier = 4
 Region = ALOLA
 Basic = true
 Types = FIRE,GHOST
+BaseStats = 53,127,53,151,79,107
 #-------------------------------
 [ZERAORA]
 Name = 제라오라
@@ -8851,6 +9657,7 @@ Tier = 3
 Region = ALOLA
 Basic = true
 Types = ELECTRIC
+BaseStats = 88,112,75,102,80,143
 #-------------------------------
 [MELTAN]
 Name = 멜탄
@@ -8861,6 +9668,7 @@ Tier = 3
 Region = ALOLA
 Basic = true
 Types = STEEL
+BaseStats = 46,65,65,55,35,34
 #-------------------------------
 [MELMETAL]
 Name = 멜메탈
@@ -8871,6 +9679,7 @@ Tier = 3
 Region = ALOLA
 Basic = true
 Types = STEEL
+BaseStats = 135,143,143,80,65,34
 #-------------------------------
 [GROOKEY]
 Name = 흥나숭
@@ -8881,6 +9690,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GRASS
+BaseStats = 50,65,50,40,40,65
 Evolution = THWACKEY,16
 #-------------------------------
 [THWACKEY]
@@ -8892,6 +9702,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GRASS
+BaseStats = 70,85,70,55,60,80
 Prev = GROOKEY
 Evolution = RILLABOOM,35
 #-------------------------------
@@ -8904,6 +9715,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GRASS
+BaseStats = 100,125,90,60,70,85
 Prev = THWACKEY
 #-------------------------------
 [SCORBUNNY]
@@ -8915,6 +9727,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FIRE
+BaseStats = 50,71,40,40,40,69
 Evolution = RABOOT,16
 #-------------------------------
 [RABOOT]
@@ -8926,6 +9739,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FIRE
+BaseStats = 65,86,60,55,60,94
 Prev = SCORBUNNY
 Evolution = CINDERACE,35
 #-------------------------------
@@ -8938,6 +9752,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FIRE
+BaseStats = 80,116,75,65,75,119
 Prev = RABOOT
 #-------------------------------
 [SOBBLE]
@@ -8949,6 +9764,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = WATER
+BaseStats = 50,40,40,70,40,70
 Evolution = DRIZZILE,16
 #-------------------------------
 [DRIZZILE]
@@ -8960,6 +9776,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = WATER
+BaseStats = 65,60,55,95,55,90
 Prev = SOBBLE
 Evolution = INTELEON,35
 #-------------------------------
@@ -8972,6 +9789,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = WATER
+BaseStats = 70,85,65,125,65,120
 Prev = DRIZZILE
 #-------------------------------
 [SKWOVET]
@@ -8983,6 +9801,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = NORMAL
+BaseStats = 70,55,55,35,35,25
 Evolution = GREEDENT,24
 #-------------------------------
 [GREEDENT]
@@ -8994,6 +9813,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = NORMAL
+BaseStats = 120,95,95,55,75,20
 Prev = SKWOVET
 #-------------------------------
 [ROOKIDEE]
@@ -9005,6 +9825,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FLYING
+BaseStats = 38,47,35,33,35,57
 Evolution = CORVISQUIRE,18
 #-------------------------------
 [CORVISQUIRE]
@@ -9016,6 +9837,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FLYING
+BaseStats = 68,67,55,43,55,77
 Prev = ROOKIDEE
 Evolution = CORVIKNIGHT,38
 #-------------------------------
@@ -9028,6 +9850,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FLYING,STEEL
+BaseStats = 98,87,105,53,85,67
 Prev = CORVISQUIRE
 #-------------------------------
 [BLIPBUG]
@@ -9039,6 +9862,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = BUG
+BaseStats = 25,20,20,25,45,45
 Evolution = DOTTLER,10
 #-------------------------------
 [DOTTLER]
@@ -9050,6 +9874,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = BUG,PSYCHIC
+BaseStats = 50,35,80,50,90,30
 Prev = BLIPBUG
 Evolution = ORBEETLE,30
 #-------------------------------
@@ -9062,6 +9887,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = BUG,PSYCHIC
+BaseStats = 60,45,110,80,120,90
 Prev = DOTTLER
 #-------------------------------
 [NICKIT]
@@ -9073,6 +9899,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = DARK
+BaseStats = 40,28,28,47,52,50
 Evolution = THIEVUL,18
 #-------------------------------
 [THIEVUL]
@@ -9084,6 +9911,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = DARK
+BaseStats = 70,58,58,87,92,90
 Prev = NICKIT
 #-------------------------------
 [GOSSIFLEUR]
@@ -9095,6 +9923,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GRASS
+BaseStats = 40,40,60,40,60,10
 Evolution = ELDEGOSS,20
 #-------------------------------
 [ELDEGOSS]
@@ -9106,6 +9935,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GRASS
+BaseStats = 60,50,90,80,120,60
 Prev = GOSSIFLEUR
 #-------------------------------
 [WOOLOO]
@@ -9117,6 +9947,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = NORMAL
+BaseStats = 42,40,55,40,45,48
 Evolution = DUBWOOL,24
 #-------------------------------
 [DUBWOOL]
@@ -9128,6 +9959,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = NORMAL
+BaseStats = 72,80,100,60,90,88
 Prev = WOOLOO
 #-------------------------------
 [CHEWTLE]
@@ -9139,6 +9971,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = WATER
+BaseStats = 50,64,50,38,38,44
 Evolution = DREDNAW,22
 #-------------------------------
 [DREDNAW]
@@ -9150,6 +9983,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = WATER,ROCK
+BaseStats = 90,115,90,48,68,74
 Prev = CHEWTLE
 #-------------------------------
 [YAMPER]
@@ -9161,6 +9995,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ELECTRIC
+BaseStats = 59,45,50,40,50,26
 Evolution = BOLTUND,25
 #-------------------------------
 [BOLTUND]
@@ -9172,6 +10007,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = ELECTRIC
+BaseStats = 69,90,60,90,60,121
 Prev = YAMPER
 #-------------------------------
 [ROLYCOLY]
@@ -9183,6 +10019,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ROCK
+BaseStats = 30,40,50,40,50,30
 Evolution = CARKOL,18
 #-------------------------------
 [CARKOL]
@@ -9194,6 +10031,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = ROCK,FIRE
+BaseStats = 80,60,90,60,70,50
 Prev = ROLYCOLY
 Evolution = COALOSSAL,34
 #-------------------------------
@@ -9206,6 +10044,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = ROCK,FIRE
+BaseStats = 110,80,120,80,90,30
 Prev = CARKOL
 #-------------------------------
 [APPLIN]
@@ -9217,6 +10056,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GRASS,DRAGON
+BaseStats = 40,40,80,40,40,20
 Evolution = FLAPPLE,22
 Evolution = APPLETUN,22
 Evolution = DIPPLIN,22
@@ -9230,6 +10070,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GRASS,DRAGON
+BaseStats = 70,110,80,95,60,70
 Prev = APPLIN
 #-------------------------------
 [APPLETUN]
@@ -9241,6 +10082,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GRASS,DRAGON
+BaseStats = 110,85,80,100,80,30
 Prev = APPLIN
 #-------------------------------
 [SILICOBRA]
@@ -9252,6 +10094,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GROUND
+BaseStats = 52,57,75,35,50,46
 Evolution = SANDACONDA,36
 #-------------------------------
 [SANDACONDA]
@@ -9263,6 +10106,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GROUND
+BaseStats = 72,107,125,65,70,71
 Prev = SILICOBRA
 #-------------------------------
 [CRAMORANT]
@@ -9274,6 +10118,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FLYING,WATER
+BaseStats = 70,85,55,85,95,85
 #-------------------------------
 [ARROKUDA]
 Name = 찌로꼬치
@@ -9284,6 +10129,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = WATER
+BaseStats = 41,63,40,40,30,66
 Evolution = BARRASKEWDA,26
 #-------------------------------
 [BARRASKEWDA]
@@ -9295,6 +10141,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = WATER
+BaseStats = 61,123,60,60,50,136
 Prev = ARROKUDA
 #-------------------------------
 [TOXEL]
@@ -9306,6 +10153,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ELECTRIC,POISON
+BaseStats = 40,38,35,54,35,40
 Evolution = TOXTRICITY,30
 #-------------------------------
 [TOXTRICITY]
@@ -9317,6 +10165,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = ELECTRIC,POISON
+BaseStats = 75,98,70,114,70,75
 Prev = TOXEL
 #-------------------------------
 [SIZZLIPEDE]
@@ -9328,6 +10177,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FIRE,BUG
+BaseStats = 50,65,45,50,50,45
 Evolution = CENTISKORCH,28
 #-------------------------------
 [CENTISKORCH]
@@ -9339,6 +10189,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FIRE,BUG
+BaseStats = 100,115,65,90,90,65
 Prev = SIZZLIPEDE
 #-------------------------------
 [CLOBBOPUS]
@@ -9350,6 +10201,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FIGHTING
+BaseStats = 50,68,60,50,50,32
 Evolution = GRAPPLOCT,26
 #-------------------------------
 [GRAPPLOCT]
@@ -9361,6 +10213,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FIGHTING
+BaseStats = 80,118,90,70,80,42
 Prev = CLOBBOPUS
 #-------------------------------
 [SINISTEA]
@@ -9372,6 +10225,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GHOST
+BaseStats = 40,45,45,74,54,50
 Evolution = POLTEAGEIST,26
 #-------------------------------
 [POLTEAGEIST]
@@ -9383,6 +10237,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GHOST
+BaseStats = 60,65,65,134,114,70
 Prev = SINISTEA
 #-------------------------------
 [HATENNA]
@@ -9394,6 +10249,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = PSYCHIC
+BaseStats = 42,30,45,56,53,39
 Evolution = HATTREM,32
 #-------------------------------
 [HATTREM]
@@ -9405,6 +10261,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = PSYCHIC
+BaseStats = 57,40,65,86,73,49
 Prev = HATENNA
 Evolution = HATTERENE,42
 #-------------------------------
@@ -9417,6 +10274,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = PSYCHIC,FAIRY
+BaseStats = 57,90,95,136,103,29
 Prev = HATTREM
 #-------------------------------
 [IMPIDIMP]
@@ -9428,6 +10286,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = DARK,FAIRY
+BaseStats = 45,45,30,55,40,50
 Evolution = MORGREM,32
 #-------------------------------
 [MORGREM]
@@ -9439,6 +10298,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = DARK,FAIRY
+BaseStats = 65,60,45,75,55,70
 Prev = IMPIDIMP
 Evolution = GRIMMSNARL,42
 #-------------------------------
@@ -9451,6 +10311,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = DARK,FAIRY
+BaseStats = 95,120,65,95,75,60
 Prev = MORGREM
 #-------------------------------
 [OBSTAGOON]
@@ -9462,6 +10323,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = DARK,NORMAL
+BaseStats = 93,90,101,60,81,95
 #-------------------------------
 [PERRSERKER]
 Name = 나이킹
@@ -9472,6 +10334,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = STEEL
+BaseStats = 70,110,100,50,60,50
 #-------------------------------
 [CURSOLA]
 Name = 산호르곤
@@ -9482,6 +10345,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GHOST
+BaseStats = 60,95,50,145,130,30
 #-------------------------------
 [SIRFETCHD]
 Name = 창파나이트
@@ -9492,6 +10356,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FIGHTING
+BaseStats = 62,135,95,68,82,65
 #-------------------------------
 [MRRIME]
 Name = 마임꽁꽁
@@ -9502,6 +10367,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ICE,PSYCHIC
+BaseStats = 80,85,75,110,100,70
 #-------------------------------
 [RUNERIGUS]
 Name = 데스판
@@ -9512,6 +10378,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = GROUND,GHOST
+BaseStats = 58,95,145,50,105,30
 #-------------------------------
 [MILCERY]
 Name = 마빌크
@@ -9522,6 +10389,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FAIRY
+BaseStats = 45,40,40,50,61,34
 Evolution = ALCREMIE,23
 #-------------------------------
 [ALCREMIE]
@@ -9533,6 +10401,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = FAIRY
+BaseStats = 65,60,75,110,121,64
 Prev = MILCERY
 #-------------------------------
 [FALINKS]
@@ -9544,6 +10413,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FIGHTING
+BaseStats = 65,100,100,70,60,75
 #-------------------------------
 [PINCURCHIN]
 Name = 찌르성게
@@ -9554,6 +10424,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ELECTRIC
+BaseStats = 48,101,95,91,85,15
 #-------------------------------
 [SNOM]
 Name = 누니머기
@@ -9564,6 +10435,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ICE,BUG
+BaseStats = 30,25,35,45,30,20
 Evolution = FROSMOTH,16
 #-------------------------------
 [FROSMOTH]
@@ -9575,6 +10447,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = ICE,BUG
+BaseStats = 70,65,60,125,90,65
 Prev = SNOM
 #-------------------------------
 [STONJOURNER]
@@ -9586,6 +10459,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ROCK
+BaseStats = 100,125,135,20,20,70
 #-------------------------------
 [EISCUE]
 Name = 빙큐보
@@ -9596,6 +10470,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ICE
+BaseStats = 75,80,110,65,90,50
 #-------------------------------
 [INDEEDEE]
 Name = 에써르
@@ -9606,6 +10481,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = PSYCHIC,NORMAL
+BaseStats = 60,65,55,105,95,95
 #-------------------------------
 [MORPEKO]
 Name = 모르페코
@@ -9616,6 +10492,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ELECTRIC,DARK
+BaseStats = 58,95,58,70,58,97
 #-------------------------------
 [CUFANT]
 Name = 끼리동
@@ -9626,6 +10503,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = STEEL
+BaseStats = 72,80,49,40,49,40
 Evolution = COPPERAJAH,34
 #-------------------------------
 [COPPERAJAH]
@@ -9637,6 +10515,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = STEEL
+BaseStats = 122,130,69,80,69,30
 Prev = CUFANT
 #-------------------------------
 [DRACOZOLT]
@@ -9648,6 +10527,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ELECTRIC,DRAGON
+BaseStats = 90,100,90,80,70,75
 #-------------------------------
 [ARCTOZOLT]
 Name = 파치르돈
@@ -9658,6 +10538,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = ELECTRIC,ICE
+BaseStats = 90,100,90,90,80,55
 #-------------------------------
 [DRACOVISH]
 Name = 어래곤
@@ -9668,6 +10549,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = WATER,DRAGON
+BaseStats = 90,90,100,70,80,75
 #-------------------------------
 [ARCTOVISH]
 Name = 어치르돈
@@ -9678,6 +10560,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = WATER,ICE
+BaseStats = 90,90,100,80,90,55
 #-------------------------------
 [DURALUDON]
 Name = 두랄루돈
@@ -9688,6 +10571,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = STEEL,DRAGON
+BaseStats = 70,95,115,120,50,85
 Evolution = ARCHALUDON,40
 #-------------------------------
 [DREEPY]
@@ -9699,6 +10583,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = DRAGON,GHOST
+BaseStats = 28,60,30,40,30,82
 Evolution = DRAKLOAK,50
 #-------------------------------
 [DRAKLOAK]
@@ -9710,6 +10595,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = DRAGON,GHOST
+BaseStats = 68,80,50,60,50,102
 Prev = DREEPY
 Evolution = DRAGAPULT,60
 #-------------------------------
@@ -9722,6 +10608,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = DRAGON,GHOST
+BaseStats = 88,120,75,100,75,142
 Prev = DRAKLOAK
 #-------------------------------
 [ZACIAN]
@@ -9733,6 +10620,7 @@ Tier = 2
 Region = GALAR
 Basic = true
 Types = FAIRY
+BaseStats = 92,120,115,80,115,138
 #-------------------------------
 [ZAMAZENTA]
 Name = 자마젠타
@@ -9743,6 +10631,7 @@ Tier = 2
 Region = GALAR
 Basic = true
 Types = FIGHTING
+BaseStats = 92,120,115,80,115,138
 #-------------------------------
 [ETERNATUS]
 Name = 무한다이노
@@ -9753,6 +10642,7 @@ Tier = 2
 Region = GALAR
 Basic = true
 Types = POISON,DRAGON
+BaseStats = 140,85,95,145,95,130
 #-------------------------------
 [KUBFU]
 Name = 치고마
@@ -9763,6 +10653,7 @@ Tier = 1
 Region = GALAR
 Basic = true
 Types = FIGHTING
+BaseStats = 60,90,60,53,50,72
 Evolution = URSHIFU,32
 #-------------------------------
 [URSHIFU]
@@ -9774,6 +10665,7 @@ Tier = 1
 Region = GALAR
 Basic = false
 Types = FIGHTING,DARK
+BaseStats = 100,130,100,63,60,97
 Prev = KUBFU
 #-------------------------------
 [ZARUDE]
@@ -9785,6 +10677,7 @@ Tier = 3
 Region = GALAR
 Basic = true
 Types = DARK,GRASS
+BaseStats = 105,120,105,70,95,105
 #-------------------------------
 [REGIELEKI]
 Name = 레지에레키
@@ -9795,6 +10688,7 @@ Tier = 1
 Region = GALAR
 Basic = true
 Types = ELECTRIC
+BaseStats = 80,100,50,100,50,200
 #-------------------------------
 [REGIDRAGO]
 Name = 레지드래고
@@ -9805,6 +10699,7 @@ Tier = 1
 Region = GALAR
 Basic = true
 Types = DRAGON
+BaseStats = 200,100,50,100,50,80
 #-------------------------------
 [GLASTRIER]
 Name = 블리자포스
@@ -9815,6 +10710,7 @@ Tier = 1
 Region = GALAR
 Basic = true
 Types = ICE
+BaseStats = 100,145,130,65,110,30
 #-------------------------------
 [SPECTRIER]
 Name = 레이스포스
@@ -9825,6 +10721,7 @@ Tier = 1
 Region = GALAR
 Basic = true
 Types = GHOST
+BaseStats = 100,65,60,145,80,130
 #-------------------------------
 [CALYREX]
 Name = 버드렉스
@@ -9835,6 +10732,7 @@ Tier = 2
 Region = GALAR
 Basic = true
 Types = PSYCHIC,GRASS
+BaseStats = 100,80,80,80,80,80
 #-------------------------------
 [WYRDEER]
 Name = 신비록
@@ -9845,6 +10743,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = NORMAL,PSYCHIC
+BaseStats = 103,105,72,105,75,65
 Prev = STANTLER
 #-------------------------------
 [KLEAVOR]
@@ -9856,6 +10755,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = BUG,ROCK
+BaseStats = 70,135,95,45,70,85
 Prev = SCYTHER
 #-------------------------------
 [URSALUNA]
@@ -9867,6 +10767,7 @@ Tier = 0
 Region = GALAR
 Basic = false
 Types = GROUND,NORMAL
+BaseStats = 130,140,105,45,80,50
 Prev = URSARING
 #-------------------------------
 [BASCULEGION]
@@ -9878,6 +10779,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = WATER,GHOST
+BaseStats = 120,112,65,80,75,78
 #-------------------------------
 [SNEASLER]
 Name = 포푸니크
@@ -9888,6 +10790,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = FIGHTING,POISON
+BaseStats = 80,130,60,40,80,120
 #-------------------------------
 [OVERQWIL]
 Name = 장침바루
@@ -9898,6 +10801,7 @@ Tier = 0
 Region = GALAR
 Basic = true
 Types = DARK,POISON
+BaseStats = 85,115,95,65,65,85
 #-------------------------------
 [ENAMORUS]
 Name = 러브로스
@@ -9908,6 +10812,7 @@ Tier = 1
 Region = GALAR
 Basic = true
 Types = FAIRY,FLYING
+BaseStats = 74,115,70,135,80,106
 #-------------------------------
 [SPRIGATITO]
 Name = 나오하
@@ -9918,6 +10823,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GRASS
+BaseStats = 40,61,54,45,45,65
 Evolution = FLORAGATO,16
 #-------------------------------
 [FLORAGATO]
@@ -9929,6 +10835,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS
+BaseStats = 61,80,63,60,63,83
 Prev = SPRIGATITO
 Evolution = MEOWSCARADA,36
 #-------------------------------
@@ -9941,6 +10848,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,DARK
+BaseStats = 76,110,70,81,70,123
 Prev = FLORAGATO
 #-------------------------------
 [FUECOCO]
@@ -9952,6 +10860,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = FIRE
+BaseStats = 67,45,59,63,40,36
 Evolution = CROCALOR,16
 #-------------------------------
 [CROCALOR]
@@ -9963,6 +10872,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FIRE
+BaseStats = 81,55,78,90,58,49
 Prev = FUECOCO
 Evolution = SKELEDIRGE,36
 #-------------------------------
@@ -9975,6 +10885,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FIRE,GHOST
+BaseStats = 104,75,100,110,75,66
 Prev = CROCALOR
 #-------------------------------
 [QUAXLY]
@@ -9986,6 +10897,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = WATER
+BaseStats = 55,65,45,50,45,50
 Evolution = QUAXWELL,16
 #-------------------------------
 [QUAXWELL]
@@ -9997,6 +10909,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = WATER
+BaseStats = 70,85,65,65,60,65
 Prev = QUAXLY
 Evolution = QUAQUAVAL,36
 #-------------------------------
@@ -10009,6 +10922,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = WATER,FIGHTING
+BaseStats = 85,120,80,85,75,85
 Prev = QUAXWELL
 #-------------------------------
 [LECHONK]
@@ -10020,6 +10934,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = NORMAL
+BaseStats = 54,45,40,35,45,35
 Evolution = OINKOLOGNE,18
 #-------------------------------
 [OINKOLOGNE]
@@ -10031,6 +10946,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = NORMAL
+BaseStats = 110,100,75,59,80,65
 Prev = LECHONK
 #-------------------------------
 [TAROUNTULA]
@@ -10042,6 +10958,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = BUG
+BaseStats = 35,41,45,29,40,20
 Evolution = SPIDOPS,15
 #-------------------------------
 [SPIDOPS]
@@ -10053,6 +10970,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = BUG
+BaseStats = 60,79,92,52,86,35
 Prev = TAROUNTULA
 #-------------------------------
 [NYMBLE]
@@ -10064,6 +10982,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = BUG
+BaseStats = 33,46,40,21,25,45
 Evolution = LOKIX,24
 #-------------------------------
 [LOKIX]
@@ -10075,6 +10994,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = BUG,DARK
+BaseStats = 71,102,78,52,55,92
 Prev = NYMBLE
 #-------------------------------
 [PAWMI]
@@ -10086,6 +11006,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ELECTRIC
+BaseStats = 45,50,20,40,25,60
 Evolution = PAWMO,18
 #-------------------------------
 [PAWMO]
@@ -10097,6 +11018,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ELECTRIC,FIGHTING
+BaseStats = 60,75,40,50,40,85
 Prev = PAWMI
 Evolution = PAWMOT,29
 #-------------------------------
@@ -10109,6 +11031,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ELECTRIC,FIGHTING
+BaseStats = 70,115,70,70,60,105
 Prev = PAWMO
 #-------------------------------
 [TANDEMAUS]
@@ -10120,6 +11043,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = NORMAL
+BaseStats = 50,50,45,40,45,75
 Evolution = MAUSHOLD,25
 #-------------------------------
 [MAUSHOLD]
@@ -10131,6 +11055,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = NORMAL
+BaseStats = 74,75,70,65,75,111
 Prev = TANDEMAUS
 #-------------------------------
 [FIDOUGH]
@@ -10142,6 +11067,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = FAIRY
+BaseStats = 37,55,70,30,55,65
 Evolution = DACHSBUN,26
 #-------------------------------
 [DACHSBUN]
@@ -10153,6 +11079,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FAIRY
+BaseStats = 57,80,115,50,80,95
 Prev = FIDOUGH
 #-------------------------------
 [SMOLIV]
@@ -10164,6 +11091,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GRASS,NORMAL
+BaseStats = 41,35,45,58,51,30
 Evolution = DOLLIV,25
 #-------------------------------
 [DOLLIV]
@@ -10175,6 +11103,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,NORMAL
+BaseStats = 52,53,60,78,78,33
 Prev = SMOLIV
 Evolution = ARBOLIVA,35
 #-------------------------------
@@ -10187,6 +11116,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,NORMAL
+BaseStats = 78,69,90,125,109,39
 Prev = DOLLIV
 #-------------------------------
 [SQUAWKABILLY]
@@ -10198,6 +11128,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = NORMAL,FLYING
+BaseStats = 82,96,51,45,51,92
 #-------------------------------
 [NACLI]
 Name = 베베솔트
@@ -10208,6 +11139,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ROCK
+BaseStats = 55,55,75,35,35,25
 Evolution = NACLSTACK,24
 #-------------------------------
 [NACLSTACK]
@@ -10219,6 +11151,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ROCK
+BaseStats = 60,60,100,35,65,35
 Prev = NACLI
 Evolution = GARGANACL,38
 #-------------------------------
@@ -10231,6 +11164,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ROCK
+BaseStats = 100,100,130,45,90,35
 Prev = NACLSTACK
 #-------------------------------
 [CHARCADET]
@@ -10242,6 +11176,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = FIRE
+BaseStats = 40,50,40,50,40,35
 Evolution = ARMAROUGE,21
 Evolution = CERULEDGE,21
 #-------------------------------
@@ -10254,6 +11189,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FIRE,PSYCHIC
+BaseStats = 85,60,100,125,80,75
 Prev = CHARCADET
 #-------------------------------
 [CERULEDGE]
@@ -10265,6 +11201,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FIRE,GHOST
+BaseStats = 75,125,80,60,100,85
 Prev = CHARCADET
 #-------------------------------
 [TADBULB]
@@ -10276,6 +11213,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ELECTRIC
+BaseStats = 61,31,41,59,35,45
 Evolution = BELLIBOLT,23
 #-------------------------------
 [BELLIBOLT]
@@ -10287,6 +11225,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ELECTRIC
+BaseStats = 109,64,91,103,83,45
 Prev = TADBULB
 #-------------------------------
 [WATTREL]
@@ -10298,6 +11237,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ELECTRIC,FLYING
+BaseStats = 40,40,35,55,40,70
 Evolution = KILOWATTREL,25
 #-------------------------------
 [KILOWATTREL]
@@ -10309,6 +11249,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ELECTRIC,FLYING
+BaseStats = 70,70,60,105,60,125
 Prev = WATTREL
 #-------------------------------
 [MASCHIFF]
@@ -10320,6 +11261,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = DARK
+BaseStats = 60,78,60,40,51,51
 Evolution = MABOSSTIFF,30
 #-------------------------------
 [MABOSSTIFF]
@@ -10331,6 +11273,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = DARK
+BaseStats = 80,120,90,60,70,85
 Prev = MASCHIFF
 #-------------------------------
 [SHROODLE]
@@ -10342,6 +11285,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = POISON,NORMAL
+BaseStats = 40,65,35,40,35,75
 Evolution = GRAFAIAI,28
 #-------------------------------
 [GRAFAIAI]
@@ -10353,6 +11297,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = POISON,NORMAL
+BaseStats = 63,95,65,80,72,110
 Prev = SHROODLE
 #-------------------------------
 [BRAMBLIN]
@@ -10364,6 +11309,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GRASS,GHOST
+BaseStats = 40,65,30,45,35,60
 Evolution = BRAMBLEGHAST,23
 #-------------------------------
 [BRAMBLEGHAST]
@@ -10375,6 +11321,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,GHOST
+BaseStats = 55,115,70,80,70,90
 Prev = BRAMBLIN
 #-------------------------------
 [TOEDSCOOL]
@@ -10386,6 +11333,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GROUND,GRASS
+BaseStats = 40,40,35,50,100,70
 Evolution = TOEDSCRUEL,30
 #-------------------------------
 [TOEDSCRUEL]
@@ -10397,6 +11345,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GROUND,GRASS
+BaseStats = 80,70,65,80,120,100
 Prev = TOEDSCOOL
 #-------------------------------
 [KLAWF]
@@ -10408,6 +11357,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ROCK
+BaseStats = 70,100,115,35,55,75
 #-------------------------------
 [CAPSAKID]
 Name = 캡싸이
@@ -10418,6 +11368,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GRASS
+BaseStats = 50,62,40,62,40,50
 Evolution = SCOVILLAIN,25
 #-------------------------------
 [SCOVILLAIN]
@@ -10429,6 +11380,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,FIRE
+BaseStats = 65,108,65,108,65,75
 Prev = CAPSAKID
 #-------------------------------
 [RELLOR]
@@ -10440,6 +11392,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = BUG
+BaseStats = 41,50,60,31,58,30
 Evolution = RABSCA,23
 #-------------------------------
 [RABSCA]
@@ -10451,6 +11404,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = BUG,PSYCHIC
+BaseStats = 75,50,85,115,100,45
 Prev = RELLOR
 #-------------------------------
 [FLITTLE]
@@ -10462,6 +11416,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = PSYCHIC
+BaseStats = 30,35,30,55,30,75
 Evolution = ESPATHRA,35
 #-------------------------------
 [ESPATHRA]
@@ -10473,6 +11428,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = PSYCHIC
+BaseStats = 95,60,60,101,60,105
 Prev = FLITTLE
 #-------------------------------
 [TINKATINK]
@@ -10484,6 +11440,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = FAIRY,STEEL
+BaseStats = 50,45,45,35,64,58
 Evolution = TINKATUFF,24
 #-------------------------------
 [TINKATUFF]
@@ -10495,6 +11452,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FAIRY,STEEL
+BaseStats = 65,55,55,45,82,78
 Prev = TINKATINK
 Evolution = TINKATON,38
 #-------------------------------
@@ -10507,6 +11465,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FAIRY,STEEL
+BaseStats = 85,75,77,70,105,94
 Prev = TINKATUFF
 #-------------------------------
 [WIGLETT]
@@ -10518,6 +11477,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = WATER
+BaseStats = 10,55,25,35,25,95
 Evolution = WUGTRIO,26
 #-------------------------------
 [WUGTRIO]
@@ -10529,6 +11489,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = WATER
+BaseStats = 35,100,50,50,70,120
 Prev = WIGLETT
 #-------------------------------
 [BOMBIRDIER]
@@ -10540,6 +11501,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = FLYING,DARK
+BaseStats = 70,103,85,60,85,82
 #-------------------------------
 [FINIZEN]
 Name = 맨돌핀
@@ -10550,6 +11512,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = WATER
+BaseStats = 70,45,40,45,40,75
 Evolution = PALAFIN,38
 #-------------------------------
 [PALAFIN]
@@ -10561,6 +11524,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = WATER
+BaseStats = 100,70,72,53,62,100
 Prev = FINIZEN
 #-------------------------------
 [VAROOM]
@@ -10572,6 +11536,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = STEEL,POISON
+BaseStats = 45,70,63,30,45,47
 Evolution = REVAVROOM,40
 #-------------------------------
 [REVAVROOM]
@@ -10583,6 +11548,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = STEEL,POISON
+BaseStats = 80,119,90,54,67,90
 Prev = VAROOM
 #-------------------------------
 [CYCLIZAR]
@@ -10594,6 +11560,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = DRAGON,NORMAL
+BaseStats = 70,95,65,85,65,121
 #-------------------------------
 [ORTHWORM]
 Name = 꿈트렁
@@ -10604,6 +11571,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = STEEL
+BaseStats = 70,85,145,60,55,65
 #-------------------------------
 [GLIMMET]
 Name = 초롱순
@@ -10614,6 +11582,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ROCK,POISON
+BaseStats = 48,35,42,105,60,60
 Evolution = GLIMMORA,35
 #-------------------------------
 [GLIMMORA]
@@ -10625,6 +11594,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ROCK,POISON
+BaseStats = 83,55,90,130,81,86
 Prev = GLIMMET
 #-------------------------------
 [GREAVARD]
@@ -10636,6 +11606,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GHOST
+BaseStats = 50,61,60,30,55,34
 Evolution = HOUNDSTONE,30
 #-------------------------------
 [HOUNDSTONE]
@@ -10647,6 +11618,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GHOST
+BaseStats = 72,101,100,50,97,68
 Prev = GREAVARD
 #-------------------------------
 [FLAMIGO]
@@ -10658,6 +11630,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = FLYING,FIGHTING
+BaseStats = 82,115,74,75,64,90
 #-------------------------------
 [CETODDLE]
 Name = 터벅고래
@@ -10668,6 +11641,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = ICE
+BaseStats = 108,68,45,30,40,43
 Evolution = CETITAN,28
 #-------------------------------
 [CETITAN]
@@ -10679,6 +11653,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = ICE
+BaseStats = 170,113,65,45,55,73
 Prev = CETODDLE
 #-------------------------------
 [VELUZA]
@@ -10690,6 +11665,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = WATER,PSYCHIC
+BaseStats = 90,102,73,78,65,70
 #-------------------------------
 [DONDOZO]
 Name = 어써러셔
@@ -10700,6 +11676,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = WATER
+BaseStats = 150,100,115,65,65,35
 #-------------------------------
 [TATSUGIRI]
 Name = 싸리용
@@ -10710,6 +11687,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = DRAGON,WATER
+BaseStats = 68,50,60,120,95,82
 #-------------------------------
 [ANNIHILAPE]
 Name = 저승갓숭
@@ -10720,6 +11698,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = FIGHTING,GHOST
+BaseStats = 110,115,80,50,90,90
 Prev = PRIMEAPE
 #-------------------------------
 [CLODSIRE]
@@ -10731,6 +11710,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = POISON,GROUND
+BaseStats = 130,75,60,45,100,20
 #-------------------------------
 [FARIGIRAF]
 Name = 키키링
@@ -10741,6 +11721,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = NORMAL,PSYCHIC
+BaseStats = 120,90,70,110,70,60
 Prev = GIRAFARIG
 #-------------------------------
 [DUDUNSPARCE]
@@ -10752,6 +11733,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = NORMAL
+BaseStats = 125,100,80,85,75,55
 Prev = DUNSPARCE
 #-------------------------------
 [KINGAMBIT]
@@ -10763,6 +11745,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = DARK,STEEL
+BaseStats = 100,135,120,60,85,50
 Prev = BISHARP
 #-------------------------------
 [GREATTUSK]
@@ -10774,6 +11757,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = GROUND,FIGHTING
+BaseStats = 115,131,131,53,53,87
 #-------------------------------
 [SCREAMTAIL]
 Name = 우렁찬꼬리
@@ -10784,6 +11768,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = FAIRY,PSYCHIC
+BaseStats = 115,65,99,65,115,111
 #-------------------------------
 [BRUTEBONNET]
 Name = 사나운버섯
@@ -10794,6 +11779,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = GRASS,DARK
+BaseStats = 111,127,99,79,99,55
 #-------------------------------
 [FLUTTERMANE]
 Name = 날개치는머리
@@ -10804,6 +11790,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = GHOST,FAIRY
+BaseStats = 55,55,55,135,135,135
 #-------------------------------
 [SLITHERWING]
 Name = 땅을기는날개
@@ -10814,6 +11801,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = BUG,FIGHTING
+BaseStats = 85,135,79,85,105,81
 #-------------------------------
 [SANDYSHOCKS]
 Name = 모래털가죽
@@ -10824,6 +11812,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = ELECTRIC,GROUND
+BaseStats = 85,81,97,121,85,101
 #-------------------------------
 [IRONTREADS]
 Name = 무쇠바퀴
@@ -10834,6 +11823,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = GROUND,STEEL
+BaseStats = 90,112,120,72,70,106
 #-------------------------------
 [IRONBUNDLE]
 Name = 무쇠보따리
@@ -10844,6 +11834,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = ICE,WATER
+BaseStats = 56,80,114,124,60,136
 #-------------------------------
 [IRONHANDS]
 Name = 무쇠손
@@ -10854,6 +11845,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = FIGHTING,ELECTRIC
+BaseStats = 154,140,108,50,68,50
 #-------------------------------
 [IRONJUGULIS]
 Name = 무쇠머리
@@ -10864,6 +11856,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = DARK,FLYING
+BaseStats = 94,80,86,122,80,108
 #-------------------------------
 [IRONMOTH]
 Name = 무쇠독나방
@@ -10874,6 +11867,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = FIRE,POISON
+BaseStats = 80,70,60,140,110,110
 #-------------------------------
 [IRONTHORNS]
 Name = 무쇠가시
@@ -10884,6 +11878,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = ROCK,ELECTRIC
+BaseStats = 100,134,110,70,84,72
 #-------------------------------
 [FRIGIBAX]
 Name = 드니차
@@ -10894,6 +11889,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = DRAGON,ICE
+BaseStats = 65,75,45,35,45,55
 Evolution = ARCTIBAX,35
 #-------------------------------
 [ARCTIBAX]
@@ -10905,6 +11901,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = DRAGON,ICE
+BaseStats = 90,95,66,45,65,62
 Prev = FRIGIBAX
 Evolution = BAXCALIBUR,54
 #-------------------------------
@@ -10917,6 +11914,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = DRAGON,ICE
+BaseStats = 115,145,92,75,86,87
 Prev = ARCTIBAX
 #-------------------------------
 [GIMMIGHOUL]
@@ -10928,6 +11926,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GHOST
+BaseStats = 45,30,70,75,70,10
 Evolution = GHOLDENGO,25
 #-------------------------------
 [GHOLDENGO]
@@ -10939,6 +11938,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = STEEL,GHOST
+BaseStats = 87,60,95,133,91,84
 Prev = GIMMIGHOUL
 #-------------------------------
 [WOCHIEN]
@@ -10950,6 +11950,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = DARK,GRASS
+BaseStats = 85,85,100,95,135,70
 #-------------------------------
 [CHIENPAO]
 Name = 파오젠
@@ -10960,6 +11961,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = DARK,ICE
+BaseStats = 80,120,80,90,65,135
 #-------------------------------
 [TINGLU]
 Name = 딩루
@@ -10970,6 +11972,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = DARK,GROUND
+BaseStats = 155,110,125,55,80,45
 #-------------------------------
 [CHIYU]
 Name = 위유이
@@ -10980,6 +11983,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = DARK,FIRE
+BaseStats = 55,80,80,135,120,100
 #-------------------------------
 [ROARINGMOON]
 Name = 고동치는달
@@ -10990,6 +11994,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = DRAGON,DARK
+BaseStats = 105,139,71,55,101,119
 #-------------------------------
 [IRONVALIANT]
 Name = 무쇠무인
@@ -11000,6 +12005,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = FAIRY,FIGHTING
+BaseStats = 74,130,90,120,60,116
 #-------------------------------
 [KORAIDON]
 Name = 코라이돈
@@ -11010,6 +12016,7 @@ Tier = 2
 Region = PALDEA
 Basic = true
 Types = FIGHTING,DRAGON
+BaseStats = 100,135,115,85,100,135
 #-------------------------------
 [MIRAIDON]
 Name = 미라이돈
@@ -11020,6 +12027,7 @@ Tier = 2
 Region = PALDEA
 Basic = true
 Types = ELECTRIC,DRAGON
+BaseStats = 100,85,100,135,115,135
 #-------------------------------
 [WALKINGWAKE]
 Name = 굽이치는물결
@@ -11030,6 +12038,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = WATER,DRAGON
+BaseStats = 99,83,91,125,83,109
 #-------------------------------
 [IRONLEAVES]
 Name = 무쇠잎새
@@ -11040,6 +12049,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = GRASS,PSYCHIC
+BaseStats = 90,130,88,70,108,104
 #-------------------------------
 [DIPPLIN]
 Name = 과미르
@@ -11050,6 +12060,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,DRAGON
+BaseStats = 80,80,110,95,80,40
 Prev = APPLIN
 Evolution = HYDRAPPLE,40
 #-------------------------------
@@ -11062,6 +12073,7 @@ Tier = 0
 Region = PALDEA
 Basic = true
 Types = GRASS,GHOST
+BaseStats = 40,45,45,74,54,50
 Evolution = SINISTCHA,26
 #-------------------------------
 [SINISTCHA]
@@ -11073,6 +12085,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,GHOST
+BaseStats = 71,60,106,121,80,70
 Prev = POLTCHAGEIST
 #-------------------------------
 [OKIDOGI]
@@ -11084,6 +12097,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = POISON,FIGHTING
+BaseStats = 88,128,115,58,86,80
 #-------------------------------
 [MUNKIDORI]
 Name = 이야후
@@ -11094,6 +12108,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = POISON,PSYCHIC
+BaseStats = 88,75,66,130,90,106
 #-------------------------------
 [FEZANDIPITI]
 Name = 기로치
@@ -11104,6 +12119,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = POISON,FAIRY
+BaseStats = 88,91,82,70,125,99
 #-------------------------------
 [OGERPON]
 Name = 오거폰
@@ -11114,6 +12130,7 @@ Tier = 1
 Region = PALDEA
 Basic = true
 Types = GRASS
+BaseStats = 80,120,84,60,96,110
 #-------------------------------
 [ARCHALUDON]
 Name = 브리두라스
@@ -11124,6 +12141,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = STEEL,DRAGON
+BaseStats = 90,105,130,125,65,85
 Prev = DURALUDON
 #-------------------------------
 [HYDRAPPLE]
@@ -11135,6 +12153,7 @@ Tier = 0
 Region = PALDEA
 Basic = false
 Types = GRASS,DRAGON
+BaseStats = 106,80,110,120,80,44
 Prev = DIPPLIN
 #-------------------------------
 [GOUGINGFIRE]
@@ -11146,6 +12165,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = FIRE,DRAGON
+BaseStats = 105,115,121,65,93,91
 #-------------------------------
 [RAGINGBOLT]
 Name = 날뛰는우레
@@ -11156,6 +12176,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = ELECTRIC,DRAGON
+BaseStats = 125,73,91,137,89,75
 #-------------------------------
 [IRONBOULDER]
 Name = 무쇠암석
@@ -11166,6 +12187,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = ROCK,PSYCHIC
+BaseStats = 90,120,80,68,108,124
 #-------------------------------
 [IRONCROWN]
 Name = 무쇠감투
@@ -11176,6 +12198,7 @@ Tier = 5
 Region = PALDEA
 Basic = true
 Types = STEEL,PSYCHIC
+BaseStats = 90,72,100,122,108,98
 #-------------------------------
 [TERAPAGOS]
 Name = 테라파고스
@@ -11186,6 +12209,7 @@ Tier = 2
 Region = PALDEA
 Basic = true
 Types = NORMAL
+BaseStats = 90,65,85,65,85,60
 #-------------------------------
 [PECHARUNT]
 Name = 복숭악동
@@ -11196,3 +12220,4 @@ Tier = 3
 Region = PALDEA
 Basic = true
 Types = POISON,GHOST
+BaseStats = 88,88,160,88,88,88

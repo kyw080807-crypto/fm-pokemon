@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("재정·대출"), _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("코치"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -92,6 +92,7 @@ module FM
         when 8 then choose_club
         when 9 then match_settings
         when 10 then finance
+        when 11 then coaches
         else break
         end
       end
@@ -212,6 +213,51 @@ module FM
           elsif pbConfirmMessage(_INTL("{1}를 지금 갚을까요?", money(c.loan[:owed])))
             Credit.repay_all(c, date: world.calendar.date)
           end
+        end
+      end
+    end
+
+    STAT_NAMES = %w[체력 공격 방어 특공 특방 스피드].freeze
+
+    # Poké Manager coaches: retired mons take a slot (training level) and
+    # speed up growth; a coach eats what it ate when it retired.
+    def coaches
+      c = player_club or return
+      loop do
+        pool = world.species
+        slots = Coach.slots(c)
+        staff = c.coaches
+        head = _INTL("코치 {1}/{2}자리 (훈련장 단계) · 주 식비 {3}", staff.size, slots, money(Coach.weekly_food(c)))
+        if staff.any?
+          fx = Coach.staff(c, pool)
+          head += "\n" + _INTL("숙련 성장 +{1}% · 노력치 +{2}% (같은 타입 포켓몬은 더)", ((fx[:lv] - 1) * 100).round,
+                               ((fx[:ev] - 1) * 100).round)
+        end
+        list = c.retired.sort_by { |m| [m.coach ? 0 : 1, -Coach.quality(m)] }
+        if list.empty?
+          pbMessage(_INTL("은퇴한 포켓몬이 없습니다. 은퇴하거나 교체된 포켓몬이 코치 후보가 됩니다."))
+          return
+        end
+        rows = list.map do |m|
+          q = Coach.quality(m)
+          mark = m.coach ? _INTL("[코치] ") : ""
+          food = m.food_fixed || Economy.food(ovr: Economy.ovr(m.rating), fame: c.fame)
+          _INTL("{1}{2} {3}등급({4}) · {5} 전문 · KO {6} · 식비 {7}", mark, species_name(m.species), Coach.grade(q),
+                format("%.1f", q), STAT_NAMES[Coach.spec(pool, m)], m.ko, money(food))
+        end
+        i = pbMessage(head, rows + [_INTL("닫기")], rows.size + 1)
+        break if i >= list.size
+        m = list[i]
+        if m.coach
+          m.coach = false
+          pbMessage(_INTL("{1}이 코치에서 물러났습니다.", species_name(m.species)))
+        elsif staff.size >= slots
+          pbMessage(_INTL("코치 자리가 없습니다. 훈련장 단계를 올리면 자리가 늘어납니다."))
+        else
+          m.coach = true
+          m.food_fixed ||= Economy.food(ovr: Economy.ovr(m.rating), fame: c.fame)
+          pbMessage(_INTL("{1}이 코치로 합류했습니다 ({2}등급 · {3} 전문).", species_name(m.species),
+                          Coach.grade(Coach.quality(m)), STAT_NAMES[Coach.spec(pool, m)]))
         end
       end
     end

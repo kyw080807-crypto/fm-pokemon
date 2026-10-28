@@ -27,6 +27,21 @@ module FM
     # FM::Injury: weeks left, { k:, sev:, w0:, cause: }, rehab weeks left.
     attr_accessor :inj, :injd, :rehab
 
+    # Career record (Poké Manager ko / gp / sko / sgp / titles / awards):
+    # coach quality (FM::Coach) and the season's KO king.
+    attr_writer :ko, :gp, :sko, :sgp
+    def ko = @ko || 0
+    def gp = @gp || 0
+    def sko = @sko || 0
+    def sgp = @sgp || 0
+    def titles = @titles ||= []
+    def awards = @awards ||= []
+    # Retired: coaching (FM::Coach) and the food it ate when it retired.
+    attr_accessor :coach, :food_fixed
+
+    # declineMul: the last two seasons of its life play at x0.96, then x0.92.
+    def decline_mul = @age >= @life - 1 ? 0.92 : @age >= @life - 2 ? 0.96 : 1.0
+
     # Days spent travelling this week (Club#travel): no training on them.
     attr_accessor :away_days
     def hurt? = @inj.to_i.positive?
@@ -65,13 +80,20 @@ module FM
     end
 
     # monStr's condition part: condMul x condDebuffMul.
-    def strength_mul = Rating.cond_mul(cond) * Rating.debuff_mul(debuffs)
+    def strength_mul = Rating.cond_mul(cond) * Rating.debuff_mul(debuffs) * decline_mul
 
     def to_rating
-      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond, mul: Rating.debuff_mul(debuffs) }
+      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond, mul: Rating.debuff_mul(debuffs) * decline_mul }
     end
 
-    def rating = Rating.mon(to_rating)
+    # Rating.mon of to_rating, kept until something it reads changes (it
+    # is asked for constantly: entry, food, running costs).
+    def rating
+      key = [@species, @bst, @level, @stars, @ev, @cond, @inj, @injd, @age]
+      return @rating_v if @rating_k == key
+      @rating_k = key
+      @rating_v = Rating.mon(to_rating)
+    end
   end
 
   module Growth
@@ -132,12 +154,13 @@ module FM
     # One week of growth after condition_week: resting gives half the level
     # progress and no EVs; tired mons (under 40) train at half effect.
     # train_level is the club's TRAINING design level.
-    def week(mon, train_level:, species:)
+    # fx: FM::Coach.fx multipliers ({ lv:, ev: }).
+    def week(mon, train_level:, species:, fx: nil)
       home = (7 - mon.away_days.to_i).clamp(0, 7) / 7.0   # design 05: travel days stop training
       mon.away_days = nil
       return mon if mon.hurt?   # injured: recovery only, no training
       t = original_level(train_level)
-      g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t) * home
+      g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t) * home * (fx ? fx[:lv] : 1)
       tired = mon.cond < 40
       mon.prog += mon.resting ? g * 0.5 : g * (tired ? 0.6 : 1)
       while mon.prog >= 1 && mon.level < 100
@@ -147,7 +170,7 @@ module FM
       mon.prog = 0.0 if mon.level >= 100
       # EV_RATE: a full 510 over growSeasons, counting ~75% training weeks.
       unless mon.resting
-        mon.ev = [mon.ev + EV_MAX / (52.0 * TRAIN_SHARE * grow_seasons(t)) * (tired ? 0.5 : 1) * home, EV_MAX].min
+        mon.ev = [mon.ev + EV_MAX / (52.0 * TRAIN_SHARE * grow_seasons(t)) * (tired ? 0.5 : 1) * home * (fx ? fx[:ev] : 1), EV_MAX].min
       end
       evolve(mon, species)
     end
@@ -225,10 +248,17 @@ module FM
     def ri(rng, a, b) = a + rng.rand(b - a + 1)
 
     # pickSpecies: basic forms of the region, weighted toward a final BST.
+    # BASICS_R: first stages of a region, legends left out (cached per pool).
+    def basics_in(pool, region)
+      @basics = {} unless @basics_pool.equal?(pool)
+      @basics_pool = pool
+      @basics[region] ||= pool.select { |_, s| s[:basic] && s[:region] == region && !LEGEND_TIERS.include?(s[:tier]) }
+    end
+
     # type: only species of that type now or after evolving (PICK_TYPE),
     # from every region when the region has fewer than 4.
     def pick_species(pool, region, target, sub_weight, rng, type: nil)
-      basics = pool.select { |_, s| s[:basic] && s[:region] == region && !LEGEND_TIERS.include?(s[:tier]) }
+      basics = basics_in(pool, region)
       if type
         typed = basics.select { |id, _| Scout.final_types(pool, id).include?(type) }
         if typed.size < 4

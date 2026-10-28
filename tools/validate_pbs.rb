@@ -54,7 +54,8 @@ SCHEMAS = {
     "Basic"     => { required: true, check: %w[true false] },
     "Evolution" => { repeat: true, check: :evolution },
     "Types"     => { required: true, check: /\A[A-Z]+(,[A-Z]+)?\z/ },
-    "Prev"      => { check: :species_id }
+    "Prev"      => { check: :species_id },
+    "BaseStats" => { required: true, check: /\A\d+(,\d+){5}\z/ }
   }
 }.freeze
 

@@ -133,7 +133,17 @@ module FM
     end
 
     def weekly_cost
-      food + @facilities.values.sum { |lv| Economy.facility_keep(lv) } + Economy.stadium_keep(@stadium)
+      food + Coach.weekly_food(self) + @facilities.values.sum { |lv| Economy.facility_keep(lv) } +
+        Economy.stadium_keep(@stadium)
+    end
+
+    def coaches = @retired.select(&:coach)
+
+    # Into the retired list (coach candidates), its food fixed as it was.
+    def retire(mon)
+      mon.coach = false
+      mon.food_fixed = Economy.food(ovr: Economy.ovr(mon.rating), fame: @fame)
+      @retired << mon
     end
 
     # Money beyond Invest's running-cost reserve.
@@ -315,11 +325,21 @@ module FM
     # match; a real battle's result may name them (:lineup_a/:lineup_b)
     # and who fainted (:fainted_a/:fainted_b). Injury events are added to
     # the day's events.
-    def after_match(home, away, r, lineups)
+    def after_match(home, away, r, lineups, league: false)
       la = r[:lineup_a] || lineups[0]
       lb = r[:lineup_b] || lineups[1]
-      [[home, la, r[:fainted_a], r[:ko_b]], [away, lb, r[:fainted_b], r[:ko_a]]].each do |club, mons, fainted, ko|
+      [[home, la, r[:fainted_a], r[:ko_b], r[:ko_a]], [away, lb, r[:fainted_b], r[:ko_a], r[:ko_b]]].each do |club, mons, fainted, ko, scored|
         fainted ||= mons.sample([ko.to_i, mons.size].min, random: @rng)
+        mons.each do |m|
+          m.gp += 1
+          m.sgp += 1 if league
+        end
+        scored.to_i.times do   # who scored isn't known: a random mon that played
+          next if mons.empty?
+          m = mons[@rng.rand(mons.size)]
+          m.ko += 1
+          m.sko += 1 if league
+        end
         club.drain_lineup(Growth::MATCH_COND, mons: mons, match: true)
         Injury.after_match(fainted, club.facilities[:MEDICAL], @rng).each do |m, info|
           (@match_events ||= []) << injury_event(club, m, info)
@@ -416,7 +436,7 @@ module FM
         away.stay_night(hc, date: date) if go[:days].positive?   # arrived the day before
         lineups = [home.lineup, away.lineup]
         r = play_match(home, away, rng: @rng)
-        after_match(home, away, r, lineups)
+        after_match(home, away, r, lineups, league: true)
         away.travel(Travel.land(hc, ac, arrive_before: false, hub: hub(ac)), date: date)   # home again (귀환)
         settle(r, home, away, ranking)
         r.slice(:res, :ko_a, :ko_b).merge(attendance: gate[:attendance])
@@ -456,6 +476,8 @@ module FM
         w.record(-food, category: :food, date: date) if food.positive?
         keep = c.facilities.values.sum { |lv| Economy.facility_keep(lv) }
         w.record(-keep, category: :fac, date: date) if keep.positive?
+        cp = Coach.weekly_food(c)
+        w.record(-cp, category: :coach, date: date) if cp.positive?
         w.record(-Economy.stadium_keep(c.stadium), category: :std, date: date)
         merch = Economy.merch(c.fame)
         w.record(merch, category: :merch, date: date) if merch.positive?
@@ -489,7 +511,9 @@ module FM
         c.fame = Growth.fame_drift(c.fame)
         next unless @species
         gone = Growth.rollover(c.squad)
-        c.retired.concat(gone)
+        gone.each { |m| c.retire(m) }
+        c.squad.each { |m| m.sko = m.sgp = 0 }   # a new season's record
+        Coach.ai_pick(c) if ai?(c)
         c.refresh_rating
         events << { kind: :retired, club: c.id, mons: gone.map(&:species), date: date } unless gone.empty?
       end
@@ -526,15 +550,18 @@ module FM
     def squad_week
       events = []
       window = recruit_window?
+      regs = regions
+      avgs = regs.to_h { |r| [r, avg_level(r)] }
       @clubs.each_value do |c|
         train = c.facilities.fetch(:TRAINING, 0)
-        c.squad.each { |m| Growth.week(m, train_level: train, species: @species) }
-        avg = avg_level(c.region)
+        st = Coach.staff(c, @species)
+        c.squad.each { |m| Growth.week(m, train_level: train, species: @species, fx: Coach.fx(c, m, @species, st)) }
+        avg = avgs[c.region]
         released = ai?(c) ? Recruit.budget(c, pool: @species) : []
         events << { kind: :released, club: c.id, mons: released, date: date } unless released.empty?
         youth = Recruit.emergency(c, pool: @species, avg_level: avg, rng: @rng)
         events << { kind: :youth, club: c.id, mons: youth, date: date } unless youth.empty?
-        e = ai?(c) && Recruit.weekly(c, pool: @species, regions: regions, avg_level: avg,
+        e = ai?(c) && Recruit.weekly(c, pool: @species, regions: regs, avg_level: avg,
                                       window: window, date: date, rng: @rng)
         events << e if e
         c.refresh_rating
@@ -612,6 +639,11 @@ module FM
         sponsor_season_end(c, pos)
         (c.history[@calendar.year] ||= {})[:pos] = pos
       end
+      # Titles (league won, 8+ games) and the region's KO king.
+      year = @calendar.year
+      @clubs[standings.first].squad.each { |m| m.titles << [year, :league] if m.sgp >= Coach::TITLE_GAMES }
+      king = standings.flat_map { |id| @clubs[id].squad }.max_by(&:sko)
+      king.awards << [year, :ko_king] if king && king.sko.positive?
       if (cm = committees[region])
         cm.seat_gym_reps(self, standings)
         cm.distribute(self, standings, date)
