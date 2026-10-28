@@ -198,7 +198,7 @@ FM::Smoke.register("battle_calibration") do
     g = games.select { |d, _| d >= lo && d < hi }
     next if g.empty?
     real = g.sum { |_, r| r[:res].positive? ? 1.0 : (r[:res].zero? ? 0.5 : 0.0) } / g.size
-    sim = g.sum { |d, _| FM::MatchSim.win_probability(d, 0, neutral: true) } / g.size
+    sim = g.sum { |d, _| FM::MatchSim.win_probability(d, 0) } / g.size
     FM::Log.info(format("smoke: calib gap %5s..%-5s n=%3d real %.2f sim %.2f", lo, hi, g.size, real, sim))
   end
   decided = games.reject { |_, r| r[:res].zero? }

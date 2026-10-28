@@ -17,16 +17,16 @@ class TestMatchSim < Minitest::Test
     end
   end
 
-  def test_equal_teams_are_balanced_with_home_edge
+  def test_equal_teams_are_even_with_no_home_edge
     rs = sample(500, 500)
     wins = rs.count { |r| r[:res] == 1 }.fdiv(rs.size)
     losses = rs.count { |r| r[:res] == -1 }.fdiv(rs.size)
-    assert_in_delta 0.5, wins, 0.08
-    assert wins > losses, "home side should have a small edge"
+    assert_in_delta wins, losses, 0.04
+    assert_in_delta 0.5, FM::MatchSim.win_probability(500, 500), 1e-9
   end
 
   def test_stronger_team_wins_more_but_not_always
-    rs = sample(560, 480)
+    rs = sample(600, 480)
     wins = rs.count { |r| r[:res] == 1 }.fdiv(rs.size)
     assert wins > 0.7
     assert wins < 0.98, "upsets must still happen"

@@ -6,24 +6,23 @@
 # Strength is a team rating on the scale of its picked mons' base stat totals
 # (~300-700). SCALE and DRAW_RATE are fitted to 1,000 real AI-vs-AI battles
 # (smoke check battle_calibration, docs/design/README.md 실전 보정); real
-# battles have no home side, so HOME_EDGE is still a guess.
+# battles have no home side, so neither does the formula (no home
+# advantage anywhere, by design decision 2026-10-28).
 #===============================================================================
 module FM
   module MatchSim
     SCALE     = 90.0    # rating gap that moves win odds by a factor of e (real battles, below)
-    HOME_EDGE = 8.0     # home advantage in rating points
     DRAW_RATE = 0.006   # both sides left standing at the turn cap
 
     module_function
 
-    def win_probability(home, away, neutral: false)
-      1.0 / (1.0 + Math.exp(-(home - away + (neutral ? 0 : HOME_EDGE)) / SCALE))
+    def win_probability(home, away)
+      1.0 / (1.0 + Math.exp(-(home - away) / SCALE))
     end
 
     # -> { res: 1 home win / -1 away win / 0 draw, ko_a:, ko_b: }
-    # neutral: tournament games at a third venue, no home edge.
-    def play(home, away, rng: Random.new, neutral: false)
-      p = win_probability(home, away, neutral: neutral)
+    def play(home, away, rng: Random.new)
+      p = win_probability(home, away)
       if rng.rand < DRAW_RATE
         ko = Array.new(2) { rng.rand(3) }
         return { res: 0, ko_a: ko[0], ko_b: ko[1] }

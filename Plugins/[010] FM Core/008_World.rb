@@ -119,7 +119,7 @@ module FM
         r = hook.call(home, away, self, neutral: neutral, important: important)
         return r if r
       end
-      MatchSim.play(home.rating, away.rating, rng: rng, neutral: neutral)
+      MatchSim.play(home.rating, away.rating, rng: rng)
     end
 
     # A scout trip in `region` for the player's club (FM::Recruit.scout).
