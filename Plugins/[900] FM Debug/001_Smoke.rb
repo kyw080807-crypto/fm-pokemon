@@ -153,6 +153,9 @@ FM::Smoke.register("fm_menu_render") do
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })
     mine = club.lineup.map { |m| FM::Battle.to_pokemon(m, foe) }
     raise "battle party not built" unless foe.party.size == 3 && mine.all? { |p| p.level == FM::Battle::LEVEL }
+    entry_rows = club.entry.map { |m| FM::UI.mon_line(m) }
+    raise "entry rows" if entry_rows.empty?
+    FM::Log.info("smoke: pick screen row: #{entry_rows.first}")
     FM::Log.info("smoke: battle #{foe.name} (#{foe.trainer_type}) " +
                  foe.party.map { |p| "#{p.speciesName} #{p.totalhp}HP" }.join(", "))
   ensure

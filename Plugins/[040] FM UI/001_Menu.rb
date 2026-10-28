@@ -337,10 +337,58 @@ module FM
       show_list(_INTL("대회"), rows)
     end
 
+    def mon_line(m)
+      rest = m.resting ? _INTL(" · 휴식") : ""
+      _INTL("{1} Lv{2} ★{3} · 전력 {4} · 컨디션 {5}{6}", species_name(m.species), m.level, m.stars, m.rating.round,
+            m.cond, rest)
+    end
+
+    # World.player_match hook: ask how to play, show the opponent's entry of
+    # six, let the player pick three, fight. nil = use the formula.
+    def player_match(home, away, world, neutral: false)
+      mine = world.player_club
+      me, opp = home.id == mine ? [home, away] : [away, home]
+      choice = pbMessage(_INTL("{1}전: {2} (전력 {3}) vs {4} (전력 {5})", neutral ? _INTL("대회") : _INTL("리그"),
+                               me.name, me.rating.round, opp.name, opp.rating.round),
+                         [_INTL("직접 전투"), _INTL("결과만 보기")], 2)
+      return nil unless choice.zero?
+      picks = choose_three(me, opp) or return nil
+      r = FM::Battle.fight(me, opp, picks: picks)
+      home.id == mine ? r : { res: -r[:res], ko_a: r[:ko_b], ko_b: r[:ko_a] }
+    end
+
+    # Poké Manager: both entries of six are shown, then each side picks
+    # three. Returns the three Mons in the order picked (first one leads),
+    # or nil if the player backs out (the match then goes by the formula).
+    def choose_three(me, opp)
+      show_list(_INTL("상대 엔트리: {1}", opp.name), opp.entry.map { |m| mon_line(m) })
+      entry = me.entry
+      picked = []
+      loop do
+        rows = entry.map do |m|
+          i = picked.index(m)
+          (i ? "#{i + 1}▶ " : "   ") + mon_line(m)
+        end
+        done = picked.size == 3 || picked.size == entry.size
+        rows << (done ? _INTL("이 3마리로 출전") : _INTL("({1}/3 선택)", picked.size))
+        i = pbMessage(_INTL("출전할 3마리를 고르세요 (먼저 고른 포켓몬이 선봉, 다시 고르면 취소)."), rows + [_INTL("결과만 보기")],
+                      rows.size + 1)
+        return nil if i == rows.size
+        if i == entry.size
+          return picked if done
+          next
+        end
+        m = entry[i]
+        if picked.include?(m) then picked.delete(m)
+        elsif picked.size < 3 then picked << m
+        end
+      end
+    end
+
     # The player's matches this week can be fought for real (FM::Battle);
     # the hook is only on while the player advances time from this menu.
     def advance_week
-      FM::World.player_match = FM::Battle.method(:player_match) if FM.state.player_club
+      FM::World.player_match = method(:player_match) if FM.state.player_club
       events = begin
         FM.advance_days(7)
       ensure

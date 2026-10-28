@@ -57,7 +57,14 @@ module FM
 
     # The three who play (topMons: best after condition).
     def lineup
-      @squad.max_by(3) { |m| m.rating * Rating.cond_mul(m.cond) }
+      entry(3)
+    end
+
+    # The entry both sides reveal before a match (Poké Manager PARTY = 6);
+    # each then picks 3 (PICK) of it.
+    ENTRY_SIZE = 6
+    def entry(n = ENTRY_SIZE)
+      @squad.max_by(n) { |m| m.rating * Rating.cond_mul(m.cond) }
     end
 
     def drain_lineup(amount)

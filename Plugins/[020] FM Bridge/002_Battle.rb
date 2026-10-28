@@ -45,22 +45,14 @@ module FM
       t
     end
 
-    # World.player_match hook: asks, then fights. nil = use the formula.
-    def player_match(home, away, world, neutral: false)
-      mine = world.player_club
-      me, opp = home.id == mine ? [home, away] : [away, home]
-      choice = pbMessage(_INTL("{1}전: {2} (전력 {3}) vs {4} (전력 {5})", neutral ? _INTL("대회") : _INTL("리그"),
-                               me.name, me.rating.round, opp.name, opp.rating.round),
-                         [_INTL("직접 전투"), _INTL("결과만 보기")], 2)
-      return nil unless choice.zero?
-      r = fight(me, opp)
-      home.id == mine ? r : { res: -r[:res], ko_a: r[:ko_b], ko_b: r[:ko_a] }
-    end
-
-    # Returns { res:, ko_a:, ko_b: } from the player's side (a = player).
-    def fight(me, opp)
+    # Fights with the player's chosen three (`picks`, FM::Mon; default the
+    # best three) against the opponent's best three. Returns
+    # { res:, ko_a:, ko_b: } from the player's side (a = player).
+    # The match prompt and the pick screen are in FM UI.
+    def fight(me, opp, picks: nil)
+      picks ||= me.lineup
       saved = $player.party
-      $player.party = me.lineup.map { |m| to_pokemon(m, $player) }
+      $player.party = picks.map { |m| to_pokemon(m, $player) }
       foe = trainer_for(opp)
       setBattleRule("canLose")
       setBattleRule("noExp")
@@ -70,7 +62,7 @@ module FM
       mine_down = $player.party.count(&:fainted?)   # healed after a loss, see below
       case outcome
       when 1 then { res: 1, ko_a: foe_down, ko_b: mine_down }
-      when 2 then { res: -1, ko_a: foe_down, ko_b: me.lineup.size }   # after_battle heals a losing party
+      when 2 then { res: -1, ko_a: foe_down, ko_b: picks.size }   # after_battle heals a losing party
       else { res: 0, ko_a: foe_down, ko_b: mine_down }
       end
     ensure
