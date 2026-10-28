@@ -174,6 +174,12 @@ module FM
         champ.fame = Economy.add_fame(champ.fame, 10)
         champ.lineup.each { |m| m.titles << [world.calendar.year, :pwt] if m.sgp >= Coach::TITLE_GAMES }
         hist(world, ko.champion)[:pwt] = :champion
+        # legRight: the champion may find a legend next season.
+        world.leg_right = { club: ko.champion, year: world.calendar.year, used: false }
+        if !world.ai?(champ) && world.species && (g = Legend.candidate(world, champ, champ.region, rng))
+          world.legend_gift = g.merge(cost: 0, until: world.calendar.date_after(date, 7 * Legend::GIFT_WEEKS))
+          world.leg_right[:used] = true
+        end
         events << { kind: :cup_champion, cup: :pwt, club: ko.champion, date: date }
       end
       events

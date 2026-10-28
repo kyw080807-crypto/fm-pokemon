@@ -176,6 +176,10 @@ module FM
     # week it can.
     attr_accessor :tour_next, :tour_auto
 
+    # FM::Legend: the registry, the PWT champion's right ({ club:, year:,
+    # used: }) and the player's free gift candidate (with :until).
+    attr_accessor :legends, :leg_right, :legend_gift
+
     # hasMatchT: a league round, or a cup game while still in it, this week.
     def official_match_week?(club, week = this_week)
       return true if week.any? { |d| league_date_set.key?(d) }
@@ -252,10 +256,32 @@ module FM
     end
 
     # A scout trip in `region` for the player's club (FM::Recruit.scout).
+    # The PWT champion's scout reports may also bring an owner-less legend.
     def player_scout(region)
       c = @clubs.fetch(@player_club)
-      Recruit.scout(c, pool: @species, region: region, avg_level: avg_level(region), rng: @rng,
-                       date: @calendar.date)
+      cands = Recruit.scout(c, pool: @species, region: region, avg_level: avg_level(region), rng: @rng,
+                               date: @calendar.date)
+      if cands && @leg_right && @leg_right[:club] == c.id && @rng.rand < Legend::SCOUT_CHANCE
+        (l = Legend.candidate(self, c, region, @rng)) && cands << l
+      end
+      cands
+    end
+
+    # The PWT title's gift (free, outside the signing limit); `release`
+    # makes room in a full squad.
+    def claim_legend_gift(release: nil)
+      g = @legend_gift or return nil
+      c = @clubs.fetch(@player_club)
+      return nil if Legend.block?(self, c, g[:mon].species)
+      if c.squad.size >= Build.squad_size(c.clubhouse)
+        return nil unless release && c.squad.include?(release)
+        c.squad.delete(release)
+        c.retire(release)
+      end
+      c.squad << g[:mon]
+      c.refresh_rating
+      @legend_gift = nil
+      Legend.acquire(self, c, g[:mon])
     end
 
     # species: FM::Scout pool (PBS/fm_species.txt). Without it squads stay
@@ -280,6 +306,8 @@ module FM
       @rng      = Random.new(seed)
       @league_dates = {}
       seed_squads if @species
+      Legend.registry(self) if @species   # initLegends: holders registered, legends made symbols
+      @clubs.each_value(&:refresh_rating) if @species
       sign_sponsors
       start_leagues
     end
@@ -328,10 +356,13 @@ module FM
       @calendar.advance(1).each do |kind, _|
         case kind
         when :new_year
+          events.concat(Legend.season_end(self)) if @species
           events.concat(season_rollover)
           sign_sponsors
           start_leagues
           reset_cups
+          (e = @species && Legend.ai_claim(self, @rng)) && events << e
+          @legend_gift = nil if @legend_gift && (@legend_gift[:until] <=> date) .negative?
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
           weekly_economy
@@ -530,7 +561,9 @@ module FM
         cp = Coach.weekly_food(c)
         w.record(-cp, category: :coach, date: date) if cp.positive?
         w.record(-Economy.stadium_keep(c.stadium), category: :std, date: date)
-        merch = Economy.merch(c.fame)
+        legend = @species && Legend.held(c, @species)
+        merch = (Economy.merch(c.fame) * (legend ? Legend::MERCH_MUL : 1)).round
+        c.fame = Economy.add_fame(c.fame, Legend::FAME_WEEK) if legend
         w.record(merch, category: :merch, date: date) if merch.positive?
         pay_sponsor(c)
       end

@@ -328,14 +328,37 @@ module FM
               Recruit.foreign_cap(club), Recruit::HG_MIN, region_name(club.region))
       when :family then _INTL("같은 진화 계열의 포켓몬이 이미 스쿼드에 있습니다.")
       when :sub_legend then _INTL("준전설은 1마리만 둘 수 있습니다.")
+      when :legend then _INTL("전설은 클럽마다 1마리, 세계에 한 마리뿐입니다 (이미 주인이 있거나 전설이 있음).")
       when :specialty
         _INTL("전문 타입 규정: {1} 타입이 아닌 포켓몬은 스쿼드에 {2}마리까지입니다.", type_name(Specialty.of(club)),
               Specialty.other_cap(club))
       end
     end
 
+    # PWT champion's gift: a free legend, outside the signing limit.
+    def legend_gift(c)
+      g = world.legend_gift or return
+      m = g[:mon]
+      return unless pbConfirmMessage(_INTL("PWT 우승 선물: 전설 {1} Lv{2}이(가) 함께하려 합니다 (무료, {3}까지). 데려올까요?\n" \
+                                           "전설은 상징이라 훈련할 수 없고 개체값·노력치가 0이지만, 굿즈 수입 ×{4}·명성이 오르고 {5}시즌 함께합니다.",
+                                           species_name(m.species), m.level, date_text(g[:until]), Legend::MERCH_MUL, Legend::LEG_YEARS))
+      if Legend.block?(world, c, m.species)
+        pbMessage(sign_block_text(:legend, c))
+        return
+      end
+      release = nil
+      if c.squad.size >= Build.squad_size(c.clubhouse)
+        names = c.squad.map { |x| _INTL("{1} Lv{2} ★{3} · 전력 {4}", species_name(x.species), x.level, x.stars, x.rating.round) }
+        j = pbMessage(_INTL("스쿼드가 가득 찼습니다. 누구를 내보낼까요?"), names + [_INTL("취소")], names.size + 1)
+        return if j >= c.squad.size
+        release = c.squad[j]
+      end
+      pbMessage(_INTL("전설 {1}이(가) 합류했습니다!", species_name(m.species))) if world.claim_legend_gift(release: release)
+    end
+
     def scout
       c = player_club or return
+      legend_gift(c) if world.legend_gift
       return if austerity_blocked?(c)
       year = world.calendar.year
       left = Recruit.signs_left(c, year)
@@ -361,8 +384,9 @@ module FM
       labels = cands.map do |cand|
         m = cand[:mon]
         price = cand[:full] ? _INTL("{1} (정가 {2})", money(cand[:cost]), money(cand[:full])) : money(cand[:cost])
-        _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · {6}", species_name(m.species), m.level, m.stars,
-              m.age + 1, m.rating.round, price)
+        tag = cand[:legend] ? _INTL("[전설] ") : ""
+        tag + _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · {6}", species_name(m.species), m.level, m.stars,
+                    m.age + 1, m.rating.round, price)
       end
       i = pbMessage(_INTL("스카우트 보고서입니다. 영입할 포켓몬을 고르세요."), labels + [_INTL("영입 안 함")],
                     labels.size + 1)
@@ -379,11 +403,12 @@ module FM
         return if j >= c.squad.size
         release = c.squad[j]
       end
-      if (why = Recruit.sign_block(c, cand, world.species, release: release))
+      if (why = Recruit.sign_block(c, cand, world.species, release: release, world: world))
         pbMessage(sign_block_text(why, c))
         return
       end
       e = Recruit.sign(c, cand, date: world.calendar.date, release: release, pool: world.species)
+      Legend.acquire(world, c, cand[:mon]) if cand[:legend]
       msg = _INTL("{1}을 영입했습니다 ({2}).", species_name(e[:species]), money(e[:cost]))
       msg += " " + _INTL("{1}은 팀을 떠났습니다.", species_name(e[:released])) if e[:released]
       pbMessage(msg)
@@ -773,6 +798,12 @@ module FM
           _INTL("{1} vs {2}: {3} ({4})", date_text(e[:date]), opp, outcome, score)
         when :built
           _INTL("{1} 완공", facility_name(e[:what])) if e[:club] == id
+        when :legend_joined
+          _INTL("전설 {1}이(가) {2}의 새 주인 곁으로 ({3}시즌 함께)", species_name(e[:species]), world.clubs[e[:club]].name,
+                Legend::LEG_YEARS)
+        when :legend_left
+          _INTL("전설 {1}이(가) {2}의 곁을 떠났다 ({3}시즌 동행을 마침)", species_name(e[:species]), world.clubs[e[:club]].name,
+                Legend::LEG_YEARS)
         when :tour
           _INTL("원정 친선 투어: 출전료 {1} · 엔트리 컨디션 −{2}, 이번 주 훈련 쉼", money(e[:pay]), Tour::COND) if e[:club] == id
         when :crisis

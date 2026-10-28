@@ -228,8 +228,10 @@ module FM
     class Blocked < StandardError; end   # signBlock: homegrown rule, family, 준전설
 
     # Why the player can't sign `cand` (signBlock), or nil.
-    def sign_block(club, cand, pool, release: nil)
+    # world: for the legend rules (FM::Legend).
+    def sign_block(club, cand, pool, release: nil, world: nil)
       sp = cand[:mon].species
+      return :legend if world && Legend.block?(world, club, sp)
       others = release ? club.squad - [release] : club.squad
       return :homegrown if hg_block?(club, cand[:mon], pool, replacing: release)
       return :specialty if Specialty.block?(club, cand[:mon], pool, replacing: release)

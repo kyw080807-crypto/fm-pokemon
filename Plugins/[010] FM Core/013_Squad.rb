@@ -126,6 +126,12 @@ module FM
     def condition_week(mon, rest_mul: 1.0)
       played = mon.played
       mon.played = false
+      if Scout.pool && Scout.legend?(Scout.pool, mon.species)   # legDebuffed: always rests
+        mon.resting = true
+        mon.cond = [mon.cond + [rest_gain(mon, played: played).round, 1].max, 100].min
+        mon.fat = [mon.fat - (played ? 2 : 14), 0].max
+        return
+      end
       if mon.tour   # touring: fatigue eases (fatWeek), nothing else this week
         mon.resting = false
         mon.fat = [mon.fat - (played ? 2 : 9), 0].max
@@ -171,8 +177,9 @@ module FM
       return mon if mon.hurt?   # injured: recovery only, no training
       t = original_level(train_level)
       g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t) * home * (fx ? fx[:lv] : 1)
-      if touring   # a tour week: half the level progress, from playing; no EVs
-        mon.prog += 0.5 * g
+      legend = Scout.pool && Scout.legend?(Scout.pool, mon.species)
+      if touring || legend   # a tour week: half the level progress, no EVs; a legend: full, no EVs
+        mon.prog += legend ? g : 0.5 * g
         while mon.prog >= 1 && mon.level < 100
           mon.prog -= 1
           mon.level += 1
