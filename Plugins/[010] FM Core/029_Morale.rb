@@ -15,6 +15,13 @@
 #   28%, third 12%); each mon of the entry reacts with a mood for the week
 #   (x0.97-1.04, morale and bond changes). The same talk again loses
 #   force. Individual talks are not carried over yet.
+# - In battle (FM Bridge): a proud mon (stronger than its team's average,
+#   newly evolved, a proud species, a legend) with bond under 120 may
+#   disobey (disobey_p, at most 30% an action): another move, a nap, or
+#   nothing. High bond may survive a lethal hit with 1 HP once a battle,
+#   or shake off a status at the end of a turn (bond_fx). The formula
+#   counts disobedience as half its chance off the mon's strength (an
+#   estimate: the original plays every match as a battle).
 #===============================================================================
 module FM
   module Morale
@@ -51,7 +58,18 @@ module FM
       # hook.(club, opponent, ctx, mons) -> a talk from TALKS, or nil for
       # the coach; set by FM UI while the player advances time.
       attr_accessor :player_talk
+      # The world's calendar, for weeks since an evolution.
+      attr_accessor :calendar
     end
+
+    PRIDE_SPECIES = {
+      CHARMANDER: 1.3, CHARMELEON: 1.7, CHARIZARD: 1.7, GYARADOS: 1.3, DRAGONITE: 1.3, TYRANITAR: 1.3, SALAMENCE: 1.3,
+      GARCHOMP: 1.3, METAGROSS: 1.2, HYDREIGON: 1.3, GOODRA: 1.2, KOMMOO: 1.2, DRAGAPULT: 1.2, BAXCALIBUR: 1.2,
+      PRIMEAPE: 1.3, ANNIHILAPE: 1.3, LUCARIO: 1.2, ZOROARK: 1.2, MEWTWO: 1.4, GRENINJA: 1.2
+    }.freeze
+    LAZY_SPECIES = %i[SNORLAX MUNCHLAX SLAKING SLAKOTH SLOWPOKE SLOWBRO SLOWKING KOMALA SWAMPERT PSYDUCK DROWZEE
+                      HYPNO].freeze
+    FORMULA_DISOBEY = 0.5
 
     module_function
 
@@ -148,6 +166,41 @@ module FM
         add_bond(m, MOOD[k][2])
         [m, k]
       end
+    end
+
+    # prideOf: above the team's average overall, a recent evolution (20
+    # weeks), a proud species, a legend; at most 2.5.
+    def pride(mon, club)
+      ovr = ->(m) { Economy.ovr(m.rating) }
+      sq = club.squad.empty? ? [mon] : club.squad
+      p = [0, (ovr.(mon) - sq.sum(&ovr) / sq.size.to_f) / 12.0].max
+      if mon.evo_week && calendar && week
+        d = calendar.days_between(mon.evo_week, week) / 7
+        p += 0.9 * (1 - d / 20.0) if d >= 0 && d < 20
+      end
+      k = mon.species && PRIDE_SPECIES[mon.species.to_sym]
+      p = (p + 0.25) * k if k
+      p *= 1.3 if Scout.pool && mon.species && Scout.legend?(Scout.pool, mon.species)
+      [p, 2.5].min
+    end
+
+    def lazy?(mon) = !mon.species.nil? && LAZY_SPECIES.include?(mon.species.to_sym)
+
+    # disobeyP: a chance an action, 0 at bond 120 or with no pride.
+    def disobey_p(mon, club)
+      return 0.0 if mon.bond >= BOND_OBEY
+      pr = pride(mon, club)
+      return 0.0 if pr <= 0
+      p = (BOND_OBEY - mon.bond) / BOND_OBEY.to_f * pr * 0.2
+      p *= { comp: 1.6, off: 1.4, fire: 0.7, mot: 0.85 }.fetch(mon.mood(week), 1)
+      p *= { worst: 1.5, bad: 1.2 }.fetch(tier(mon.mor)[1], 1)
+      [p, 0.3].min
+    end
+
+    # bondFx -> [survive a lethal hit, shake off a status a turn]
+    def bond_fx(mon)
+      b = mon.bond
+      b >= 220 ? [0.008, 0.03] : b >= 180 ? [0.004, 0.02] : b >= 150 ? [0.002, 0.01] : [0.0, 0.0]
     end
 
     # morWeek for one club: `form` is its last league results (:w/:d/:l).

@@ -69,4 +69,42 @@ class TestMorale < Minitest::Test
   ensure
     FM::Morale.player_talk = nil
   end
+  def test_disobedience_needs_low_bond_and_pride
+    w = TestPlayer.new("x").world
+    c = w.clubs["A"]
+    star = c.squad.max_by(&:rating)
+    star.level = 90   # far above the team average
+    star.bond = 60
+    star.mor = 60
+    assert_operator FM::Morale.pride(star, c), :>, 0
+    p = FM::Morale.disobey_p(star, c)
+    assert_operator p, :>, 0
+    assert_operator p, :<=, 0.3
+    star.bond = FM::Morale::BOND_OBEY
+    assert_equal 0.0, FM::Morale.disobey_p(star, c), "120 bond: it listens"
+    weak = c.squad.min_by(&:rating)
+    weak.bond = 0
+    assert_equal 0.0, FM::Morale.disobey_p(weak, c), "no pride, no disobedience" if FM::Morale.pride(weak, c).zero?
+  end
+
+  def test_proud_species_and_formula_cost
+    w = TestPlayer.new("x").world
+    c = w.clubs["A"]
+    m = c.squad.first
+    m.species = "CHARMELEON"
+    assert_operator FM::Morale.pride(m, c), :>=, 0.25 * 1.7
+    before = c.rating
+    c.squad.each { |x| x.bond = 0 }
+    c.refresh_rating
+    assert_operator c.rating, :<, before
+  end
+
+  def test_bond_effects
+    m = mon
+    m.bond = 230
+    assert_equal [0.008, 0.03], FM::Morale.bond_fx(m)
+    m.bond = 100
+    assert_equal [0.0, 0.0], FM::Morale.bond_fx(m)
+  end
+
 end

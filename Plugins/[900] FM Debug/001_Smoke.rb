@@ -176,7 +176,10 @@ FM::Smoke.register("fm_menu_render") do
     # Battle parties can be built for real species (no battle is started:
     # that needs the map scene).
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })
-    mine = club.lineup.map { |m| FM::Battle.to_pokemon(m, foe) }
+    mine = club.lineup.map { |m| FM::Battle.to_pokemon(m, foe, club: club) }
+    raise "morale fields missing" unless mine.all? { |p| p.fm_disobey && !p.fm_end.nil? && p.happiness.between?(0, 255) }
+    FM::Log.info("smoke: morale in battle " + mine.map { |p| "#{p.speciesName} disobey #{(p.fm_disobey * 100).round(1)}% " \
+                                                         "friendship #{p.happiness}" }.join(", "))
     raise "battle party not built" unless foe.party.size == 3 && mine.all? { |p| p.level == FM::Battle::LEVEL }
     entry_rows = club.entry.map { |m| FM::UI.mon_line(m) }
     raise "entry rows" if entry_rows.empty?

@@ -32,7 +32,8 @@ module FM
 
     # EVs into stats in pretrain order: main attack, speed, HP, the matching
     # defence, special defence, defence; 252 each at most.
-    def to_pokemon(mon, owner)
+    # club: the mon's club, for disobedience (FM::Morale.disobey_p).
+    def to_pokemon(mon, owner, club: nil)
       pkmn = Pokemon.new(mon.species.to_sym, LEVEL, owner)
       pkmn.nature = Morale.nature(mon)   # the same list the temperament comes from
       iv = Rating::IV_MID.fetch(mon.stars - 1).round
@@ -50,6 +51,10 @@ module FM
       pkmn.fm_cond_mul = Rating.cond_mul(mon.cond) * mon.decline_mul * Morale.mor_mul(mon) *
                          Morale.mood_mul(mon, Morale.week)
       pkmn.happiness = mon.bond.round.clamp(0, 255)
+      pkmn.fm_disobey = club ? Morale.disobey_p(mon, club) : 0.0
+      pkmn.fm_lazy = Morale.lazy?(mon)
+      pkmn.fm_end, pkmn.fm_shake = Morale.bond_fx(mon)
+      pkmn.fm_mood = mon.mood(Morale.week)
       pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
       pkmn.calc_stats
       pkmn.heal
@@ -66,6 +71,17 @@ module FM
       list.each { |s| battler.stages[s] = [battler.stages[s] - 1, -6].max }
     end
 
+    MOOD_LINES = { fire: "{1}은(는) 투지가 활활 불타오르고 있다!", nerv: "{1}은(는) 긴장한 것 같다…",
+                   comp: "{1}은(는) 여유를 부리고 있다…", off: "{1}은(는) 어딘가 시큰둥하다…" }.freeze
+
+    # The week's mood, once, the first time it comes out.
+    def mood_line(battle, battler)
+      pk = battler&.pokemon
+      return if pk.nil? || battler.fainted? || pk.fm_mood_shown || !MOOD_LINES[pk.fm_mood]
+      pk.fm_mood_shown = true
+      battle.pbDisplay(_INTL(MOOD_LINES[pk.fm_mood], battler.pbThis))
+    end
+
     def debuff_text(list)
       names = { SPEED: _INTL("스피드"), ATTACK: _INTL("공격"), SPECIAL_ATTACK: _INTL("특수공격"), DEFENSE: _INTL("방어"),
                 SPECIAL_DEFENSE: _INTL("특수방어") }
@@ -76,7 +92,7 @@ module FM
       type = ROLE_TRAINER_TYPE.fetch(club.role[0], FALLBACK_TYPE)
       type = FALLBACK_TYPE unless GameData::TrainerType.exists?(type)
       t = NPCTrainer.new(club.name, type)
-      t.party = club.lineup.map { |m| to_pokemon(m, t) }
+      t.party = club.lineup.map { |m| to_pokemon(m, t, club: club) }
       t.lose_text = _INTL("...졌다.")
       t
     end
@@ -91,7 +107,7 @@ module FM
       Battle.auto = auto
       Battle.fast = fast
       saved = $player.party
-      $player.party = picks.map { |m| to_pokemon(m, $player) }
+      $player.party = picks.map { |m| to_pokemon(m, $player, club: me) }
       foe = trainer_for(opp)
       Battle.auto_skill = auto ? foe.skill_level : nil
       theirs = opp.lineup   # trainer_for builds the party from this, in order
@@ -132,6 +148,9 @@ end
 
 class Pokemon
   attr_accessor :fm_cond_mul, :fm_debuffs   # FM battles only (FM::Battle.to_pokemon)
+  # FM::Morale in battle: disobedience chance, lazy species, bond effects,
+  # this week's mood; fm_end_used once the 1-HP survival happened.
+  attr_accessor :fm_disobey, :fm_lazy, :fm_end, :fm_shake, :fm_mood, :fm_end_used, :fm_mood_shown
 
   alias __fm_calc_stats calc_stats
   def calc_stats
@@ -151,12 +170,90 @@ class Battle
   def pbOnBattlerEnteringBattle(battler_index, skip_event_reset = false)
     Array(battler_index).flatten.each do |i|
       b = @battlers[i]
+      FM::Battle.mood_line(self, b)
       next if !b || b.fainted? || b.pokemon&.fm_debuffs.nil? || b.pokemon.fm_debuffs.empty?
       FM::Battle.apply_debuffs(b)
       pbDisplay(_INTL("{1}은(는) 컨디션이 나빠 {2} 상태로 싸운다!", b.pbThis,
                       FM::Battle.debuff_text(b.pokemon.fm_debuffs)))
     end
     __fm_pbOnBattlerEnteringBattle(battler_index, skip_event_reset)
+  end
+end
+
+# Poké Manager morale in battle (FM::Morale): bond-based survival at 1 HP
+# (once a battle) and shaking off a status at the end of a turn.
+class Battle::Move
+  alias __fm_pbReduceDamage pbReduceDamage
+  def pbReduceDamage(user, target)
+    st = target.damageState
+    pk = target.pokemon
+    if pk && pk.fm_end.to_f.positive? && !pk.fm_end_used && !st.substitute && st.calcDamage >= target.hp &&
+       target.hp > 1 && user.opposes?(target) && @battle.pbRandom(1000) < pk.fm_end * 1000
+      st.calcDamage = target.hp - 1
+      pk.fm_end_used = true
+      @battle.pbDisplay(_INTL("{1}은(는) 트레이너를 슬프게 하지 않으려고 버텼다!", target.pbThis))
+    end
+    __fm_pbReduceDamage(user, target)
+  end
+end
+
+class Battle
+  alias __fm_pbEndOfRoundPhase pbEndOfRoundPhase
+  def pbEndOfRoundPhase
+    __fm_pbEndOfRoundPhase
+    return if @decision.positive?
+    allBattlers.each do |b|
+      next if b.fainted? || b.status == :NONE
+      s = b.pokemon&.fm_shake.to_f
+      next unless s.positive? && pbRandom(1000) < s * 1000
+      pbDisplay(_INTL("{1}은(는) 트레이너의 기대에 부응하려고 상태 이상을 이겨냈다!", b.pbThis))
+      b.pbCureStatus(false)
+    end
+  end
+end
+
+class Battle::Battler
+  # Disobedience (Poké Manager morPatch runMove): not while asleep or
+  # frozen or in a move that locks it in. 30%: another damaging move;
+  # then a nap (45% for lazy species, else 20%); else it does nothing.
+  alias __fm_pbObedienceCheck? pbObedienceCheck?
+  def pbObedienceCheck?(choice)
+    d = @pokemon&.fm_disobey.to_f
+    if d.positive? && choice[0] == :UseMove && !usingMultiTurnAttack? && !%i[SLEEP FROZEN].include?(@status) &&
+       @battle.pbRandom(1000) < d * 1000
+      return fm_disobey(choice)
+    end
+    __fm_pbObedienceCheck?(choice)
+  end
+
+  def fm_disobey(choice)
+    r = @battle.pbRandom(100)
+    if r < 30
+      others = []
+      eachMoveWithIndex do |m, i|
+        others << i if i != choice[1] && m.damagingMove? && @battle.pbCanChooseMove?(@index, i, false)
+      end
+      unless others.empty?
+        i = others[@battle.pbRandom(others.length)]
+        @battle.pbDisplay(_INTL("{1}은(는) 명령을 무시하고 제멋대로 움직였다!", pbThis))
+        choice[1] = i
+        choice[2] = @moves[i]
+        choice[3] = -1
+        return true
+      end
+    end
+    if r < 30 + (@pokemon.fm_lazy ? 45 : 20) && pbCanSleep?(self, false)
+      pbSleepSelf(_INTL("{1}은(는) 낮잠을 자기 시작했다!", pbThis))
+      return false
+    end
+    q = @battle.pbRandom(100)
+    msg = if pbHasType?(:FIRE) && q < 25 then _INTL("{1}은(는) 트레이너에게 불꽃을 내뿜었다!", pbThis)
+          elsif q < 50 then _INTL("{1}은(는) 말을 듣지 않는다!", pbThis)
+          elsif q < 75 then _INTL("{1}은(는) 고개를 홱 돌려 버렸다!", pbThis)
+          else _INTL("{1}은(는) 못 들은 척하고 있다…", pbThis)
+          end
+    @battle.pbDisplay(msg)
+    false
   end
 end
 

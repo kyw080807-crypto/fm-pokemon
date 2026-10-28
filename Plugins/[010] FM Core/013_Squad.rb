@@ -46,6 +46,8 @@ module FM
     # sees the mon), the season it joined, this week's mood, recent KOs.
     attr_writer :mor, :bond, :form_ko
     attr_accessor :bond_year
+    # The Monday it last evolved (pride: newly evolved mons are proud).
+    attr_accessor :evo_week
     def mor = @mor || 60
     def bond = @bond || Morale::BOND_START
     def bond? = !@bond.nil?
@@ -230,6 +232,7 @@ module FM
         break if mon.level < lv
         mon.species = to
         mon.bst = species.fetch(to)[:bst]
+        mon.evo_week = Morale.week
       end
       mon
     end

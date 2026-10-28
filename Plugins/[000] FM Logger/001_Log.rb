@@ -11,9 +11,10 @@ module FM
 
     def write(level, msg)
       line = "#{Time.now.strftime('%Y-%m-%d %H:%M:%S')} [#{level}] #{msg}"
-      echoln(line) if respond_to?(:echoln, true)
       Dir.mkdir(DIR) unless File.directory?(DIR)
       File.open(FILE, "a:UTF-8") { |f| f.puts(line) }
+      # The engine's echo is printf: a bare % would raise and lose the line.
+      echoln(line.gsub("%", "%%")) if respond_to?(:echoln, true)
     rescue StandardError
       # Logging must never crash the game.
     end

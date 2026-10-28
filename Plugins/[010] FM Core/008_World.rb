@@ -123,7 +123,12 @@ module FM
     # The best three of the entry (topMons).
     def refresh_rating
       mons = Specialty.of(self) ? entry : @squad.reject(&:out?)
-      @rating = Rating.team(mons.map(&:to_rating))
+      @rating = Rating.team(mons.map do |m|
+        h = m.to_rating
+        d = Morale.disobey_p(m, self)
+        h[:mul] *= 1 - d * Morale::FORMULA_DISOBEY if d.positive?
+        h
+      end)
     end
 
     def mon_ratings = @squad.map(&:rating)
@@ -167,6 +172,7 @@ module FM
       @species = species if species && !species.empty?
       Scout.pool = @species
       Morale.week = @week_key
+      Morale.calendar = @calendar
       @clubs.each do |id, c|
         t = club_types[id]
         c.instance_variable_set(:@type, t) if t && c.type.nil?
@@ -413,6 +419,7 @@ module FM
         when :new_week
           @week_key = date
           Morale.week = date
+          Morale.calendar = @calendar
           weekly_economy
           @clubs.each_value { |c| events.concat(Credit.week(c, date: date, calendar: @calendar)) }
           city_economy
