@@ -70,9 +70,11 @@ module FM
     # Next public building step for a city, or nil: the lowest of INFRA
     # (transport first on a tie), under the size's public cap, a free plot
     # for a new one. Cost and weeks follow club buildings (draft).
-    def infra_step(city)
+    # only: one building's next step (a petition), else the cheapest.
+    def infra_step(city, only: nil)
       cap = public_cap(city.size)
       steps = INFRA.filter_map do |b|
+        next if only && b != only
         lv = city.level(b)
         next if lv >= cap
         next if CAPITAL_ONLY_LEVEL[b] && lv + 1 >= CAPITAL_ONLY_LEVEL[b] && city.size < 5
@@ -99,6 +101,7 @@ module FM
     attr_accessor :size, :free_plots, :project, :unrest
     attr_writer :tax_rate, :satisfaction
     attr_accessor :tax_changed   # date of the last tax change, nil if never
+    attr_accessor :petition      # { agenda:, target:, by: } for the next meeting (FM::Meeting.petition)
 
     # Defaults cover cities saved before these existed.
     def tax_rate = @tax_rate || 1.0

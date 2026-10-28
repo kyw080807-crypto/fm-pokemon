@@ -33,10 +33,18 @@ module FM
     # injProne: fixed hidden injury proneness 0.7-1.5, from a stable hash
     # (String#hash changes between runs).
     def prone
-      @prone ||= begin
-        h = "#{@species}/#{@stars}/#{@life}/#{@branch}/#{@level}".bytes.reduce(7) { |a, b| (a * 31 + b) & 0xffffffff }
-        (0.7 + ((h * 2_654_435_761) % 1000) / 1000.0 * 0.8).round(2)
-      end
+      @prone ||= (0.7 + ((seed * 2_654_435_761) % 1000) / 1000.0 * 0.8).round(2)
+    end
+
+    # natureOf: the same nature every battle (0-24, an index into the
+    # engine's nature list), fixed the first time it is asked.
+    def nature_index
+      @nature_index ||= (seed >> 3) % 25
+    end
+
+    # Stable per-mon number, fixed once taken.
+    def seed
+      @seed ||= "#{@species}/#{@stars}/#{@life}/#{@branch}/#{@level}".bytes.reduce(7) { |a, b| (a * 31 + b) & 0xffffffff }
     end
 
     # ev nil = what makeMon's pretrain gives a mon of this level.

@@ -241,7 +241,89 @@ module FM
 
     def my_city
       c = player_club or return
-      show_list(_INTL("내 도시"), city_rows(c.city, c.id))
+      loop do
+        city = world.cities[c.city]
+        pending = city.petition && _INTL("청원 중: {1}", agenda_text(city.petition[:agenda], city.petition[:target]))
+        cmds = [_INTL("도시 정보"), _INTL("다음 회의 안건 청원"), _INTL("닫기")]
+        case pbMessage(pending || _INTL("{1}", city.name), cmds, cmds.size)
+        when 0 then show_list(_INTL("내 도시"), city_rows(c.city, c.id))
+        when 1 then petition(c, city)
+        else break
+        end
+      end
+    end
+
+    # Design 02: any club may put an agenda to its city's next monthly
+    # meeting; it still needs a majority (or the player's full payment).
+    def petition(club, city)
+      if city.capital?
+        pbMessage(_INTL("수도의 안건은 리그 관리위원회 총회가 정합니다."))
+        return
+      end
+      opts = Meeting.petition_options(world, city)
+      if opts.empty?
+        pbMessage(_INTL("지금은 올릴 수 있는 안건이 없습니다 (공사 중이거나 세율 변경 뒤 반년이 안 됨)."))
+        return
+      end
+      names = opts.map do |o|
+        cost = o[:cost].positive? ? _INTL(" · 비용 {1}", money(o[:cost])) : ""
+        lv = o[:from] ? _INTL(" Lv{1}→{2}", o[:from], o[:from] + 1) : ""
+        agenda_text(o[:agenda], o[:target]) + lv + cost
+      end
+      i = pbMessage(_INTL("다음 달 1일 회의에 올릴 안건을 고르세요."), names + [_INTL("취소")], names.size + 1)
+      return if i >= opts.size
+      Meeting.petition(city, opts[i], by: club.id)
+      pbMessage(_INTL("{1} 안건을 청원했습니다.", agenda_text(opts[i][:agenda], opts[i][:target])))
+    end
+
+    REASON_LINES = {
+      no_money: "이번 시즌은 돈이 없다.", prefers_team: "그 돈이면 우리 팀에 투자하겠다.",
+      too_expensive: "분담금이 너무 크다.", no_need: "지금은 필요 없다."
+    }.freeze
+
+    def reason_line(reason) = _INTL(REASON_LINES.fetch(reason, "반대한다."))
+
+    # Meeting.player_hook: the meeting scene for the player's city. Shows
+    # the agenda, each club's share and leaning (with its reason), and lets
+    # the player take on more of the others' shares, pay it all, or vote.
+    def player_meeting(p)
+      me = p.player
+      extra = 0
+      loop do
+        shares, votes = p.evaluate.call(extra)
+        rows = [_INTL("{1} 회의: {2}", p.city.name, agenda_text(p.agenda, p.target))]
+        if p.cost.positive?
+          rows << _INTL("비용 {1} · 도시 예산 {2} · 클럽 분담 {3}", money(p.cost), money(p.city_part), money(p.full_cost))
+        end
+        p.members.each do |c|
+          next if c.equal?(me)
+          v = votes[c.id]
+          lean = v[:yes] ? _INTL("찬성 쪽") : _INTL("반대 쪽")
+          why = v[:yes] ? "" : _INTL(" — \"{1}\"", reason_line(v[:reason]))
+          rows << _INTL("{1}: 분담 {2} · {3}{4}", c.name, money(shares[c.id]), lean, why)
+        end
+        rows << _INTL("나({1}): 분담 {2}", me.name, money(shares[me.id]))
+        show_list(_INTL("도시 회의"), rows)
+        cmds = [_INTL("찬성"), _INTL("반대")]
+        others = shares.reject { |id, _| id == me.id }.values.sum
+        can_shift = p.cost.positive? && p.members.size > 1 && others.positive?
+        can_full = p.cost.positive? && p.full_cost.positive? && me.wallet.balance >= p.full_cost
+        cmds << _INTL("분담 더 맡기") if can_shift
+        cmds << _INTL("전액 부담 ({1})", money(p.full_cost)) if can_full
+        yes_now = votes.count { |id, v| id != me.id && v[:yes] }
+        i = pbMessage(_INTL("찬성 쪽 {1}/{2}곳. 어떻게 할까요?", yes_now, p.members.size - 1), cmds, 2)   # cancel = 반대
+        case cmds[i]
+        when _INTL("찬성") then return { vote: true, extra: extra }
+        when _INTL("반대"), nil then return { vote: false, extra: extra }
+        when _INTL("분담 더 맡기")
+          steps = [25, 50, 100].map { |pct| (others * pct / 100.0).round }
+          labels = [25, 50, 100].zip(steps).map { |pct, amt| _INTL("다른 클럽 몫의 {1}% ({2})", pct, money(amt)) }
+          j = pbMessage(_INTL("얼마나 더 맡을까요?"), labels + [_INTL("취소")], labels.size + 1)
+          extra += steps[j] if j < steps.size
+        else
+          return { full: true } if pbConfirmMessage(_INTL("{1}를 혼자 내고 투표 없이 통과시킬까요?", money(p.full_cost)))
+        end
+      end
     end
 
     def city_rows(city_id, viewer)
@@ -458,11 +540,15 @@ module FM
     # The player's matches this week can be fought for real (FM::Battle);
     # the hook is only on while the player advances time from this menu.
     def advance_week
-      FM::World.player_match = method(:player_match) if FM.state.player_club
+      if FM.state.player_club
+        FM::World.player_match = method(:player_match)
+        Meeting.player_hook = method(:player_meeting)
+      end
       events = begin
         FM.advance_days(7)
       ensure
         FM::World.player_match = nil
+        Meeting.player_hook = nil
       end
       id = FM.state.player_club
       lines = events.filter_map do |e|
@@ -479,6 +565,11 @@ module FM
           _INTL("{1} vs {2}: {3} ({4})", date_text(e[:date]), opp, outcome, score)
         when :built
           _INTL("{1} 완공", facility_name(e[:what])) if e[:club] == id
+        when :meeting
+          next unless id && e[:votes].key?(id)
+          result = e[:passed] ? _INTL("통과") : _INTL("부결")
+          how = e[:full] ? _INTL(" (전액 부담)") : _INTL(" ({1}/{2})", e[:votes].count { |_, v| v[:yes] }, e[:votes].size)
+          _INTL("도시 회의 {1}: {2}{3}", agenda_text(e[:agenda], e[:target]), result, how)
         when :signed
           _INTL("영입: {1} ({2})", species_name(e[:species]), money(e[:cost])) if e[:club] == id
         when :injured

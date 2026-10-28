@@ -164,6 +164,8 @@ FM::Smoke.register("fm_menu_render") do
     tired.cond = 30
     pf = FM::Battle.to_pokemon(fresh, foe)
     pt = FM::Battle.to_pokemon(tired, foe)
+    raise "nature changes between battles" unless FM::Battle.to_pokemon(fresh, foe).nature == pf.nature &&
+                                                  pt.nature == pf.nature
     raise "HP changed with condition" unless pt.totalhp == pf.totalhp
     raise "stats not scaled" unless pt.speed < pf.speed && pt.defense < pf.defense
     raise "debuffs #{pt.fm_debuffs.inspect}" unless pt.fm_debuffs.size == 2 && pt.fm_debuffs.first == :SPEED
@@ -188,6 +190,38 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: battle #{foe.name} (#{foe.trainer_type}) " +
                  foe.party.map { |p| "#{p.speciesName} #{p.totalhp}HP" }.join(", "))
   ensure
+    FM::Bridge.state = saved
+  end
+end
+
+# Design 02: the player at a shared city's meeting. The interactive scene
+# needs input, so the hook here only reads the proposal the way the scene
+# does, and the texts it would show are logged.
+FM::Smoke.register("meeting_player") do
+  saved = FM::Bridge.state
+  FM::Bridge.state = FM::State.new_game(world: FM::Bridge.build_world(seed: 7))
+  begin
+    w = FM.world
+    city = w.cities.values.find { |c| !c.capital? && c.club_ids.size >= 2 }
+    me = w.clubs[city.club_ids.first]
+    FM.state.player_club = me.id
+    opts = FM::Meeting.petition_options(w, city)
+    raise "no petition options" if opts.empty?
+    seen = []
+    FM::Meeting.player_hook = lambda do |p|
+      shares, votes = p.evaluate.call(p.full_cost / 4)
+      seen << p.members.reject { |c| c.equal?(me) }.map do |c|
+        v = votes[c.id]
+        "#{c.name} #{FM::UI.money(shares[c.id])} " + (v[:yes] ? "찬성" : FM::UI.reason_line(v[:reason]))
+      end.join(" / ")
+      { vote: true, extra: p.full_cost / 4 }
+    end
+    FM.advance_days(200)
+    raise "player never asked at #{city.name}" if seen.empty?
+    FM::Log.info("smoke: #{city.name} meetings asked #{seen.size}x; e.g. #{FM::UI.agenda_text(:infrastructure, :HOTEL)}: #{seen.first}")
+    FM::Log.info("smoke: petitions " + opts.map { |o| FM::UI.agenda_text(o[:agenda], o[:target]) }.join(", "))
+  ensure
+    FM::Meeting.player_hook = nil
     FM::Bridge.state = saved
   end
 end

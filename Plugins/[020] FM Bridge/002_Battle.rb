@@ -34,6 +34,8 @@ module FM
     # defence, special defence, defence; 252 each at most.
     def to_pokemon(mon, owner)
       pkmn = Pokemon.new(mon.species.to_sym, LEVEL, owner)
+      natures = GameData::Nature.keys
+      pkmn.nature = natures[mon.nature_index % natures.size]
       iv = Rating::IV_MID.fetch(mon.stars - 1).round
       GameData::Stat.each_main { |s| pkmn.iv[s.id] = iv }
       base = GameData::Species.get(pkmn.species).base_stats
