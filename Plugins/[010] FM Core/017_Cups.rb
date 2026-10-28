@@ -58,7 +58,7 @@ module FM
 
     def game(world, rng)
       lambda do |a, b|
-        r = MatchSim.play(world.clubs[a].rating, world.clubs[b].rating, rng: rng, neutral: true)
+        r = world.play_match(world.clubs[a], world.clubs[b], rng: rng, neutral: true)
         world.clubs[a].drain_lineup(Growth::MATCH_COND)
         world.clubs[b].drain_lineup(Growth::MATCH_COND)
         r

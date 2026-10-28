@@ -75,3 +75,30 @@ class TestPlayer < Minitest::Test
     assert_equal "A", s.world.player_club
   end
 end
+
+class TestPlayerMatchHook < Minitest::Test
+  def test_hook_decides_only_the_players_matches
+    w = TestPlayer.new("x").world
+    calls = []
+    FM::World.player_match = lambda do |home, away, _world, neutral:|
+      calls << [home.id, away.id, neutral]
+      home.id == "P" ? { res: 1, ko_a: 3, ko_b: 0 } : { res: -1, ko_a: 0, ko_b: 3 }
+    end
+    w.advance_days(364)
+    assert calls.any?
+    assert(calls.all? { |h, a, _| [h, a].include?("P") })
+    t = w.leagues["KANTO"].table["P"]
+    assert_equal t[:p], t[:w], "the hook made P win every game"
+  ensure
+    FM::World.player_match = nil
+  end
+
+  def test_nil_from_hook_falls_back_to_the_formula
+    w = TestPlayer.new("x").world
+    FM::World.player_match = ->(*_, **_) { nil }
+    w.advance_days(200)
+    assert w.leagues["KANTO"].table["P"][:p].positive?
+  ensure
+    FM::World.player_match = nil
+  end
+end

@@ -337,8 +337,15 @@ module FM
       show_list(_INTL("대회"), rows)
     end
 
+    # The player's matches this week can be fought for real (FM::Battle);
+    # the hook is only on while the player advances time from this menu.
     def advance_week
-      events = FM.advance_days(7)
+      FM::World.player_match = FM::Battle.method(:player_match) if FM.state.player_club
+      events = begin
+        FM.advance_days(7)
+      ensure
+        FM::World.player_match = nil
+      end
       id = FM.state.player_club
       lines = events.filter_map do |e|
         case e[:kind]

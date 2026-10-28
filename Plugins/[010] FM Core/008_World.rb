@@ -96,6 +96,23 @@ module FM
 
     def ai?(club) = club.id != @player_club
 
+    # Optional hook for the player's own matches: called as
+    # hook.(home_club, away_club, world, neutral:) and returns a result hash
+    # ({ res:, ko_a:, ko_b: }, home's view) or nil for the formula. Set by
+    # the engine side (a real battle); kept on the class, not in saves.
+    class << self
+      attr_accessor :player_match
+    end
+
+    def play_match(home, away, rng:, neutral: false)
+      hook = World.player_match
+      if hook && @player_club && [home.id, away.id].include?(@player_club)
+        r = hook.call(home, away, self, neutral: neutral)
+        return r if r
+      end
+      MatchSim.play(home.rating, away.rating, rng: rng, neutral: neutral)
+    end
+
     # A scout trip in `region` for the player's club (FM::Recruit.scout).
     def player_scout(region)
       c = @clubs.fetch(@player_club)
@@ -274,7 +291,7 @@ module FM
         contribute(home, gate[:revenue])
         travel = travel_fatigue(away, home)
         away.drain_lineup(travel) if travel.positive?
-        r = MatchSim.play(home.rating, away.rating, rng: @rng)
+        r = play_match(home, away, rng: @rng)
         home.drain_lineup(Growth::MATCH_COND)
         away.drain_lineup(Growth::MATCH_COND)
         settle(r, home, away, ranking)

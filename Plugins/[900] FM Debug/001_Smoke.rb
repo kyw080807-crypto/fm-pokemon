@@ -148,6 +148,13 @@ FM::Smoke.register("fm_menu_render") do
     raise "scout returned nothing" if cands.nil? || cands.empty?
     names = cands.map { |cd| FM::UI.species_name(cd[:mon].species) }
     FM::Log.info("smoke: #{opts.size} build options; scouted #{names.join(', ')}")
+    # Battle parties can be built for real species (no battle is started:
+    # that needs the map scene).
+    foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })
+    mine = club.lineup.map { |m| FM::Battle.to_pokemon(m, foe) }
+    raise "battle party not built" unless foe.party.size == 3 && mine.all? { |p| p.level == FM::Battle::LEVEL }
+    FM::Log.info("smoke: battle #{foe.name} (#{foe.trainer_type}) " +
+                 foe.party.map { |p| "#{p.speciesName} #{p.totalhp}HP" }.join(", "))
   ensure
     FM::Bridge.state = saved
   end
