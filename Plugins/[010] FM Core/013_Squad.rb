@@ -46,8 +46,18 @@ module FM
       @prog, @ev, @age, @life, @canon, @branch = 0.0, ev.to_f, age, life, canon, branch
     end
 
+    # Stat stages down for the whole battle: low condition (Rating.debuff)
+    # plus a light injury's stat (FM::Injury::TYPES).
+    def debuffs
+      list = Rating.debuff(cond)
+      yellow? ? list + [Injury.stat(@injd[:k])] : list
+    end
+
+    # monStr's condition part: condMul x condDebuffMul.
+    def strength_mul = Rating.cond_mul(cond) * Rating.debuff_mul(debuffs)
+
     def to_rating
-      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond, mul: yellow? ? Injury::YELLOW_MUL : 1 }
+      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond, mul: Rating.debuff_mul(debuffs) }
     end
 
     def rating = Rating.mon(to_rating)

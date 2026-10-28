@@ -28,7 +28,7 @@ module FM
           { species: m.species, level: m.level, stars: m.stars, age: m.age, rating: m.rating.round,
             cond: m.cond, resting: m.resting ? true : false,
             injury: m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj } : nil,
-            rehab: m.rehab }
+            rehab: m.rehab, debuffs: m.debuffs }
         end,
         last_year: c.history[world.calendar.year - 1] }
     end

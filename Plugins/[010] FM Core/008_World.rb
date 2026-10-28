@@ -65,7 +65,7 @@ module FM
     ENTRY_SIZE = 6
     # Mons out injured (FM::Injury, severity 2-3) are not in it.
     def entry(n = ENTRY_SIZE)
-      @squad.reject(&:out?).max_by(n) { |m| m.rating * Rating.cond_mul(m.cond) * (m.yellow? ? Injury::YELLOW_MUL : 1) }
+      @squad.reject(&:out?).max_by(n) { |m| m.rating * m.strength_mul }
     end
 
     # Travel (match: false) or a match played (Growth.match_drain: fatigue).

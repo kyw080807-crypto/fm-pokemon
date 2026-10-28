@@ -139,6 +139,7 @@ module FM
       rows << _INTL("— 스쿼드 {1}마리 —", c[:squad].size)
       c[:squad].each do |m|
         rest = injury_tag(m[:injury], m[:rehab]) || (m[:resting] ? _INTL(" · 휴식") : "")
+        rest += debuff_tag(m[:species], m[:debuffs])
         rows << _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · 컨디션 {6}{7}", species_name(m[:species]), m[:level], m[:stars],
                       m[:age] + 1, m[:rating], m[:cond], rest)
       end
@@ -357,9 +358,18 @@ module FM
       end
     end
 
+    # " · ⬇스피드 -1 · 공격 -1" (condDebuffTxt): the stages it will fight at.
+    def debuff_tag(species, list)
+      return "" if list.nil? || list.empty?
+      base = GameData::Species.try_get(species)&.base_stats
+      main = base && base[:SPECIAL_ATTACK] > base[:ATTACK] ? _INTL("특공") : _INTL("공격")
+      names = { spe: _INTL("스피드"), main: main, def: _INTL("방어"), spd: _INTL("특방") }
+      _INTL(" · ⬇{1}", list.tally.map { |s, n| "#{names.fetch(s, s.to_s)} -#{n}" }.join(" "))
+    end
+
     def mon_line(m)
       inj = m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj } : nil
-      rest = injury_tag(inj, m.rehab) || (m.resting ? _INTL(" · 휴식") : "")
+      rest = (injury_tag(inj, m.rehab) || (m.resting ? _INTL(" · 휴식") : "")) + debuff_tag(m.species, m.debuffs)
       _INTL("{1} Lv{2} ★{3} · 전력 {4} · 컨디션 {5}{6}", species_name(m.species), m.level, m.stars, m.rating.round,
             m.cond, rest)
     end

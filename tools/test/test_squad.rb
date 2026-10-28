@@ -124,7 +124,24 @@ class TestCondition < Minitest::Test
     fresh = [{ bst: 500, level: 50, stars: 3, cond: 100 }] * 3
     tired = [{ bst: 500, level: 50, stars: 3, cond: 20 }] * 3
     assert FM::Rating.team(fresh) > FM::Rating.team(tired)
-    assert_in_delta FM::Rating.team(fresh) * FM::Rating.cond_mul(20), FM::Rating.team(tired), 0.01
+    assert_in_delta FM::Rating.team(fresh) * FM::Rating.cond_eff(20), FM::Rating.team(tired), 0.01
+  end
+
+  # condDebuff tiers: under 50 speed -1, under 35 + main attack, under 25 + both defences.
+  def test_condition_stat_drops_follow_the_original_tiers
+    assert_equal [], FM::Rating.debuff(50)
+    assert_equal %i[spe], FM::Rating.debuff(49)
+    assert_equal %i[spe main], FM::Rating.debuff(34)
+    assert_equal %i[spe main def spd], FM::Rating.debuff(24)
+    assert_in_delta 0.95 * 0.9 * 0.96 * 0.96, FM::Rating.debuff_mul(FM::Rating.debuff(20)), 1e-9
+  end
+
+  def test_light_injury_adds_its_stat
+    m = mon(80)
+    FM::Injury.injure(m, :battle, Random.new(1), :bruise)
+    assert_equal %i[def], m.debuffs
+    m.cond = 40
+    assert_equal %i[spe def], m.debuffs
   end
 end
 

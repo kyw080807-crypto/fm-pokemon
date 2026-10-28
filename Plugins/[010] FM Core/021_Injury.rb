@@ -8,7 +8,7 @@
 #   condition 50, more with hidden fatigue, x1.6 in rehab, x its hidden
 #   proneness 0.7-1.5), less with a better medical center.
 # - Training weeks carry a small risk too (TRAIN_RATE).
-# - Severity 1 (가벼운 부상): can still play, at YELLOW_MUL strength.
+# - Severity 1 (가벼운 부상): can still play, one stat stage down (injDbStat).
 #   Severity 2-3: out of the entry and resting until healed.
 # - Healing is a week per week; the medical center gives an extra week
 #   with chance 3% per original level. After a 2-3 injury: 2 weeks of
@@ -23,21 +23,22 @@ module FM
     TRAIN_RATE = 0.004
     REHAB_WEEKS = 2
     REHAB_COND = 70
-    YELLOW_MUL = 0.95   # rank -1 on one stat, for the formula's rating
 
-    # k => [severity, weeks range, caused by fatigue]
+    # k => [severity, weeks range, caused by fatigue, stat a light one drops]
     TYPES = {
-      bruise:     [1, 1..2, false],
-      cramp:      [1, 1..1, true],
-      sprain:     [2, 2..3, false],
-      muscle:     [2, 3..4, true],
-      concussion: [2, 2..3, false],
-      burnout:    [2, 2..4, true],
-      ligament:   [3, 5..7, false],
-      fracture:   [3, 6..8, false]
+      bruise:     [1, 1..2, false, :def],
+      cramp:      [1, 1..1, true, :main],
+      sprain:     [2, 2..3, false, :spe],
+      muscle:     [2, 3..4, true, :main],
+      concussion: [2, 2..3, false, :spe],
+      burnout:    [2, 2..4, true, :main],
+      ligament:   [3, 5..7, false, :spe],
+      fracture:   [3, 6..8, false, :def]
     }.freeze
 
     module_function
+
+    def stat(kind) = TYPES.fetch(kind)[3]
 
     def med_original(med_level) = Growth.original_level(med_level.to_i)   # none = original level 1
 
@@ -57,7 +58,7 @@ module FM
 
     # pickInjury weights, without the type-specific ones.
     def pick(mon, cause, rng)
-      weights = TYPES.map do |k, (sev, _, fat)|
+      weights = TYPES.map do |k, (sev, _, fat, _)|
         v = 1.0
         v *= mon.fat >= 40 ? 2.5 : 0.5 if fat
         v *= 0.3 if cause == :train && sev == 3

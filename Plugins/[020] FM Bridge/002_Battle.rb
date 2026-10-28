@@ -12,6 +12,10 @@
 # its skill is the opponent's (Player#skill_level below), so auto is no
 # weaker or stronger than the other side. Battle style is Set, so the
 # "switch your Pokémon?" prompt never comes up. 빠른 진행: animations off.
+# Condition, as in Poké Manager (pmApplyCm, condDebuff): every stat but
+# HP is multiplied by Rating.cond_mul, and low condition (or a light
+# injury) means stat stages down for the whole battle: put back on at
+# every switch-in and after Haze-style resets (Battler patches below).
 #===============================================================================
 module FM
   module Battle
@@ -41,9 +45,27 @@ module FM
         pkmn.ev[s] = give
         left -= give
       end
+      pkmn.fm_cond_mul = Rating.cond_mul(mon.cond)
+      pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
       pkmn.calc_stats
       pkmn.heal
       pkmn
+    end
+
+    STAGE_STAT = { spe: :SPEED, def: :DEFENSE, spd: :SPECIAL_DEFENSE }.freeze   # :main = the better attack
+
+    # Lowers the battler's stages by its Pokémon's FM debuffs (no ability
+    # or Mist interaction: it is the mon's state, not a move).
+    def apply_debuffs(battler)
+      list = battler.pokemon&.fm_debuffs
+      return if list.nil? || list.empty?
+      list.each { |s| battler.stages[s] = [battler.stages[s] - 1, -6].max }
+    end
+
+    def debuff_text(list)
+      names = { SPEED: _INTL("스피드"), ATTACK: _INTL("공격"), SPECIAL_ATTACK: _INTL("특수공격"), DEFENSE: _INTL("방어"),
+                SPECIAL_DEFENSE: _INTL("특수방어") }
+      list.tally.map { |s, n| _INTL("{1} -{2}", names.fetch(s, s.to_s), n) }.join(" · ")
     end
 
     def trainer_for(club)
@@ -101,6 +123,44 @@ module FM
       ko_b = ta.party.count(&:fainted?)
       { res: { 1 => 1, 2 => -1 }.fetch(decision, 0), ko_a: ko_a, ko_b: ko_b, turns: battle.turnCount }
     end
+  end
+end
+
+class Pokemon
+  attr_accessor :fm_cond_mul, :fm_debuffs   # FM battles only (FM::Battle.to_pokemon)
+
+  alias __fm_calc_stats calc_stats
+  def calc_stats
+    __fm_calc_stats
+    mul = @fm_cond_mul
+    return if mul.nil? || mul == 1
+    @attack  = [(@attack * mul).floor, 1].max
+    @defense = [(@defense * mul).floor, 1].max
+    @spatk   = [(@spatk * mul).floor, 1].max
+    @spdef   = [(@spdef * mul).floor, 1].max
+    @speed   = [(@speed * mul).floor, 1].max
+  end
+end
+
+class Battle
+  alias __fm_pbOnBattlerEnteringBattle pbOnBattlerEnteringBattle
+  def pbOnBattlerEnteringBattle(battler_index, skip_event_reset = false)
+    Array(battler_index).flatten.each do |i|
+      b = @battlers[i]
+      next if !b || b.fainted? || b.pokemon&.fm_debuffs.nil? || b.pokemon.fm_debuffs.empty?
+      FM::Battle.apply_debuffs(b)
+      pbDisplay(_INTL("{1}은(는) 컨디션이 나빠 {2} 상태로 싸운다!", b.pbThis,
+                      FM::Battle.debuff_text(b.pokemon.fm_debuffs)))
+    end
+    __fm_pbOnBattlerEnteringBattle(battler_index, skip_event_reset)
+  end
+end
+
+class Battle::Battler
+  alias __fm_pbResetStatStages pbResetStatStages
+  def pbResetStatStages
+    __fm_pbResetStatStages
+    FM::Battle.apply_debuffs(self)
   end
 end
 

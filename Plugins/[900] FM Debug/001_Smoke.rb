@@ -156,6 +156,22 @@ FM::Smoke.register("fm_menu_render") do
     entry_rows = club.entry.map { |m| FM::UI.mon_line(m) }
     raise "entry rows" if entry_rows.empty?
     FM::Log.info("smoke: pick screen row: #{entry_rows.first}")
+    # Condition in battle (Poké Manager): stats x condMul but not HP, and
+    # stage drops that a switch-in or Haze puts back.
+    fresh = Marshal.load(Marshal.dump(club.entry.first))
+    fresh.cond = 100
+    tired = Marshal.load(Marshal.dump(fresh))
+    tired.cond = 30
+    pf = FM::Battle.to_pokemon(fresh, foe)
+    pt = FM::Battle.to_pokemon(tired, foe)
+    raise "HP changed with condition" unless pt.totalhp == pf.totalhp
+    raise "stats not scaled" unless pt.speed < pf.speed && pt.defense < pf.defense
+    raise "debuffs #{pt.fm_debuffs.inspect}" unless pt.fm_debuffs.size == 2 && pt.fm_debuffs.first == :SPEED
+    stages = Hash.new(0)
+    FM::Battle.apply_debuffs(Struct.new(:pokemon, :stages).new(pt, stages))
+    raise "stages #{stages.inspect}" unless stages[:SPEED] == -1 && stages[pt.fm_debuffs.last] == -1
+    FM::Log.info("smoke: cond 30 #{FM::UI.mon_line(tired)}; speed #{pf.speed} -> #{pt.speed}, " +
+                 FM::Battle.debuff_text(pt.fm_debuffs))
     hurt = Marshal.load(Marshal.dump(club.entry.first))
     FM::Injury.injure(hurt, :battle, Random.new(1), :fracture)
     FM::Log.info("smoke: injured row: #{FM::UI.mon_line(hurt)}")

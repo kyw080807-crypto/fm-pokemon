@@ -22,13 +22,31 @@ module FM
       m[:bst] + IV_MID.fetch(m[:stars] - 1) * 6 / 2.0 + ev / 8.0
     end
 
-    # condMul: condition 100 plays at full strength, 0 at 88%.
+    # condMul: condition 100 plays at full strength, 0 at 88% (in battle:
+    # every stat but HP).
     def cond_mul(cond) = 0.88 + 0.12 * (cond || 100) / 100.0
 
+    # Condition 저하 (condDebuff, COND_TIERS): stat stages a tired mon
+    # fights at for the whole battle. :main = its better attacking stat.
+    COND_TIERS = [[50, %i[spe]], [35, %i[spe main]], [25, %i[spe main def spd]]].freeze
+    # DEBUFF_W: what one stage down is worth in the formula's rating.
+    DEBUFF_W = { spe: 0.95, main: 0.9, def: 0.96, spd: 0.96 }.freeze
+
+    def debuff(cond)
+      c = cond || 100
+      COND_TIERS.reverse.find { |th, _| c < th }&.last || []
+    end
+
+    def debuff_mul(stats) = stats.reduce(1.0) { |a, s| a * DEBUFF_W.fetch(s, 1) }
+
+    # condEff: condMul x condDebuffMul.
+    def cond_eff(cond) = cond_mul(cond) * debuff_mul(debuff(cond))
+
     # Mean of the best three after condition (each side picks 3 of its 6;
-    # topMons ranks by OVR x condition); missing slots are 0.
+    # topMons ranks by monStr = OVR x condMul x condDebuffMul); missing
+    # slots are 0. m[:mul]: the stat-stage part (debuff_mul), else from cond.
     def team(mons)
-      best = mons.map { |m| mon(m) * cond_mul(m[:cond]) * (m[:mul] || 1) }.max(3)
+      best = mons.map { |m| mon(m) * cond_mul(m[:cond]) * (m[:mul] || debuff_mul(debuff(m[:cond]))) }.max(3)
       best.sum / 3.0
     end
   end
