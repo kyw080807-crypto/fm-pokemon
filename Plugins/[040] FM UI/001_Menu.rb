@@ -121,7 +121,35 @@ module FM
         pbMessage(_INTL("아직 맡은 클럽이 없습니다. 먼저 클럽을 고르세요."))
         return choose_club
       end
-      show_list(_INTL("내 클럽"), my_club_rows(id))
+      loop do
+        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("닫기")]
+        case pbMessage(_INTL("내 클럽"), cmds, cmds.size)
+        when 0 then show_list(_INTL("내 클럽"), my_club_rows(id))
+        when 1 then injury_room(world.clubs[id])
+        else break
+        end
+      end
+    end
+
+    # Poké Manager 무리 출전: a red-injured mon kept in the entry, at speed
+    # and main attack -1 more, and it may get worse if it plays.
+    def injury_room(c)
+      loop do
+        reds = c.squad.select(&:red?)
+        if reds.empty?
+          pbMessage(_INTL("출전할 수 없는 부상 포켓몬이 없습니다."))
+          return
+        end
+        rows = reds.map do |m|
+          _INTL("{1}{2} · {3} {4}주", m.ptp ? _INTL("[무리 출전] ") : "", species_name(m.species), injury_name(m.injd[:k]), m.inj)
+        end
+        i = pbMessage(_INTL("무리 출전시키면 엔트리에 남지만 스피드·주 공격이 한 단계씩 더 떨어지고, 뛰면 부상이 악화될 수 있습니다 " \
+                            "(쓰러지면 45%, 아니면 25%)."), rows + [_INTL("닫기")], rows.size + 1)
+        return if i >= reds.size
+        m = reds[i]
+        m.ptp = !m.ptp
+        c.refresh_rating
+      end
     end
 
     def my_club_rows(id)
@@ -725,7 +753,8 @@ module FM
         if injury[:sev] == 1
           _INTL(" · 가벼운 부상({1}) {2}주", injury_name(injury[:kind]), injury[:weeks])
         else
-          _INTL(" · 부상({1}) {2}주 결장", injury_name(injury[:kind]), injury[:weeks])
+          injury[:ptp] ? _INTL(" · 부상({1}) {2}주 · 무리 출전", injury_name(injury[:kind]), injury[:weeks]) :
+            _INTL(" · 부상({1}) {2}주 결장", injury_name(injury[:kind]), injury[:weeks])
         end
       elsif rehab
         _INTL(" · 재활 {1}주", rehab)
@@ -742,7 +771,7 @@ module FM
     end
 
     def mon_line(m)
-      inj = m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj } : nil
+      inj = m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj, ptp: m.ptp } : nil
       rest = (injury_tag(inj, m.rehab) || (m.resting ? _INTL(" · 휴식") : "")) + debuff_tag(m.species, m.debuffs)
       _INTL("{1} Lv{2} ★{3} · 전력 {4} · 컨디션 {5}{6}", species_name(m.species), m.level, m.stars, m.rating.round,
             m.cond, rest)
@@ -894,7 +923,10 @@ module FM
         when :injured
           next unless e[:club] == id
           cause = e[:cause] == :train ? _INTL("훈련 중") : _INTL("경기 중")
-          if e[:sev] == 1
+          if e[:worse]
+            _INTL("부상 악화: {1} {2}, +{3}주{4}", species_name(e[:species]), injury_name(e[:injury]), e[:weeks],
+                  e[:sev] >= 2 ? _INTL(" · 출전 불가") : "")
+          elsif e[:sev] == 1
             _INTL("가벼운 부상: {1} {2}({3}), {4}주 · 출전은 가능", species_name(e[:species]), injury_name(e[:injury]), cause,
                   e[:weeks])
           else

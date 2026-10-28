@@ -14,8 +14,11 @@
 #   with chance 3% per original level. After a 2-3 injury: 2 weeks of
 #   rehab (condition at most 70), 1 week with a Lv5 center (design 01:
 #   "Lv5 장기 결장 위험 감소"; original Lv10 perk).
-# Not carried over: type-specific injuries (Core species data has no
-# types), playing through an injury (무리 출전), news.
+# - 무리 출전 (the player's choice): a red-injured mon stays in the entry
+#   at speed and main attack -1 more; playing it may make it worse
+#   (PTP_WORSE, +1-3 weeks, maybe a grade up). A light injury that plays
+#   may also turn red (YELLOW_WORSE, +1-2 weeks).
+# Not carried over: type-specific injuries, news.
 #===============================================================================
 module FM
   module Injury
@@ -82,12 +85,33 @@ module FM
       { injury: kind, sev: sev, weeks: w, cause: cause }
     end
 
-    # After a match: `fainted` of the mons that played are hurt with
-    # match_risk. Returns the injuries as [mon, info].
-    def after_match(fainted, med_level, rng)
-      fainted.filter_map do |m|
-        next if m.hurt?
-        [m, injure(m, :battle, rng)] if rng.rand < match_risk(m, med_level)
+    PTP_WORSE = { fainted: 0.45, played: 0.25 }.freeze
+    YELLOW_WORSE = { fainted: 0.3, played: 0.1 }.freeze
+
+    # After a match (injureFrom): of the mons that `played`, the injured
+    # may get worse; the `fainted` healthy ones are hurt with match_risk.
+    # Returns [mon, info] for each new or worse injury.
+    def after_match(played, fainted, med_level, rng)
+      played.filter_map do |m|
+        down = fainted.any? { |f| f.equal?(m) }
+        if m.red? && m.ptp
+          next unless rng.rand < PTP_WORSE[down ? :fainted : :played]
+          add = rng.rand(1..3)
+          m.inj += add
+          m.injd[:w0] += add
+          m.injd[:sev] += 1 if m.injd[:sev] < 3 && rng.rand < 0.4
+          [m, { injury: m.injd[:k], sev: m.injd[:sev], weeks: add, cause: :ptp, worse: true }]
+        elsif m.yellow?
+          next unless rng.rand < YELLOW_WORSE[down ? :fainted : :played]
+          add = rng.rand(1..2)
+          m.inj += add
+          m.injd[:sev] = 2
+          m.injd[:w0] += add
+          m.resting = true
+          [m, { injury: m.injd[:k], sev: 2, weeks: add, cause: :ptp, worse: true }]
+        elsif down && rng.rand < match_risk(m, med_level)
+          [m, injure(m, :battle, rng)]
+        end
       end
     end
 
@@ -101,6 +125,7 @@ module FM
       return if mon.inj.positive?
       sev = mon.injd && mon.injd[:sev]
       mon.inj = nil
+      mon.ptp = nil
       mon.injd = nil
       if sev && sev >= 2
         mon.rehab = orig >= 10 ? 1 : REHAB_WEEKS

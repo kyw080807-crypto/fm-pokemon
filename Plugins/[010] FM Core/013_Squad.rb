@@ -48,8 +48,12 @@ module FM
     # Days spent travelling this week (Club#travel): no training on them.
     attr_accessor :away_days
     def hurt? = @inj.to_i.positive?
-    def out? = hurt? && @injd && @injd[:sev] >= 2   # 빨간 부상: not in the entry
-    def yellow? = hurt? && !out?
+    # 빨간 부상 (severity 2-3): heals resting; out of the entry unless the
+    # player plays it through (ptp, 무리 출전).
+    def red? = hurt? && @injd && @injd[:sev] >= 2
+    attr_accessor :ptp
+    def out? = red? && !@ptp
+    def yellow? = hurt? && !red?
 
     # injProne: fixed hidden injury proneness 0.7-1.5, from a stable hash
     # (String#hash changes between runs).
@@ -79,6 +83,7 @@ module FM
     # plus a light injury's stat (FM::Injury::TYPES).
     def debuffs
       list = Rating.debuff(cond)
+      return list + %i[spe main] if red? && @ptp   # 무리 출전: speed and main attack -1 more
       yellow? ? list + [Injury.stat(@injd[:k])] : list
     end
 
@@ -137,9 +142,9 @@ module FM
         mon.fat = [mon.fat - (played ? 2 : 9), 0].max
         return
       end
-      mon.resting = mon.out? || mon.cond < 60 || (mon.resting && mon.cond < 85)
+      mon.resting = mon.red? || mon.cond < 60 || (mon.resting && mon.cond < 85)
       if mon.resting
-        g = rest_gain(mon, played: played) * (mon.out? ? 0.8 : 1) * rest_mul
+        g = rest_gain(mon, played: played) * (mon.red? ? 0.8 : 1) * rest_mul
         mon.cond = [mon.cond + [g.round, 1].max, 100].min
       else
         mon.cond = [mon.cond - TRAIN_COND, COND_MIN].max

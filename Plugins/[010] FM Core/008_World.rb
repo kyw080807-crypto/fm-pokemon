@@ -423,7 +423,7 @@ module FM
           m.sko += 1 if league
         end
         club.drain_lineup(Growth::MATCH_COND, mons: mons, match: true)
-        Injury.after_match(fainted, club.facilities[:MEDICAL], @rng).each do |m, info|
+        Injury.after_match(mons, fainted, club.facilities[:MEDICAL], @rng).each do |m, info|
           (@match_events ||= []) << injury_event(club, m, info)
         end
         club.refresh_rating

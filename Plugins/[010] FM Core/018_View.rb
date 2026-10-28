@@ -27,7 +27,7 @@ module FM
         squad: c.squad.sort_by { |m| -m.rating }.map do |m|
           { species: m.species, level: m.level, stars: m.stars, age: m.age, rating: m.rating.round,
             cond: m.cond, resting: m.resting ? true : false,
-            injury: m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj } : nil,
+            injury: m.hurt? ? { kind: m.injd && m.injd[:k], sev: m.injd && m.injd[:sev], weeks: m.inj, ptp: m.ptp } : nil,
             rehab: m.rehab, debuffs: m.debuffs }
         end,
         last_year: c.history[world.calendar.year - 1],
