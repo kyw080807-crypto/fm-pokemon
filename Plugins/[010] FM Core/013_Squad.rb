@@ -26,6 +26,9 @@ module FM
 
     # FM::Injury: weeks left, { k:, sev:, w0:, cause: }, rehab weeks left.
     attr_accessor :inj, :injd, :rehab
+
+    # Days spent travelling this week (Club#travel): no training on them.
+    attr_accessor :away_days
     def hurt? = @inj.to_i.positive?
     def out? = hurt? && @injd && @injd[:sev] >= 2   # 빨간 부상: not in the entry
     def yellow? = hurt? && !out?
@@ -123,9 +126,11 @@ module FM
     # progress and no EVs; tired mons (under 40) train at half effect.
     # train_level is the club's TRAINING design level.
     def week(mon, train_level:, species:)
+      home = (7 - mon.away_days.to_i).clamp(0, 7) / 7.0   # design 05: travel days stop training
+      mon.away_days = nil
       return mon if mon.hurt?   # injured: recovery only, no training
       t = original_level(train_level)
-      g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t)
+      g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t) * home
       tired = mon.cond < 40
       mon.prog += mon.resting ? g * 0.5 : g * (tired ? 0.6 : 1)
       while mon.prog >= 1 && mon.level < 100
@@ -135,7 +140,7 @@ module FM
       mon.prog = 0.0 if mon.level >= 100
       # EV_RATE: a full 510 over growSeasons, counting ~75% training weeks.
       unless mon.resting
-        mon.ev = [mon.ev + EV_MAX / (52.0 * TRAIN_SHARE * grow_seasons(t)) * (tired ? 0.5 : 1), EV_MAX].min
+        mon.ev = [mon.ev + EV_MAX / (52.0 * TRAIN_SHARE * grow_seasons(t)) * (tired ? 0.5 : 1) * home, EV_MAX].min
       end
       evolve(mon, species)
     end

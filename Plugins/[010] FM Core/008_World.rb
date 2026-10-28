@@ -69,6 +69,20 @@ module FM
     end
 
     # Travel (match: false) or a match played (Growth.match_drain: fatigue).
+    # A trip (FM::Travel) for the travelling party, the entry of six:
+    # condition and hidden fatigue, days without training this week, and
+    # the fare.
+    def travel(trip, date:)
+      return if trip[:days].zero? && trip[:cond].zero?
+      entry.each do |m|
+        Growth.drain(m, trip[:cond])
+        m.fat = [m.fat + trip[:fat], 100].min
+        m.away_days = m.away_days.to_i + trip[:days]
+      end
+      @wallet.record(-trip[:cost], category: :travel, date: date) if trip[:cost].positive?
+      refresh_rating
+    end
+
     def drain_lineup(amount, mons: lineup, match: false)
       mons.each do |m|
         match ? Growth.match_drain(m, amount) : Growth.drain(m, amount)
@@ -104,6 +118,11 @@ module FM
     attr_accessor :player_club
 
     def ai?(club) = club.id != @player_club
+
+    # { region => its capital City }, for tournament trips.
+    def capitals
+      @cities.values.select(&:capital?).to_h { |c| [c.region, c] }
+    end
 
     # Optional hook for the player's own matches: called as
     # hook.(home_club, away_club, world, neutral:) and returns a result hash
@@ -342,11 +361,11 @@ module FM
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
         home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
         contribute(home, gate[:revenue])
-        travel = travel_fatigue(away, home)
-        away.drain_lineup(travel) if travel.positive?
+        away.travel(Travel.land(ac, hc), date: date)
         lineups = [home.lineup, away.lineup]
         r = play_match(home, away, rng: @rng)
         after_match(home, away, r, lineups)
+        away.travel(Travel.land(hc, ac, arrive_before: false), date: date)   # home again (귀환)
         settle(r, home, away, ranking)
         r.slice(:res, :ko_a, :ko_b).merge(attendance: gate[:attendance])
       end
@@ -425,17 +444,12 @@ module FM
       events
     end
 
-    # Design 05: an away side travels days from its city's transport level
-    # (same city: none): condition -2 a day, and arriving the day before
-    # (the AI's safety margin) costs another 3.
-    TRAVEL_COND_PER_DAY = 2
-    ARRIVE_DAY_BEFORE_COND = 3
+    # Design 05: the condition an away side loses getting to `home`
+    # (FM::Travel.land; same city: none).
     def travel_fatigue(away, home)
-      from, to = @cities[away.city], @cities[home.city]
-      return 0 unless from && to && from.id != to.id
-      days = Civic::TRANSPORT_DAYS[from.transport]
-      days.zero? ? 0 : days * TRAVEL_COND_PER_DAY + ARRIVE_DAY_BEFORE_COND
+      Travel.land(@cities[away.city], @cities[home.city])[:cond]
     end
+
 
     # Monday: injuries heal (medical center), condition and fatigue move,
     # then a training week may hurt. -> :injured / :recovered events.

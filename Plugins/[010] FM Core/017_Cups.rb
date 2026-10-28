@@ -45,15 +45,36 @@ module FM
       dates = cups[:dates]
       events = []
       if (i = dates[:pet].index(d))
+        %i[pet pent].each { |cup| fly_in(world, cup, cups[cup][:players]) if i.zero? }
         %i[pet pent].each { |cup| events.concat(sub_round(world, cup, i, rng)) }
       end
       if (i = dates[:pwt_swiss].index(d))
+        fly_in(world, :pwt, cups[:pwt][:players]) if i.zero?
         events.concat(swiss_round(world, i, rng))
       end
       if (i = dates[:pwt_knockout].index(d))
         events.concat(pwt_ko_round(world, i, rng))
       end
       events
+    end
+
+    # Design 05 대회 개최: before the first round every player travels to
+    # the host region (over land to its capital, then by air if abroad).
+    # PET/PENT champions come on from that cup's host capital. Rounds are
+    # at the host capital (same-day moves); trips home are not counted.
+    def fly_in(world, cup, players)
+      host = world.cups[cup][:host]
+      caps = world.capitals
+      return if caps.empty?
+      date = world.calendar.date
+      players.each do |id|
+        club = world.clubs[id]
+        from = %i[pet pent].find { |s| world.cups[s][:ko]&.champion == id } if cup == :pwt
+        trip = if from then Travel.to_cup(caps[world.cups[from][:host]], world.cups[from][:host], host, caps)
+               else Travel.to_cup(world.cities[club.city], club.region, host, caps)
+               end
+        club.travel(trip, date: date)
+      end
     end
 
     def game(world, rng, important: false)
