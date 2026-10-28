@@ -15,6 +15,13 @@ module FM
 
     attr_reader :calendar, :finance, :world
     attr_reader :player_club   # club id the player manages; nil until chosen
+    # Design 06 기본값 설정: how the player's matches are played unless the
+    # match is important (then always asked). :ask, :direct, :auto, :skip.
+    MATCH_MODES = %i[ask direct auto skip].freeze
+    attr_writer :match_mode, :match_fast
+    def match_mode = @match_mode || :ask
+    # 속도 옵션: battle animations off in FM battles.
+    def match_fast = @match_fast || false
 
     def player_club=(id)
       @player_club = id
@@ -51,6 +58,8 @@ module FM
       h = { schema_version: SCHEMA_VERSION, calendar: @calendar.to_h, finance: @finance.to_h }
       h[:world] = @world if @world
       h[:player_club] = @player_club if @player_club
+      h[:match_mode] = @match_mode if @match_mode
+      h[:match_fast] = @match_fast if @match_fast
       h
     end
 
@@ -59,6 +68,8 @@ module FM
       raise ArgumentError, "unknown FM state schema #{version}" if version > SCHEMA_VERSION
       s = new(calendar: Calendar.from_h(h[:calendar]), finance: Finance.from_h(h[:finance]), world: h[:world])
       s.player_club = h[:player_club]
+      s.match_mode = h[:match_mode]   # absent in older saves: default :ask
+      s.match_fast = h[:match_fast]
       s
     end
   end

@@ -65,6 +65,17 @@ class TestState < Minitest::Test
     assert_equal :CLUB_KANTO_03, FM::State.from_h(Marshal.load(Marshal.dump(s.to_h))).player_club
   end
 
+  def test_match_settings_are_saved_and_default_for_old_saves
+    s = FM::State.new_game
+    assert_equal [:ask, false], [s.match_mode, s.match_fast]
+    s.match_mode = :auto
+    s.match_fast = true
+    back = FM::State.from_h(Marshal.load(Marshal.dump(s.to_h)))
+    assert_equal [:auto, true], [back.match_mode, back.match_fast]
+    old = s.to_h.reject { |k, _| %i[match_mode match_fast].include?(k) }
+    assert_equal [:ask, false], [FM::State.from_h(old).match_mode, FM::State.from_h(old).match_fast]
+  end
+
   def test_state_v1_saves_still_load
     v1 = { schema_version: 1, calendar: FM::Calendar.new.to_h, finance: FM::Finance.new(balance: 5).to_h }
     s = FM::State.from_h(v1)

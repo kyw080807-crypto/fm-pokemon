@@ -156,6 +156,9 @@ FM::Smoke.register("fm_menu_render") do
     entry_rows = club.entry.map { |m| FM::UI.mon_line(m) }
     raise "entry rows" if entry_rows.empty?
     FM::Log.info("smoke: pick screen row: #{entry_rows.first}")
+    # 자동 진행 hooks battle setup; every saved match mode has a label.
+    raise "prepare_battle not wrapped" unless BattleCreationHelperMethods.respond_to?(:__fm_prepare_battle)
+    raise "match mode labels" unless FM::State::MATCH_MODES.all? { |m| FM::UI.mode_names[m] }
     FM::Log.info("smoke: battle #{foe.name} (#{foe.trainer_type}) " +
                  foe.party.map { |p| "#{p.speciesName} #{p.totalhp}HP" }.join(", "))
   ensure

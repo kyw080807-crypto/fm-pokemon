@@ -78,7 +78,8 @@ module FM
         header = _INTL("{1} ({2}) · {3}\n{4}", date_text(s[:date]), _INTL(WEEKDAYS[s[:weekday]]),
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
-                    _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("닫기")]
+                    _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
+                    _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -89,6 +90,7 @@ module FM
         when 6 then cups
         when 7 then advance_week
         when 8 then choose_club
+        when 9 then match_settings
         else break
         end
       end
@@ -343,17 +345,50 @@ module FM
             m.cond, rest)
     end
 
-    # World.player_match hook: ask how to play, show the opponent's entry of
-    # six, let the player pick three, fight. nil = use the formula.
-    def player_match(home, away, world, neutral: false)
+    def mode_names
+      { ask: _INTL("매번 묻기"), direct: _INTL("직접 전투"), auto: _INTL("자동 진행"), skip: _INTL("결과만 보기") }
+    end
+
+    # Design 06 기본값 설정 and 속도 옵션.
+    def match_settings
+      loop do
+        st = FM.state
+        rows = [_INTL("기본 방식: {1}", mode_names[st.match_mode]),
+                _INTL("빠른 진행(연출 생략): {1}", st.match_fast ? _INTL("켜짐") : _INTL("꺼짐")), _INTL("닫기")]
+        case pbMessage(_INTL("관장전과 결승은 기본 방식과 상관없이 항상 묻습니다."), rows, rows.size)
+        when 0
+          names = State::MATCH_MODES.map { |m| mode_names[m] }
+          i = pbMessage(_INTL("경기를 어떻게 진행할까요?"), names + [_INTL("취소")], names.size + 1)
+          st.match_mode = State::MATCH_MODES[i] if i < names.size
+        when 1 then st.match_fast = !st.match_fast
+        else break
+        end
+      end
+    end
+
+    # World.player_match hook: decide how to play (the default mode, or ask
+    # when it is :ask or the match is important), then for a direct battle
+    # show the opponent's entry of six and let the player pick three; auto
+    # fights the best three with the AI on both sides. nil = the formula.
+    def player_match(home, away, world, neutral: false, important: false)
       mine = world.player_club
       me, opp = home.id == mine ? [home, away] : [away, home]
-      choice = pbMessage(_INTL("{1}전: {2} (전력 {3}) vs {4} (전력 {5})", neutral ? _INTL("대회") : _INTL("리그"),
-                               me.name, me.rating.round, opp.name, opp.rating.round),
-                         [_INTL("직접 전투"), _INTL("결과만 보기")], 2)
-      return nil unless choice.zero?
-      picks = choose_three(me, opp) or return nil
-      r = FM::Battle.fight(me, opp, picks: picks)
+      mode = FM.state.match_mode
+      if important || mode == :ask
+        tag = important ? (neutral ? _INTL("결승") : _INTL("관장전")) : (neutral ? _INTL("대회") : _INTL("리그"))
+        modes = %i[direct auto skip]
+        i = pbMessage(_INTL("{1}: {2} (전력 {3}) vs {4} (전력 {5})", tag, me.name, me.rating.round, opp.name,
+                            opp.rating.round), modes.map { |m| mode_names[m] }, modes.size)
+        mode = modes[i] || :skip
+      end
+      fast = FM.state.match_fast
+      r = case mode
+          when :direct
+            picks = choose_three(me, opp) or return nil
+            FM::Battle.fight(me, opp, picks: picks, fast: fast)
+          when :auto then FM::Battle.fight(me, opp, auto: true, fast: fast)
+          else return nil
+          end
       home.id == mine ? r : { res: -r[:res], ko_a: r[:ko_b], ko_b: r[:ko_a] }
     end
 

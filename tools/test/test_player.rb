@@ -4,8 +4,8 @@ require_relative "test_squad"   # TestSquad::SPECIES
 class TestPlayer < Minitest::Test
   SPECIES = TestSquad::SPECIES
 
-  def club(id)
-    { id: id, name: id, region: "KANTO", city: "C", role: "G1", canon: false, level: 20, potential: 3,
+  def club(id, role: "G1")
+    { id: id, name: id, region: "KANTO", city: "C", role: role, canon: false, level: 20, potential: 3,
       stadium: 1, clubhouse: 2, city_size: 2, facilities: { TRAINING: 2, SCOUTING: 2 },
       pokemon: [{ species: "CHARMANDER", bst: 309, level: 14, stars: 3 },
                 { species: "PIDGEY", bst: 251, level: 12, stars: 3 },
@@ -80,7 +80,7 @@ class TestPlayerMatchHook < Minitest::Test
   def test_hook_decides_only_the_players_matches
     w = TestPlayer.new("x").world
     calls = []
-    FM::World.player_match = lambda do |home, away, _world, neutral:|
+    FM::World.player_match = lambda do |home, away, _world, neutral:, important:|
       calls << [home.id, away.id, neutral]
       home.id == "P" ? { res: 1, ko_a: 3, ko_b: 0 } : { res: -1, ko_a: 0, ko_b: 3 }
     end
@@ -89,6 +89,25 @@ class TestPlayerMatchHook < Minitest::Test
     assert(calls.all? { |h, a, _| [h, a].include?("P") })
     t = w.leagues["KANTO"].table["P"]
     assert_equal t[:p], t[:w], "the hook made P win every game"
+  ensure
+    FM::World.player_match = nil
+  end
+
+  # Design 06: 관장전 (vs a gym leader's club) are important; others not.
+  def test_gym_matches_are_important
+    t = TestPlayer.new("x")
+    w = FM::World.new_game([t.club("P", role: "T"), t.club("A"), t.club("B", role: "T"), t.club("C", role: "E1")],
+                           seed: 4, species: TestPlayer::SPECIES)
+    w.player_club = "P"
+    seen = Hash.new { |h, k| h[k] = [] }
+    FM::World.player_match = lambda do |home, away, _world, important:, **|
+      seen[home.id == "P" ? away.id : home.id] << important
+      nil
+    end
+    w.advance_days(200)
+    assert_equal [true], seen["A"].uniq
+    assert_equal [false], seen["B"].uniq
+    assert_equal [false], seen["C"].uniq
   ensure
     FM::World.player_match = nil
   end

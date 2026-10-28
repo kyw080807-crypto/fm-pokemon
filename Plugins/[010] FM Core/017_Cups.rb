@@ -56,9 +56,9 @@ module FM
       events
     end
 
-    def game(world, rng)
+    def game(world, rng, important: false)
       lambda do |a, b|
-        r = world.play_match(world.clubs[a], world.clubs[b], rng: rng, neutral: true)
+        r = world.play_match(world.clubs[a], world.clubs[b], rng: rng, neutral: true, important: important)
         world.clubs[a].drain_lineup(Growth::MATCH_COND)
         world.clubs[b].drain_lineup(Growth::MATCH_COND)
         r
@@ -68,7 +68,7 @@ module FM
     def sub_round(world, cup, i, rng)
       c = world.cups[cup]
       ko = c[:ko] or return []
-      res = ko.play_round(best_of: i == 3 ? 3 : 1, rng: rng, &game(world, rng))
+      res = ko.play_round(best_of: i == 3 ? 3 : 1, rng: rng, &game(world, rng, important: i == 3))
       date = world.calendar.date
       res.each do |_, _, _, loser, _|
         world.clubs[loser].wallet.record(Tournament::SUB_PRIZE[i], category: :prize, date: date)
@@ -113,7 +113,7 @@ module FM
       pwt = world.cups[:pwt]
       ko = pwt[:ko] or return []
       date = world.calendar.date
-      res = ko.play_round(best_of: 3, rng: rng, &game(world, rng))
+      res = ko.play_round(best_of: 3, rng: rng, &game(world, rng, important: i == 3))
       res.each do |_, _, _, loser, _|
         c = world.clubs[loser]
         c.wallet.record(Tournament::KO_PRIZE[i], category: :prize, date: date)

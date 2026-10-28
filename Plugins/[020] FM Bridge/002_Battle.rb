@@ -7,12 +7,19 @@
 # Battle rules: can lose, no EXP, no prize money.
 # Engine API: TrainerBattle.start_core(NPCTrainer)
 #   (Data/Scripts/012_Overworld/002_Battle triggering/001_Overworld_BattleStarting.rb:492)
+# 자동 진행 (design 06): the same battle with Battle#controlPlayer on, so the
+# battle AI plays the player's side too (as the Battle Frontier sim does);
+# its skill is the player's trainer type's. 빠른 진행: animations off.
 #===============================================================================
 module FM
   module Battle
     LEVEL = 50
     ROLE_TRAINER_TYPE = { "C" => :CHAMPION, "E" => :ELITEFOUR_Lorelei, "G" => :LEADER_Brock }.freeze
     FALLBACK_TYPE = :COOLTRAINER_M
+
+    class << self
+      attr_accessor :auto, :fast   # read by prepare_battle below during fight
+    end
 
     module_function
 
@@ -49,8 +56,10 @@ module FM
     # best three) against the opponent's best three. Returns
     # { res:, ko_a:, ko_b: } from the player's side (a = player).
     # The match prompt and the pick screen are in FM UI.
-    def fight(me, opp, picks: nil)
+    def fight(me, opp, picks: nil, auto: false, fast: false)
       picks ||= me.lineup
+      Battle.auto = auto
+      Battle.fast = fast
       saved = $player.party
       $player.party = picks.map { |m| to_pokemon(m, $player) }
       foe = trainer_for(opp)
@@ -66,7 +75,19 @@ module FM
       else { res: 0, ko_a: foe_down, ko_b: mine_down }
       end
     ensure
+      Battle.auto = Battle.fast = false
       $player.party = saved if saved
+    end
+  end
+end
+
+module BattleCreationHelperMethods
+  class << self
+    alias __fm_prepare_battle prepare_battle
+    def prepare_battle(battle)
+      __fm_prepare_battle(battle)
+      battle.controlPlayer = true if FM::Battle.auto
+      battle.showAnims = false if FM::Battle.fast
     end
   end
 end
