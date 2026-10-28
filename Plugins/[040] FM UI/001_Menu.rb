@@ -813,7 +813,27 @@ module FM
                     talks.map { |t| _INTL(TALK_TEXT[t][0]) } + [_INTL("코치에게 맡기기")], talks.size + 1)
       return nil if i >= talks.size
       pbMessage(_INTL("\"{1}\"", _INTL(TALK_TEXT[talks[i]][1])))
-      talks[i]
+      [talks[i], individual_words(mons)]
+    end
+
+    ITALK_NAMES = { praise: "칭찬", cheer: "격려", push: "분발 촉구", calm: "진정시키기" }.freeze
+
+    # Poké Manager's individual words (ITALKS) after the team talk.
+    def individual_words(mons)
+      ind = {}
+      loop do
+        rows = mons.map do |m|
+          w = ind[m] ? _INTL(" → {1}", _INTL(ITALK_NAMES[ind[m]])) : ""
+          _INTL("{1} ({2}){3}", species_name(m.species), _INTL(TEMPER_NAMES[Morale.temper(m)]), w)
+        end
+        i = pbMessage(_INTL("따로 한마디 할 포켓몬이 있나요? (기질에 맞으면 힘이 나고 유대감이 오릅니다)"), rows + [_INTL("이대로 경기에")],
+                      rows.size + 1)
+        return ind if i >= mons.size
+        words = Morale::ITALKS
+        j = pbMessage(_INTL("{1}에게 뭐라고 할까요?", species_name(mons[i].species)),
+                      words.map { |k| _INTL(ITALK_NAMES[k]) } + [_INTL("아무 말 안 하기")], words.size + 1)
+        j < words.size ? ind[mons[i]] = words[j] : ind.delete(mons[i])
+      end
     end
 
     def match_settings
@@ -863,7 +883,7 @@ module FM
     # A result from the player's side as the home side's view.
     def flip(r)
       { res: -r[:res], ko_a: r[:ko_b], ko_b: r[:ko_a], lineup_a: r[:lineup_b], lineup_b: r[:lineup_a],
-        fainted_a: r[:fainted_b], fainted_b: r[:fainted_a] }
+        fainted_a: r[:fainted_b], fainted_b: r[:fainted_a], disobeyed_a: r[:disobeyed_b], disobeyed_b: r[:disobeyed_a] }
     end
 
     # Poké Manager: both entries of six are shown, then each side picks
@@ -937,6 +957,12 @@ module FM
           elsif e[:type] then _INTL("{1} 타입 스카우트 보고({2}): {3}", type_name(e[:type]), e[:region] ? region_name(e[:region]) : _INTL("전체 지방"), names)
           else _INTL("스카우트 보고({1}): {2}", region_name(e[:region]), names)
           end
+        when :disobeyed
+          next unless e[:club] == id
+          _INTL("{1}이(가) 경기 중 {2}번 말을 듣지 않았다 (유대감 {3})", species_name(e[:species]), e[:times], e[:bond])
+        when :bond_opened
+          next unless e[:club] == id
+          _INTL("{1}이(가) 이제 말을 따르기 시작했다. 함께 쌓은 시간이 결실을 맺었다.", species_name(e[:species]))
         when :talk
           next unless e[:club] == id
           moods = e[:moods].map { |k, n| _INTL("{1} {2}", _INTL(MOOD_NAMES[k]), n) }.join(" · ")

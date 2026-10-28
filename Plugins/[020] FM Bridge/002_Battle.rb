@@ -119,8 +119,12 @@ module FM
       # after_battle heals a losing party, so on a loss all three fainted.
       fainted_a = outcome == 2 ? picks : picks.select.with_index { |_, i| $player.party[i]&.fainted? }
       res = { 1 => 1, 2 => -1 }.fetch(outcome, 0)
+      disob = lambda do |mons, party|
+        mons.each_with_index.filter_map { |m, i| (n = party[i]&.fm_disob_n.to_i).positive? ? [m, n] : nil }.to_h
+      end
       { res: res, ko_a: fainted_b.size, ko_b: fainted_a.size,
-        lineup_a: picks, lineup_b: theirs, fainted_a: fainted_a, fainted_b: fainted_b }
+        lineup_a: picks, lineup_b: theirs, fainted_a: fainted_a, fainted_b: fainted_b,
+        disobeyed_a: disob.(picks, $player.party), disobeyed_b: disob.(theirs, foe.party) }
     ensure
       Battle.auto = Battle.fast = false
       Battle.auto_skill = nil
@@ -151,6 +155,7 @@ class Pokemon
   # FM::Morale in battle: disobedience chance, lazy species, bond effects,
   # this week's mood; fm_end_used once the 1-HP survival happened.
   attr_accessor :fm_disobey, :fm_lazy, :fm_end, :fm_shake, :fm_mood, :fm_end_used, :fm_mood_shown
+  attr_accessor :fm_disob_n   # times it disobeyed this battle
 
   alias __fm_calc_stats calc_stats
   def calc_stats
@@ -227,6 +232,7 @@ class Battle::Battler
   end
 
   def fm_disobey(choice)
+    @pokemon.fm_disob_n = @pokemon.fm_disob_n.to_i + 1
     r = @battle.pbRandom(100)
     if r < 30
       others = []

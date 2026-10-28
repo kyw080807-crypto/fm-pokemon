@@ -107,4 +107,52 @@ class TestMorale < Minitest::Test
     assert_equal [0.0, 0.0], FM::Morale.bond_fx(m)
   end
 
+  def test_individual_words_by_temperament
+    ctx = { f: 0.0, big: false }
+    sens = mon(nature_index: 20)    # CALM
+    fiery = mon(nature_index: 0)    # HARDY
+    base = FM::Morale.score(sens, :easy, ctx, 1)[:s]
+    assert_operator FM::Morale.score(sens, :easy, ctx, 1, :cheer)[:s], :>, base
+    assert_operator FM::Morale.score(sens, :easy, ctx, 1, :push)[:s], :<, base
+    assert_operator FM::Morale.score(fiery, :easy, ctx, 1, :push)[:s], :>, FM::Morale.score(fiery, :easy, ctx, 1)[:s]
+  end
+
+  def test_good_word_adds_bond
+    m = mon(nature_index: 20)
+    b = m.bond
+    rng = Random.new(1)
+    moods = FM::Morale.apply([m], :trust, { f: 0.0, big: false }, [1, 1, 1], rng, ind: { m => :cheer })
+    extra = %i[fire mot].include?(moods[m]) ? 1 : 0
+    assert_in_delta b + FM::Morale::MOOD[moods[m]][2] + extra, m.bond, 1e-9
+  end
+
+  def test_bond_passing_120_after_disobeying_is_news
+    m = mon
+    m.bond = 119
+    m.disob = 1
+    FM::Morale.add_bond(m, 2)
+    assert m.opened
+    n = mon
+    n.bond = 119
+    FM::Morale.add_bond(n, 2)
+    refute n.opened, "only after it has disobeyed"
+  end
+
+  def test_disobedience_from_a_battle_is_counted
+    w = TestPlayer.new("x").world
+    p = w.clubs["P"]
+    star = p.lineup.first
+    FM::World.player_match = lambda do |home, _away, _world, **|
+      mine = home.id == "P"
+      { res: 1, ko_a: 3, ko_b: 0, (mine ? :disobeyed_a : :disobeyed_b) => { star => 2 } }
+    end
+    events = w.advance_days(60)
+    d = events.find { |e| e[:kind] == :disobeyed }
+    assert d
+    assert_equal 2, d[:times]
+    assert_operator star.disob, :>=, 1
+  ensure
+    FM::World.player_match = nil
+  end
+
 end

@@ -191,13 +191,15 @@ module FM
         next if mons.empty? || mons.any? { |m| m.mood(week) }
         ctx = { f: pe - 0.5, big: big_match?(c, o, cup) }
         hook = Morale.player_talk
-        tid = (!ai?(c) && hook && hook.call(c, o, ctx, mons)) || Morale.coach_pick(mons, ctx, @rng)
+        pick = !ai?(c) && hook && hook.call(c, o, ctx, mons)
+        tid, ind = pick.is_a?(Array) ? pick : [pick, {}]
+        tid ||= Morale.coach_pick(mons, ctx, @rng)
         rep = 1
         if !ai?(c)
           (@talk_hist ||= []).reverse_each { |t| t == tid ? rep += 1 : break }
           @talk_hist = (@talk_hist + [tid]).last(3)
         end
-        moods = Morale.apply(mons, tid, ctx, week, @rng, rep: rep)
+        moods = Morale.apply(mons, tid, ctx, week, @rng, rep: rep, ind: ind || {})
         (@match_events ||= []) << { kind: :talk, club: c.id, talk: tid, moods: moods.values.tally, date: date } unless ai?(c)
       end
       out
@@ -219,6 +221,10 @@ module FM
     def morale_week
       year = @calendar.year
       @clubs.each_value do |c|
+        c.squad.select(&:opened).each do |m|
+          m.opened = nil
+          (@match_events ||= []) << { kind: :bond_opened, club: c.id, species: m.species, date: date }
+        end
         c.squad.each do |m|
           m.bond_year ||= year
           m.bond = Morale.bond_init(m, year, ai: ai?(c)) unless m.bond?
@@ -482,6 +488,11 @@ module FM
           m.ko += 1
           m.sko += 1 if league
           kos[m] = (kos[m] || 0) + 1
+        end
+        disob = club.equal?(home) ? r[:disobeyed_a] : r[:disobeyed_b]
+        (disob || {}).each do |m, n|
+          m.disob += 1
+          (@match_events ||= []) << { kind: :disobeyed, club: club.id, species: m.species, times: n, bond: m.bond.floor, date: date }
         end
         if talk
           won = club.equal?(home) ? r[:res].positive? : r[:res].negative?

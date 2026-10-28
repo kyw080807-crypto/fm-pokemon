@@ -14,7 +14,8 @@
 #   talk (the player's choice, else the coach / AI: the best 60%, second
 #   28%, third 12%); each mon of the entry reacts with a mood for the week
 #   (x0.97-1.04, morale and bond changes). The same talk again loses
-#   force. Individual talks are not carried over yet.
+#   force. Individual words (ITALKS: praise, cheer, push, calm) to some of
+#   the entry add to their reaction; a good one adds bond +1.
 # - In battle (FM Bridge): a proud mon (stronger than its team's average,
 #   newly evolved, a proud species, a legend) with bond under 120 may
 #   disobey (disobey_p, at most 30% an action): another move, a nap, or
@@ -55,8 +56,9 @@ module FM
     class << self
       # The Monday of the current week (World sets it): moods last a week.
       attr_accessor :week
-      # hook.(club, opponent, ctx, mons) -> a talk from TALKS, or nil for
-      # the coach; set by FM UI while the player advances time.
+      # hook.(club, opponent, ctx, mons) -> a talk from TALKS (or [talk,
+      # { mon => individual word }]), or nil for the coach; set by FM UI
+      # while the player advances time.
       attr_accessor :player_talk
       # The world's calendar, for weeks since an evolution.
       attr_accessor :calendar
@@ -82,7 +84,16 @@ module FM
     def mood_mul(mon, week) = (k = mon.mood(week)) ? MOOD[k][0] : 1.0
 
     def add_mor(mon, d) = mon.mor = (mon.mor + d).clamp(0, 100).round(1)
-    def add_bond(mon, d) = mon.bond = (mon.bond + d).clamp(0, BOND_MAX).round(1)
+    ITALKS = %i[praise cheer push calm].freeze
+
+    # bondAdd; crossing 120 after it has disobeyed (morOpened) is marked
+    # for the news.
+    def add_bond(mon, d)
+      b0 = mon.bond
+      mon.bond = (b0 + d).clamp(0, BOND_MAX).round(1)
+      mon.opened = true if b0 < BOND_OBEY && mon.bond >= BOND_OBEY && mon.disob.positive?
+      mon.bond
+    end
 
     # bondInit: time together (5 seasons at most), canon mons, AI clubs.
     def bond_init(mon, year, ai:)
@@ -98,7 +109,8 @@ module FM
     end
 
     # talkScore -> { s:, np:, cp:, om: }
-    def score(mon, tid, ctx, rep)
+    # iid: an individual word to this mon (ITALKS), or nil.
+    def score(mon, tid, ctx, rep, iid = nil)
       tp = temper(mon)
       f = ctx[:f]
       mv = mon.mor
@@ -137,6 +149,22 @@ module FM
       add.(-0.4, :c) if mv >= 85 && tid == :win
       add.(-0.4) if mv < 25 && tid == :demand
       s *= rep >= 3 ? 0.3 : 0.6 if rep >= 2 && s.positive?
+      case iid
+      when :praise
+        good = mon.form_ko >= 0.8
+        add.(good ? (tp == :cool ? 0.6 : 1) : (tp == :cool ? -0.4 : tp == :sens ? 0.4 : 0.1))
+      when :cheer then add.({ sens: 1, easy: 0.4, free: 0.4, fiery: 0.2, cool: 0.1 }[tp] + (f < -0.12 ? 0.3 : 0))
+      when :push
+        add.({ fiery: 1, cool: 0.3, easy: -0.3, free: -0.5, sens: -1.2 }[tp] + (mon.form_ko < 0.4 && tp != :sens ? 0.3 : 0),
+             tp == :sens ? :n : :o)
+      when :calm
+        need = f > 0.15 || mv >= 85 || ctx[:big]
+        add.(need ? 0.6 : (tp == :sens ? 0.3 : tp == :fiery ? -0.3 : 0))
+        if need
+          np *= 0.5
+          cp *= 0.5
+        end
+      end
       { s: s, np: np, cp: cp, om: om }
     end
 
@@ -158,12 +186,14 @@ module FM
     end
 
     # talkApply -> { mon => mood }
-    def apply(mons, tid, ctx, week, rng, rep: 1)
+    # ind: { mon => individual word }.
+    def apply(mons, tid, ctx, week, rng, rep: 1, ind: {})
       mons.to_h do |m|
-        k = react(score(m, tid, ctx, rep), (rng.rand - 0.5) * 0.7)
+        iid = ind[m]
+        k = react(score(m, tid, ctx, rep, iid), (rng.rand - 0.5) * 0.7)
         m.set_mood(k, week)
         add_mor(m, MOOD[k][1])
-        add_bond(m, MOOD[k][2])
+        add_bond(m, MOOD[k][2] + (iid && %i[fire mot].include?(k) ? 1 : 0))
         [m, k]
       end
     end

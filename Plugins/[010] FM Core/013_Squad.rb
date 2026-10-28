@@ -46,6 +46,10 @@ module FM
     # sees the mon), the season it joined, this week's mood, recent KOs.
     attr_writer :mor, :bond, :form_ko
     attr_accessor :bond_year
+    # Times it disobeyed in a match; opened: bond passed 120 after that.
+    attr_writer :disob
+    def disob = @disob || 0
+    attr_accessor :opened
     # The Monday it last evolved (pride: newly evolved mons are proud).
     attr_accessor :evo_week
     def mor = @mor || 60
