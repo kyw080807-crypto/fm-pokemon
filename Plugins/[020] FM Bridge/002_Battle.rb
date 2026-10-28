@@ -9,7 +9,8 @@
 #   (Data/Scripts/012_Overworld/002_Battle triggering/001_Overworld_BattleStarting.rb:492)
 # 자동 진행 (design 06): the same battle with Battle#controlPlayer on, so the
 # battle AI plays the player's side too (as the Battle Frontier sim does);
-# its skill is the player's trainer type's. Battle style is Set, so the
+# its skill is the opponent's (Player#skill_level below), so auto is no
+# weaker or stronger than the other side. Battle style is Set, so the
 # "switch your Pokémon?" prompt never comes up. 빠른 진행: animations off.
 #===============================================================================
 module FM
@@ -20,6 +21,7 @@ module FM
 
     class << self
       attr_accessor :auto, :fast   # read by prepare_battle below during fight
+      attr_accessor :auto_skill    # the player's AI skill while auto is on
     end
 
     module_function
@@ -65,6 +67,7 @@ module FM
       saved = $player.party
       $player.party = picks.map { |m| to_pokemon(m, $player) }
       foe = trainer_for(opp)
+      Battle.auto_skill = auto ? foe.skill_level : nil
       theirs = opp.lineup   # trainer_for builds the party from this, in order
       setBattleRule("canLose")
       setBattleRule("noExp")
@@ -78,6 +81,7 @@ module FM
         lineup_a: picks, lineup_b: theirs, fainted_a: fainted_a, fainted_b: fainted_b }
     ensure
       Battle.auto = Battle.fast = false
+      Battle.auto_skill = nil
       $player.party = saved if saved
     end
 
@@ -97,6 +101,13 @@ module FM
       ko_b = ta.party.count(&:fainted?)
       { res: { 1 => 1, 2 => -1 }.fetch(decision, 0), ko_a: ko_a, ko_b: ko_b, turns: battle.turnCount }
     end
+  end
+end
+
+class Player
+  alias __fm_skill_level skill_level
+  def skill_level
+    FM::Battle.auto_skill || __fm_skill_level
   end
 end
 

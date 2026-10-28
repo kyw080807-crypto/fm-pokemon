@@ -161,6 +161,13 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: injured row: #{FM::UI.mon_line(hurt)}")
     # 자동 진행 hooks battle setup; every saved match mode has a label.
     raise "prepare_battle not wrapped" unless BattleCreationHelperMethods.respond_to?(:__fm_prepare_battle)
+    pl = Player.new("FM", :POKEMONTRAINER_Red)
+    own = pl.skill_level
+    FM::Battle.auto_skill = foe.skill_level
+    raise "auto skill not applied" unless pl.skill_level == foe.skill_level
+    FM::Battle.auto_skill = nil
+    raise "own skill not restored" unless pl.skill_level == own
+    FM::Log.info("smoke: auto-play AI skill #{own} -> #{foe.skill_level} vs #{foe.trainer_type}")
     raise "match mode labels" unless FM::State::MATCH_MODES.all? { |m| FM::UI.mode_names[m] }
     FM::Log.info("smoke: battle #{foe.name} (#{foe.trainer_type}) " +
                  foe.party.map { |p| "#{p.speciesName} #{p.totalhp}HP" }.join(", "))
