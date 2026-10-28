@@ -130,7 +130,9 @@ FM::Smoke.register("fm_menu_render") do
     club = FM.world.clubs.values.find { |c| c.region == "KANTO" && c.role == "G3" } || FM.world.clubs.values.first
     FM.state.player_club = club.id
     FM.advance_days(60)
-    rows = FM::UI.my_club_rows(club.id).first(8) + FM::UI.standings_rows("KANTO").first(6)
+    FM.advance_days(100)   # past a few city meetings and a committee meeting
+    rows = FM::UI.my_club_rows(club.id).first(4) + FM::UI.city_rows(club.city, club.id).first(9) +
+           FM::UI.committee_rows("KANTO").first(4)
     bitmap = Bitmap.new(Graphics.width, 32 * rows.size)
     bitmap.fill_rect(bitmap.rect, Color.new(248, 248, 248))
     pbSetSystemFont(bitmap)

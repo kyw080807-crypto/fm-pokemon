@@ -26,6 +26,17 @@ module FM
     GYM_SEATS = 2
 
     attr_reader :region, :city_id, :facilities, :gym_reps
+
+    LOG_SIZE = 12
+
+    # Recent meetings, newest first (for screens). Older saves start empty.
+    def log = (@log ||= [])
+
+    def record(event)
+      log.unshift(event)
+      log.pop while log.size > LOG_SIZE
+      event
+    end
     attr_accessor :project
 
     def initialize(region:, city_id:)
@@ -92,8 +103,8 @@ module FM
         c.budget.record(-step[:cost], category: :committee, date: date)
         @project = step.merge(to: step[:from] + 1, done: world.calendar.date_after(date, 7 * step[:weeks]))
       end
-      { kind: :committee, region: @region, target: step[:target], cost: step[:cost], passed: passed,
-        votes: votes, date: date }
+      record({ kind: :committee, region: @region, target: step[:target], cost: step[:cost], passed: passed,
+               votes: votes, date: date })
     end
 
     def finish(world, date)

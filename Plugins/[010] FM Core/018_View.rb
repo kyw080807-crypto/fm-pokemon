@@ -48,6 +48,28 @@ module FM
         next: nxt && { kind: nxt[0], date: nxt[1], in_days: cal.days_until(nxt[1]) } }
     end
 
+    # A city and the clubs in it; relation is toward `viewer` (a club id).
+    def city(world, id, viewer: nil)
+      c = world.cities.fetch(id)
+      { id: id, name: c.name, region: c.region, form: c.form, size: c.size, free_plots: c.free_plots,
+        budget: c.budget.balance, tax_rate: c.tax_rate, satisfaction: c.satisfaction.round,
+        transport: c.transport, hotel: c.hotel, buildings: c.buildings.map(&:dup), project: c.project,
+        clubs: c.club_ids.map do |cid|
+          club = world.clubs[cid]
+          { id: cid, name: club.name, fame: club.fame.round, relation: viewer && cid != viewer ? world.relations.get(viewer, cid).round(2) : nil }
+        end,
+        log: c.log.map { |e| e.slice(:agenda, :target, :date, :cost, :passed).merge(yes: e[:votes].count { |_, v| v[:yes] }, members: e[:votes].size) } }
+    end
+
+    def committee(world, region)
+      cm = world.committees[region] or return nil
+      cap = world.cities[cm.city_id]
+      { region: region, city: cap.name, budget: cap.budget.balance, facilities: cm.facilities.dup,
+        project: cm.project && cm.project.slice(:target, :to, :done),
+        members: cm.members(world).uniq.map { |id| { id: id, name: world.clubs[id].name, gym_rep: cm.gym_reps.include?(id) } },
+        log: cm.log.map { |e| e.slice(:target, :date, :cost, :passed).merge(yes: e[:votes].values.count(true), members: e[:votes].size) } }
+    end
+
     def cups(world)
       cups = world.cups or return nil
       ko = ->(k) { k && { round: k.round_index, champion: k.champion, bracket: k.bracket.map(&:dup) } }

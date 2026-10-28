@@ -26,6 +26,9 @@ module FM
     # unhappy, raise it when the budget can't pay for the next public step.
     def tax(world, city, members, date)
       rate = city.tax_rate
+      if city.tax_changed && world.calendar.days_between(city.tax_changed, date) < Civic::TAX_COOLDOWN_DAYS
+        return nil
+      end
       raise_it = if city.satisfaction < Civic::LOW_SATISFACTION && rate > Civic::TAX_RATE_RANGE.min then false
                  elsif rate < Civic::TAX_RATE_RANGE.max && (step = Civic.infra_step(city)) &&
                        city.budget.balance - city.weekly_upkeep * Civic::BUDGET_RESERVE_WEEKS < step[:cost]
@@ -40,6 +43,7 @@ module FM
         next unless e && e[:passed]
         delta = raise_it ? Civic::TAX_STEP : -Civic::TAX_STEP
         city.tax_rate = (rate + delta).round(2).clamp(Civic::TAX_RATE_RANGE.min, Civic::TAX_RATE_RANGE.max)
+        city.tax_changed = date
       end
     end
 
@@ -103,8 +107,8 @@ module FM
       else
         city.vote_failed
       end
-      { kind: :meeting, agenda: agenda, target: target, city: city.id, date: date, cost: cost,
-        city_part: city_part, passed: passed, votes: votes }
+      city.record({ kind: :meeting, agenda: agenda, target: target, city: city.id, date: date, cost: cost,
+                    city_part: city_part, passed: passed, votes: votes })
     end
 
     # Split by fame; rounding leftovers go to the most famous club.

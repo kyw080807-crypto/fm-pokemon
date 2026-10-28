@@ -32,6 +32,7 @@ module FM
     SATISFACTION_DRIFT = 0.05      # share of the gap closed each week
     FAILED_VOTE_HIT = 2.0
     LOW_SATISFACTION = 40.0
+    TAX_COOLDOWN_DAYS = 182        # at most one tax change per half year (draft)
 
     # Design 05, by transport level 0-5 (0 = no transport building).
     TRANSPORT_DAYS = [3, 2, 2, 1, 1, 0].freeze
@@ -97,6 +98,7 @@ module FM
     attr_reader :id, :name, :region, :form, :budget, :buildings, :club_ids
     attr_accessor :size, :free_plots, :project, :unrest
     attr_writer :tax_rate, :satisfaction
+    attr_accessor :tax_changed   # date of the last tax change, nil if never
 
     # Defaults cover cities saved before these existed.
     def tax_rate = @tax_rate || 1.0
@@ -117,6 +119,17 @@ module FM
 
     # Home crowds scale with satisfaction: 0.85 at 0, 1.0 at 50, 1.15 at 100 (draft).
     def crowd_mood = 0.85 + 0.3 * satisfaction / 100.0
+
+    LOG_SIZE = 12
+
+    # Recent meetings, newest first (for screens). Older saves start empty.
+    def log = (@log ||= [])
+
+    def record(event)
+      log.unshift(event)
+      log.pop while log.size > LOG_SIZE
+      event
+    end
 
     def initialize(data)
       @id, @name, @region, @form = data.values_at(:id, :name, :region, :form)

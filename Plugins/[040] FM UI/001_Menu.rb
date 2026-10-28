@@ -77,16 +77,18 @@ module FM
                                date_text(s[:next][:date]), s[:next][:in_days]) : ""
         header = _INTL("{1} ({2}) · {3}\n{4}", date_text(s[:date]), _INTL(WEEKDAYS[s[:weekday]]),
                        phase_text(s[:phase]), nxt)
-        commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("리그 순위"), _INTL("대회"),
-                    _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("닫기")]
+        commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
+                    _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
         when 2 then scout
-        when 3 then standings
-        when 4 then cups
-        when 5 then advance_week
-        when 6 then choose_club
+        when 3 then my_city
+        when 4 then committee
+        when 5 then standings
+        when 6 then cups
+        when 7 then advance_week
+        when 8 then choose_club
         else break
         end
       end
@@ -215,10 +217,88 @@ module FM
       pbMessage(msg)
     end
 
+    SIZE_NAMES = { 1 => "마을", 2 => "소도시", 3 => "중도시", 4 => "대도시", 5 => "거대도시" }.freeze
+    FORM_NAMES = { "SOLO" => "단독", "LONDON" => "런던형", "MILAN" => "밀란형", "LEAGUE" => "리그 도시" }.freeze
+
+    def agenda_text(agenda, target)
+      case agenda
+      when :expansion then _INTL("도시 확장")
+      when :infrastructure then _INTL("{1} 건설", facility_name(target))
+      when :tax then target == :raise ? _INTL("세율 인상") : _INTL("세율 인하")
+      else facility_name(target)
+      end
+    end
+
+    def relation_text(r)
+      return _INTL("우호") if r >= 0.2
+      return _INTL("냉랭") if r <= -0.2
+      _INTL("보통")
+    end
+
+    def my_city
+      c = player_club or return
+      show_list(_INTL("내 도시"), city_rows(c.city, c.id))
+    end
+
+    def city_rows(city_id, viewer)
+      v = View.city(world, city_id, viewer: viewer)
+      rows = []
+      rows << _INTL("{1} · {2} · {3}", v[:name], _INTL(SIZE_NAMES[v[:size]]), _INTL(FORM_NAMES.fetch(v[:form], v[:form])))
+      rows << _INTL("예산 {1} · 세율 ×{2} · 시민 만족도 {3}", money(v[:budget]), format("%.1f", v[:tax_rate]), v[:satisfaction])
+      rows << _INTL("교통 Lv{1} · 호텔 Lv{2} · 빈 부지 {3}칸", v[:transport], v[:hotel], v[:free_plots])
+      if v[:project]
+        what = v[:project][:kind] == :expansion ? _INTL("도시 확장") : facility_name(v[:project][:target])
+        rows << _INTL("공사 중: {1} → {2} ({3} 완공)", what, v[:project][:to], date_text(v[:project][:done]))
+      end
+      rows << _INTL("— 연고 클럽 —")
+      v[:clubs].each do |cl|
+        rel = cl[:relation].nil? ? _INTL("(나)") : _INTL("관계 {1} ({2})", relation_text(cl[:relation]), format("%+.2f", cl[:relation]))
+        rows << _INTL("{1} · 명성 {2} · {3}", cl[:name], cl[:fame], rel)
+      end
+      rows << _INTL("— 최근 도시 회의 —")
+      rows << _INTL("(아직 없음)") if v[:log].empty?
+      v[:log].each do |e|
+        result = e[:passed] ? _INTL("통과") : _INTL("부결")
+        rows << _INTL("{1} {2}: {3} ({4}/{5})", date_text(e[:date]), agenda_text(e[:agenda], e[:target]), result, e[:yes], e[:members])
+      end
+      rows
+    end
+
+    def committee
+      c = player_club or return
+      v = View.committee(world, c.region)
+      unless v
+        pbMessage(_INTL("이 지방에는 리그 관리위원회가 없습니다."))
+        return
+      end
+      show_list(_INTL("{1} 리그 관리위원회", region_name(c.region)), committee_rows(c.region))
+    end
+
+    def committee_rows(region)
+      v = View.committee(world, region)
+      rows = []
+      rows << _INTL("수도 {1} · 예산 {2}", v[:city], money(v[:budget]))
+      v[:facilities].each { |k, lv| rows << _INTL("{1} Lv{2}", facility_name(k), lv) }
+      if v[:project]
+        rows << _INTL("공사 중: {1} Lv{2} ({3} 완공)", facility_name(v[:project][:target]), v[:project][:to], date_text(v[:project][:done]))
+      end
+      rows << _INTL("— 위원 —")
+      v[:members].each { |m| rows << (m[:gym_rep] ? _INTL("{1} (관장 대표)", m[:name]) : m[:name]) }
+      rows << _INTL("— 최근 총회 —")
+      rows << _INTL("(아직 없음)") if v[:log].empty?
+      v[:log].each do |e|
+        result = e[:passed] ? _INTL("통과") : _INTL("부결")
+        rows << _INTL("{1} {2}: {3} ({4}/{5})", date_text(e[:date]), facility_name(e[:target]), result, e[:yes], e[:members])
+      end
+      rows
+    end
+
     def facility_name(key)
       { TRAINING: _INTL("훈련장"), MEDICAL: _INTL("메디컬센터"), SCOUTING: _INTL("스카우팅"),
         DAYCARE: _INTL("키우미집"), SHOP: _INTL("프렌들리숍"), CLUBHOUSE: _INTL("클럽하우스"),
-        STADIUM: _INTL("경기장") }.fetch(key.to_sym, key.to_s)
+        STADIUM: _INTL("경기장"), TRANSPORT: _INTL("교통"), HOTEL: _INTL("호텔"),
+        SIDE_STADIUM: _INTL("사이드 스타디움"), LEAGUE_HQ: _INTL("리그 본부"), HUB: _INTL("지방 교통 허브"),
+        BROADCAST: _INTL("방송 센터"), HALL_OF_FAME: _INTL("명예의 전당") }.fetch(key.to_sym, key.to_s)
     end
 
     def standings

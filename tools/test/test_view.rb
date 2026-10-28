@@ -42,3 +42,26 @@ class TestView < Minitest::Test
     assert_equal 32, c[:pwt][:players].size
   end
 end
+
+require_relative "test_committee"
+
+class TestViewCity < Minitest::Test
+  def test_city_and_committee_views
+    w = TestCommittee.new("x").world
+    w.cities["CAP"].budget.record(20_000_000, category: :grant, date: [1, 1, 1])
+    w.clubs.each_value { |c| c.wallet.record(5_000_000, category: :grant, date: [1, 1, 1]) }
+    w.advance_days(200)
+    v = FM::View.city(w, "TOWN", viewer: "K4")
+    assert_equal 4, v[:clubs].size
+    assert_nil v[:clubs].find { |c| c[:id] == "K4" }[:relation]
+    assert v[:clubs].find { |c| c[:id] == "K5" }[:relation].is_a?(Float)
+    refute_empty v[:log], "town held meetings"
+    assert(v[:log].all? { |e| e.key?(:agenda) && e.key?(:yes) })
+    assert_operator v[:log].size, :<=, FM::City::LOG_SIZE
+    cm = FM::View.committee(w, "KANTO")
+    assert_equal 6, cm[:members].size
+    refute_empty cm[:log]
+    assert_equal 4, cm[:facilities][:SIDE_STADIUM]
+    assert_nil FM::View.committee(w, "JOHTO")
+  end
+end

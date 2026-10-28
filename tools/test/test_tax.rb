@@ -65,6 +65,10 @@ class TestTax < Minitest::Test
     refute_nil m
     assert_equal :raise, m[:target]
     assert_in_delta(m[:passed] ? 1.1 : 1.0, s.tax_rate)
+    if m[:passed]
+      more = w.advance_days(150).select { |e| e[:kind] == :meeting && e[:agenda] == :tax }
+      assert_empty more, "no second tax change within half a year"
+    end
   end
 
   def test_unhappy_city_votes_on_cutting_tax
