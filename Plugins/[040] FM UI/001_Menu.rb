@@ -356,46 +356,96 @@ module FM
       pbMessage(_INTL("전설 {1}이(가) 합류했습니다!", species_name(m.species))) if world.claim_legend_gift(release: release)
     end
 
+    # Poké Manager's scouting office (FM::Scouting): scouts report the
+    # next week and candidates wait in a list for a few weeks.
     def scout
       c = player_club or return
       legend_gift(c) if world.legend_gift
+      loop do
+        st = Scouting.state(world)
+        year = world.calendar.year
+        limit = Recruit.sign_limit(c, year)
+        used = limit - Recruit.signs_left(c, year)
+        extra = []
+        mul = Recruit.recovery_mul(c, year)
+        extra << _INTL("하위권 영입 할인 {1}%", ((1 - mul) * 100).round) if mul < 1
+        extra << _INTL("하위권 스카우트 보너스") if Recruit.scout_bonus(c, year).positive?
+        nxt = st[:next_passive] ? date_text(st[:next_passive]) : _INTL("곧")
+        head = _INTL("스카우트 {1}/{2}명 파견 중 · 후보 {3}마리 · 이번 시즌 영입 {4}/{5}\n정기 보고: {6}",
+                     st[:assign].size, Scouting.max_scouts(c), st[:cands].size, used, limit, nxt)
+        head += "\n" + extra.join(" · ") unless extra.empty?
+        cmds = [_INTL("지방에 파견 ({1})", money(Scouting::FEE)), _INTL("타입별 스카우팅 ({1})", money(Scouting::TYPE_FEE)),
+                _INTL("후보 명단 ({1})", st[:cands].size), _INTL("닫기")]
+        case pbMessage(head, cmds, cmds.size)
+        when 0 then dispatch_scout(c)
+        when 1 then dispatch_scout(c, typed: true)
+        when 2 then candidate_list(c)
+        else break
+        end
+      end
+    end
+
+    def dispatch_scout(c, typed: false)
       return if austerity_blocked?(c)
-      year = world.calendar.year
-      left = Recruit.signs_left(c, year)
-      limit = Recruit.sign_limit(c, year)
-      if left <= 0
-        pbMessage(_INTL("이번 시즌 영입 한도({1}마리)를 다 썼습니다. 지난 시즌 순위가 낮을수록 한도가 큽니다.", limit))
+      regions = Scouting.regions(world, c)
+      type = nil
+      if typed
+        types = TYPE_NAMES.keys
+        i = pbMessage(_INTL("어떤 타입을 찾을까요? (진화하면 그 타입이 되는 포켓몬 포함)"), types.map { |t| type_name(t) } + [_INTL("취소")],
+                      types.size + 1)
+        return if i >= types.size
+        type = types[i]
+      end
+      opts = regions.map { |r| [r, region_name(r)] }
+      opts.unshift([nil, _INTL("전체 지방")]) if typed && regions.size > 1
+      j = pbMessage(regions.size == 1 ? _INTL("교통 Lv3부터 다른 지방에도 보낼 수 있습니다. 어디로 보낼까요?") : _INTL("어디로 보낼까요?"),
+                    opts.map(&:last) + [_INTL("취소")], opts.size + 1)
+      return if j >= opts.size
+      case world.send_scout(opts[j][0], type: type)
+      when :busy then pbMessage(_INTL("파견할 스카우트가 없습니다 (스카우팅 시설을 올리면 늘어납니다)."))
+      when :money then pbMessage(_INTL("파견 비용이 모자랍니다."))
+      when :region then pbMessage(_INTL("교통이 Lv3 이상이어야 다른 지방으로 보낼 수 있습니다."))
+      else pbMessage(_INTL("{1}에 스카우트를 보냈습니다. 다음 주에 보고서가 옵니다.", opts[j][1]))
+      end
+    end
+
+    def age_text(c)
+      lo, hi = c[:age_lo], c[:age_hi]
+      lo == hi ? _INTL("{1}시즌째", lo + 1) : _INTL("{1}~{2}시즌째(추정)", lo + 1, hi + 1)
+    end
+
+    def candidate_list(c)
+      loop do
+        cands = Scouting.state(world)[:cands]
+        if cands.empty?
+          pbMessage(_INTL("후보가 없습니다. 스카우트를 보내거나 정기 보고를 기다리세요."))
+          return
+        end
+        labels = cands.map do |cand|
+          m = cand[:mon]
+          price = cand[:full] ? _INTL("{1}(정가 {2})", money(cand[:cost]), money(cand[:full])) : money(cand[:cost])
+          tag = cand[:legend] ? _INTL("[전설] ") : ""
+          tag + _INTL("{1} Lv{2} ★{3} · {4} · {5} · {6} · {7}까지", species_name(m.species), m.level, cand[:shown], age_text(cand),
+                      region_name(cand[:region]), price, date_text(cand[:until]))
+        end
+        i = pbMessage(_INTL("후보 명단 (★와 나이는 스카우트의 추정입니다)"), labels + [_INTL("닫기")], labels.size + 1)
+        return if i >= cands.size
+        sign_candidate(c, cands[i])
+      end
+    end
+
+    def sign_candidate(c, cand)
+      return if austerity_blocked?(c)
+      if Recruit.signs_left(c, world.calendar.year) <= 0
+        pbMessage(_INTL("이번 시즌 영입 한도({1}마리)를 다 썼습니다. 지난 시즌 순위가 낮을수록 한도가 큽니다.",
+                        Recruit.sign_limit(c, world.calendar.year)))
         return
       end
-      extra = []
-      mul = Recruit.recovery_mul(c, year)
-      extra << _INTL("하위권 영입 할인 {1}%", ((1 - mul) * 100).round) if mul < 1
-      extra << _INTL("하위권 스카우트 보너스") if Recruit.scout_bonus(c, year).positive?
-      note = extra.empty? ? "" : "\n" + extra.join(" · ")
-      unless pbConfirmMessage(_INTL("{1}에 스카우트를 보낼까요? (비용 {2})\n이번 시즌 영입 {3}/{4}{5}", region_name(c.region),
-                                    money(Scout::FEE), limit - left, limit, note))
-        return
-      end
-      cands = world.player_scout(c.region)
-      unless cands
-        pbMessage(_INTL("스카우트 비용이 모자랍니다."))
-        return
-      end
-      labels = cands.map do |cand|
-        m = cand[:mon]
-        price = cand[:full] ? _INTL("{1} (정가 {2})", money(cand[:cost]), money(cand[:full])) : money(cand[:cost])
-        tag = cand[:legend] ? _INTL("[전설] ") : ""
-        tag + _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · {6}", species_name(m.species), m.level, m.stars,
-                    m.age + 1, m.rating.round, price)
-      end
-      i = pbMessage(_INTL("스카우트 보고서입니다. 영입할 포켓몬을 고르세요."), labels + [_INTL("영입 안 함")],
-                    labels.size + 1)
-      return if i >= cands.size
-      cand = cands[i]
       if c.wallet.balance < cand[:cost]
         pbMessage(_INTL("돈이 모자랍니다 ({1} 필요).", money(cand[:cost])))
         return
       end
+      return unless pbConfirmMessage(_INTL("{1}을 {2}에 영입할까요?", species_name(cand[:mon].species), money(cand[:cost])))
       release = nil
       if c.squad.size >= Build.squad_size(c.clubhouse)
         names = c.squad.map { |m| _INTL("{1} Lv{2} ★{3} · 전력 {4}", species_name(m.species), m.level, m.stars, m.rating.round) }
@@ -408,8 +458,9 @@ module FM
         return
       end
       e = Recruit.sign(c, cand, date: world.calendar.date, release: release, pool: world.species)
+      Scouting.take(world, cand)
       Legend.acquire(world, c, cand[:mon]) if cand[:legend]
-      msg = _INTL("{1}을 영입했습니다 ({2}).", species_name(e[:species]), money(e[:cost]))
+      msg = _INTL("{1}을 영입했습니다 ({2}). 실제 ★{3}.", species_name(e[:species]), money(e[:cost]), cand[:mon].stars)
       msg += " " + _INTL("{1}은 팀을 떠났습니다.", species_name(e[:released])) if e[:released]
       pbMessage(msg)
     end
@@ -804,6 +855,13 @@ module FM
         when :legend_left
           _INTL("전설 {1}이(가) {2}의 곁을 떠났다 ({3}시즌 동행을 마침)", species_name(e[:species]), world.clubs[e[:club]].name,
                 Legend::LEG_YEARS)
+        when :scout_report
+          next unless e[:club] == id
+          names = e[:species].map { |sp| species_name(sp) }.join(", ")
+          if e[:passive] then _INTL("정기 스카우트 보고: {1}", names)
+          elsif e[:type] then _INTL("{1} 타입 스카우트 보고({2}): {3}", type_name(e[:type]), e[:region] ? region_name(e[:region]) : _INTL("전체 지방"), names)
+          else _INTL("스카우트 보고({1}): {2}", region_name(e[:region]), names)
+          end
         when :tour
           _INTL("원정 친선 투어: 출전료 {1} · 엔트리 컨디션 −{2}, 이번 주 훈련 쉼", money(e[:pay]), Tour::COND) if e[:club] == id
         when :crisis

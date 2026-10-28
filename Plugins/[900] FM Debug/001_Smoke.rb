@@ -147,8 +147,13 @@ FM::Smoke.register("fm_menu_render") do
     # Player actions the new menu items call.
     opts = FM::Invest.options(club)
     raise "no build options" if opts.empty?
-    cands = FM.world.player_scout(club.region)
+    cands = FM::Scouting.generate(FM.world, club, FM::Scouting.report_size(club), region: club.region, keep: 4,
+                                                                          date: FM.world.calendar.date, rng: Random.new(1))
     raise "scout returned nothing" if cands.nil? || cands.empty?
+    cd = cands.first
+    FM::Log.info("smoke: scout list row #{FM::UI.species_name(cd[:mon].species)} ★#{cd[:shown]} (real ★#{cd[:mon].stars}) " \
+                 "#{FM::UI.age_text(cd)} · #{FM::UI.region_name(cd[:region])}; scouts #{FM::Scouting.max_scouts(club)}, " \
+                 "regions #{FM::Scouting.regions(FM.world, club).size}")
     names = cands.map { |cd| FM::UI.species_name(cd[:mon].species) }
     year = FM.world.calendar.year
     FM::Log.info("smoke: #{opts.size} build options; scouted #{names.join(', ')}; " \

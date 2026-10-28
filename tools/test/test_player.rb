@@ -48,7 +48,9 @@ class TestPlayer < Minitest::Test
   def test_scout_and_sign
     w = world
     p = w.clubs["P"]
-    cands = w.player_scout("KANTO")
+    assert_nil w.send_scout("KANTO")
+    w.advance_days(8)   # the report comes the next Monday
+    cands = FM::Scouting.state(w)[:cands].reject { |c| c[:legend] }
     assert cands.size >= 3
     assert_equal(-FM::Scout::FEE, p.wallet.totals[:scout])
     e = FM::Recruit.sign(p, cands.first, date: w.calendar.date)
@@ -61,7 +63,7 @@ class TestPlayer < Minitest::Test
     p = w.clubs["P"]
     cap = FM::Build.squad_size(p.clubhouse)
     p.squad << FM::Mon.new(species: "PIDGEY", bst: 251, level: 12, stars: 1) while p.squad.size < cap
-    cand = w.player_scout("KANTO").first
+    cand = FM::Scouting.generate(w, p, 1, region: "KANTO", keep: 4, date: w.calendar.date, rng: Random.new(1)).first
     assert_raises(ArgumentError) { FM::Recruit.sign(p, cand, date: w.calendar.date) }
     out = p.squad.last
     FM::Recruit.sign(p, cand, date: w.calendar.date, release: out)

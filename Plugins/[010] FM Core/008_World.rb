@@ -256,15 +256,12 @@ module FM
     end
 
     # A scout trip in `region` for the player's club (FM::Recruit.scout).
-    # The PWT champion's scout reports may also bring an owner-less legend.
-    def player_scout(region)
-      c = @clubs.fetch(@player_club)
-      cands = Recruit.scout(c, pool: @species, region: region, avg_level: avg_level(region), rng: @rng,
-                               date: @calendar.date)
-      if cands && @leg_right && @leg_right[:club] == c.id && @rng.rand < Legend::SCOUT_CHANCE
-        (l = Legend.candidate(self, c, region, @rng)) && cands << l
-      end
-      cands
+    # The player's scouting office (FM::Scouting): assignments, the
+    # candidate list and the next regular report.
+    attr_accessor :scouting
+
+    def send_scout(region, type: nil)
+      Scouting.send(self, @clubs.fetch(@player_club), region, type: type, date: date)
     end
 
     # The PWT title's gift (free, outside the signing limit); `release`
@@ -375,6 +372,9 @@ module FM
             (e = cm.finish(self, date)) && events << e
           end
           undo_loans if @loans
+          if @player_club && @species
+            events.concat(Scouting.week(self, @clubs.fetch(@player_club), date: date, rng: @rng))
+          end
           events.concat(tour_week)
           events.concat(condition_week)
           events.concat(squad_week) if @species
