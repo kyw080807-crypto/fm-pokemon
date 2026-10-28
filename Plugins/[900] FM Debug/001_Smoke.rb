@@ -150,6 +150,11 @@ FM::Smoke.register("fm_menu_render") do
     year = FM.world.calendar.year
     FM::Log.info("smoke: #{opts.size} build options; scouted #{names.join(', ')}; " \
                  "signs #{club.signs_used(year)}/#{FM::Recruit.sign_limit(club, year)}")
+    # Design 04 대출: the row My Club shows.
+    FM::Credit.borrow(club, FM::Credit.limit(club) / 2, date: FM.world.calendar.date) unless club.loan
+    loan_row = FM::UI.my_club_rows(club.id).find { |t| t.include?("대출") }
+    raise "no loan row" unless loan_row
+    FM::Log.info("smoke: #{loan_row}; crisis label #{FM::UI.crisis_name(:austerity)}")
     # Battle parties can be built for real species (no battle is started:
     # that needs the map scene).
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })

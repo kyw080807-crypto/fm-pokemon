@@ -83,6 +83,7 @@ start_cities = city_sizes.call
 meetings = []
 squad_events = Hash.new(0)
 injuries = []
+crises = Hash.new(0)
 cup_champs = []
 start_funds = world.clubs.values.sum { |c| c.wallet.balance }
 growth = lambda do
@@ -103,6 +104,7 @@ time = Benchmark.realtime do
       meetings << e if e[:kind] == :meeting
       squad_events[e[:kind]] += 1 if %i[signed released youth].include?(e[:kind])
       injuries << e if e[:kind] == :injured
+      crises[e[:kind] == :crisis ? e[:stage] : e[:kind]] += 1 if %i[crisis bailout dismissed].include?(e[:kind])
       cup_champs << e.merge(year: e[:date][0]) if e[:kind] == :cup_champion
     end
   end
@@ -158,6 +160,7 @@ cs = world.clubs.values
 puts "squads: mean size #{(cs.sum { |c| c.squad.size }.fdiv(cs.size)).round(1)}, " \
      "signing events #{squad_events.sort.to_h}, retired or released mons #{cs.sum { |c| c.retired.size }}, " \
      "empty squads #{cs.count { |c| c.squad.empty? }}"
+puts "financial crises (design 04): #{crises.sort.to_h}"
 unless injuries.empty?
   per = injuries.size.fdiv(cs.size * years)
   by_med = injuries.group_by { |e| world.clubs[e[:club]].facilities.fetch(:MEDICAL, 0) }

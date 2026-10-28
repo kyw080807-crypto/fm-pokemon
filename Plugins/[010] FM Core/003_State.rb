@@ -45,8 +45,13 @@ module FM
     # Moves time forward and routes calendar boundary events to the systems
     # that react to them. Returns the events for callers (UI, news) to use.
     # With a world, the world's own calendar is the clock.
+    # A dismissed manager (FM::Credit :dismissed) no longer has a club.
     def advance_days(days)
-      return @world.advance_days(days) if @world
+      if @world
+        events = @world.advance_days(days)
+        self.player_club = nil if @player_club && events.any? { |e| e[:kind] == :dismissed && e[:club] == @player_club }
+        return events
+      end
       events = @calendar.advance(days)
       events.each do |kind, snap|
         @finance.on_calendar_event(kind, [snap[:year], snap[:month], snap[:day]])

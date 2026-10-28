@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -91,6 +91,7 @@ module FM
         when 7 then advance_week
         when 8 then choose_club
         when 9 then match_settings
+        when 10 then finance
         else break
         end
       end
@@ -126,6 +127,8 @@ module FM
       rows = []
       rows << _INTL("{1} · {2} · 순위 {3}위", c[:name], region_name(c[:region]), c[:position] || "-")
       rows << _INTL("잔고 {1} · 명성 {2} · 전력 {3}", money(c[:balance]), c[:fame], c[:rating])
+      rows << _INTL("대출 잔액 {1} (매주 {2} 상환)", money(c[:loan][:owed]), money(c[:loan][:part])) if c[:loan]
+      rows << _INTL("재정 위기: {1}", crisis_name(c[:crisis])) if c[:crisis]
       fac = c[:facilities].map { |k, lv| "#{facility_name(k)} Lv#{lv}" }.join(" · ")
       rows << _INTL("클럽하우스 Lv{1} · 경기장 Lv{2} · 이번 시즌 영입 {3}/{4}", c[:clubhouse], c[:stadium], c[:signs][:used],
                     c[:signs][:limit])
@@ -156,8 +159,61 @@ module FM
       FM.state.player_club && world.clubs[FM.state.player_club]
     end
 
+    CRISIS_NAMES = { warning: "경고 (잔고 마이너스)", austerity: "긴축 (새 공사·스카우트·영입 금지)",
+                     pressure: "해고 압박 (구제금융 뒤 다시 적자)" }.freeze
+
+    def crisis_name(stage) = _INTL(CRISIS_NAMES.fetch(stage, stage.to_s))
+
+    # 긴축 or worse: nothing new is started (design 04 재정 위기 단계).
+    def austerity_blocked?(club)
+      return false unless Credit.austerity?(club)
+      pbMessage(_INTL("재정 위기({1})라 새로 시작할 수 없습니다. 잔고를 회복하거나 대출을 검토하세요.", crisis_name(club.crisis)))
+      true
+    end
+
+    # Design 04 대출: one loan at a time, up to fame x ₽5,000, repaid weekly.
+    def finance
+      c = player_club or return
+      loop do
+        limit = Credit.limit(c)
+        head = if c.loan
+                 _INTL("대출 잔액 {1} · 매주 {2} 상환 (이자 주 {3}%)", money(c.loan[:owed]), money(c.loan[:part]),
+                       format("%.2f", Credit::LOAN_RATE * 100))
+               else
+                 _INTL("대출 한도 {1} (명성 × {2}) · {3}주 분할 상환, 이자 주 {4}%", money(limit), money(Credit::LIMIT_PER_FAME),
+                       Credit::TERM_WEEKS, format("%.2f", Credit::LOAN_RATE * 100))
+               end
+        head += "\n" + _INTL("재정 위기: {1}", crisis_name(c.crisis)) if c.crisis
+        cmds = []
+        cmds << _INTL("대출 받기") unless c.loan
+        cmds << _INTL("전액 상환 ({1})", money(c.loan[:owed])) if c.loan
+        cmds << _INTL("닫기")
+        i = pbMessage(head, cmds, cmds.size)
+        case cmds[i]
+        when _INTL("대출 받기")
+          unless Credit.can_borrow?(c, [limit, 1].max)
+            pbMessage(_INTL("지금은 대출을 받을 수 없습니다."))
+            next
+          end
+          amounts = [0.25, 0.5, 1.0].map { |f| (limit * f / 10_000).floor * 10_000 }.select(&:positive?).uniq
+          j = pbMessage(_INTL("얼마나 빌릴까요?"), amounts.map { |a| money(a) } + [_INTL("취소")], amounts.size + 1)
+          next if j >= amounts.size
+          Credit.borrow(c, amounts[j], date: world.calendar.date)
+          pbMessage(_INTL("{1}을 빌렸습니다. 매주 {2}씩 갚습니다.", money(amounts[j]), money(c.loan[:part])))
+        when nil, _INTL("닫기") then break
+        else
+          if c.wallet.balance < c.loan[:owed]
+            pbMessage(_INTL("잔고가 모자랍니다."))
+          elsif pbConfirmMessage(_INTL("{1}를 지금 갚을까요?", money(c.loan[:owed])))
+            Credit.repay_all(c, date: world.calendar.date)
+          end
+        end
+      end
+    end
+
     def invest
       c = player_club or return
+      return if austerity_blocked?(c)
       if c.project
         pbMessage(_INTL("{1} Lv{2} 공사 중입니다 ({3} 완공). 한 번에 하나만 지을 수 있습니다.",
                         facility_name(c.project[:target]), c.project[:to], date_text(c.project[:done])))
@@ -188,6 +244,7 @@ module FM
     # the range; travel isn't built yet).
     def scout
       c = player_club or return
+      return if austerity_blocked?(c)
       year = world.calendar.year
       left = Recruit.signs_left(c, year)
       limit = Recruit.sign_limit(c, year)
@@ -595,7 +652,8 @@ module FM
     # The player's matches this week can be fought for real (FM::Battle);
     # the hook is only on while the player advances time from this menu.
     def advance_week
-      if FM.state.player_club
+      id = FM.state.player_club   # taken before: a dismissal clears it
+      if id
         FM::World.player_match = method(:player_match)
         Meeting.player_hook = method(:player_meeting)
       end
@@ -605,7 +663,6 @@ module FM
         FM::World.player_match = nil
         Meeting.player_hook = nil
       end
-      id = FM.state.player_club
       lines = events.filter_map do |e|
         case e[:kind]
         when :league_round
@@ -620,6 +677,13 @@ module FM
           _INTL("{1} vs {2}: {3} ({4})", date_text(e[:date]), opp, outcome, score)
         when :built
           _INTL("{1} 완공", facility_name(e[:what])) if e[:club] == id
+        when :crisis
+          _INTL("재정 위기: {1}", crisis_name(e[:stage])) if e[:club] == id
+        when :bailout
+          _INTL("리그 구제금융: 빚 {1}을 대신 갚았다 (명성 −{2}, 다음 시즌 영입 한도 −1)", money(e[:amount]),
+                Credit::BAILOUT_FAME) if e[:club] == id
+        when :dismissed
+          _INTL("구단주가 감독을 해고했다. 새 클럽을 골라야 한다.") if e[:club] == id
         when :meeting
           next unless id && e[:votes].key?(id)
           result = e[:passed] ? _INTL("통과") : _INTL("부결")

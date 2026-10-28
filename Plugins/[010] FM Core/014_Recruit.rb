@@ -50,9 +50,11 @@ module FM
     # no position yet -> 3 (free youth call-ups don't count).
     def prev_pos(club, year) = club.history.dig(year - 1, :pos)
 
+    # (FM::Credit: one fewer the season after a bailout.)
     def sign_limit(club, year)
       p = prev_pos(club, year)
-      p.nil? ? 3 : p <= 4 ? 2 : p <= 10 ? 3 : 4
+      n = p.nil? ? 3 : p <= 4 ? 2 : p <= 10 ? 3 : 4
+      [n - Credit.sign_penalty(club, year), 1].max
     end
 
     def signs_left(club, year) = sign_limit(club, year) - club.signs_used(year)
@@ -86,7 +88,7 @@ module FM
     end
 
     def weekly(club, pool:, regions:, avg_level:, window:, date:, rng:)
-      return if signs_left(club, date[0]) <= 0
+      return if signs_left(club, date[0]) <= 0 || Credit.austerity?(club)
       cap = Build.squad_size(club.clubhouse)
       size = club.squad.size
       soon = club.squad.count { |m| m.age >= m.life - 1 }

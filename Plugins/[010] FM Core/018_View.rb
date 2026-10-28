@@ -31,7 +31,8 @@ module FM
             rehab: m.rehab, debuffs: m.debuffs }
         end,
         last_year: c.history[world.calendar.year - 1],
-        signs: { used: c.signs_used(world.calendar.year), limit: Recruit.sign_limit(c, world.calendar.year) } }
+        signs: { used: c.signs_used(world.calendar.year), limit: Recruit.sign_limit(c, world.calendar.year) },
+        loan: c.loan && c.loan.slice(:owed, :part), crisis: c.crisis, credit_limit: Credit.limit(c) }
     end
 
     # Where we are in the season and what comes next.

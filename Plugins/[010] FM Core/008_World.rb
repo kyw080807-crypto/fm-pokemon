@@ -41,6 +41,11 @@ module FM
       @form    = []
     end
 
+    # FM::Credit state. Older saves: no loan, never in the red.
+    attr_accessor :loan, :crisis, :bailed
+    attr_writer :red_weeks
+    def red_weeks = @red_weeks || 0
+
     # Signings this season (Recruit.sign_limit). Older saves: none yet.
     def signs_used(year) = @signs && @signs[:year] == year ? @signs[:n] : 0
 
@@ -249,6 +254,7 @@ module FM
           events << { kind: :new_year, year: @calendar.year }
         when :new_week
           weekly_economy
+          @clubs.each_value { |c| events.concat(Credit.week(c, date: date, calendar: @calendar)) }
           city_economy
           events.concat(finish_projects)
           events.concat(finish_city_projects)
@@ -259,7 +265,7 @@ module FM
           undo_loans if @loans
           events.concat(condition_week)
           events.concat(squad_week) if @species
-          @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) }
+          @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) && !Credit.austerity?(c) }
         when :new_month
           events.concat(Meeting.monthly(self, date: date))
           if Committee::QUARTER_MONTHS.include?(@calendar.month)
