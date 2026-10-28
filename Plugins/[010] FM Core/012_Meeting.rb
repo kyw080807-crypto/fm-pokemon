@@ -17,7 +17,29 @@ module FM
       world.cities.each_value.filter_map do |city|
         next if city.capital? || city.project || city.club_ids.empty?
         members = city.club_ids.map { |id| world.clubs[id] }
-        expansion(world, city, members, date) || infrastructure(world, city, members, date)
+        expansion(world, city, members, date) || infrastructure(world, city, members, date) ||
+          tax(world, city, members, date)
+      end
+    end
+
+    # Agenda 3 (design 02 공공 예산 배분과 세율): cut tax when citizens are
+    # unhappy, raise it when the budget can't pay for the next public step.
+    def tax(world, city, members, date)
+      rate = city.tax_rate
+      raise_it = if city.satisfaction < Civic::LOW_SATISFACTION && rate > Civic::TAX_RATE_RANGE.min then false
+                 elsif rate < Civic::TAX_RATE_RANGE.max && (step = Civic.infra_step(city)) &&
+                       city.budget.balance - city.weekly_upkeep * Civic::BUDGET_RESERVE_WEEKS < step[:cost]
+                   true
+                 end
+      return nil if raise_it.nil?
+      target = raise_it ? :raise : :lower
+      hold(world, city, members, date, agenda: :tax, cost: 0, target: target) do |c, _|
+        yes = Vote.tax_yes?(c.traits, raise: raise_it)
+        [yes, yes ? nil : (raise_it ? :prefers_team : :no_need)]
+      end.tap do |e|
+        next unless e && e[:passed]
+        delta = raise_it ? Civic::TAX_STEP : -Civic::TAX_STEP
+        city.tax_rate = (rate + delta).round(2).clamp(Civic::TAX_RATE_RANGE.min, Civic::TAX_RATE_RANGE.max)
       end
     end
 
@@ -77,7 +99,7 @@ module FM
           c.wallet.record(-s, category: :city, date: date, memo: "#{agenda} #{city.id}") if s.positive?
         end
       else
-        city.unrest += 1
+        city.vote_failed
       end
       { kind: :meeting, agenda: agenda, target: target, city: city.id, date: date, cost: cost,
         city_part: city_part, passed: passed, votes: votes }

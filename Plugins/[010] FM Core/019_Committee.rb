@@ -21,7 +21,7 @@ module FM
     DUES_PER_FAME = 10              # ₽ per fame point per week (draft)
     HQ_INCOME_PER_LEVEL = 1500      # ₽ per week (draft: broadcast rights, league sponsors)
     BROADCAST_PER_LEVEL = 150       # ₽ per club per week (draft)
-    COST_MUL = 2.0                  # x club building step cost (draft)
+    COST_MUL = 4.0                  # x club building step cost (draft)
     QUARTER_MONTHS = [1, 4, 7, 10].freeze
     GYM_SEATS = 2
 
@@ -132,9 +132,11 @@ module FM
       paid = 0
       bottom.each_with_index do |id, i|
         amount = pot * weights[i] / total
+        next unless amount.positive?
         world.clubs[id].wallet.record(amount, category: :distribution, date: date)
         paid += amount
       end
+      return nil unless paid.positive?
       c.budget.record(-paid, category: :distribution, date: date)
       { kind: :distribution, region: @region, amount: paid, date: date }
     end

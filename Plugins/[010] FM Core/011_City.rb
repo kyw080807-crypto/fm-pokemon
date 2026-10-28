@@ -23,6 +23,16 @@ module FM
     # idle and clubs short: 53 of 17,279 meetings passed in a 20-year run.)
     BUDGET_RESERVE_WEEKS = 26
 
+    # Tax rate and satisfaction (design 04; numbers are drafts).
+    TAX_RATE_RANGE = (0.5..1.5).freeze
+    TAX_STEP = 0.1
+    SATISFACTION_START = 60.0
+    SATISFACTION_BASE = 60.0       # where satisfaction settles at the normal rate
+    SATISFACTION_PER_TAX = 50.0    # x1.2 tax -> settles 10 lower
+    SATISFACTION_DRIFT = 0.05      # share of the gap closed each week
+    FAILED_VOTE_HIT = 2.0
+    LOW_SATISFACTION = 40.0
+
     # Design 05, by transport level 0-5 (0 = no transport building).
     TRANSPORT_DAYS = [3, 2, 2, 1, 1, 0].freeze
     FAN_FACTOR     = [0.4, 0.6, 0.8, 1.0, 1.2, 1.4].freeze
@@ -86,6 +96,27 @@ module FM
   class City
     attr_reader :id, :name, :region, :form, :budget, :buildings, :club_ids
     attr_accessor :size, :free_plots, :project, :unrest
+    attr_writer :tax_rate, :satisfaction
+
+    # Defaults cover cities saved before these existed.
+    def tax_rate = @tax_rate || 1.0
+    def satisfaction = @satisfaction || Civic::SATISFACTION_START
+
+    # Weekly drift toward the level the tax rate allows (design 04: higher
+    # tax, lower satisfaction).
+    def drift_satisfaction
+      target = Civic::SATISFACTION_BASE - (tax_rate - 1.0) * Civic::SATISFACTION_PER_TAX
+      @satisfaction = (satisfaction + (target - satisfaction) * Civic::SATISFACTION_DRIFT).clamp(0.0, 100.0)
+    end
+
+    # A failed vote leaves citizens unhappy (design 02: 방치하면 시민 불만).
+    def vote_failed
+      @unrest += 1
+      @satisfaction = (satisfaction - Civic::FAILED_VOTE_HIT).clamp(0.0, 100.0)
+    end
+
+    # Home crowds scale with satisfaction: 0.85 at 0, 1.0 at 50, 1.15 at 100 (draft).
+    def crowd_mood = 0.85 + 0.3 * satisfaction / 100.0
 
     def initialize(data)
       @id, @name, @region, @form = data.values_at(:id, :name, :region, :form)
@@ -166,6 +197,17 @@ module FM
       t = v[:traits]
       fit = 0.3 * t[:civic] + 0.4 * t[:commercial] + 0.2 * t[:cooperative]
       score(fit: fit, gain: 0.5, share: share, spare: v[:spare], relation: v.fetch(:relation, 0.0)).positive?
+    end
+
+    # Raising tax funds the city but cools crowds; lowering it the reverse.
+    # City-minded, cooperative trainers back raises; commercial ones back cuts
+    # (draft weights).
+    def tax_yes?(traits, raise:)
+      t = traits
+      score = if raise then 0.1 + 0.4 * t[:civic] + 0.2 * t[:cooperative] - 0.3 * t[:commercial]
+              else 0.2 + 0.3 * t[:commercial] - 0.2 * t[:civic]
+              end
+      score.positive?
     end
 
     def score(fit:, gain:, share:, spare:, relation:)

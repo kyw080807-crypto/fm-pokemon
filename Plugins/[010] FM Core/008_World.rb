@@ -251,7 +251,8 @@ module FM
         fans = hc && ac && Civic.away_fans(away_fame: away.fame, from: ac, to: hc,
                                            capacity: Economy.capacity(home.stadium))
         gate = Economy.gate(home_fame: home.fame, away_fame: away.fame, wins: home.recent_wins,
-                            stadium: home.stadium, rng: @rng, away: fans && fans[:fans])
+                            stadium: home.stadium, rng: @rng, away: fans && fans[:fans],
+                            mood: hc ? hc.crowd_mood : 1.0)
         tourism = fans ? (fans[:lodging] * Civic::LODGE_SPEND).round : 0
         hc.budget.record(tourism, category: :tourism, date: date) if tourism.positive?
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
@@ -372,7 +373,8 @@ module FM
 
     def city_economy
       @cities.each_value do |c|
-        c.budget.record(Civic.weekly_tax(c.size), category: :tax, date: date)
+        c.budget.record((Civic.weekly_tax(c.size) * c.tax_rate).round, category: :tax, date: date)
+        c.drift_satisfaction
         keep = c.weekly_upkeep
         c.budget.record(-keep, category: :upkeep, date: date) if keep.positive?
       end

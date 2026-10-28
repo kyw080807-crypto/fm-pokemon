@@ -78,14 +78,14 @@ module FM
     # link = design 05 travel factor L (1.0 = same region at transport Lv3).
     # away: away fans already worked out (FM::Civic.away_fans); else the
     # simple formula with travel factor `link`.
-    def demand(home_fame:, away_fame:, wins:, capacity:, link: 1.0, away: nil)
+    def demand(home_fame:, away_fame:, wins:, capacity:, link: 1.0, away: nil, mood: 1.0)
       away ||= [fame_eff(away_fame) * 25 * link, capacity * AWAY_SECTION].min
-      (500 + fame_eff(home_fame) * 45 + away) * (0.8 + 0.1 * wins)
+      (500 + fame_eff(home_fame) * 45 + away) * (0.8 + 0.1 * wins) * mood
     end
 
-    def gate(home_fame:, away_fame:, wins:, stadium:, rng:, link: 1.0, away: nil)
+    def gate(home_fame:, away_fame:, wins:, stadium:, rng:, link: 1.0, away: nil, mood: 1.0)
       cap = capacity(stadium)
-      d = demand(home_fame: home_fame, away_fame: away_fame, wins: wins, capacity: cap, link: link, away: away)
+      d = demand(home_fame: home_fame, away_fame: away_fame, wins: wins, capacity: cap, link: link, away: away, mood: mood)
       att = [cap, (d * (0.92 + rng.rand * 0.16)).round].min
       p = price(home_fame)
       { attendance: att, price: p, revenue: att * p }

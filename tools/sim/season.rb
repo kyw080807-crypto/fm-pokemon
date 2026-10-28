@@ -145,6 +145,8 @@ caps = world.cities.values.select(&:capital?).map { |c| c.budget.balance }.sort
 puts "capital budgets: min #{won.(caps.first)}, median #{won.(caps[caps.size / 2])}"
 ordinary = world.cities.values.reject(&:capital?)
 puts "ordinary cities transport #{ordinary.map(&:transport).tally.sort.to_h}, hotel #{ordinary.map(&:hotel).tally.sort.to_h}"
+puts "tax rates #{world.cities.values.map(&:tax_rate).tally.sort.to_h}; satisfaction " \
+     "#{world.cities.values.map { |c| (c.satisfaction / 10).floor * 10 }.tally.sort.to_h}"
 budgets = world.cities.values.map { |c| c.budget.balance }.sort
 puts "city budgets: median #{won.(budgets[budgets.size / 2])}, negative #{budgets.count(&:negative?)} of #{budgets.size}"
 cs = world.clubs.values
