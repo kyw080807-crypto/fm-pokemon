@@ -79,6 +79,23 @@ module FM
       Battle.auto = Battle.fast = false
       $player.party = saved if saved
     end
+
+    # The same battle with no scene and the AI on both sides (as the Battle
+    # Frontier generator does: DebugSceneNoVisuals, controlPlayer). Debug
+    # mode caps it at 100 rounds (then the engine judges on remaining HP).
+    # Used to calibrate MatchSim against real results. a = first club.
+    def simulate(a, b)
+      ta = trainer_for(a)
+      tb = trainer_for(b)
+      battle = ::Battle.new(::Battle::DebugSceneNoVisuals.new, ta.party, tb.party, [ta], [tb])
+      battle.debug = true
+      battle.controlPlayer = true
+      battle.internalBattle = false
+      decision = battle.pbStartBattle
+      ko_a = tb.party.count(&:fainted?)
+      ko_b = ta.party.count(&:fainted?)
+      { res: { 1 => 1, 2 => -1 }.fetch(decision, 0), ko_a: ko_a, ko_b: ko_b, turns: battle.turnCount }
+    end
   end
 end
 

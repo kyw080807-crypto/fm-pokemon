@@ -4,14 +4,15 @@
 # each side brings 3 of its 6 (all Lv50); a win means knocking out all 3.
 #
 # Strength is a team rating on the scale of its picked mons' base stat totals
-# (~300-700). All constants are first guesses, to be calibrated against real
-# battle results by headless runs (roadmap stage 1).
+# (~300-700). SCALE and DRAW_RATE are fitted to 1,000 real AI-vs-AI battles
+# (smoke check battle_calibration, docs/design/README.md 실전 보정); real
+# battles have no home side, so HOME_EDGE is still a guess.
 #===============================================================================
 module FM
   module MatchSim
-    SCALE     = 55.0    # rating gap that moves win odds by a factor of e
+    SCALE     = 90.0    # rating gap that moves win odds by a factor of e (real battles, below)
     HOME_EDGE = 8.0     # home advantage in rating points
-    DRAW_RATE = 0.03    # both sides left standing at the turn cap
+    DRAW_RATE = 0.006   # both sides left standing at the turn cap
 
     module_function
 

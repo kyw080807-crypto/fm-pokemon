@@ -166,6 +166,55 @@ FM::Smoke.register("fm_menu_render") do
   end
 end
 
+# Stage 3 (직접 전투와 자동 진행이 시즌에 맞는다): real AI-vs-AI battles
+# between clubs against MatchSim's neutral win odds. Slow, so only with
+# logs/calibrate.flag (delete it after). Pairs are clubs of one region on
+# day 60 of a seeded world; the result table and the best-fitting SCALE
+# go to the log.
+FM::Smoke.register("battle_calibration") do
+  next FM::Log.info("smoke: battle_calibration skipped (no logs/calibrate.flag)") unless File.exist?("logs/calibrate.flag")
+  n = File.read("logs/calibrate.flag").to_i
+  n = 300 unless n.positive?
+  # Battles read game globals that only exist once a game is loaded.
+  $game_switches  ||= Game_Switches.new
+  $game_variables ||= Game_Variables.new
+  $PokemonGlobal  ||= PokemonGlobalMetadata.new
+  $bag            ||= PokemonBag.new
+  $player         ||= Player.new("FM", :POKEMONTRAINER_Red)
+  w = FM::Bridge.build_world(seed: 11)
+  w.advance_days(60)
+  rng = Random.new(5)
+  by_region = w.clubs.values.group_by(&:region).values
+  games = []
+  t = Time.now
+  n.times do
+    a, b = by_region.sample(random: rng).sample(2, random: rng)
+    r = FM::Battle.simulate(a, b)
+    games << [a.rating - b.rating, r]
+  end
+  secs = Time.now - t
+  bins = [-Float::INFINITY, -100, -50, -20, 20, 50, 100, Float::INFINITY]
+  bins.each_cons(2) do |lo, hi|
+    g = games.select { |d, _| d >= lo && d < hi }
+    next if g.empty?
+    real = g.sum { |_, r| r[:res].positive? ? 1.0 : (r[:res].zero? ? 0.5 : 0.0) } / g.size
+    sim = g.sum { |d, _| FM::MatchSim.win_probability(d, 0, neutral: true) } / g.size
+    FM::Log.info(format("smoke: calib gap %5s..%-5s n=%3d real %.2f sim %.2f", lo, hi, g.size, real, sim))
+  end
+  decided = games.reject { |_, r| r[:res].zero? }
+  ll = lambda do |scale|
+    decided.sum do |d, r|
+      p = 1.0 / (1.0 + Math.exp(-d / scale))
+      Math.log(r[:res].positive? ? p : 1 - p)
+    end
+  end
+  best = (20..400).step(5).max_by { |sc| ll.call(sc.to_f) }
+  draws = games.size - decided.size
+  turns = games.sum { |_, r| r[:turns] }.fdiv(games.size)
+  FM::Log.info(format("smoke: calib %d battles in %.1fs, draws %d, avg %.1f turns, best SCALE %d (now %.0f)",
+                      games.size, secs, draws, turns, best, FM::MatchSim::SCALE))
+end
+
 # Run just before the title screen: by then Compiler.main has compiled and
 # Game.set_up_system has loaded GameData (Data/Scripts/999_Main/999_Main.rb).
 # Running at plugin load would see empty GameData.
