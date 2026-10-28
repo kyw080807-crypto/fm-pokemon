@@ -55,7 +55,10 @@ SCHEMAS = {
     "Evolution" => { repeat: true, check: :evolution },
     "Types"     => { required: true, check: /\A[A-Z]+(,[A-Z]+)?\z/ },
     "Prev"      => { check: :species_id },
-    "BaseStats" => { required: true, check: /\A\d+(,\d+){5}\z/ }
+    "BaseStats" => { required: true, check: /\A\d+(,\d+){5}\z/ },
+    "EggGroups" => { required: true, check: /\A[A-Za-z0-9 ]+(,[A-Za-z0-9 ]+)?\z/ },
+    "GenderRatio" => { required: true, check: %w[AlwaysMale AlwaysFemale Genderless FemaleOneEighth Female25Percent
+                                                Female50Percent Female75Percent FemaleSevenEighths] }
   }
 }.freeze
 

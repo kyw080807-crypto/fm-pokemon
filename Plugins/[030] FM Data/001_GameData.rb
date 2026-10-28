@@ -88,7 +88,7 @@ module GameData
   end
 
   class FmSpecies
-    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :types, :prev, :base_stats,
+    attr_reader :id, :real_name, :dex, :bst, :final_bst, :tier, :region, :basic, :evolutions, :types, :prev, :base_stats, :egg_groups, :gender_ratio,
                 :pbs_file_suffix
 
     DATA = {}
@@ -106,7 +106,9 @@ module GameData
       "Evolution"   => [:evolutions, "^mu"],
       "Types"       => [:types,      "*m"],   # Poké Manager's (lower-case there)
       "Prev"        => [:prev,       "m"],
-      "BaseStats"   => [:base_stats, "*u"]   # HP, Atk, Def, SpA, SpD, Spe
+      "BaseStats"   => [:base_stats, "*u"],   # HP, Atk, Def, SpA, SpD, Spe
+      "EggGroups"   => [:egg_groups, "*s"],   # Essentials' (FM::Daycare)
+      "GenderRatio" => [:gender_ratio, "s"]
     }
 
     extend ClassMethodsSymbols
@@ -125,6 +127,8 @@ module GameData
       @types      = hash[:types] || []
       @prev       = hash[:prev]
       @base_stats = hash[:base_stats] || []
+      @egg_groups = hash[:egg_groups] || []
+      @gender_ratio = hash[:gender_ratio] || "Female50Percent"
       @pbs_file_suffix = hash[:pbs_file_suffix] || ""
     end
   end

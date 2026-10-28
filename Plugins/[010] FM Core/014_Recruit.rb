@@ -20,7 +20,8 @@ module FM
 
     module_function
 
-    def home?(club, mon, pool) = Scout.home?(pool, mon.species, club.region)
+    # (A mon hatched at the club's daycare counts as homegrown there.)
+    def home?(club, mon, pool) = mon.hatched_by == club.id || Scout.home?(pool, mon.species, club.region)
 
     def foreign_cap(club) = [Build.squad_size(club.clubhouse) - HG_MIN, 0].max
     def foreign_count(club, pool, except: nil) = club.squad.count { |m| !m.equal?(except) && !home?(club, m, pool) }

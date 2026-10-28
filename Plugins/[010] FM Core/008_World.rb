@@ -42,6 +42,9 @@ module FM
       @form    = []
     end
 
+    # FM::Daycare: { pairs: [[mon, mon], ...], eggs: [{ mon:, hatch: }] }.
+    attr_accessor :daycare
+
     # FM::Credit state. Older saves: no loan, never in the red.
     attr_accessor :loan, :crisis, :bailed
     attr_writer :red_weeks
@@ -271,6 +274,15 @@ module FM
       @league_date_set ||= league_dates.to_h { |d| [d, true] }   # (no Set: mkxp-z may lack the library)
     end
 
+    # Daycare (FM::Daycare): the AI pairs every 13 weeks; eggs come and hatch.
+    def daycare_week
+      week_no = @calendar.days_between([@calendar.year, 1, 1], date) / 7 + 1
+      @clubs.each_value.flat_map do |c|
+        Daycare.ai_pick(self, c, week_no) if ai?(c)
+        Daycare.week(self, c, @rng)
+      end
+    end
+
     # tourWeek
     def tour_week
       week = this_week
@@ -440,6 +452,7 @@ module FM
             events.concat(Scouting.week(self, @clubs.fetch(@player_club), date: date, rng: @rng))
           end
           events.concat(tour_week)
+          events.concat(daycare_week) if @species
           events.concat(condition_week)
           morale_week
           events.concat(squad_week) if @species

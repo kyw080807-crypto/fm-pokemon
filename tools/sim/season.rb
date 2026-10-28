@@ -38,7 +38,8 @@ def species_data
            region: s["Region"].first, basic: s["Basic"].first == "true",
            evo: s["Evolution"].map { |e| to, lv = e.split(","); [to, lv.to_i] },
            types: (s["Types"].first || "").split(","), prev: s["Prev"].first,
-           base: (s["BaseStats"].first || "").split(",").map(&:to_i) }]
+           base: (s["BaseStats"].first || "").split(",").map(&:to_i),
+           eggs: (s["EggGroups"].first || "").split(","), gender: s["GenderRatio"].first }]
   end
 end
 

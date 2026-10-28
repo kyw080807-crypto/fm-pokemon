@@ -50,6 +50,8 @@ module FM
     attr_writer :disob
     def disob = @disob || 0
     attr_accessor :opened
+    # Hatched at a club's daycare (homegrown there) and from which parents.
+    attr_accessor :hatched_by, :parents
     # The Monday it last evolved (pride: newly evolved mons are proud).
     attr_accessor :evo_week
     def mor = @mor || 60

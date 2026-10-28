@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -94,6 +94,7 @@ module FM
         when 10 then finance
         when 11 then coaches
         when 12 then tour
+        when 13 then daycare
         else break
         end
       end
@@ -248,6 +249,82 @@ module FM
 
     STAT_NAMES = %w[체력 공격 방어 특공 특방 스피드].freeze
 
+    EGG_NAMES = { "Monster" => "괴수", "Water1" => "수중1", "Water2" => "수중2", "Water3" => "수중3", "Bug" => "벌레",
+                  "Flying" => "비행", "Field" => "육상", "Fairy" => "요정", "Grass" => "식물", "Humanlike" => "인간형",
+                  "Mineral" => "광물", "Amorphous" => "부정형", "Ditto" => "메타몽", "Dragon" => "드래곤",
+                  "Undiscovered" => "미발견" }.freeze
+    COMPAT_WHY = { pick_two: "두 마리를 골라야 합니다.", legend: "전설·준전설은 알을 낳지 않습니다.",
+                   undiscovered: "알을 낳을 수 없는 포켓몬입니다 (미발견 그룹).", two_dittos: "메타몽끼리는 알을 낳지 않습니다.",
+                   genderless: "성별이 없는 포켓몬은 메타몽하고만 알을 낳습니다.", same_gender: "수컷과 암컷이어야 합니다.",
+                   egg_group: "알 그룹이 다릅니다." }.freeze
+
+    def gender_mark(mon) = { M: "♂", F: "♀", N: "" }[Daycare.gender(world.species, mon)]
+
+    def dc_line(mon)
+      groups = Daycare.eggs(world.species, mon).map { |g| _INTL(EGG_NAMES.fetch(g, g)) }.join("·")
+      _INTL("{1}{2} ★{3} · {4}", species_name(mon.species), gender_mark(mon), mon.stars, groups)
+    end
+
+    # Poké Manager 키우미집: retired mons (not coaching) and Ditto breed.
+    def daycare
+      c = player_club or return
+      unless Daycare.built?(c)
+        pbMessage(_INTL("키우미집이 없습니다. 시설 투자에서 키우미집을 지으면 은퇴한 포켓몬끼리 알을 낳게 할 수 있습니다."))
+        return
+      end
+      loop do
+        st = Daycare.state(c)
+        head = _INTL("키우미집 · 짝 {1}/{2} · 알 {3}/{4} · 짝마다 주 {5}", st[:pairs].size, Daycare.slots(c), st[:eggs].size,
+                     Daycare.egg_max(c), money(Daycare::FEE))
+        cmds = [_INTL("짝 짓기"), _INTL("짝 풀기 ({1})", st[:pairs].size), _INTL("알 ({1})", st[:eggs].size), _INTL("닫기")]
+        case pbMessage(head, cmds, cmds.size)
+        when 0 then daycare_pair(c)
+        when 1
+          next if st[:pairs].empty?
+          rows = st[:pairs].map { |x, y| _INTL("{1} × {2}", dc_line(x), dc_line(y)) }
+          i = pbMessage(_INTL("어느 짝을 풀까요?"), rows + [_INTL("취소")], rows.size + 1)
+          st[:pairs].delete_at(i) if i < rows.size
+        when 2
+          rows = st[:eggs].map do |e|
+            wait = e[:waiting] ? _INTL(" · 자리가 없어 기다리는 중") : ""
+            _INTL("{1}의 알 · {2} 부화{3}", species_name(e[:mon].species), date_text(e[:hatch]), wait)
+          end
+          show_list(_INTL("키우미집 알"), rows)
+        else break
+        end
+      end
+    end
+
+    def daycare_pair(c)
+      st = Daycare.state(c)
+      if st[:pairs].size >= Daycare.slots(c)
+        pbMessage(_INTL("짝 자리가 없습니다 (키우미집 단계를 올리면 늘어납니다)."))
+        return
+      end
+      pool = Daycare.candidates(world.species, c).reject { |m| Daycare.paired?(c, m) }
+      if pool.size < 2
+        pbMessage(_INTL("맡길 포켓몬이 모자랍니다. 은퇴한 포켓몬(코치 제외)이나 메타몽이 필요합니다."))
+        return
+      end
+      i = pbMessage(_INTL("첫 번째 포켓몬"), pool.map { |m| dc_line(m) } + [_INTL("취소")], pool.size + 1)
+      return if i >= pool.size
+      rest = pool - [pool[i]]
+      j = pbMessage(_INTL("짝지을 포켓몬"), rest.map { |m| dc_line(m) } + [_INTL("취소")], rest.size + 1)
+      return if j >= rest.size
+      a, b = pool[i], rest[j]
+      cp = Daycare.compat(world.species, a, b)
+      unless cp[:ok]
+        pbMessage(_INTL(COMPAT_WHY.fetch(cp[:why], "알을 낳을 수 없습니다.")))
+        return
+      end
+      baby = Daycare.baby_species(world.species, Daycare.mother(world.species, a, b))
+      return unless pbConfirmMessage(_INTL("궁합 {1} (주에 {2}%). {3}의 알을 기다릴까요? (짝마다 주 {4})",
+                                           cp[:rate] >= 0.1 ? _INTL("아주 좋음") : cp[:rate] >= 0.06 ? _INTL("좋음") : _INTL("그럭저럭"),
+                                           (cp[:rate] * Daycare.rate_mul(c) * 100).round, species_name(baby), money(Daycare::FEE)))
+      a.coach = b.coach = false
+      st[:pairs] << [a, b]
+    end
+
     # Poké Manager 원정 친선 투어: a week without official matches, for fees.
     def tour
       c = player_club or return
@@ -298,6 +375,8 @@ module FM
         if m.coach
           m.coach = false
           pbMessage(_INTL("{1}이 코치에서 물러났습니다.", species_name(m.species)))
+        elsif Daycare.paired?(c, m)
+          pbMessage(_INTL("{1}은(는) 키우미집에 맡겨져 있습니다. 먼저 짝을 풀어 주세요.", species_name(m.species)))
         elsif staff.size >= slots
           pbMessage(_INTL("코치 자리가 없습니다. 훈련장 단계를 올리면 자리가 늘어납니다."))
         else
@@ -967,6 +1046,14 @@ module FM
           next unless e[:club] == id
           moods = e[:moods].map { |k, n| _INTL("{1} {2}", _INTL(MOOD_NAMES[k]), n) }.join(" · ")
           _INTL("라커룸 토크 \"{1}\": {2}", _INTL(TALK_TEXT[e[:talk]][0]), moods)
+        when :egg
+          _INTL("키우미집에 {1}의 알이 생겼다", species_name(e[:species])) if e[:club] == id
+        when :hatched
+          next unless e[:club] == id
+          _INTL("키우미집에서 {1}이(가) 태어났다 ({2} × {3} · ★{4})", species_name(e[:species]), species_name(e[:parents][0]),
+                species_name(e[:parents][1]), e[:stars])
+        when :egg_waiting
+          _INTL("{1}의 알이 부화했지만 스쿼드에 자리가 없다 (키우미집에서 기다림)", species_name(e[:species])) if e[:club] == id
         when :tour
           _INTL("원정 친선 투어: 출전료 {1} · 엔트리 컨디션 −{2}, 이번 주 훈련 쉼", money(e[:pay]), Tour::COND) if e[:club] == id
         when :crisis

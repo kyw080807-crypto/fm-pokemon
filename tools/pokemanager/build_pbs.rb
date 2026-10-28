@@ -55,6 +55,19 @@ die "#{trainers_path} missing: run tools/pokemanager/export.rb" unless File.exis
 trainers = JSON.parse(File.read(trainers_path, encoding: "utf-8"))
 locked = JSON.parse(File.read(File.join(__dir__, "data", "rosters.json"), encoding: "utf-8"))["trainers"]
 ids = species_ids
+
+# Breeding data from Essentials' own species PBS (FM::Daycare): egg groups and
+# gender ratio, keyed by species ID.
+def breeding
+  %w[pokemon.txt pokemon_base_Gen_9_Pack.txt].each_with_object({}) do |f, h|
+    File.read(File.join(ROOT, "PBS", f), encoding: "bom|utf-8").split(/^\[/).drop(1).each do |sec|
+      id = sec[/\A([A-Za-z0-9_]+)\]/, 1] or next
+      h[id] = { eggs: sec[/^EggGroups = (.+)$/, 1]&.strip || "Undiscovered",
+                gender: sec[/^GenderRatio = (.+)$/, 1]&.strip || "Female50Percent" }
+    end
+  end
+end
+breed = breeding
 die "expected 1025 species, got #{ids.size}" unless ids.size == 1025
 
 # Resolve a short design-doc name ("하준★", "자매") to one Poké Manager trainer.
@@ -188,6 +201,8 @@ dex.each do |d|
   species_txt << "Basic = #{d['prev'] ? 'false' : 'true'}\n"
   species_txt << "Types = #{d['types'].map(&:upcase).join(',')}\n"
   species_txt << "BaseStats = #{d['base'].join(',')}\n"   # HP, Atk, Def, SpA, SpD, Spe (coachSpec)
+  br = breed.fetch(ids[d['num'] - 1])
+  species_txt << "EggGroups = #{br[:eggs]}\nGenderRatio = #{br[:gender]}\n"
   species_txt << "Prev = #{ids[d['prev'] - 1]}\n" if d["prev"]
   d["evo"].each { |e| species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}\n" }
 end

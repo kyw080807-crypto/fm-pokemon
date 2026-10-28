@@ -173,6 +173,11 @@ FM::Smoke.register("fm_menu_render") do
                  "#{FM::UI::STAT_NAMES[FM::Coach.spec(FM.world.species, old)]}, slots #{FM::Coach.slots(club)}, " \
                  "lv x#{fx[:lv].round(3)} ev x#{fx[:ev].round(3)}")
     FM::Log.info("smoke: tour pay #{FM::UI.money(FM::Tour.pay(club))}, match week #{FM.world.official_match_week?(club)}")
+    # Daycare: Essentials' egg groups and gender ratios compiled.
+    pool = FM.world.species
+    raise "egg data missing" unless pool.dig(:DITTO, :eggs) == ["Ditto"] && pool.dig(:MAGNEMITE, :gender) == "Genderless"
+    FM::Log.info("smoke: daycare row #{FM::UI.dc_line(old)}; Ditto pair " \
+                 "#{FM::Daycare.compat(pool, old, FM::Mon.new(species: :DITTO, bst: 288, level: 30, stars: 3)).inspect}")
     # Battle parties can be built for real species (no battle is started:
     # that needs the map scene).
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })
