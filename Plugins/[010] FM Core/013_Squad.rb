@@ -13,6 +13,11 @@
 module FM
   class Mon
     attr_accessor :species, :bst, :level, :prog, :stars, :ev, :age, :life, :canon, :branch
+    attr_writer :cond
+    attr_accessor :resting, :played   # this week's focus; played a match since the last week
+
+    # Condition 20-100 (Poké Manager cond); older saves have none = 100.
+    def cond = @cond || 100
 
     # ev nil = what makeMon's pretrain gives a mon of this level.
     def initialize(species:, bst:, level:, stars:, ev: nil, age: 0, life: Growth::LIFE, canon: false, branch: 0)
@@ -22,7 +27,7 @@ module FM
     end
 
     def to_rating
-      { bst: @bst, level: @level, stars: @stars, ev: @ev }
+      { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond }
     end
 
     def rating = Rating.mon(to_rating)
@@ -42,17 +47,46 @@ module FM
       5 - (original_level.clamp(1, 10) - 1) * 2 / 9.0
     end
 
-    # One week for an AI mon. train_level is the club's TRAINING design level.
+    COND_MIN = 20
+    TRAIN_COND = 3
+    MATCH_COND = 4
+
+    # Weekly condition and focus (weekGrowth/condGain, AI rule): rest below
+    # 60 and keep resting until 85; resting recovers 10 + 20% of what's
+    # missing (half if it played last week); training costs 3.
+    def condition_week(mon)
+      played = mon.played
+      mon.played = false
+      mon.resting = mon.cond < 60 || (mon.resting && mon.cond < 85)
+      if mon.resting
+        gain = [((10 + (100 - mon.cond) * 0.2) * (played ? 0.5 : 1)).round, 1].max
+        mon.cond = [mon.cond + gain, 100].min
+      else
+        mon.cond = [mon.cond - TRAIN_COND, COND_MIN].max
+      end
+    end
+
+    def drain(mon, amount)
+      mon.cond = [mon.cond - amount, COND_MIN].max
+    end
+
+    # One week of growth after condition_week: resting gives half the level
+    # progress and no EVs; tired mons (under 40) train at half effect.
+    # train_level is the club's TRAINING design level.
     def week(mon, train_level:, species:)
       t = original_level(train_level)
       g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t)
-      mon.prog += g * (TRAIN_SHARE + (1 - TRAIN_SHARE) * 0.5)
+      tired = mon.cond < 40
+      mon.prog += mon.resting ? g * 0.5 : g * (tired ? 0.6 : 1)
       while mon.prog >= 1 && mon.level < 100
         mon.prog -= 1
         mon.level += 1
       end
       mon.prog = 0.0 if mon.level >= 100
-      mon.ev = [mon.ev + EV_MAX / (52.0 * grow_seasons(t)), EV_MAX].min
+      # EV_RATE: a full 510 over growSeasons, counting ~75% training weeks.
+      unless mon.resting
+        mon.ev = [mon.ev + EV_MAX / (52.0 * TRAIN_SHARE * grow_seasons(t)) * (tired ? 0.5 : 1), EV_MAX].min
+      end
       evolve(mon, species)
     end
 

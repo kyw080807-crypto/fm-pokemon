@@ -55,6 +55,19 @@ module FM
       @home_fill.shift while @home_fill.size > 5
     end
 
+    # The three who play (topMons: best after condition).
+    def lineup
+      @squad.max_by(3) { |m| m.rating * Rating.cond_mul(m.cond) }
+    end
+
+    def drain_lineup(amount)
+      lineup.each do |m|
+        Growth.drain(m, amount)
+        m.played = true
+      end
+      refresh_rating
+    end
+
     def refresh_rating
       @rating = Rating.team(@squad.map(&:to_rating))
     end
@@ -173,6 +186,7 @@ module FM
             cm.weekly(self, date)
             (e = cm.finish(self, date)) && events << e
           end
+          condition_week
           events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) }
         when :new_month
@@ -258,7 +272,11 @@ module FM
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
         home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
         contribute(home, gate[:revenue])
+        travel = travel_fatigue(away, home)
+        away.drain_lineup(travel) if travel.positive?
         r = MatchSim.play(home.rating, away.rating, rng: @rng)
+        home.drain_lineup(Growth::MATCH_COND)
+        away.drain_lineup(Growth::MATCH_COND)
         settle(r, home, away, ranking)
         r.merge(attendance: gate[:attendance])
       end
@@ -335,6 +353,25 @@ module FM
         events << { kind: :retired, club: c.id, mons: gone.map(&:species), date: date } unless gone.empty?
       end
       events
+    end
+
+    # Design 05: an away side travels days from its city's transport level
+    # (same city: none): condition -2 a day, and arriving the day before
+    # (the AI's safety margin) costs another 3.
+    TRAVEL_COND_PER_DAY = 2
+    ARRIVE_DAY_BEFORE_COND = 3
+    def travel_fatigue(away, home)
+      from, to = @cities[away.city], @cities[home.city]
+      return 0 unless from && to && from.id != to.id
+      days = Civic::TRANSPORT_DAYS[from.transport]
+      days.zero? ? 0 : days * TRAVEL_COND_PER_DAY + ARRIVE_DAY_BEFORE_COND
+    end
+
+    def condition_week
+      @clubs.each_value do |c|
+        c.squad.each { |m| Growth.condition_week(m) }
+        c.refresh_rating
+      end
     end
 
     def squad_week

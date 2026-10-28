@@ -25,7 +25,8 @@ module FM
         position: league&.position(id), clubhouse: c.clubhouse, stadium: c.stadium,
         facilities: c.facilities.dup, project: c.project, sponsor: c.sponsor && c.sponsor.slice(:name, :kind, :base, :bonus),
         squad: c.squad.sort_by { |m| -m.rating }.map do |m|
-          { species: m.species, level: m.level, stars: m.stars, age: m.age, rating: m.rating.round }
+          { species: m.species, level: m.level, stars: m.stars, age: m.age, rating: m.rating.round,
+            cond: m.cond, resting: m.resting ? true : false }
         end,
         last_year: c.history[world.calendar.year - 1] }
     end

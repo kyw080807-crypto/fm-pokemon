@@ -136,8 +136,9 @@ module FM
       end
       rows << _INTL("— 스쿼드 {1}마리 —", c[:squad].size)
       c[:squad].each do |m|
-        rows << _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5}", species_name(m[:species]), m[:level], m[:stars],
-                      m[:age] + 1, m[:rating])
+        rest = m[:resting] ? _INTL(" · 휴식") : ""
+        rows << _INTL("{1} Lv{2} ★{3} · {4}년차 · 전력 {5} · 컨디션 {6}{7}", species_name(m[:species]), m[:level], m[:stars],
+                      m[:age] + 1, m[:rating], m[:cond], rest)
       end
       rows
     end

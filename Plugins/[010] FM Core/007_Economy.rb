@@ -22,9 +22,13 @@ module FM
       m[:bst] + IV_MID.fetch(m[:stars] - 1) * 6 / 2.0 + ev / 8.0
     end
 
-    # Mean of the best three (each side picks 3 of its 6); missing slots are 0.
+    # condMul: condition 100 plays at full strength, 0 at 88%.
+    def cond_mul(cond) = 0.88 + 0.12 * (cond || 100) / 100.0
+
+    # Mean of the best three after condition (each side picks 3 of its 6;
+    # topMons ranks by OVR x condition); missing slots are 0.
     def team(mons)
-      best = mons.map { |m| mon(m) }.max(3)
+      best = mons.map { |m| mon(m) * cond_mul(m[:cond]) }.max(3)
       best.sum / 3.0
     end
   end

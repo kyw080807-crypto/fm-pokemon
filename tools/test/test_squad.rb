@@ -20,8 +20,18 @@ class TestSquad < Minitest::Test
     assert_in_delta 3.0, FM::Growth.grow_seasons(10), 1e-9
     # A year of training fills 510 / growSeasons.
     m = mon
-    52.times { FM::Growth.week(m, train_level: 5, species: SPECIES) }   # design 5 = original 10
-    assert_in_delta 510 / 3.0, m.ev, 3
+    # Real weeks: condition first (trains until 60, rests back to 85), then
+    # growth; plus a match every other week. Rest weeks give no EVs, so a year comes
+    # close to the 510 / growSeasons target.
+    52.times do |w|
+      FM::Growth.condition_week(m)
+      FM::Growth.week(m, train_level: 5, species: SPECIES)   # design 5 = original 10
+      next unless w.even?                                    # squads rotate: a match every other week
+      FM::Growth.drain(m, FM::Growth::MATCH_COND)
+      m.played = true
+    end
+    assert_in_delta 510 / 3.0, m.ev, 510 / 3.0 * 0.2
+    assert m.cond.between?(FM::Growth::COND_MIN, 100)
   end
 
   def test_ev_never_exceeds_510
@@ -82,5 +92,54 @@ class TestSquad < Minitest::Test
     c = Array.new(200) { FM::Scout.candidate(SPECIES, region: "KANTO", scout_level: 5, avg_level: 60, rng: rng) }
     evolved = c.select { |x| x[:base] == "CHARMANDER" && x[:mon].level >= 36 }
     evolved.each { |x| assert_equal "CHARIZARD", x[:mon].species }
+  end
+end
+
+class TestCondition < Minitest::Test
+  def mon(cond) = FM::Mon.new(species: "PIDGEY", bst: 251, level: 20, stars: 3).tap { |m| m.cond = cond }
+
+  def test_rest_below_sixty_until_eighty_five
+    m = mon(55)
+    FM::Growth.condition_week(m)
+    assert m.resting
+    assert_equal 55 + (10 + 45 * 0.2).round, m.cond
+    m.cond = 80
+    FM::Growth.condition_week(m)
+    assert m.resting, "keeps resting until 85"
+    m.cond = 90
+    FM::Growth.condition_week(m)
+    refute m.resting
+    assert_equal 87, m.cond
+  end
+
+  def test_floor_and_old_saves
+    m = mon(22)
+    FM::Growth.drain(m, 10)
+    assert_equal FM::Growth::COND_MIN, m.cond
+    m.remove_instance_variable(:@cond)
+    assert_equal 100, m.cond
+  end
+
+  def test_condition_lowers_team_strength
+    fresh = [{ bst: 500, level: 50, stars: 3, cond: 100 }] * 3
+    tired = [{ bst: 500, level: 50, stars: 3, cond: 20 }] * 3
+    assert FM::Rating.team(fresh) > FM::Rating.team(tired)
+    assert_in_delta FM::Rating.team(fresh) * FM::Rating.cond_mul(20), FM::Rating.team(tired), 0.01
+  end
+end
+
+class TestTravelFatigue < Minitest::Test
+  def club(id, city)
+    { id: id, name: id, region: "KANTO", city: city, role: "T", canon: true, level: 30, potential: 3,
+      stadium: 1, pokemon: Array.new(3) { { bst: 450, level: 30, stars: 3 } } }
+  end
+
+  def test_away_side_tires_by_its_city_transport
+    cities = [{ id: "FAR", name: "FAR", region: "KANTO", form: "SOLO", size: 1, buildings: [] },       # transport Lv0: 3 days
+              { id: "NEAR", name: "NEAR", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, 4]] }]
+    w = FM::World.new_game([club("F", "FAR"), club("N", "NEAR"), club("F2", "FAR"), club("N2", "NEAR")], seed: 1, cities: cities)
+    assert_equal 3 * 2 + 3, w.send(:travel_fatigue, w.clubs["F"], w.clubs["N"])
+    assert_equal 1 * 2 + 3, w.send(:travel_fatigue, w.clubs["N"], w.clubs["F"])
+    assert_equal 0, w.send(:travel_fatigue, w.clubs["F"], w.clubs["F2"]), "same city: no travel"
   end
 end
