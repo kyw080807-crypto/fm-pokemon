@@ -42,6 +42,9 @@ module FM
     # declineMul: the last two seasons of its life play at x0.96, then x0.92.
     def decline_mul = @age >= @life - 1 ? 0.92 : @age >= @life - 2 ? 0.96 : 1.0
 
+    # On a friendly tour this week (FM::Tour): no training or rest.
+    attr_accessor :tour
+
     # Days spent travelling this week (Club#travel): no training on them.
     attr_accessor :away_days
     def hurt? = @inj.to_i.positive?
@@ -123,6 +126,11 @@ module FM
     def condition_week(mon, rest_mul: 1.0)
       played = mon.played
       mon.played = false
+      if mon.tour   # touring: fatigue eases (fatWeek), nothing else this week
+        mon.resting = false
+        mon.fat = [mon.fat - (played ? 2 : 9), 0].max
+        return
+      end
       mon.resting = mon.out? || mon.cond < 60 || (mon.resting && mon.cond < 85)
       if mon.resting
         g = rest_gain(mon, played: played) * (mon.out? ? 0.8 : 1) * rest_mul
@@ -158,9 +166,20 @@ module FM
     def week(mon, train_level:, species:, fx: nil)
       home = (7 - mon.away_days.to_i).clamp(0, 7) / 7.0   # design 05: travel days stop training
       mon.away_days = nil
+      touring = mon.tour
+      mon.tour = nil
       return mon if mon.hurt?   # injured: recovery only, no training
       t = original_level(train_level)
       g = [0.35, 1.15 - mon.level / 110.0].max * (0.3 + 0.03 * t) * home * (fx ? fx[:lv] : 1)
+      if touring   # a tour week: half the level progress, from playing; no EVs
+        mon.prog += 0.5 * g
+        while mon.prog >= 1 && mon.level < 100
+          mon.prog -= 1
+          mon.level += 1
+        end
+        mon.prog = 0.0 if mon.level >= 100
+        return evolve(mon, species)
+      end
       tired = mon.cond < 40
       mon.prog += mon.resting ? g * 0.5 : g * (tired ? 0.6 : 1)
       while mon.prog >= 1 && mon.level < 100

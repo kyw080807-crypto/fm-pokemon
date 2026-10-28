@@ -167,6 +167,7 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: coach #{FM::UI.species_name(old.species)} #{FM::Coach.grade(FM::Coach.quality(old))} " \
                  "#{FM::UI::STAT_NAMES[FM::Coach.spec(FM.world.species, old)]}, slots #{FM::Coach.slots(club)}, " \
                  "lv x#{fx[:lv].round(3)} ev x#{fx[:ev].round(3)}")
+    FM::Log.info("smoke: tour pay #{FM::UI.money(FM::Tour.pay(club))}, match week #{FM.world.official_match_week?(club)}")
     # Battle parties can be built for real species (no battle is started:
     # that needs the map scene).
     foe = FM::Battle.trainer_for(FM.world.clubs.values.find { |c| c.role == "C" })

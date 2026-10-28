@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("재정·대출"), _INTL("코치"), _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -93,6 +93,7 @@ module FM
         when 9 then match_settings
         when 10 then finance
         when 11 then coaches
+        when 12 then tour
         else break
         end
       end
@@ -218,6 +219,24 @@ module FM
     end
 
     STAT_NAMES = %w[체력 공격 방어 특공 특방 스피드].freeze
+
+    # Poké Manager 원정 친선 투어: a week without official matches, for fees.
+    def tour
+      c = player_club or return
+      loop do
+        busy = world.official_match_week?(c)
+        head = _INTL("공식 경기가 없는 주에 엔트리가 다른 지방을 돌며 출전료를 법니다. 예상 출전료 {1}.\n" \
+                     "엔트리 컨디션 −{2}, 그 주는 훈련·휴식 없음.", money(Tour.pay(c)), Tour::COND)
+        head += "\n" + _INTL("이번 주는 공식 경기가 있어 갈 수 없습니다.") if busy
+        cmds = [world.tour_next ? _INTL("다음 주 투어 취소") : _INTL("다음 주 투어 신청"),
+                world.tour_auto ? _INTL("매주 자동 투어: 켜짐") : _INTL("매주 자동 투어: 꺼짐"), _INTL("닫기")]
+        case pbMessage(head, cmds, cmds.size)
+        when 0 then world.tour_next = !world.tour_next
+        when 1 then world.tour_auto = !world.tour_auto
+        else break
+        end
+      end
+    end
 
     # Poké Manager coaches: retired mons take a slot (training level) and
     # speed up growth; a coach eats what it ate when it retired.
@@ -754,6 +773,8 @@ module FM
           _INTL("{1} vs {2}: {3} ({4})", date_text(e[:date]), opp, outcome, score)
         when :built
           _INTL("{1} 완공", facility_name(e[:what])) if e[:club] == id
+        when :tour
+          _INTL("원정 친선 투어: 출전료 {1} · 엔트리 컨디션 −{2}, 이번 주 훈련 쉼", money(e[:pay]), Tour::COND) if e[:club] == id
         when :crisis
           _INTL("재정 위기: {1}", crisis_name(e[:stage])) if e[:club] == id
         when :bailout

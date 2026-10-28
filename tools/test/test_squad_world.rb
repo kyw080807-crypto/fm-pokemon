@@ -28,6 +28,8 @@ class TestSquadWorld < Minitest::Test
 
   def test_better_training_makes_a_stronger_team
     w = world
+    # Rich enough that friendly tours (no training that week) are rare.
+    w.clubs.each_value { |c| c.wallet.record(50_000_000, category: :grant, date: [1, 1, 1]) }
     w.advance_days(200)
     hi = w.clubs["HI"].squad.sum(&:ev)
     lo = w.clubs["LO"].squad.sum(&:ev)

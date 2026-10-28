@@ -172,6 +172,56 @@ module FM
       end
     end
 
+    # The player's friendly tour (FM::Tour): next week only, or every
+    # week it can.
+    attr_accessor :tour_next, :tour_auto
+
+    # hasMatchT: a league round, or a cup game while still in it, this week.
+    def official_match_week?(club, week = this_week)
+      return true if week.any? { |d| league_date_set.key?(d) }
+      cups = @cups or return false
+      dates = cups[:dates]
+      alive = lambda do |ko, id|
+        ko.nil? || (!ko.done? && ko.bracket.last.include?(id))
+      end
+      %i[pet pent].each do |cup|
+        next unless cups[cup][:players].include?(club.id) && week.any? { |d| dates[:pet].include?(d) }
+        return true if alive.(cups[cup][:ko], club.id)
+      end
+      pwt = cups[:pwt]
+      if pwt[:players].include?(club.id)
+        sw = pwt[:swiss]
+        return true if week.any? { |d| dates[:pwt_swiss].include?(d) } &&
+                       (sw.nil? || (!sw.done? && sw.losses[club.id] < Tournament::SWISS_GOAL))
+        return true if week.any? { |d| dates[:pwt_knockout].include?(d) } && pwt[:ko] && alive.(pwt[:ko], club.id)
+      end
+      false
+    end
+
+    def this_week = Array.new(7) { |i| @calendar.date_after(date, i) }
+
+    def league_date_set
+      @league_date_set = nil unless @league_date_set_year == @calendar.year
+      @league_date_set_year = @calendar.year
+      @league_date_set ||= league_dates.to_h { |d| [d, true] }   # (no Set: mkxp-z may lack the library)
+    end
+
+    # tourWeek
+    def tour_week
+      week = this_week
+      @clubs.each_value.filter_map do |c|
+        next if official_match_week?(c, week) || c.entry.size < 3
+        if ai?(c)
+          next if c.wallet.balance >= 0 && c.entry.any? { |m| m.cond < Tour::TIRED }
+          next unless @rng.rand < Tour.ai_chance(c)
+        else
+          next unless tour_next || tour_auto
+          self.tour_next = false
+        end
+        { kind: :tour, club: c.id, pay: Tour.go(c, date: date), date: date }
+      end
+    end
+
     # { region => its capital City }, for tournament trips.
     def capitals
       @cities.values.select(&:capital?).to_h { |c| [c.region, c] }
@@ -294,6 +344,7 @@ module FM
             (e = cm.finish(self, date)) && events << e
           end
           undo_loans if @loans
+          events.concat(tour_week)
           events.concat(condition_week)
           events.concat(squad_week) if @species
           @clubs.each_value { |c| Invest.decide(c, date: date, calendar: @calendar) if ai?(c) && !Credit.austerity?(c) }
