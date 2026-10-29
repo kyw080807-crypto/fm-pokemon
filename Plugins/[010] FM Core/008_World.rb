@@ -22,6 +22,7 @@ module FM
     attr_accessor :bag   # FM::Items: the player's items, { id => count }
     attr_accessor :att   # this season's home crowds { year:, sum:, n: } (FM::Contract)
     attr_accessor :tlog  # FM::Titles: titles earned, newest first
+    attr_accessor :gbag  # FM::Gimmick: an AI's gimmick items not in use
     attr_writer :stadium_shared
 
     # FM::Transfer: a new region, home city and role.
@@ -360,12 +361,14 @@ module FM
     # `important`: cup finals (design 06: always asked, whatever the
     # player's default match mode).
     def play_match(home, away, rng:, neutral: false, important: false)
+      gims = Gimmick.for_match(self, home, cup: neutral)
       hook = World.player_match
       if hook && @player_club && [home.id, away.id].include?(@player_club)
-        r = hook.call(home, away, self, neutral: neutral, important: important)
+        r = hook.call(home, away, self, neutral: neutral, important: important, gimmicks: gims)
         return r if r
       end
-      MatchSim.play(home.rating, away.rating, rng: rng)
+      MatchSim.play(home.rating * Gimmick.side_mul(@species, home.lineup, gims),
+                    away.rating * Gimmick.side_mul(@species, away.lineup, gims), rng: rng)
     end
 
     # A scout trip in `region` for the player's club (FM::Recruit.scout).
@@ -379,6 +382,7 @@ module FM
     attr_accessor :h2h, :rival, :taunt   # FM::Rival
     attr_accessor :sponsor_offers   # FM::Contract: the player's offers to pick from
     attr_accessor :my_title         # FM::Titles: the title the player shows (nil = the first)
+    attr_accessor :pwt_hosts        # FM::Gimmick.pwt_host: year => region
     attr_reader :rng
     def sponsor_table = @sponsors
 
@@ -828,7 +832,7 @@ module FM
       return unless ((@calendar.day_of_year - 1) / 7) % Items::AI_EVERY == 0
       @clubs.each_value do |c|
         next unless ai?(c) && !Credit.austerity?(c)
-        c.refresh_rating if Items.ai_shop(c, @species, date: date).positive?
+        c.refresh_rating if Items.ai_shop(c, @species, date: date, world: self).positive?
       end
     end
 

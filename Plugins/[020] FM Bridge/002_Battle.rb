@@ -57,6 +57,7 @@ module FM
       pkmn.fm_mood = mon.mood(Morale.week)
       pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
       pkmn.item = mon.item if mon.item && GameData::Item.exists?(mon.item)
+      gimmick_pokemon(pkmn, mon)
       pkmn.calc_stats
       pkmn.heal
       pkmn
@@ -103,10 +104,12 @@ module FM
     # { res:, ko_a:, ko_b: } from the player's side (a = player), plus who
     # played and who fainted (FM::Mon) for fatigue and injuries
     # (World#after_match). The match prompt and the pick screen are in FM UI.
-    def fight(me, opp, picks: nil, auto: false, fast: false)
+    # gimmicks: the match's FM::Gimmick kinds (World#play_match).
+    def fight(me, opp, picks: nil, auto: false, fast: false, gimmicks: [])
       picks ||= me.lineup
       Battle.auto = auto
       Battle.fast = fast
+      Battle.gimmicks = gimmicks
       saved = $player.party
       $player.party = picks.map { |m| to_pokemon(m, $player, club: me) }
       foe = trainer_for(opp)
@@ -115,7 +118,7 @@ module FM
       setBattleRule("canLose")
       setBattleRule("noExp")
       setBattleRule("noMoney")
-      outcome = TrainerBattle.start_core(foe)
+      outcome = with_gimmick_switches { TrainerBattle.start_core(foe) }
       fainted_b = theirs.select.with_index { |_, i| foe.party[i]&.fainted? }
       # after_battle heals a losing party, so on a loss all three fainted.
       fainted_a = outcome == 2 ? picks : picks.select.with_index { |_, i| $player.party[i]&.fainted? }
@@ -132,6 +135,7 @@ module FM
     ensure
       Battle.auto = Battle.fast = false
       Battle.auto_skill = nil
+      Battle.gimmicks = nil
       $player.party = saved if saved
     end
 
@@ -139,17 +143,20 @@ module FM
     # Frontier generator does: DebugSceneNoVisuals, controlPlayer). Debug
     # mode caps it at 100 rounds (then the engine judges on remaining HP).
     # Used to calibrate MatchSim against real results. a = first club.
-    def simulate(a, b)
+    def simulate(a, b, gimmicks: FM::Gimmick.of_region(a.region))
+      Battle.gimmicks = gimmicks
       ta = trainer_for(a)
       tb = trainer_for(b)
       battle = ::Battle.new(::Battle::DebugSceneNoVisuals.new, ta.party, tb.party, [ta], [tb])
       battle.debug = true
       battle.controlPlayer = true
       battle.internalBattle = false
-      decision = battle.pbStartBattle
+      decision = with_gimmick_switches { battle.pbStartBattle }
       ko_a = tb.party.count(&:fainted?)
       ko_b = ta.party.count(&:fainted?)
       { res: { 1 => 1, 2 => -1 }.fetch(decision, 0), ko_a: ko_a, ko_b: ko_b, turns: battle.turnCount }
+    ensure
+      Battle.gimmicks = nil
     end
   end
 end
@@ -294,4 +301,25 @@ module BattleCreationHelperMethods
       battle.showAnims = false if FM::Battle.fast
     end
   end
+end
+
+# The headless battles (FM::Battle.sim, the calibration) use Essentials'
+# DebugSceneNoVisuals, which lacks the scene calls the Deluxe Battle Kit and
+# its add-ons make (speech, gimmick animations). Nothing to show: no-ops.
+class Battle::DebugSceneNoVisuals
+  %i[pbAnimateSubstitute pbAnimateTrainerIntros pbBattlerFlee pbBeginAttackPhase pbBeginCommandPhase pbDynamaxSendOut
+     pbForceEndSpeech pbItemUseAnimation pbRefresh pbRevertBattlerEnd pbRevertBattlerStart pbRevertTera
+     pbSafariCommandMenu pbSafariStart pbShowDynamax pbShowMegaEvolution pbShowPrimalReversion pbShowTerastallize
+     pbShowUltraBurst pbThrowBait pbThrowRock].each do |m|
+    define_method(m) { |*_args| nil } unless method_defined?(m)
+  end
+  def pbCommonAnimationExists?(*_args) = false unless method_defined?(:pbCommonAnimationExists?)
+  def pbCommonAnimationExists(*_args) = false unless method_defined?(:pbCommonAnimationExists)
+
+  # Any other scene call the add-ons make (pbShowZMove, ...): nothing to show.
+  def method_missing(name, *args, &block)
+    name.to_s.start_with?("pb") ? nil : super
+  end
+
+  def respond_to_missing?(name, include_private = false) = name.to_s.start_with?("pb") || super
 end

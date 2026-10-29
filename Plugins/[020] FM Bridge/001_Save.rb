@@ -64,11 +64,13 @@ module FM
 
     def refresh_static(world)
       return unless world && world_available?
+      FM::Gimmick.catalog = FM::Battle.gimmick_catalog
       d = world_data
       world.refresh_static(species: d[:species], club_types: d[:clubs].to_h { |c| [c[:id], c[:type]] })
     end
 
     def build_world(seed:)
+      FM::Gimmick.catalog = FM::Battle.gimmick_catalog
       d = world_data
       FM::World.new_game(d[:clubs], seed: seed, cities: d[:cities], species: d[:species], sponsors: d[:sponsors])
     end

@@ -56,6 +56,7 @@ module FM
     def shop_mul(club) = club.sponsor && club.sponsor[:kind] == "SHOP" ? SHOP_MUL : 1.0
     def base_price(id)
       return HELD[id] if HELD.key?(id)
+      return Gimmick.price(id) if Gimmick.item?(id)
       return 12_000 if id == :LINKINGCORD
       return 10_000 if id == :SOOTHEBELL
       id.to_s.end_with?("STONE") && id != :OVALSTONE ? 8000 : 15_000
@@ -73,7 +74,7 @@ module FM
 
     # buyItem -> the cost, or nil if it can't
     def buy(club, id, n = 1, date:)
-      return unless held?(id) || evo?(id)
+      return unless held?(id) || evo?(id) || Gimmick.item?(id)
       cost = price(club, id) * n
       return if club.wallet.balance < cost
       club.wallet.record(-cost, category: :shop, date: date)
@@ -81,13 +82,18 @@ module FM
       cost
     end
 
-    def team_holds?(club, id, except = nil) = club.squad.any? { |m| !m.equal?(except) && m.item == id }
+    def team_holds?(club, id, except = nil)
+      Gimmick.unique?(id) && club.squad.any? { |m| !m.equal?(except) && m.item == id }
+    end
 
-    # equipItem (id nil = take it off) -> :ok or why not
-    def equip(club, mon, id)
+    # equipItem (id nil = take it off) -> :ok or why not. Gimmick items go
+    # in the same slot (gimItemOK: a Mega Stone its own species', G-Max
+    # Mushrooms G-Max species only; Max Mushrooms any number).
+    def equip(club, mon, id, pool: nil)
       return :not_mine unless club.squad.any? { |m| m.equal?(mon) }
       if id
-        return :unknown unless held?(id)
+        return :unknown unless held?(id) || Gimmick.item?(id)
+        return :wrong_mon if Gimmick.item?(id) && !Gimmick.ok?(pool, mon, id)
         return :none if count(club, id) < 1
         return :taken if team_holds?(club, id, mon)
       end
@@ -131,7 +137,7 @@ module FM
         id = m.item
         next unless id && CONSUMABLE.include?(id)
         m.item = nil
-        equip(club, m, id) if club.bag && count(club, id).positive?
+        equip(club, m, id) if club.bag && count(club, id).positive?   # (consumables are never gimmick items)
       end
     end
 
@@ -152,15 +158,23 @@ module FM
     end
 
     # aiMetaTeam's item part -> what it spent
-    def ai_shop(club, pool, date:)
+    def ai_shop(club, pool, date:, world: nil)
       reserve = club.weekly_cost * AI_RESERVE_WEEKS + (club.squad.size < 6 ? AI_SHORT_SQUAD : 0)
       # (Ours: a club saving for a sold-out stadium keeps that too, as FM::Invest does.)
       reserve += Build.stadium_cost(club.stadium) * Invest::MARGIN if Invest.stadium_wanted?(club)
       budget = [0, club.wallet.balance - reserve].max * 0.5
-      used = club.squad.filter_map(&:item)
       top = club.lineup
       party = club.entry.sort_by { |m| [top.any? { |t| t.equal?(m) } ? 0 : 1, -m.rating] }
       spent = 0
+      # aiGimmick (its own budget: 4 weeks of costs left in hand).
+      Gimmick.ai_prepare(club, pool, world ? Gimmick.next_for(world, club) : Gimmick.of_region(club.region)) do |gid|
+        cost = (Gimmick.price(gid) * shop_mul(club)).round
+        next false if club.wallet.balance - cost < club.weekly_cost * Gimmick::AI_RESERVE_WEEKS
+        club.wallet.record(-cost, category: :shop, date: date)
+        spent += cost
+        true
+      end
+      used = club.squad.filter_map(&:item)
       party.each do |m|
         next if m.item
         id = pick_for(pool, m, used) or next

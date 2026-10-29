@@ -89,12 +89,46 @@ module FM
       UNREMARKABLETEACUP: "범작찻잔"
     }.freeze
 
+    GIMMICK_NAMES = { mega: "메가진화", z: "Z기술", dmax: "다이맥스", tera: "테라스탈" }.freeze
+
+    def gimmick_text(gims) = gims.empty? ? _INTL("기믹 없음") : gims.map { |g| _INTL(GIMMICK_NAMES[g]) }.join("+")
+
+    # The original's names: <species>나이트(X/Y), <type>Z, 다이버섯, <type>테라크리스탈.
+    def gimmick_item_name(id)
+      c = Gimmick.catalog
+      case Gimmick.kind(id)
+      when :mega
+        return id == :REDORB ? _INTL("빨강구슬") : _INTL("쪽빛구슬") if c[:primal].key?(id)
+        sp = c[:mega][id]&.first
+        suf = id.to_s[/ITE([XY])\z/, 1].to_s
+        _INTL("{1}나이트{2}", sp ? species_name(sp) : id.to_s, suf)
+      when :z then _INTL("{1}Z", type_name(c[:z][id]))
+      when :dmax then id == Gimmick::GMAX_MUSHROOM ? _INTL("거다이버섯") : _INTL("다이버섯")
+      when :tera then _INTL("{1}테라크리스탈", type_name(Gimmick.tera_type(id)))
+      end
+    end
+
+    def gimmick_item_desc(id)
+      case Gimmick.kind(id)
+      when :mega then _INTL("전용 메가스톤. 메가진화를 쓰는 경기에서 쥐면 배틀 중 메가진화한다")
+      when :z then _INTL("Z기술을 쓰는 경기에서 쥐면 {1} 타입 기술을 한 번 Z기술로 쓴다", type_name(Gimmick.catalog[:z][id]))
+      when :dmax
+        id == Gimmick::GMAX_MUSHROOM ? _INTL("거다이맥스할 수 있는 포켓몬 전용. 다이맥스를 쓰는 경기에서 거다이맥스한다. 다른 경기에서는 효과 없음") :
+                                       _INTL("다이맥스를 쓰는 경기에서 이 포켓몬이 다이맥스할 수 있다. 여러 마리가 쥘 수 있다. 다른 경기에서는 효과 없음")
+      when :tera then _INTL("테라스탈을 쓰는 경기에서 이 포켓몬이 {1} 타입으로 테라스탈할 수 있다. 다른 경기에서는 효과 없음", type_name(Gimmick.tera_type(id)))
+      end
+    end
+
     def item_name(id)
+      return gimmick_item_name(id) if Gimmick.item?(id)
       return _INTL(ITEM_TEXT[id][0]) if id && ITEM_TEXT[id]
       return _INTL(EVO_ITEM_NAMES[id]) if id && EVO_ITEM_NAMES[id]
       id.to_s
     end
-    def item_desc(id) = ITEM_TEXT[id] ? _INTL(ITEM_TEXT[id][1]) : _INTL("이 아이템으로 진화하는 포켓몬을 진화시킨다")
+    def item_desc(id)
+      return gimmick_item_desc(id) if Gimmick.item?(id)
+      ITEM_TEXT[id] ? _INTL(ITEM_TEXT[id][1]) : _INTL("이 아이템으로 진화하는 포켓몬을 진화시킨다")
+    end
 
     def items_menu
       c = player_club or return
@@ -102,15 +136,23 @@ module FM
         bag = Items.bag(c)
         head = _INTL("잔고 {1} · 가방 {2}개{3}", money(c.wallet.balance), bag.values.sum,
                      Items.shop_mul(c) < 1 ? _INTL(" · 숍 스폰서 할인 20%") : "")
-        cmds = [_INTL("배틀 아이템 사기"), _INTL("진화 도구 사기"), _INTL("지닌 물건 주기·빼기"), _INTL("진화시키기"), _INTL("닫기")]
+        cmds = [_INTL("배틀 아이템 사기"), _INTL("기믹 아이템 사기"), _INTL("진화 도구 사기"), _INTL("지닌 물건 주기·빼기"),
+                _INTL("진화시키기"), _INTL("닫기")]
         case pbMessage(head, cmds, cmds.size)
         when 0 then item_shop(c, Items::HELD.keys)
-        when 1 then item_shop(c, Items::EVO)
-        when 2 then item_equip(c)
-        when 3 then evolve_menu(c)
+        when 1 then item_shop(c, gimmick_shop_items(c))
+        when 2 then item_shop(c, Items::EVO)
+        when 3 then item_equip(c)
+        when 4 then evolve_menu(c)
         else break
         end
       end
+    end
+
+    # The squad's own Mega Stones, every Z-Crystal, the mushrooms, every Tera Crystal.
+    def gimmick_shop_items(c)
+      megas = c.squad.flat_map { |m| Gimmick.mega_stones(m) }.uniq
+      megas + Gimmick.catalog[:z].keys + [Gimmick::MUSHROOM, Gimmick::GMAX_MUSHROOM] + Gimmick::TYPES.map { |t| Gimmick.tera_item(t) }
     end
 
     def item_shop(c, ids)
@@ -135,17 +177,18 @@ module FM
         i = pbMessage(_INTL("누구에게 줄까요? 같은 물건은 팀에 하나만."), rows + [_INTL("닫기")], rows.size + 1)
         break if i >= mons.size
         m = mons[i]
-        have = Items.bag(c).keys.select { |id| Items.held?(id) }
+        have = Items.bag(c).keys.select { |id| Items.held?(id) || Gimmick.item?(id) }
         opts = have.map { |id| _INTL("{1} ({2}개)", item_name(id), Items.count(c, id)) }
         opts << _INTL("빼기") if m.item
         j = pbMessage(_INTL("{1}에게 무엇을? (가방에 있는 것)", species_name(m.species)), opts + [_INTL("취소")], opts.size + 1)
         next if j >= opts.size
         id = j < have.size ? have[j] : nil
-        case Items.equip(c, m, id)
+        case Items.equip(c, m, id, pool: world.species)
         when :ok
           pbMessage(id ? _INTL("{1}에게 {2}을(를) 쥐여 주었습니다.", species_name(m.species), item_name(id)) :
                          _INTL("{1}의 물건을 가방에 넣었습니다.", species_name(m.species)))
         when :taken then pbMessage(_INTL("팀의 다른 포켓몬이 이미 {1}을(를) 지니고 있습니다.", item_name(id)))
+        when :wrong_mon then pbMessage(_INTL("{1}은(는) {2}을(를) 쥘 수 없습니다.", species_name(m.species), item_name(id)))
         else pbMessage(_INTL("줄 수 없습니다."))
         end
       end

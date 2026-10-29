@@ -41,6 +41,7 @@ module FM
     attr_accessor :nurse
     # A held item (FM::Items, an Essentials item id) or nil.
     attr_accessor :item
+    attr_accessor :prev_item   # FM::Gimmick: the held item a gimmick item replaced (AI)
 
     # declineMul: the last two seasons of its life play at x0.96, then x0.92.
     def decline_mul = @age >= @life - 1 ? 0.92 : @age >= @life - 2 ? 0.96 : 1.0
@@ -119,7 +120,7 @@ module FM
     def to_rating
       { bst: @bst, level: @level, stars: @stars, ev: @ev, cond: cond,
         mul: Rating.debuff_mul(debuffs) * decline_mul * Morale.mor_mul(self) * Morale.mood_mul(self, Morale.week) *
-             (@item ? Items::RATING_MUL : 1.0) }
+             (@item && Items.held?(@item) ? Items::RATING_MUL : 1.0) }
     end
 
     # Rating.mon of to_rating, kept until something it reads changes (it

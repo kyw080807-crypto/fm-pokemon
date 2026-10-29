@@ -21,6 +21,10 @@ module FM
 
     def run_all
       FM::Log.info("smoke: #{@checks.size} check(s)")
+      # Game globals exist only once a game is loaded; Pokémon.new reads
+      # $game_switches since the Terastallization plugin.
+      $game_switches  ||= Game_Switches.new
+      $game_variables ||= Game_Variables.new
       failures = 0
       @checks.each do |name, block|
         begin
@@ -205,6 +209,19 @@ FM::Smoke.register("fm_menu_render") do
     eevee = FM.world.species.dig(:EEVEE, :evo) || []
     raise "evolution items missing: #{eevee.inspect}" unless eevee.any? { |e| e[2].to_s == "WATERSTONE" }
     FM::Log.info("smoke: Eevee evolutions " + eevee.map { |to, _, it| "#{FM::UI.species_name(to)}(#{FM::UI.item_name(it&.to_sym)})" }.join(", "))
+    # Gimmicks: the catalog from the game data, and battle Pokémon set up
+    # from Tera Crystals / Max Mushrooms.
+    cat = FM::Gimmick.catalog
+    raise "gimmick catalog empty: #{cat.transform_values(&:size)}" if cat[:mega].empty? || cat[:z].size < 18 || cat[:gmax].empty?
+    probe = Marshal.load(Marshal.dump(club.lineup.first))
+    probe.item = :WATERTERACRYSTAL
+    pk = FM::Battle.to_pokemon(probe, $player, club: club)
+    raise "tera type not set" unless pk.tera_type == :WATER && pk.item_id.nil? && pk.fm_tera
+    probe.item = :MAXMUSHROOM
+    raise "dynamax right not set" unless FM::Battle.to_pokemon(probe, $player, club: club).fm_dmax
+    FM::Log.info("smoke: gimmicks: #{cat[:mega].size} mega stones, #{cat[:z].size} Z-crystals, #{cat[:gmax].size} G-Max species; " +
+                 FM::UI.my_club_rows(club.id).grep(/기믹/).first.to_s + "; " +
+                 %i[CHARIZARDITEX FIRIUMZ GMAXMUSHROOM FIRETERACRYSTAL].map { |id| FM::UI.item_name(id) }.join(", "))
     # Held items: bought, held, and on the battle Pokémon.
     holder = club.lineup.first
     FM::Items.buy(club, :LEFTOVERS, date: FM.world.calendar.date)
@@ -350,6 +367,52 @@ FM::Smoke.register("region_move") do
   ensure
     FM::Bridge.state = saved
   end
+end
+
+# Gimmicks in real (headless) battles: each one is used when the match has
+# it and the mons hold its items, and never when the match hasn't.
+module FM
+  module SmokeGimmickCount
+    def self.counts = @counts ||= Hash.new(0)
+    def pbMegaEvolve(i) = (SmokeGimmickCount.counts[:mega] += 1) && super
+    def pbRegisterZMove(i) = (SmokeGimmickCount.counts[:z] += 1) && super
+    def pbDynamax(i) = (SmokeGimmickCount.counts[:dmax] += 1) && super
+    def pbTerastallize(i) = (SmokeGimmickCount.counts[:tera] += 1) && super
+  end
+end
+
+FM::Smoke.register("gimmick_battles") do
+  ::Battle.prepend(FM::SmokeGimmickCount) unless ::Battle.ancestors.include?(FM::SmokeGimmickCount)
+  $PokemonGlobal ||= PokemonGlobalMetadata.new
+  $bag ||= PokemonBag.new
+  $player ||= Player.new("FM", :POKEMONTRAINER_Red)
+  w = FM::Bridge.build_world(seed: 12)
+  pool = w.species
+  a, b = w.clubs.values.select { |c| c.role == "T" }.first(2)
+  team = { mega: [[:CHARIZARD, :CHARIZARDITEX], [:VENUSAUR, :VENUSAURITE], [:BLASTOISE, :BLASTOISINITE]],
+           z: [[:CHARIZARD, :FIRIUMZ], [:VENUSAUR, :GRASSIUMZ], [:BLASTOISE, :WATERIUMZ]],
+           dmax: [[:CHARIZARD, :GMAXMUSHROOM], [:VENUSAUR, :MAXMUSHROOM], [:BLASTOISE, :MAXMUSHROOM]],
+           tera: [[:CHARIZARD, :DRAGONTERACRYSTAL], [:VENUSAUR, :FIRETERACRYSTAL], [:BLASTOISE, :ELECTRICTERACRYSTAL]] }
+  out = []
+  team.each do |kind, set|
+    [a, b].each do |c|
+      c.squad.replace(set.map { |sp, it| FM::Mon.new(species: sp, bst: pool[sp][:bst], level: 50, stars: 4).tap { |m| m.item = it } })
+      c.refresh_rating
+    end
+    counts = FM::SmokeGimmickCount.counts
+    counts.clear
+    3.times { FM::Battle.simulate(a, b, gimmicks: []) }
+    off = counts[kind]
+    counts.clear
+    3.times { FM::Battle.simulate(a, b, gimmicks: [kind]) }
+    on = counts[kind]
+    others = counts.reject { |k, _| k == kind }.values.sum
+    raise "#{kind}: used in a match without it (#{off})" if off.positive?
+    raise "#{kind}: never used in 3 battles with it" unless on.positive?
+    raise "#{kind}: another gimmick used (#{counts.inspect})" if others.positive?
+    out << "#{kind} #{on}"
+  end
+  FM::Log.info("smoke: gimmick uses in 3 battles each: #{out.join(', ')}; none without")
 end
 
 # Stage 3 (직접 전투와 자동 진행이 시즌에 맞는다): real AI-vs-AI battles

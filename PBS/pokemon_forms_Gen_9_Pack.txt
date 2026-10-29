@@ -456,6 +456,7 @@ Flags = Legendary,TeraType_ROCK
 #-------------------------------
 [OGERPON,4]
 PokedexForm = 0
+Flags = Legendary,TeraType_GRASS
 #-------------------------------
 [OGERPON,5]
 FormName = Wellspring Mask
@@ -484,27 +485,28 @@ Flags = Legendary,TeraType_ROCK
 [OGERPON,8]
 FormName = Terastal Teal Mask
 Abilities = EMBODYASPECT
+Flags = Legendary,CannotDynamax,TeraType_GRASS
 #-------------------------------
 [OGERPON,9]
 FormName = Terastal Wellspring Mask
 Types = GRASS,WATER
 Abilities = EMBODYASPECT_1
 Color = Blue
-Flags = Legendary,TeraType_WATER
+Flags = Legendary,TeraType_WATER,CannotDynamax
 #-------------------------------
 [OGERPON,10]
 FormName = Terastal Hearthflame Mask
 Types = GRASS,FIRE
 Abilities = EMBODYASPECT_2
 Color = Red
-Flags = Legendary,TeraType_FIRE
+Flags = Legendary,TeraType_FIRE,CannotDynamax
 #-------------------------------
 [OGERPON,11]
 FormName = Terastal Cornerstone Mask
 Types = GRASS,ROCK
 Abilities = EMBODYASPECT_3
 Color = Gray
-Flags = Legendary,TeraType_ROCK
+Flags = Legendary,TeraType_ROCK,CannotDynamax
 #-------------------------------
 [TERAPAGOS,1]
 FormName = Terastal Form
@@ -526,7 +528,7 @@ Height = 1.7
 Weight = 77.0
 Shape = Head
 Pokedex = In this form, Terapagos resembles the world as the ancients saw it, and its Terastal energy is abnormally amplified.
-Flags = Legendary,TeraType_STELLAR
+Flags = Legendary,TeraType_STELLAR,CannotDynamax
 #-------------------------------
 # PLZA
 #-------------------------------

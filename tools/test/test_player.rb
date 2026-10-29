@@ -82,7 +82,7 @@ class TestPlayerMatchHook < Minitest::Test
   def test_hook_decides_only_the_players_matches
     w = TestPlayer.new("x").world
     calls = []
-    FM::World.player_match = lambda do |home, away, _world, neutral:, important:|
+    FM::World.player_match = lambda do |home, away, _world, neutral:, important:, **|
       calls << [home.id, away.id, neutral]
       home.id == "P" ? { res: 1, ko_a: 3, ko_b: 0 } : { res: -1, ko_a: 0, ko_b: 3 }
     end
@@ -99,7 +99,7 @@ class TestPlayerMatchHook < Minitest::Test
   def test_league_matches_follow_the_default_mode
     w = TestPlayer.new("x").world
     seen = []
-    FM::World.player_match = lambda do |_home, _away, _world, neutral:, important:|
+    FM::World.player_match = lambda do |_home, _away, _world, neutral:, important:, **|
       seen << important unless neutral
       nil
     end

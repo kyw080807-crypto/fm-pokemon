@@ -1042,6 +1042,7 @@ Abilities = PRIMORDIALSEA
 Height = 9.8
 Weight = 430.0
 Generation = 6
+Flags = CannotDynamax
 #-------------------------------
 [GROUDON,1]
 FormName = Primal Groudon
@@ -1052,6 +1053,7 @@ Abilities = DESOLATELAND
 Height = 5.0
 Weight = 999.7
 Generation = 6
+Flags = CannotDynamax
 #-------------------------------
 [RAYQUAZA,1]
 FormName = Mega Rayquaza
@@ -2029,6 +2031,7 @@ Abilities = NEUROFORCE
 Height = 7.5
 Color = Yellow
 Pokedex = The light pouring out from all over its body affects living things and nature, impacting them in various ways.
+Flags = CannotDynamax
 #-------------------------------
 [NECROZMA,4]
 PokedexForm = 3
@@ -2039,6 +2042,7 @@ EVs = ATTACK,1,SPECIAL_ATTACK,1,SPEED,1
 Abilities = NEUROFORCE
 Height = 7.5
 Color = Yellow
+Flags = CannotDynamax
 #-------------------------------
 [MAGEARNA,1]
 FormName = Original Color

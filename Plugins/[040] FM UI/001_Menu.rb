@@ -224,6 +224,8 @@ module FM
       club = world.clubs[id]
       if id == world.player_club
         rows << goal_row(club) if club.goal && club.goal[:year] == world.calendar.year
+        rows << _INTL("리그 기믹: {1} · PWT({2}): {3}", gimmick_text(Gimmick.of_region(club.region)),
+                      region_name(Gimmick.pwt_host(world, world.calendar.year)), gimmick_text(Gimmick.pwt(world)))
         t = Titles.main(world, club)
         rows << _INTL("칭호: {1}", t ? title_name(t) : _INTL("(아직 없음)"))
         if (rv = Rival.current(world))
@@ -1219,7 +1221,7 @@ module FM
     # when it is :ask or the match is important), then for a direct battle
     # show the opponent's entry of six and let the player pick three; auto
     # fights the best three with the AI on both sides. nil = the formula.
-    def player_match(home, away, world, neutral: false, important: false)
+    def player_match(home, away, world, neutral: false, important: false, gimmicks: [])
       mine = world.player_club
       me, opp = home.id == mine ? [home, away] : [away, home]
       mode = FM.state.match_mode
@@ -1234,8 +1236,8 @@ module FM
       r = case mode
           when :direct
             picks = choose_three(me, opp) or return nil
-            FM::Battle.fight(me, opp, picks: picks, fast: fast)
-          when :auto then FM::Battle.fight(me, opp, auto: true, fast: fast)
+            FM::Battle.fight(me, opp, picks: picks, fast: fast, gimmicks: gimmicks)
+          when :auto then FM::Battle.fight(me, opp, auto: true, fast: fast, gimmicks: gimmicks)
           else return nil
           end
       home.id == mine ? r : flip(r)

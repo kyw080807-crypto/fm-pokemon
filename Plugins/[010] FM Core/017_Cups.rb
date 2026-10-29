@@ -27,8 +27,21 @@ module FM
         ko = players.size == 16 ? Tournament::Knockout.new(players) : nil
         [cup, { players: players, ko: ko, host: Tournament.host(cup, year) }]
       end
-      world.set_cups(subs.merge(pwt: { players: pwt, swiss: nil, ko: nil, host: Tournament.host(:pwt, year) },
+      world.set_cups(subs.merge(pwt: { players: pwt, swiss: nil, ko: nil, host: Gimmick.pwt_host(world, year) },
                                 dates: Season.tournament_dates(world.calendar, year)))
+      # The PWT's AI players get ready for its gimmick (4 weeks of costs kept).
+      gims = Gimmick.pwt(world)
+      pwt.each do |id|
+        c = world.clubs[id]
+        next unless world.ai?(c) && world.species
+        Gimmick.ai_prepare(c, world.species, gims) do |gid|
+          cost = (Gimmick.price(gid) * Items.shop_mul(c)).round
+          next false if c.wallet.balance - cost < c.weekly_cost * Gimmick::AI_RESERVE_WEEKS
+          c.wallet.record(-cost, category: :shop, date: world.calendar.date)
+          true
+        end
+        c.refresh_rating
+      end
       events << { kind: :cups_drawn, year: year, pwt: pwt.size, pet: subs[:pet][:players].size,
                   pent: subs[:pent][:players].size, date: world.calendar.date }
     end

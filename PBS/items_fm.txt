@@ -1,0 +1,142 @@
+﻿# FM gimmick items (FM::Gimmick): Max Mushrooms and Tera Crystals let a mon Dynamax or Terastallize
+# in games that use those gimmicks (the Poké Manager rules). Held, no battle effect of their own.
+#-------------------------------
+[MAXMUSHROOM]
+Name = Max Mushroom
+NamePlural = Max Mushrooms
+Pocket = 1
+Price = 25000
+Description = A held item. Lets the holder Dynamax in games where Dynamax is used.
+#-------------------------------
+[GMAXMUSHROOM]
+Name = G-Max Mushroom
+NamePlural = G-Max Mushrooms
+Pocket = 1
+Price = 40000
+Description = A held item for Pokémon with a Gigantamax form. Lets the holder Gigantamax in games where Dynamax is used.
+#-------------------------------
+[NORMALTERACRYSTAL]
+Name = Normal Tera Crystal
+NamePlural = Normal Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Normal type in games where Terastallization is used.
+#-------------------------------
+[FIRETERACRYSTAL]
+Name = Fire Tera Crystal
+NamePlural = Fire Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Fire type in games where Terastallization is used.
+#-------------------------------
+[WATERTERACRYSTAL]
+Name = Water Tera Crystal
+NamePlural = Water Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Water type in games where Terastallization is used.
+#-------------------------------
+[ELECTRICTERACRYSTAL]
+Name = Electric Tera Crystal
+NamePlural = Electric Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Electric type in games where Terastallization is used.
+#-------------------------------
+[GRASSTERACRYSTAL]
+Name = Grass Tera Crystal
+NamePlural = Grass Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Grass type in games where Terastallization is used.
+#-------------------------------
+[ICETERACRYSTAL]
+Name = Ice Tera Crystal
+NamePlural = Ice Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Ice type in games where Terastallization is used.
+#-------------------------------
+[FIGHTINGTERACRYSTAL]
+Name = Fighting Tera Crystal
+NamePlural = Fighting Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Fighting type in games where Terastallization is used.
+#-------------------------------
+[POISONTERACRYSTAL]
+Name = Poison Tera Crystal
+NamePlural = Poison Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Poison type in games where Terastallization is used.
+#-------------------------------
+[GROUNDTERACRYSTAL]
+Name = Ground Tera Crystal
+NamePlural = Ground Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Ground type in games where Terastallization is used.
+#-------------------------------
+[FLYINGTERACRYSTAL]
+Name = Flying Tera Crystal
+NamePlural = Flying Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Flying type in games where Terastallization is used.
+#-------------------------------
+[PSYCHICTERACRYSTAL]
+Name = Psychic Tera Crystal
+NamePlural = Psychic Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Psychic type in games where Terastallization is used.
+#-------------------------------
+[BUGTERACRYSTAL]
+Name = Bug Tera Crystal
+NamePlural = Bug Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Bug type in games where Terastallization is used.
+#-------------------------------
+[ROCKTERACRYSTAL]
+Name = Rock Tera Crystal
+NamePlural = Rock Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Rock type in games where Terastallization is used.
+#-------------------------------
+[GHOSTTERACRYSTAL]
+Name = Ghost Tera Crystal
+NamePlural = Ghost Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Ghost type in games where Terastallization is used.
+#-------------------------------
+[DRAGONTERACRYSTAL]
+Name = Dragon Tera Crystal
+NamePlural = Dragon Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Dragon type in games where Terastallization is used.
+#-------------------------------
+[DARKTERACRYSTAL]
+Name = Dark Tera Crystal
+NamePlural = Dark Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Dark type in games where Terastallization is used.
+#-------------------------------
+[STEELTERACRYSTAL]
+Name = Steel Tera Crystal
+NamePlural = Steel Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Steel type in games where Terastallization is used.
+#-------------------------------
+[FAIRYTERACRYSTAL]
+Name = Fairy Tera Crystal
+NamePlural = Fairy Tera Crystals
+Pocket = 1
+Price = 20000
+Description = A held item. Lets the holder Terastallize into the Fairy type in games where Terastallization is used.

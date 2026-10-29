@@ -1,0 +1,15 @@
+#-------------------------------
+[PICHU,1]
+Flags = CannotDynamax
+#-------------------------------
+[KYOGRE,1]
+Flags = CannotDynamax
+#-------------------------------
+[GROUDON,1]
+Flags = CannotDynamax
+#-------------------------------
+[NECROZMA,3]
+Flags = CannotDynamax
+#-------------------------------
+[NECROZMA,4]
+Flags = CannotDynamax
