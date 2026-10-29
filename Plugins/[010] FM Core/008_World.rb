@@ -21,6 +21,7 @@ module FM
     attr_accessor :move_to, :moved_year   # FM::Transfer
     attr_accessor :bag   # FM::Items: the player's items, { id => count }
     attr_accessor :att   # this season's home crowds { year:, sum:, n: } (FM::Contract)
+    attr_accessor :tlog  # FM::Titles: titles earned, newest first
     attr_writer :stadium_shared
 
     # FM::Transfer: a new region, home city and role.
@@ -377,6 +378,7 @@ module FM
     attr_accessor :event, :ev_last, :press_week, :last_official, :boast, :fs_boast
     attr_accessor :h2h, :rival, :taunt   # FM::Rival
     attr_accessor :sponsor_offers   # FM::Contract: the player's offers to pick from
+    attr_accessor :my_title         # FM::Titles: the title the player shows (nil = the first)
     attr_reader :rng
     def sponsor_table = @sponsors
 
@@ -542,7 +544,10 @@ module FM
           events << finish_league(region, league) if league.done?
         end
       end
-      events.concat(Cups.setup(self, rng: @rng)) if @cups.nil? && @leagues.values.all?(&:done?)
+      if @cups.nil? && @leagues.values.all?(&:done?)
+        events.concat(Titles.update(self))
+        events.concat(Cups.setup(self, rng: @rng))
+      end
       events.concat(Cups.play_day(self, rng: @rng)) if @cups
       events.concat(@match_events) if @match_events
       @match_events = nil

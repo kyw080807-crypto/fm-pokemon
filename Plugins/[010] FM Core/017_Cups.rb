@@ -187,6 +187,7 @@ module FM
           world.leg_right[:used] = true
         end
         events << { kind: :cup_champion, cup: :pwt, club: ko.champion, date: date }
+        events.concat(Titles.update(world))
       end
       events
     end

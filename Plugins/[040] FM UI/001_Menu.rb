@@ -126,14 +126,38 @@ module FM
         return choose_club
       end
       loop do
-        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("지방 이적"), _INTL("닫기")]
+        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("지방 이적"), _INTL("칭호"), _INTL("닫기")]
         case pbMessage(_INTL("내 클럽"), cmds, cmds.size)
         when 0 then show_list(_INTL("내 클럽"), my_club_rows(id))
         when 1 then injury_room(world.clubs[id])
         when 2 then region_move(world.clubs[id])
+        when 3 then title_menu(world.clubs[id])
         else break
         end
       end
+    end
+
+    TITLE_NAMES = { legend: "살아있는 전설", worldnow: "세계 챔피언", dynasty: "{1}연패 왕조", leaguenow: "리그 제패자",
+                    reborn: "부활한 왕", exworld: "전 세계 챔피언", fallen: "몰락한 왕", legowner: "전설의 주인", surge: "돌풍",
+                    crownless: "무관의 제왕", multi: "리그 {1}회 우승", champ1: "리그 우승 경험", mono: "{1} 마스터", mentor: "명장",
+                    veteran: "노장", challenger: "PWT 도전자", rising: "유망주" }.freeze
+
+    def title_name(t)
+      n = t[:k] == :mono ? type_name(t[:n]) : t[:n]
+      _INTL(TITLE_NAMES.fetch(t[:k], t[:k].to_s), n)
+    end
+
+    # The profile's title chips: the player picks the one shown.
+    def title_menu(c)
+      ts = Titles.of(world, c)
+      if ts.empty?
+        pbMessage(_INTL("아직 칭호가 없습니다. 리그 성적과 PWT, 명예의 전당으로 칭호가 붙습니다."))
+        return
+      end
+      rows = ts.map { |t| (Titles.main(world, c)[:k] == t[:k] ? "▶" : "") + title_name(t) } + [_INTL("자동 (첫 번째)")]
+      i = pbMessage(_INTL("이름 옆에 보일 칭호를 고르세요."), rows + [_INTL("닫기")], rows.size + 1)
+      return if i > ts.size
+      world.my_title = i < ts.size ? ts[i][:k] : nil
     end
 
     # Poké Manager 지방 이적 (movePanel).
@@ -199,6 +223,8 @@ module FM
       club = world.clubs[id]
       if id == world.player_club
         rows << goal_row(club) if club.goal && club.goal[:year] == world.calendar.year
+        t = Titles.main(world, club)
+        rows << _INTL("칭호: {1}", t ? title_name(t) : _INTL("(아직 없음)"))
         if (rv = Rival.current(world))
           rows << _INTL("라이벌 {1} · 올 시즌 {2}승 {3}패", world.clubs[rv[:club]].name, rv[:w], rv[:l])
         end
@@ -1394,6 +1420,8 @@ module FM
           e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
         when :sponsor_quit, :sponsor_warn, :sponsor_review, :sponsor_eval, :sponsor_renewal
           sponsor_news(e, id)
+        when :title_gained
+          _INTL("{1}, '{2}' 칭호", world.clubs[e[:club]].name, title_name(e[:title]))
         when :rival_set
           next unless e[:club] == id
           n = world.clubs[e[:rival]].name

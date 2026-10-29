@@ -310,6 +310,11 @@ FM::Smoke.register("meeting_player") do
     coef = FM::Power.coefficients(w).first
     FM::Log.info("smoke: power #1 #{w.clubs[top[:club]].name} #{top[:score]}; coef #1 " \
                  "#{FM::UI.region_name(coef[:region])} #{coef[:score]} (#{coef[:slots]} slots)")
+    champ = w.clubs[hof[:league].first[:club]]
+    t = FM::Titles.main(w, champ)
+    raise "a champion with no title" unless t
+    FM::Log.info("smoke: titles logged by #{w.clubs.values.count { |c| c.tlog&.any? }} clubs; " \
+                 "#{champ.name}: #{FM::UI.title_name(t)}")
     best = hof[:records][:ko]
     FM::Log.info("smoke: hof #{hof[:league].size} champions, KO record #{best && best[:ko]} " \
                  "(#{best && FM::UI.species_name(best[:species])}), goal #{me.goal && FM::UI.goal_row(me)}")
