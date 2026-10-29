@@ -215,7 +215,7 @@ module FM
                       date_text(c[:project][:done]))
       end
       if c[:sponsor]
-        rows << _INTL("스폰서: {1} (연 {2})", c[:sponsor][:name], money(c[:sponsor][:base]))
+        rows << _INTL("스폰서: {1} (연 {2})", c[:sponsor][:name] || _INTL("지역 상공회"), money(c[:sponsor][:base]))
       end
       if (sp = c[:specialty])
         rows << _INTL("{1} 전문 · 다른 타입 스쿼드 {2}/{3} · 엔트리 {4}/{5}", type_name(sp[:type]), sp[:others], sp[:cap],
@@ -359,12 +359,13 @@ module FM
                        Credit::TERM_WEEKS, format("%.2f", Credit::LOAN_RATE * 100))
                end
         head += "\n" + _INTL("재정 위기: {1}", crisis_name(c.crisis)) if c.crisis
-        cmds = [_INTL("팬 만족도·입장료")]
+        cmds = [_INTL("스폰서 계약"), _INTL("팬 만족도·입장료")]
         cmds << _INTL("대출 받기") unless c.loan
         cmds << _INTL("전액 상환 ({1})", money(c.loan[:owed])) if c.loan
         cmds << _INTL("닫기")
         i = pbMessage(head, cmds, cmds.size)
         case cmds[i]
+        when _INTL("스폰서 계약") then sponsor_menu
         when _INTL("팬 만족도·입장료") then fans_and_price(c)
         when _INTL("대출 받기")
           unless Credit.can_borrow?(c, [limit, 1].max)
@@ -1391,6 +1392,8 @@ module FM
         when :pwt_hof
           n = world.clubs[e[:club]].name
           e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
+        when :sponsor_quit, :sponsor_warn, :sponsor_review, :sponsor_eval, :sponsor_renewal
+          sponsor_news(e, id)
         when :rival_set
           next unless e[:club] == id
           n = world.clubs[e[:rival]].name

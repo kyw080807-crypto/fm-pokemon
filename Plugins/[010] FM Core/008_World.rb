@@ -20,6 +20,7 @@ module FM
     attr_accessor :hof   # FM::Hof: its own hall of fame
     attr_accessor :move_to, :moved_year   # FM::Transfer
     attr_accessor :bag   # FM::Items: the player's items, { id => count }
+    attr_accessor :att   # this season's home crowds { year:, sum:, n: } (FM::Contract)
     attr_writer :stadium_shared
 
     # FM::Transfer: a new region, home city and role.
@@ -196,6 +197,7 @@ module FM
         c.instance_variable_set(:@type, t) if t && c.type.nil?
       end
       ten_levels unless @fac_scale == 10
+      @clubs.each_value { |c| Contract.fix(self, c) } if @sponsors
     end
 
     # Saves from before facilities had 10 levels: every level x2 (Lv5 -> Lv10),
@@ -374,6 +376,9 @@ module FM
     # week, the player's last official result and the two boasts.
     attr_accessor :event, :ev_last, :press_week, :last_official, :boast, :fs_boast
     attr_accessor :h2h, :rival, :taunt   # FM::Rival
+    attr_accessor :sponsor_offers   # FM::Contract: the player's offers to pick from
+    attr_reader :rng
+    def sponsor_table = @sponsors
 
     def send_scout(region, type: nil, spec: nil)
       Scouting.send(self, @clubs.fetch(@player_club), region, type: type, spec: spec, date: date)
@@ -429,6 +434,7 @@ module FM
     # Every club takes its best offer for the season (aiPickSponsor).
     def sign_sponsors
       return unless @sponsors
+      return Contract.new_year(self)
       @clubs.each_value do |c|
         offers = Sponsor.offers(@sponsors, region: c.region, fame: c.fame, clubhouse: c.clubhouse,
                                            bans: c.sponsor_bans, year: @calendar.year, rng: @rng)
@@ -486,6 +492,11 @@ module FM
           weekly_economy
           if (pc = @player_club && @clubs[@player_club])
             events.concat(Fans.week(pc, self, date: date))
+            if (s = pc.sponsor) && Contract.v2?(s) && !s[:human]   # the player took over the club
+              s[:human] = true
+              Contract.season(self, pc, fresh: true)
+            end
+            events.concat(Contract.week(self, pc))
             (e = Rival.current(self).nil? && Rival.pick(self, pc, @rng)) && events << e
             events.concat(Events.week(self, pc, @rng))
             lg = @leagues && @leagues[pc.region]
@@ -535,6 +546,7 @@ module FM
       events.concat(Cups.play_day(self, rng: @rng)) if @cups
       events.concat(@match_events) if @match_events
       @match_events = nil
+      events.each { |e| (c = @clubs[e[:club]]) && Contract.buzz(self, c) if Contract::BUZZ_KINDS.include?(e[:kind]) }
       events
     end
 
@@ -587,6 +599,8 @@ module FM
       [[home, away, res], [away, home, -res]].each do |c, o, my|
         next if ai?(c)
         Rival.count(self, o.id, my)
+        Contract.match(c, my <=> 0, date: date) if league
+        Contract.buzz(self, c) if my.positive? && Fans.team_ovr(o) - Fans.team_ovr(c) >= 10   # an upset win
         Fans.result(c, o, my <=> 0, series: series, date: date, rival: Rival.rival?(self, o.id))
         (e = league && Rival.result(self, c, o.id, my)) && (@match_events ||= []) << e
         Events.result(self, c, my <=> 0, league: league)
@@ -674,6 +688,11 @@ module FM
 
     def play_league_round(region, league)
       round = league.next_round
+      pc = @player_club && @clubs[@player_club]
+      if round.zero? && pc && pc.region == region && @sponsor_offers   # sp2AutoPick at the first round
+        Contract.sign(self, pc, Contract.auto_pick(@sponsor_offers))
+        @sponsor_offers = nil
+      end
       before = league.standings
       # Early on the table means little; rank by strength instead (original).
       ranking = round < 3 ? before.sort_by { |id| -@clubs[id].rating } : before
@@ -692,6 +711,9 @@ module FM
         hc.budget.record(tourism, category: :tourism, date: date) if tourism.positive?
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
         home.push_fill(gate[:attendance].fdiv(Economy.capacity(home.stadium)))
+        a = home.att = home.att && home.att[:year] == @calendar.year ? home.att : { year: @calendar.year, sum: 0, n: 0 }
+        a[:sum] += gate[:attendance]
+        a[:n] += 1
         contribute(home, gate[:revenue])
         go = Travel.land(ac, hc, hub: hub(hc))
         away.travel(go, date: date)
@@ -762,6 +784,7 @@ module FM
     # sponSeasonEnd, plus the bonus for a top-4 finish.
     def sponsor_season_end(c, pos)
       s = c.sponsor or return
+      return (@match_events ||= []).concat(Contract.evaluate(self, c, pos)) if Contract.v2?(s)
       if %w[PERF STRICT].include?(s[:kind]) && pos <= Sponsor::BONUS_POSITION && s[:bonus].positive?
         c.wallet.record(s[:bonus], category: :spon, date: date)
       end

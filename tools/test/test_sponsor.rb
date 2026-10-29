@@ -64,7 +64,7 @@ class TestSponsor < Minitest::Test
     assert(w.clubs.values.all?(&:sponsor))
     w.advance_days(7)
     c = w.clubs["K1"]
-    assert_equal (c.sponsor[:base] / 52.0).round, c.wallet.totals[:spon]
+    assert_equal (c.sponsor[:base] / 52.0).round + c.sponsor[:sign], c.wallet.totals[:spon], "a week + the signing fee"
   end
 
   def test_season_end_bonus_and_strict_ban

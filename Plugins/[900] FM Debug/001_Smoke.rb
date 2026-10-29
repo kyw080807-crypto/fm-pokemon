@@ -178,6 +178,13 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: #{fan_row}; goal #{club.goal ? FM::UI.goal_row(club) : 'none yet'}")
     # Choice events: every one has a title, a body and its options.
     keys = FM::Events::OPTIONS.keys
+    # Sponsor contract 2.0: the player's contract screen rows.
+    if club.sponsor
+      club.sponsor[:human] = true
+      FM::Contract.season(FM.world, club, fresh: true)
+    end
+    rows = FM::UI.contract_rows(club)
+    FM::Log.info("smoke: sponsor " + rows.first(4).join(" | "))
     FM::Rival.pick(FM.world, club, Random.new(1)) unless FM::Rival.current(FM.world)
     rv = FM::Rival.current(FM.world)
     raise "no rival picked" unless rv

@@ -100,6 +100,7 @@ module FM
       world.boast = world.fs_boast = nil
       world.rival = world.taunt = nil
       club.goal = nil
+      Contract.season(world, club, fresh: true) if Contract.v2?(club.sponsor) && now?(world)
       [club, o].compact.each(&:refresh_rating)
       { kind: :region_moved, club: club.id, from: from, to: to, partner: o&.id, fame0: fame0, fame: club.fame,
         city: club.city, date: date }
