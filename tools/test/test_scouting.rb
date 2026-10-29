@@ -6,7 +6,7 @@ require_relative "test_specialty"   # TestSpecialty::POOL (types, families)
 class TestScouting < Minitest::Test
   POOL = TestSpecialty::POOL
 
-  def world(transport: 3, scouting: 2)
+  def world(transport: 6, scouting: 4)
     cities = [{ id: "C", name: "C", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, transport]].reject { |_, l| l.zero? } },
               { id: "J", name: "J", region: "JOHTO", form: "SOLO", size: 1, buildings: [] }]
     club = lambda do |id, city, region|
@@ -22,21 +22,21 @@ class TestScouting < Minitest::Test
   end
 
   def test_scouts_in_the_field_and_fees
-    w = world(scouting: 1)   # original 2: one scout
+    w = world(scouting: 2)   # one scout
     assert_equal 1, FM::Scouting.max_scouts(w.clubs["P"])
     assert_nil w.send_scout("KANTO")
     assert_equal :busy, w.send_scout("KANTO")
     assert_equal(-FM::Scouting::FEE, w.clubs["P"].wallet.totals[:scout])
-    assert_equal 5, FM::Scouting.max_scouts(world(scouting: 5).clubs["P"]), "original 10: 1 + 3 + 1"
+    assert_equal 5, FM::Scouting.max_scouts(world(scouting: 10).clubs["P"]), "Lv10: 1 + 3 + 1"
   end
 
   def test_low_transport_scouts_only_at_home
-    w = world(transport: 2)
+    w = world(transport: 4)
     assert_equal ["KANTO"], FM::Scouting.regions(w, w.clubs["P"])
     assert_equal :region, w.send_scout("JOHTO")
     assert_nil w.send_scout(nil, type: "ROCK")
     assert_equal "KANTO", FM::Scouting.state(w)[:assign].last[:region], "a type scout stays home below the world range"
-    assert_nil world(transport: 3).send_scout("JOHTO")
+    assert_nil world(transport: 5).send_scout("JOHTO")
   end
 
   def test_report_next_week_then_expiry

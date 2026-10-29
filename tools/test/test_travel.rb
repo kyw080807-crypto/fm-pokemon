@@ -8,12 +8,12 @@ class TestTravel < Minitest::Test
 
   def test_land_trip_follows_the_departing_city
     far = City.new("FAR", 0, "KANTO")
-    near = City.new("NEAR", 4, "KANTO")
+    near = City.new("NEAR", 8, "KANTO")
     assert_equal({ days: 3, cond: 3 * 2 + 3, fat: 3 * 3 + 2, cost: 300 }, FM::Travel.land(far, near))
     assert_equal({ days: 1, cond: 2, fat: 3, cost: 1000 }, FM::Travel.land(near, far, arrive_before: false))
     assert_equal FM::Travel::NONE, FM::Travel.land(far, far)
-    airport = City.new("CAP", 5, "KANTO")
-    assert_equal 0, FM::Travel.land(airport, far)[:days], "Lv5: same day"
+    airport = City.new("CAP", 10, "KANTO")
+    assert_equal 0, FM::Travel.land(airport, far)[:days], "Lv9-10: same day"
   end
 
   def test_flights_use_the_design_table
@@ -53,7 +53,7 @@ class TestTravel < Minitest::Test
 
   def cities
     [{ id: "FAR", name: "FAR", region: "KANTO", form: "SOLO", size: 1, buildings: [] },
-     { id: "NEAR", name: "NEAR", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, 4]] }]
+     { id: "NEAR", name: "NEAR", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, 8]] }]
   end
 
   def club(id, city)
@@ -71,13 +71,13 @@ class TestTravel < Minitest::Test
   end
   def test_hub_cuts_days_to_the_capital
     town = City.new("T", 0, "KANTO")
-    cap = City.new("C", 5, "KANTO", true)
-    other = City.new("O", 3, "KANTO")
+    cap = City.new("C", 10, "KANTO", true)
+    other = City.new("O", 6, "KANTO")
     assert_equal 3, FM::Travel.land(town, cap)[:days]
-    assert_equal 2, FM::Travel.land(town, cap, hub: 2)[:days], "Lv2 hub: -1 day"
-    assert_equal 1, FM::Travel.land(town, cap, hub: 5)[:days]
-    assert_equal 3, FM::Travel.land(town, other, hub: 4)[:days], "only trips to the capital"
-    assert_equal 0, FM::Travel.land(other, cap, hub: 4)[:days]
+    assert_equal 2, FM::Travel.land(town, cap, hub: 4)[:days], "Lv4 hub: -1 day"
+    assert_equal 1, FM::Travel.land(town, cap, hub: 10)[:days]
+    assert_equal 3, FM::Travel.land(town, other, hub: 8)[:days], "only trips to the capital"
+    assert_equal 0, FM::Travel.land(other, cap, hub: 8)[:days]
   end
 
   def test_a_night_at_a_better_hotel_rests_more_and_costs_more
@@ -86,12 +86,12 @@ class TestTravel < Minitest::Test
     [f, n].each { |c| c.squad.each { |m| m.cond = 50 } }
     inn = w.cities["FAR"]
     hotel = w.cities["NEAR"]
-    hotel.buildings << [:HOTEL, 5]
+    hotel.buildings << [:HOTEL, 10]
     f.stay_night(inn, date: [1, 2, 1])
     n.stay_night(hotel, date: [1, 2, 1])
     assert_operator n.entry.first.cond, :>, f.entry.first.cond
-    assert_equal(-FM::Travel::HOTEL_FEE[0], f.wallet.totals[:travel])
-    assert_equal(-FM::Travel::HOTEL_FEE[5], n.wallet.totals[:travel])
+    assert_equal(-FM::Travel.hotel_fee(0), f.wallet.totals[:travel])
+    assert_equal(-FM::Travel.hotel_fee(10), n.wallet.totals[:travel])
   end
 
   def test_rest_multiplier_scales_a_resting_week

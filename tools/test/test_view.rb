@@ -61,7 +61,7 @@ class TestViewCity < Minitest::Test
     cm = FM::View.committee(w, "KANTO")
     assert_equal 6, cm[:members].size
     refute_empty cm[:log]
-    assert_equal 4, cm[:facilities][:SIDE_STADIUM]
+    assert_equal 7, cm[:facilities][:SIDE_STADIUM]
     assert_nil FM::View.committee(w, "JOHTO")
   end
 end

@@ -105,7 +105,7 @@ time = Benchmark.realtime do
       ends << e if e[:kind] == :league_end
       results.concat(e[:results]) if e[:kind] == :league_round
       meetings << e if e[:kind] == :meeting
-      squad_events[e[:kind]] += 1 if %i[signed released youth].include?(e[:kind])
+      squad_events[e[:kind]] += 1 if %i[signed released youth aged city_aged committee_aged].include?(e[:kind])
       injuries << e if e[:kind] == :injured
       crises[e[:kind] == :crisis ? e[:stage] : e[:kind]] += 1 if %i[crisis bailout dismissed].include?(e[:kind])
       cup_champs << e.merge(year: e[:date][0]) if e[:kind] == :cup_champion

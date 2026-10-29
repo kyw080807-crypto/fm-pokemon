@@ -10,8 +10,8 @@ class TestInjury < Minitest::Test
 
   def test_medical_center_cuts_match_risk
     m = mon
-    assert_operator FM::Injury.match_risk(m, 5), :<, FM::Injury.match_risk(m, 1)
-    assert_in_delta 0.18, FM::Injury.risk_cut(5), 1e-9   # original Lv10 cap
+    assert_operator FM::Injury.match_risk(m, 10), :<, FM::Injury.match_risk(m, 1)
+    assert_in_delta 0.18, FM::Injury.risk_cut(10), 1e-9   # Lv10 cap
     assert_in_delta 0.0, FM::Injury.risk_cut(nil), 1e-9
   end
 
@@ -63,7 +63,7 @@ class TestInjury < Minitest::Test
     assert_operator m.cond, :<=, FM::Injury::REHAB_COND
     m2 = mon
     FM::Injury.injure(m2, :battle, rng, :sprain)
-    nil until FM::Injury.heal_week(m2, 5, rng) == :recovered
+    nil until FM::Injury.heal_week(m2, 10, rng) == :recovered
     assert_equal 1, m2.rehab
   end
 

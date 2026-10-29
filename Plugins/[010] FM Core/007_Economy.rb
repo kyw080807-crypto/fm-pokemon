@@ -131,10 +131,10 @@ module FM
       (f / 10).round * 10
     end
 
-    # Club buildings use design levels 1-5 (old level = 2 x new); every
+    # Facilities use the original 1-10 levels (0 = none or aged away); every
     # building pays upkeep (design 01), not just training and scouting.
     def facility_keep(level)
-      (60 * (2 * level)**1.4).round
+      (60 * level.to_i**1.4).round
     end
 
     def stadium_keep(stadium)

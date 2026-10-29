@@ -12,7 +12,7 @@
 #   Severity 2-3: out of the entry and resting until healed.
 # - Healing is a week per week; the medical center gives an extra week
 #   with chance 3% per original level. After a 2-3 injury: 2 weeks of
-#   rehab (condition at most 70), 1 week with a Lv5 center (design 01:
+#   rehab (condition at most 70), 1 week with a Lv10 center (design 01:
 #   "Lv5 장기 결장 위험 감소"; original Lv10 perk).
 # - 무리 출전 (the player's choice): a red-injured mon stays in the entry
 #   at speed and main attack -1 more; playing it may make it worse

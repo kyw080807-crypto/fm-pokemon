@@ -20,7 +20,7 @@ SCHEMAS = {
     "Size"      => { required: true, check: /\A[1-5]\z/ },
     "FreePlots" => { required: true, check: INT },
     "Stadium"   => { required: true },
-    "Building"  => { repeat: true, check: /\A[A-Z_]+,[0-5](,[A-Z_]+)?\z/ }
+    "Building"  => { repeat: true, check: /\A[A-Z_]+,([0-9]|10)(,[A-Z_]+)?\z/ }
   },
   "fm_clubs" => {
     "Name"      => { required: true },
@@ -34,7 +34,7 @@ SCHEMAS = {
     "Canon"     => { required: true, check: %w[true false] },
     "Clubhouse" => { required: true, check: /\A[1-5]\z/ },
     "Stadium"   => { required: true, check: /\A[0-6]\z/ },
-    "Facility"  => { repeat: true, check: /\A(TRAINING|MEDICAL|SCOUTING|DAYCARE|SHOP),[1-5]\z/ },
+    "Facility"  => { repeat: true, check: /\A(TRAINING|MEDICAL|SCOUTING|DAYCARE|SHOP),([1-9]|10)\z/ },
     "Pokemon"   => { repeat: true, required: true, check: :species }
   },
   "fm_sponsors" => {

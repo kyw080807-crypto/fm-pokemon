@@ -9,9 +9,9 @@ class TestCommittee < Minitest::Test
         facilities: { TRAINING: 2 }, pokemon: Array.new(3) { { bst: 450 + i, level: 30, stars: 3 } } }
     end
     cities = [{ id: "CAP", name: "CAP", region: "KANTO", form: "LEAGUE", size: 5, free_plots: 6,
-                buildings: [[:TRANSPORT, 5], [:HOTEL, 3]] },
+                buildings: [[:TRANSPORT, 10], [:HOTEL, 6]] },
               { id: "TOWN", name: "TOWN", region: "KANTO", form: "LONDON", size: 2, free_plots: 1,
-                buildings: [[:TRANSPORT, 1]] }]
+                buildings: [[:TRANSPORT, 2]] }]
     FM::World.new_game(clubs, seed: seed, cities: cities)
   end
 
@@ -19,7 +19,7 @@ class TestCommittee < Minitest::Test
     w = world
     cm = w.committees.fetch("KANTO")
     assert_equal 1, w.committees.size
-    assert_equal 3, cm.facilities[:SIDE_STADIUM]
+    assert_equal 6, cm.facilities[:SIDE_STADIUM]
     assert_equal %w[K0 K1 K2 K3], cm.members(w)
   end
 
@@ -28,10 +28,10 @@ class TestCommittee < Minitest::Test
     w.advance_days(7)
     c = w.clubs["K5"]
     assert_equal(-(c.fame * FM::Committee::DUES_PER_FAME).round, c.wallet.totals[:dues])
-    assert_equal 2 * FM::Committee::BROADCAST_PER_LEVEL, c.wallet.totals[:broadcast]
+    assert_equal 4 * FM::Committee::BROADCAST_PER_LEVEL, c.wallet.totals[:broadcast]
     t = w.cities["CAP"].budget.totals
     assert t[:dues].positive?
-    assert_equal 3 * FM::Committee::HQ_INCOME_PER_LEVEL, t[:league_hq]
+    assert_equal 6 * FM::Committee::HQ_INCOME_PER_LEVEL, t[:league_hq]
   end
 
   def test_side_stadium_first_and_capital_clubs_move_up

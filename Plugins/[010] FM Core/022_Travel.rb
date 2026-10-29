@@ -18,7 +18,7 @@
 #===============================================================================
 module FM
   module Travel
-    LAND_COST = [300, 400, 500, 700, 1000, 1400].freeze   # by transport level 0-5
+    LAND_COST = [300, 400, 500, 700, 1000, 1400].freeze   # by transport tier 0-5 (Civic.tier)
     LAND_COND_PER_DAY = 2
     LAND_FAT_PER_DAY = 3
     ARRIVE_BEFORE_COND = 3
@@ -41,8 +41,10 @@ module FM
     ].freeze
 
     NONE = { days: 0, cond: 0, fat: 0, cost: 0 }.freeze
-    HOTEL_FEE  = [200, 300, 500, 800, 1200, 2000].freeze   # a night for the team, by hotel level 0-5
+    HOTEL_FEE  = [200, 300, 500, 800, 1200, 2000].freeze   # a night for the team, by hotel tier 0-5
     HOTEL_REST = [0.8, 0.9, 1.0, 1.1, 1.25, 1.4].freeze    # rest recovery multiplier
+    def self.hotel_fee(level) = HOTEL_FEE[Civic.tier(level)]
+    def self.hotel_rest(level) = HOTEL_REST[Civic.tier(level)]
 
     module_function
 
@@ -52,17 +54,18 @@ module FM
     end
 
     # Days off trips to a capital for its region's hub level.
-    def hub_cut(hub) = hub.to_i / 2
+    # (A day every 4 hub levels: the design's every 2 of 5.)
+    def hub_cut(hub) = hub.to_i / 4
 
     # From one city to another in the same region. hub: the region's
     # transport hub level, counted when `to` is the capital.
     def land(from, to, arrive_before: true, hub: 0)
       return NONE if from.nil? || to.nil? || from.id == to.id
-      days = Civic::TRANSPORT_DAYS[from.transport]
+      days = Civic::TRANSPORT_DAYS[Civic.tier(from.transport)]
       days = [days - hub_cut(hub), 0].max if to.capital?
       early = arrive_before && days.positive?
       { days: days, cond: days * LAND_COND_PER_DAY + (early ? ARRIVE_BEFORE_COND : 0),
-        fat: days * LAND_FAT_PER_DAY + (early ? ARRIVE_BEFORE_FAT : 0), cost: LAND_COST[from.transport] }
+        fat: days * LAND_FAT_PER_DAY + (early ? ARRIVE_BEFORE_FAT : 0), cost: LAND_COST[Civic.tier(from.transport)] }
     end
 
     def flight(from_region, to_region)

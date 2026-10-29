@@ -151,7 +151,7 @@ city_txt = +header.call("cities (year-1 state)")
 cities.each do |c|
   city_txt << "#-------------------------------\n[#{c[:id]}]\nName = #{c[:name]}\nRegion = #{REGIONS[c[:region]]}\n"
   city_txt << "Form = #{c[:form]}\nSize = #{c[:size]}\nFreePlots = #{c[:free]}\nStadium = #{c[:stadium]}\n"
-  c[:buildings].each { |b| city_txt << "Building = #{b.join(',')}\n" }
+  c[:buildings].each { |k, lv, *rest| city_txt << "Building = #{[k, lv * 2, *rest].join(',')}\n" }   # design 1-5 -> 10 levels
 end
 
 club_txt = +header.call("clubs (year-1 state)")
@@ -167,7 +167,7 @@ trainers.each_with_index do |t, i|
   club_txt << "Level = #{t['level']}\nPotential = #{t['potential']}\nType = #{st[:type]}\n"
   club_txt << "Canon = #{t['canon'] ? 'true' : 'false'}\n"
   club_txt << "Clubhouse = #{st[:clubhouse]}\nStadium = #{st[:stadium]}\n"
-  st[:facilities].each { |f, lv| club_txt << "Facility = #{f},#{lv}\n" }
+  st[:facilities].each { |f, lv| club_txt << "Facility = #{f},#{lv * 2}\n" }   # design 1-5 -> 10 levels
   t["roster"].each { |num| club_txt << "Pokemon = #{ids[num - 1]},#{t['level']},#{t['potential']}\n" }
   (locked_by[key] || []).each do |m|
     sp = ids[m["num"] - 1] or die "no species ##{m['num']}"

@@ -5,7 +5,7 @@ class TestCityRules < Minitest::Test
 
   def test_size_table_from_design
     assert_equal [4, 6, 8, 10, 12], (1..5).map { |s| C.public_plots(s) }
-    assert_equal [2, 3, 4, 5, 5], (1..5).map { |s| C.public_cap(s) }
+    assert_equal [4, 6, 8, 10, 10], (1..5).map { |s| C.public_cap(s) }
   end
 
   def test_expansion_cost_multipliers_from_design
@@ -59,10 +59,11 @@ class TestVote < Minitest::Test
 end
 
 class TestAwayFans < Minitest::Test
+  # transport / hotel: the design 05 tier; the building's level is 2x.
   def city(id, transport: nil, hotel: nil)
     b = [[:RESIDENTIAL, 1]]
-    b << [:TRANSPORT, transport] if transport
-    b << [:HOTEL, hotel] if hotel
+    b << [:TRANSPORT, transport * 2] if transport
+    b << [:HOTEL, hotel * 2] if hotel
     FM::City.new(id: id, name: id, region: "KANTO", form: "SOLO", size: 2, buildings: b)
   end
 

@@ -11,7 +11,7 @@ module FM
   module Civic
     POPULATION   = [5_000, 15_000, 40_000, 100_000, 100_000].freeze   # by size (draft)
     PUBLIC_PLOTS = [4, 6, 8, 10, 12].freeze                             # design 01
-    PUBLIC_CAP   = [2, 3, 4, 5, 5].freeze                               # design 01
+    PUBLIC_CAP   = [4, 6, 8, 10, 10].freeze                             # design 01, on 10 levels
     TAX_PER_HEAD = 0.25         # ₽ per resident per week (draft; 0.5 left budgets at a ₽20M median after 20 years)
     EXPANSION_BASE = 1_000_000  # draft
     EXPANSION_MUL  = { 1 => 1.0, 2 => 2.5, 3 => 6.0 }.freeze           # design 01: to sizes 2/3/4
@@ -34,16 +34,20 @@ module FM
     LOW_SATISFACTION = 40.0
     TAX_COOLDOWN_DAYS = 182        # at most one tax change per half year (draft)
 
-    # Design 05, by transport level 0-5 (0 = no transport building).
+    # Design 05, by tier 0-5 (the design's transport levels; on our 0-10
+    # levels a tier spans two, Civic.tier).
     TRANSPORT_DAYS = [3, 2, 2, 1, 1, 0].freeze
     FAN_FACTOR     = [0.4, 0.6, 0.8, 1.0, 1.2, 1.4].freeze
     SAME_CITY_D    = 1.3
     SAME_REGION_D  = 1.0
-    # Design 05, by hotel level 0-5 (0 = the inn every city has).
+    # Design 05, by tier 0-5 (0 = the inn every city has).
     HOTEL_CAP      = [400, 800, 1500, 2500, 4000, 6000].freeze
     LODGE_SPEND    = 4      # ₽ per lodging fan per night, to the host city budget
 
     module_function
+
+    # Level 0-10 -> the design's 0-5 tier: 1-2 -> 1, ..., 9-10 -> 5.
+    def tier(level) = (level.to_i + 1) / 2
 
     # Share of away fans who must stay the night, by one-way trip days.
     def lodge_share(days) = days >= 2 ? 1.0 : days == 1 ? 0.6 : 0.3
@@ -54,18 +58,18 @@ module FM
     # hotel. Same region only (league games); D for flights comes with travel.
     def away_fans(away_fame:, from:, to:, capacity:)
       same = from.id == to.id
-      t = FAN_FACTOR[[from.transport, to.transport].min]
+      t = FAN_FACTOR[tier([from.transport, to.transport].min)]
       base = Economy.fame_eff(away_fame) * 25 * t * (same ? SAME_CITY_D : SAME_REGION_D)
       base = [base, capacity * Economy::AWAY_SECTION].min
-      days = same ? 0 : TRANSPORT_DAYS[from.transport]
+      days = same ? 0 : TRANSPORT_DAYS[tier(from.transport)]
       wanting = base * lodge_share(days)
-      lodging = [wanting, HOTEL_CAP[to.hotel]].min
+      lodging = [wanting, HOTEL_CAP[tier(to.hotel)]].min
       { fans: base - wanting + lodging, lodging: lodging }
     end
 
     # Infrastructure the meeting can build: those with an effect so far.
     INFRA = %i[TRANSPORT HOTEL].freeze
-    CAPITAL_ONLY_LEVEL = { TRANSPORT: 5 }.freeze   # design 05: Lv5 (airport) needs size 5
+    CAPITAL_ONLY_LEVEL = { TRANSPORT: 9 }.freeze   # design 05: the airport tier (Lv9-10) needs size 5
 
     # Next public building step for a city, or nil: the lowest of INFRA
     # (transport first on a tie), under the size's public cap, a free plot
@@ -78,8 +82,10 @@ module FM
         lv = city.level(b)
         next if lv >= cap
         next if CAPITAL_ONLY_LEVEL[b] && lv + 1 >= CAPITAL_ONLY_LEVEL[b] && city.size < 5
-        next if lv.zero? && city.free_plots < 1   # a new building takes a plot (the inn is free)
-        { target: b, from: lv, cost: Build.building_cost(lv), weeks: Build.build_weeks(:building, lv) }
+        fresh = city.buildings.none? { |x, *| x == b }
+        next if fresh && city.free_plots < 1   # a new building takes a plot (the inn is free)
+        cost = Aging.step_cost(Build.building_cost(lv), city.fac_age&.dig(b), lv + 1)
+        { target: b, from: lv, cost: cost, weeks: Build.build_weeks(:building, lv), new: fresh }
       end
       steps.min_by { |s| [s[:from], INFRA.index(s[:target])] }
     end
@@ -100,6 +106,7 @@ module FM
     attr_reader :id, :name, :region, :form, :budget, :buildings, :club_ids
     attr_accessor :size, :free_plots, :project, :unrest
     attr_writer :tax_rate, :satisfaction
+    attr_accessor :fac_age       # FM::Aging
     attr_accessor :tax_changed   # date of the last tax change, nil if never
     attr_accessor :petition      # { agenda:, target:, by: } for the next meeting (FM::Meeting.petition)
 

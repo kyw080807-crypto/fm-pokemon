@@ -7,7 +7,7 @@ class TestCoach < Minitest::Test
   POOL = TestSpecialty::POOL.transform_values { |s| s.merge(base: [50, 60, 120, 40, 50, 80]) }
                             .merge("PIDGEY" => TestSpecialty::POOL["PIDGEY"].merge(base: [40, 45, 40, 35, 35, 56]))
 
-  def club(training: 2)
+  def club(training: 4)
     FM::Club.new({ id: "X", name: "X", region: "KANTO", city: "C", role: "T", canon: false, level: 20, potential: 3,
                    stadium: 1, clubhouse: 3, type: "NORMAL", facilities: { TRAINING: training },
                    pokemon: [{ species: "ONIX", bst: 385, level: 20, stars: 3 }] })
@@ -20,9 +20,9 @@ class TestCoach < Minitest::Test
   end
 
   def test_slots_by_training
-    assert_equal 1, FM::Coach.slots(club(training: 1))   # original 2
-    assert_equal 2, FM::Coach.slots(club(training: 2))   # original 4
-    assert_equal 4, FM::Coach.slots(club(training: 5))   # original 10: 1 + 2 + 1
+    assert_equal 1, FM::Coach.slots(club(training: 2))
+    assert_equal 2, FM::Coach.slots(club(training: 4))
+    assert_equal 4, FM::Coach.slots(club(training: 10))   # 1 + 2 + 1
   end
 
   def test_quality
@@ -65,7 +65,7 @@ class TestCoach < Minitest::Test
   end
 
   def test_ai_picks_the_best_and_lets_them_go_when_short
-    c = club(training: 2)
+    c = club(training: 4)
     [1, 300, 600].each { |ko| c.retire(retired("ONIX", ko: ko)) }
     FM::Coach.ai_pick(c)
     assert_equal [300, 600], c.coaches.map(&:ko).sort

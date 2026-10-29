@@ -4,7 +4,7 @@ class TestCityWorld < Minitest::Test
   def club(id, city, clubhouse: 2)
     { id: id, name: id, region: "KANTO", city: city, role: "G1", canon: true, level: 30, potential: 3,
       type: "NORMAL", stadium: 1, stadium_shared: false, clubhouse: clubhouse,
-      facilities: { TRAINING: 3, SCOUTING: 3, MEDICAL: 3, DAYCARE: 1 },
+      facilities: { TRAINING: 6, SCOUTING: 6, MEDICAL: 6, DAYCARE: 2 },
       pokemon: Array.new(3) { { bst: 450, level: 30, stars: 3 } } }
   end
 
@@ -87,10 +87,10 @@ class TestInfrastructure < Minitest::Test
     step = FM::Civic.infra_step(c)
     assert_equal :HOTEL, step[:target], "the lower one first: hotel Lv0 (inn) before transport Lv1"
     assert_equal 0, step[:from]
-    full = FM::City.new(city("B", form: "SOLO", size: 1, free: 0, buildings: [[:TRANSPORT, 2]]))
-    assert_nil FM::Civic.infra_step(full), "size 1 caps at Lv2 and no plot for a hotel"
-    big = FM::City.new(city("C", form: "SOLO", size: 4, buildings: [[:TRANSPORT, 4], [:HOTEL, 4]]))
-    assert_equal :HOTEL, FM::Civic.infra_step(big)[:target], "transport Lv5 (airport) is capitals only"
+    full = FM::City.new(city("B", form: "SOLO", size: 1, free: 0, buildings: [[:TRANSPORT, 4]]))
+    assert_nil FM::Civic.infra_step(full), "size 1 caps at Lv4 and no plot for a hotel"
+    big = FM::City.new(city("C", form: "SOLO", size: 4, buildings: [[:TRANSPORT, 8], [:HOTEL, 8]]))
+    assert_equal :HOTEL, FM::Civic.infra_step(big)[:target], "transport Lv9 (airport) is capitals only"
   end
 
   def test_solo_city_builds_a_hotel_and_it_completes

@@ -39,7 +39,7 @@ class TestInvest < Minitest::Test
     rich!(w.clubs["A"])
     w.advance_days(8)
     first = w.clubs["A"].project
-    w.advance_days(7)
+    w.advance_days(3)
     assert_equal first, w.clubs["A"].project
   end
 

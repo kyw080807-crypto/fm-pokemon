@@ -25,7 +25,7 @@ class TestSquad < Minitest::Test
     # close to the 510 / growSeasons target.
     52.times do |w|
       FM::Growth.condition_week(m)
-      FM::Growth.week(m, train_level: 5, species: SPECIES)   # design 5 = original 10
+      FM::Growth.week(m, train_level: 10, species: SPECIES)
       next unless w.even?                                    # squads rotate: a match every other week
       FM::Growth.drain(m, FM::Growth::MATCH_COND)
       m.played = true
@@ -153,7 +153,7 @@ class TestTravelFatigue < Minitest::Test
 
   def test_away_side_tires_by_its_city_transport
     cities = [{ id: "FAR", name: "FAR", region: "KANTO", form: "SOLO", size: 1, buildings: [] },       # transport Lv0: 3 days
-              { id: "NEAR", name: "NEAR", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, 4]] }]
+              { id: "NEAR", name: "NEAR", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, 8]] }]
     w = FM::World.new_game([club("F", "FAR"), club("N", "NEAR"), club("F2", "FAR"), club("N2", "NEAR")], seed: 1, cities: cities)
     assert_equal 3 * 2 + 3, w.send(:travel_fatigue, w.clubs["F"], w.clubs["N"])
     assert_equal 1 * 2 + 3, w.send(:travel_fatigue, w.clubs["N"], w.clubs["F"])

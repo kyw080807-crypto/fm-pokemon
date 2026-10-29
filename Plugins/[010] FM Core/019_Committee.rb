@@ -16,11 +16,11 @@
 #===============================================================================
 module FM
   class Committee
-    START = { SIDE_STADIUM: 3, LEAGUE_HQ: 3, HUB: 2, BROADCAST: 2, HALL_OF_FAME: 1 }.freeze
-    MAX_LEVEL = 5
+    START = { SIDE_STADIUM: 6, LEAGUE_HQ: 6, HUB: 4, BROADCAST: 4, HALL_OF_FAME: 2 }.freeze   # (design levels x2)
+    MAX_LEVEL = 10
     DUES_PER_FAME = 10              # ₽ per fame point per week (draft)
-    HQ_INCOME_PER_LEVEL = 1500      # ₽ per week (draft: broadcast rights, league sponsors)
-    BROADCAST_PER_LEVEL = 150       # ₽ per club per week (draft)
+    HQ_INCOME_PER_LEVEL = 750       # ₽ per week (draft: broadcast rights, league sponsors)
+    BROADCAST_PER_LEVEL = 75        # ₽ per club per week (draft)
     COST_MUL = 4.0                  # x club building step cost (draft)
     QUARTER_MONTHS = [1, 4, 7, 10].freeze
     GYM_SEATS = 2
@@ -38,6 +38,7 @@ module FM
       event
     end
     attr_accessor :project
+    attr_accessor :fac_age   # FM::Aging
 
     def initialize(region:, city_id:)
       @region = region
@@ -48,6 +49,9 @@ module FM
     end
 
     def city(world) = world.cities.fetch(@city_id)
+
+    # The capital clubs' stadium level (0-6) for a side stadium level (0-10).
+    def self.stadium_of(level) = Civic.tier(level)
 
     def members(world)
       city(world).club_ids + @gym_reps
@@ -75,7 +79,8 @@ module FM
     def next_step(world)
       cands = @facilities.filter_map do |f, lv|
         next if lv >= MAX_LEVEL
-        { target: f, from: lv, cost: (Build.building_cost(lv) * COST_MUL).round, weeks: Build.build_weeks(:building, lv),
+        cost = Aging.step_cost((Build.building_cost(lv) * COST_MUL).round, @fac_age&.dig(f), lv + 1)
+        { target: f, from: lv, cost: cost, weeks: Build.build_weeks(:building, lv),
           kind: :facility }
       end
       hotel = Civic.infra_step(city(world))
@@ -114,10 +119,12 @@ module FM
       if p[:kind] == :city
         b = city(world).buildings.find { |x, *| x == p[:target] }
         b ? b[1] = p[:to] : city(world).buildings << [p[:target], p[:to]]
+        Aging.built(city(world), p[:target], p[:to])
       else
         @facilities[p[:target]] = p[:to]
+        Aging.built(self, p[:target], p[:to])
         if p[:target] == :SIDE_STADIUM
-          city(world).club_ids.each { |id| world.clubs[id].stadium = p[:to] }
+          city(world).club_ids.each { |id| world.clubs[id].stadium = Committee.stadium_of(p[:to]) }
         end
       end
       { kind: :committee_built, region: @region, what: p[:target], level: p[:to], date: date }

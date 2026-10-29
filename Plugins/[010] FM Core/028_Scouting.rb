@@ -25,7 +25,7 @@ module FM
     TYPE_FEE = 8000
     KEEP_WEEKS = 4
     TYPE_KEEP_WEEKS = 6
-    WORLD_TRANSPORT = 3
+    WORLD_TRANSPORT = 3   # transport tier (Civic.tier): car and up
     PASSIVE_DOWN = 2
 
     module_function
@@ -39,7 +39,7 @@ module FM
     # Regions this club may send scouts to (design 05).
     def regions(world, club)
       city = world.cities[club.city]
-      city && city.transport < WORLD_TRANSPORT ? [club.region] : world.regions
+      city && Civic.tier(city.transport) < WORLD_TRANSPORT ? [club.region] : world.regions
     end
 
     def state(world) = world.scouting ||= { assign: [], cands: [], next_passive: nil }

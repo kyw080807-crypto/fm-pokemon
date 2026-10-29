@@ -198,7 +198,7 @@ module FM
         [yes, reason]
       end.tap do |e|
         next unless e && e[:passed]
-        city.free_plots -= 1 if step[:from].zero?
+        city.free_plots -= 1 if step[:new]
         city.project = { kind: :building, target: step[:target], to: step[:from] + 1,
                          done: world.calendar.date_after(date, 7 * step[:weeks]) }
       end

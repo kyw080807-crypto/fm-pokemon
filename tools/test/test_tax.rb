@@ -3,7 +3,7 @@ require_relative "test_helper"
 class TestTax < Minitest::Test
   def city(**opts)
     FM::City.new({ id: "C", name: "C", region: "KANTO", form: "SOLO", size: 2, free_plots: 1,
-                   buildings: [[:TRANSPORT, 1]] }.merge(opts))
+                   buildings: [[:TRANSPORT, 2]] }.merge(opts))
   end
 
   def test_defaults_and_old_saves
@@ -56,7 +56,7 @@ class TestTax < Minitest::Test
   def test_broke_city_votes_on_raising_tax
     w = FM::World.new_game([club("S1"), club("S2"), club("S3"), club("S4")], seed: 2,
                            cities: [{ id: "S", name: "S", region: "KANTO", form: "LONDON", size: 2, free_plots: 0,
-                                      buildings: [[:TRANSPORT, 2]] }])
+                                      buildings: [[:TRANSPORT, 4]] }])
     s = w.cities["S"]
     s.budget.record(-s.budget.balance, category: :drain, date: [1, 1, 1])
     w.clubs.each_value { |c| c.wallet.record(-c.wallet.balance, category: :drain, date: [1, 1, 1]) }
@@ -74,7 +74,7 @@ class TestTax < Minitest::Test
   def test_unhappy_city_votes_on_cutting_tax
     w = FM::World.new_game([club("S1"), club("S2"), club("S3"), club("S4")], seed: 2,
                            cities: [{ id: "S", name: "S", region: "KANTO", form: "LONDON", size: 1, free_plots: 0,
-                                      buildings: [[:TRANSPORT, 2]] }])
+                                      buildings: [[:TRANSPORT, 4]] }])
     s = w.cities["S"]
     s.tax_rate = 1.3
     s.satisfaction = 20

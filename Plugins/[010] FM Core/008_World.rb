@@ -101,9 +101,9 @@ module FM
     def stay_night(city, date:)
       lv = city.hotel
       entry.each do |m|
-        m.cond = [m.cond + (Growth.rest_gain(m) / 7.0 * Travel::HOTEL_REST[lv]).round, 100].min
+        m.cond = [m.cond + (Growth.rest_gain(m) / 7.0 * Travel.hotel_rest(lv)).round, 100].min
       end
-      @wallet.record(-Travel::HOTEL_FEE[lv], category: :travel, date: date)
+      @wallet.record(-Travel.hotel_fee(lv), category: :travel, date: date)
       refresh_rating
     end
 
@@ -183,6 +183,28 @@ module FM
         t = club_types[id]
         c.instance_variable_set(:@type, t) if t && c.type.nil?
       end
+      ten_levels unless @fac_scale == 10
+    end
+
+    # Saves from before facilities had 10 levels: every level x2 (Lv5 -> Lv10),
+    # projects too; the old top-level ages carry over.
+    def ten_levels
+      dbl = ->(p) { p && (p[:to] *= 2) && p[:from] && (p[:from] *= 2) }
+      @clubs.each_value do |c|
+        c.facilities.transform_values! { |lv| lv * 2 }
+        dbl.(c.project) if c.project && c.project[:kind] == :building
+        c.fac_age&.each_value { |a| a[:top] = 10 }
+      end
+      @cities.each_value do |c|
+        c.buildings.each { |b| b[1] *= 2 }
+        dbl.(c.project) if c.project && c.project[:kind] == :building
+      end
+      committees.each_value do |cm|
+        cm.facilities.transform_values! { |lv| lv * 2 }
+        dbl.(cm.project)
+        cm.fac_age = nil
+      end
+      @fac_scale = 10
     end
 
     # Before a match (morPreMatch): each side's entry gets a talk unless it
@@ -369,6 +391,7 @@ module FM
       @clubs    = clubs.to_h { |c| [c.id, c] }
       @cities   = cities.to_h { |c| [c.id, c] }
       @species  = species
+      @fac_scale = 10   # facilities on 10 levels (older saves: 5, see refresh_static)
       Scout.pool = species if species
       @sponsors = sponsors
       @clubs.each_value do |c|
@@ -447,6 +470,8 @@ module FM
           events.concat(finish_projects)
           events.concat(finish_city_projects)
           @clubs.each_value { |c| events.concat(Aging.club_week(self, c)) }
+          @cities.each_value { |c| events.concat(Aging.city_week(self, c)) }
+          committees.each_value { |cm| events.concat(Aging.committee_week(self, cm)) }
           committees.each_value do |cm|
             cm.weekly(self, date)
             (e = cm.finish(self, date)) && events << e
@@ -712,7 +737,7 @@ module FM
       staying = Cups.staying(self)
       @clubs.each_value do |c|
         med = c.facilities[:MEDICAL]
-        rest = staying[c.id] ? Travel::HOTEL_REST[staying[c.id].hotel] : 1.0
+        rest = staying[c.id] ? Travel.hotel_rest(staying[c.id].hotel) : 1.0
         c.squad.each do |m|
           if Injury.heal_week(m, med, @rng)
             events << { kind: :recovered, club: c.id, species: m.species, rehab: m.rehab, date: date }
@@ -782,6 +807,7 @@ module FM
         if p[:kind] == :building
           b = c.buildings.find { |x, *| x == p[:target] }
           b ? b[1] = p[:to] : c.buildings << [p[:target], p[:to]]
+          Aging.built(c, p[:target], p[:to])
           next { kind: :city_built, city: c.id, what: p[:target], level: p[:to], date: date }
         end
         c.free_plots += Civic.public_plots(p[:to]) - Civic.public_plots(c.size)
@@ -796,7 +822,9 @@ module FM
         p = c.project
         next unless p && @calendar.days_until(p[:done]) <= 0
         case p[:kind]
-        when :building  then c.facilities[p[:target]] = p[:to]
+        when :building
+          c.facilities[p[:target]] = p[:to]
+          Aging.built(c, p[:target], p[:to])
         when :clubhouse then c.clubhouse = p[:to]
         when :stadium   then c.stadium = p[:to]
         end

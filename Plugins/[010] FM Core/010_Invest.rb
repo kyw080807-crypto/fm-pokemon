@@ -20,7 +20,11 @@ module FM
       return if club.project
       spare = club.spare
       return if spare <= 0
-      choice = stadium_step(club, spare) || building_step(club, spare) || clubhouse_step(club, spare)
+      choice = stadium_step(club, spare)
+      # Saving for a sold-out stadium: buildings only from money beyond it
+      # (one-level steps are cheap enough to eat every week's spare otherwise).
+      spare -= Build.stadium_cost(club.stadium) * MARGIN if !choice && stadium_wanted?(club)
+      choice ||= building_step(club, spare) || clubhouse_step(club, spare) if spare.positive?
       return unless choice
       start(club, choice, date: date, calendar: calendar)
     end
@@ -51,9 +55,13 @@ module FM
       out.sort_by(&:last)
     end
 
+    def stadium_wanted?(club)
+      !club.stadium_shared && club.stadium < Build::STADIUM_COST.size &&
+        club.home_fill.size >= 5 && club.home_fill.sum / club.home_fill.size >= SELLOUT
+    end
+
     def stadium_step(club, spare)
-      return if club.stadium_shared || club.stadium >= Build::STADIUM_COST.size
-      return if club.home_fill.size < 5 || club.home_fill.sum / club.home_fill.size < SELLOUT
+      return unless stadium_wanted?(club)
       cost = Build.stadium_cost(club.stadium)
       [:stadium, :STADIUM, club.stadium, cost] if spare > cost * MARGIN
     end
@@ -64,7 +72,7 @@ module FM
       order.each do |b|
         step = step_for(club, b, cap)
         # The top level needs three times its cost in hand (aiSeasonInvest).
-        return step if step && spare > step.last * (step[2] == Aging::TOP - 1 ? TOP_MARGIN : MARGIN)
+        return step if step && spare > step.last * (step[2] == Build::MAX_LEVEL - 1 ? TOP_MARGIN : MARGIN)
       end
       med = step_for(club, :MEDICAL, cap)
       return med if med && club.facilities.fetch(:MEDICAL, 0) < club.facilities.fetch(:TRAINING, 0) &&
@@ -76,9 +84,9 @@ module FM
     def step_for(club, building, cap)
       lv = club.facilities.fetch(building, 0)
       return if lv >= cap
-      return if lv.zero? && club.facilities.size >= Build.club_plots(club.clubhouse)
+      return if !club.facilities.key?(building) && club.facilities.size >= Build.club_plots(club.clubhouse)
       cost = Build.building_cost(lv)
-      cost = Aging.step_cost(cost, club.fac_age&.dig(building)) if lv == Aging::TOP - 1   # a rebuild after aging
+      cost = Aging.step_cost(cost, club.fac_age&.dig(building), lv + 1)   # a rebuild after aging costs more
       [:building, building, lv, cost]
     end
 

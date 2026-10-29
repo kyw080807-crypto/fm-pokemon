@@ -62,10 +62,10 @@ class TestEconomy < Minitest::Test
   end
 
   def test_weekly_costs_match_poke_manager
-    # Design levels 1-5 map to Poké Manager's 1-10 (level = ceil(old / 2)), so
-    # upkeep uses old level 2L: 60 * 2^1.4 = 158, 60 * 10^1.4 = 1507.
-    assert_equal 158, FM::Economy.facility_keep(1)
-    assert_equal 1507, FM::Economy.facility_keep(5)
+    # 60 * lv^1.4: 60 * 2^1.4 = 158, 60 * 10^1.4 = 1507.
+    assert_equal 60, FM::Economy.facility_keep(1)
+    assert_equal 158, FM::Economy.facility_keep(2)
+    assert_equal 1507, FM::Economy.facility_keep(10)
     assert_equal 800, FM::Economy.stadium_keep(0)
     assert_equal 4000, FM::Economy.stadium_keep(4)
     # OVR 100 mon (o = 150): 100 + 150^2/90 = 350; fame 50 -> x1.0

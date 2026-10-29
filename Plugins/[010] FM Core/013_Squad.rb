@@ -5,8 +5,7 @@
 #
 # Species data is a Hash of species ID => { bst:, fb: (best BST reachable by
 # evolving), tier:, region:, basic:, evo: [[to_id, level], ...] }, from
-# PBS/fm_species.txt. Club building levels are design levels 1-5; the
-# original formulas take its 1-10 levels, so they get 2 x level.
+# PBS/fm_species.txt. Club building levels are the original 1-10 levels.
 # AI training is averaged: about 75% of weeks training, 25% resting
 # (resting weeks give half the level progress and no EVs).
 #===============================================================================
@@ -135,7 +134,8 @@ module FM
 
     module_function
 
-    def original_level(design_level) = (2 * design_level).clamp(1, 10)
+    # A building's level on the original's 1-10 scale (no building = 1).
+    def original_level(level) = level.to_i.clamp(1, 10)
 
     # Seasons to fill 510 EVs: 5 at original level 1, 3 at level 10.
     def grow_seasons(original_level)
@@ -196,7 +196,7 @@ module FM
 
     # One week of growth after condition_week: resting gives half the level
     # progress and no EVs; tired mons (under 40) train at half effect.
-    # train_level is the club's TRAINING design level.
+    # train_level is the club's TRAINING level.
     # fx: FM::Coach.fx multipliers ({ lv:, ev: }).
     def week(mon, train_level:, species:, fx: nil)
       home = (7 - mon.away_days.to_i).clamp(0, 7) / 7.0   # design 05: travel days stop training
@@ -336,7 +336,7 @@ module FM
       (mean + (rng.rand + rng.rand + rng.rand - 1.5) * 1.2).round.clamp(1, 5)
     end
 
-    # genCand. scout_level is the club's SCOUTING design level.
+    # genCand. scout_level is the club's SCOUTING level.
     # bonus: genCand's scoutBonus (Recruit.scout_bonus), added to the
     # quality level for the target strength and stars only.
     # orig_level: the original 1-10 scouting level to use instead (scGen's

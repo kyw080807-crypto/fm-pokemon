@@ -8,12 +8,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_KANTO_02]
 Name = 태초마을
@@ -22,11 +22,11 @@ Form = MILAN
 Size = 3
 FreePlots = 3
 Stadium = 공동 Lv3
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = LAB,2,LANDMARK
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = LAB,4,LANDMARK
 #-------------------------------
 [CITY_KANTO_03]
 Name = 상록시티
@@ -35,10 +35,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,GROUND
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,GROUND
 #-------------------------------
 [CITY_KANTO_04]
 Name = 회색시티
@@ -47,9 +47,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 지후 임대 · 웅 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = MUSEUM,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = MUSEUM,2,LANDMARK
 #-------------------------------
 [CITY_KANTO_05]
 Name = 블루시티
@@ -58,9 +58,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 이슬 임대 · 소라 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,WATER
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,WATER
 #-------------------------------
 [CITY_KANTO_06]
 Name = 갈색시티
@@ -69,9 +69,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TRANSPORT,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TRANSPORT,2,LANDMARK
 #-------------------------------
 [CITY_KANTO_07]
 Name = 무지개시티
@@ -80,10 +80,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 민화 Lv1 · 은호 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2,LANDMARK
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,GRASS
+Building = RESIDENTIAL,4
+Building = SHOPPING,4,LANDMARK
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,GRASS
 #-------------------------------
 [CITY_KANTO_08]
 Name = 노랑시티
@@ -92,11 +92,11 @@ Form = LONDON
 Size = 3
 FreePlots = 3
 Stadium = 초련 Lv2 · 하준 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,PSYCHIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,PSYCHIC
 #-------------------------------
 [CITY_KANTO_09]
 Name = 연분홍시티
@@ -105,11 +105,11 @@ Form = SOLO
 Size = 2
 FreePlots = 1
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = SANCTUARY,1,LANDMARK
-Building = TYPE_DISTRICT,1,POISON
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = SANCTUARY,2,LANDMARK
+Building = TYPE_DISTRICT,2,POISON
 #-------------------------------
 [CITY_KANTO_10]
 Name = 홍련마을
@@ -118,11 +118,11 @@ Form = SOLO
 Size = 2
 FreePlots = 1
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = LAB,1,LANDMARK
-Building = TYPE_DISTRICT,1,FIRE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = LAB,2,LANDMARK
+Building = TYPE_DISTRICT,2,FIRE
 #-------------------------------
 [CITY_KANTO_11]
 Name = 보라타운
@@ -131,8 +131,8 @@ Form = SOLO
 Size = 1
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
 #-------------------------------
 [CITY_JOHTO_01]
 Name = 금빛시티
@@ -141,12 +141,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,4,LANDMARK
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,8,LANDMARK
+Building = SAFETY,6
 #-------------------------------
 [CITY_JOHTO_02]
 Name = 연두마을
@@ -155,10 +155,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = LAB,1,LANDMARK
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = LAB,2,LANDMARK
 #-------------------------------
 [CITY_JOHTO_03]
 Name = 도라지시티
@@ -167,9 +167,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,FLYING
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,FLYING
 #-------------------------------
 [CITY_JOHTO_04]
 Name = 고동마을
@@ -178,9 +178,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 랑스 Lv1 · 호일 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,BUG
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,BUG
 #-------------------------------
 [CITY_JOHTO_05]
 Name = 인주시티
@@ -189,12 +189,12 @@ Form = LONDON
 Size = 3
 FreePlots = 2
 Stadium = 자매 Lv2 · 미나키 Lv2 · 유빈 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = HOTEL,2,LANDMARK
-Building = TYPE_DISTRICT,1,GHOST
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = HOTEL,4,LANDMARK
+Building = TYPE_DISTRICT,2,GHOST
 #-------------------------------
 [CITY_JOHTO_06]
 Name = 진청시티
@@ -203,10 +203,10 @@ Form = MILAN
 Size = 2
 FreePlots = 2
 Stadium = 공동 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,FIGHTING
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,FIGHTING
 #-------------------------------
 [CITY_JOHTO_07]
 Name = 담청시티
@@ -215,10 +215,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 규리 Lv2 · 로운 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,2,LANDMARK
-Building = TYPE_DISTRICT,1,STEEL
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,4,LANDMARK
+Building = TYPE_DISTRICT,2,STEEL
 #-------------------------------
 [CITY_JOHTO_08]
 Name = 황토마을
@@ -227,10 +227,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 류옹 Lv2 · 람다 Lv1 · 아테나 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,ICE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,ICE
 #-------------------------------
 [CITY_JOHTO_09]
 Name = 검은먹시티
@@ -239,10 +239,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,DRAGON
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,DRAGON
 #-------------------------------
 [CITY_HOENN_01]
 Name = 그랜드시티
@@ -251,12 +251,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_HOENN_02]
 Name = 금탄도시
@@ -265,12 +265,12 @@ Form = SOLO
 Size = 3
 FreePlots = 2
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = LAB,2,LANDMARK
-Building = TYPE_DISTRICT,1,ROCK
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = LAB,4,LANDMARK
+Building = TYPE_DISTRICT,2,ROCK
 #-------------------------------
 [CITY_HOENN_03]
 Name = 무로마을
@@ -279,9 +279,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,FIGHTING
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,FIGHTING
 #-------------------------------
 [CITY_HOENN_04]
 Name = 보라시티
@@ -290,9 +290,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 암페어 임대 · 시우 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,ELECTRIC
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,ELECTRIC
 #-------------------------------
 [CITY_HOENN_05]
 Name = 용암마을
@@ -301,11 +301,11 @@ Form = LONDON
 Size = 2
 FreePlots = 1
 Stadium = 마적 Lv2 · 민지 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = SPA,1,LANDMARK
-Building = TYPE_DISTRICT,1,FIRE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = SPA,2,LANDMARK
+Building = TYPE_DISTRICT,2,FIRE
 #-------------------------------
 [CITY_HOENN_06]
 Name = 등화도시
@@ -314,10 +314,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,NORMAL
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,NORMAL
 #-------------------------------
 [CITY_HOENN_07]
 Name = 검방울시티
@@ -326,10 +326,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,FLYING
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,FLYING
 #-------------------------------
 [CITY_HOENN_08]
 Name = 이끼시티
@@ -338,10 +338,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,PSYCHIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,PSYCHIC
 #-------------------------------
 [CITY_HOENN_09]
 Name = 루네시티
@@ -350,11 +350,11 @@ Form = MILAN
 Size = 3
 FreePlots = 3
 Stadium = 공동 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,WATER
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,WATER
 #-------------------------------
 [CITY_HOENN_10]
 Name = 잔디마을
@@ -363,9 +363,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_HOENN_11]
 Name = 해안시티
@@ -374,9 +374,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_HOENN_12]
 Name = 단풍마을
@@ -385,8 +385,8 @@ Form = SOLO
 Size = 1
 FreePlots = 2
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
 #-------------------------------
 [CITY_HOENN_13]
 Name = 잿빛도시
@@ -395,9 +395,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TRANSPORT,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TRANSPORT,2,LANDMARK
 #-------------------------------
 [CITY_SINNOH_01]
 Name = 포켓몬리그(신오)
@@ -406,12 +406,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_SINNOH_02]
 Name = 무쇠시티
@@ -420,9 +420,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = MUSEUM,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = MUSEUM,2,LANDMARK
 #-------------------------------
 [CITY_SINNOH_03]
 Name = 영원시티
@@ -431,9 +431,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 주피터 Lv2 · 유채 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,GRASS
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,GRASS
 #-------------------------------
 [CITY_SINNOH_04]
 Name = 장막시티
@@ -442,11 +442,11 @@ Form = LONDON
 Size = 3
 FreePlots = 3
 Stadium = 태홍 Lv2 · 새턴 Lv2 · 자두 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,FIGHTING
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,FIGHTING
 #-------------------------------
 [CITY_SINNOH_05]
 Name = 들판시티
@@ -455,10 +455,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,WATER
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,WATER
 #-------------------------------
 [CITY_SINNOH_06]
 Name = 연고시티
@@ -467,11 +467,11 @@ Form = LONDON
 Size = 2
 FreePlots = 1
 Stadium = 멜리사 Lv1 · 은하 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = HOTEL,1,LANDMARK
-Building = TYPE_DISTRICT,1,GHOST
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = HOTEL,2,LANDMARK
+Building = TYPE_DISTRICT,2,GHOST
 #-------------------------------
 [CITY_SINNOH_07]
 Name = 운하시티
@@ -480,10 +480,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,2,LANDMARK
-Building = TYPE_DISTRICT,1,STEEL
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,4,LANDMARK
+Building = TYPE_DISTRICT,2,STEEL
 #-------------------------------
 [CITY_SINNOH_08]
 Name = 선단시티
@@ -492,10 +492,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,ICE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,ICE
 #-------------------------------
 [CITY_SINNOH_09]
 Name = 물가시티
@@ -504,10 +504,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,ELECTRIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,ELECTRIC
 #-------------------------------
 [CITY_SINNOH_10]
 Name = 축복시티
@@ -516,10 +516,10 @@ Form = SOLO
 Size = 3
 FreePlots = 4
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
 #-------------------------------
 [CITY_SINNOH_11]
 Name = 꽃향기마을
@@ -528,8 +528,8 @@ Form = LONDON
 Size = 1
 FreePlots = 2
 Stadium = 마스 Lv2 · 나리 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
 #-------------------------------
 [CITY_UNOVA_01]
 Name = 포켓몬리그(하나)
@@ -538,12 +538,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_UNOVA_02]
 Name = 성신시티
@@ -552,9 +552,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,GRASS
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,GRASS
 #-------------------------------
 [CITY_UNOVA_03]
 Name = 칠보시티
@@ -563,9 +563,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = MUSEUM,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = MUSEUM,2,LANDMARK
 #-------------------------------
 [CITY_UNOVA_04]
 Name = 구름시티
@@ -574,11 +574,11 @@ Form = LONDON
 Size = 3
 FreePlots = 3
 Stadium = 아티 임대 · 한결 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,BUG
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,BUG
 #-------------------------------
 [CITY_UNOVA_05]
 Name = 뇌문시티
@@ -587,12 +587,12 @@ Form = LONDON
 Size = 3
 FreePlots = 2
 Stadium = N Lv2 · 카밀레 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = HOTEL,2,LANDMARK
-Building = TYPE_DISTRICT,1,ELECTRIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = HOTEL,4,LANDMARK
+Building = TYPE_DISTRICT,2,ELECTRIC
 #-------------------------------
 [CITY_UNOVA_06]
 Name = 물풍경시티
@@ -601,11 +601,11 @@ Form = LONDON
 Size = 3
 FreePlots = 3
 Stadium = 게치스 Lv3 · 야콘 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,GROUND
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,GROUND
 #-------------------------------
 [CITY_UNOVA_07]
 Name = 궁수시티
@@ -614,10 +614,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,FLYING
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,FLYING
 #-------------------------------
 [CITY_UNOVA_08]
 Name = 설화시티
@@ -626,10 +626,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,ICE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,ICE
 #-------------------------------
 [CITY_UNOVA_09]
 Name = 쌍용시티
@@ -638,11 +638,11 @@ Form = MILAN
 Size = 3
 FreePlots = 3
 Stadium = 공동 Lv3
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,DRAGON
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,DRAGON
 #-------------------------------
 [CITY_UNOVA_10]
 Name = 부채시티
@@ -651,9 +651,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_UNOVA_11]
 Name = 넝쿨마을
@@ -662,9 +662,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_UNOVA_12]
 Name = 물결마을
@@ -673,9 +673,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = HOTEL,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = HOTEL,2,LANDMARK
 #-------------------------------
 [CITY_KALOS_01]
 Name = 포켓몬리그(칼로스)
@@ -684,12 +684,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_KALOS_02]
 Name = 백단시티
@@ -698,9 +698,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,BUG
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,BUG
 #-------------------------------
 [CITY_KALOS_03]
 Name = 삼채시티
@@ -709,9 +709,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,ROCK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,ROCK
 #-------------------------------
 [CITY_KALOS_04]
 Name = 사라시티
@@ -720,11 +720,11 @@ Form = LONDON
 Size = 2
 FreePlots = 1
 Stadium = 코르니 임대 · 세아 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = MUSEUM,1,LANDMARK
-Building = TYPE_DISTRICT,1,FIGHTING
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = MUSEUM,2,LANDMARK
+Building = TYPE_DISTRICT,2,FIGHTING
 #-------------------------------
 [CITY_KALOS_05]
 Name = 비익시티
@@ -733,10 +733,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,GRASS
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,GRASS
 #-------------------------------
 [CITY_KALOS_06]
 Name = 미르시티
@@ -745,12 +745,12 @@ Form = LONDON
 Size = 3
 FreePlots = 2
 Stadium = 플라드리 Lv3 · 시트론 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = LAB,2,LANDMARK
-Building = TYPE_DISTRICT,1,ELECTRIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = LAB,4,LANDMARK
+Building = TYPE_DISTRICT,2,ELECTRIC
 #-------------------------------
 [CITY_KALOS_07]
 Name = 후니시티
@@ -759,10 +759,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,FAIRY
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,FAIRY
 #-------------------------------
 [CITY_KALOS_08]
 Name = 향전시티
@@ -771,10 +771,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 고지카 Lv2 · 다온 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,PSYCHIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,PSYCHIC
 #-------------------------------
 [CITY_KALOS_09]
 Name = 이설시티
@@ -783,10 +783,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,ICE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,ICE
 #-------------------------------
 [CITY_KALOS_10]
 Name = 기남시티
@@ -795,9 +795,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_KALOS_11]
 Name = 조아마을
@@ -806,9 +806,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_KALOS_12]
 Name = 수미마을
@@ -817,8 +817,8 @@ Form = SOLO
 Size = 1
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
 #-------------------------------
 [CITY_KALOS_13]
 Name = 고목내마을
@@ -827,9 +827,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = DAYCARE_RANCH,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = DAYCARE_RANCH,2,LANDMARK
 #-------------------------------
 [CITY_ALOLA_01]
 Name = 라나키라마운틴
@@ -838,12 +838,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,5
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,10
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_ALOLA_02]
 Name = 릴리마을
@@ -852,10 +852,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 하우 Lv2 · 리리에 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = LAB,1,LANDMARK
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = LAB,2,LANDMARK
 #-------------------------------
 [CITY_ALOLA_03]
 Name = 하우올리시티
@@ -864,12 +864,12 @@ Form = LONDON
 Size = 3
 FreePlots = 2
 Stadium = 윤슬 임대 · 일리마 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = HOTEL,2,LANDMARK
-Building = TYPE_DISTRICT,1,NORMAL
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = HOTEL,4,LANDMARK
+Building = TYPE_DISTRICT,2,NORMAL
 #-------------------------------
 [CITY_ALOLA_04]
 Name = 오하나마을
@@ -878,9 +878,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 카키 임대 · 스이렌 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,FIRE
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,FIRE
 #-------------------------------
 [CITY_ALOLA_05]
 Name = 코니코니시티
@@ -889,9 +889,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,GRASS
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,GRASS
 #-------------------------------
 [CITY_ALOLA_06]
 Name = 말리에시티
@@ -900,12 +900,12 @@ Form = MILAN
 Size = 3
 FreePlots = 2
 Stadium = 공동 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = LAB,2,LANDMARK
-Building = TYPE_DISTRICT,1,STEEL
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = LAB,4,LANDMARK
+Building = TYPE_DISTRICT,2,STEEL
 #-------------------------------
 [CITY_ALOLA_07]
 Name = 포마을
@@ -914,9 +914,9 @@ Form = MILAN
 Size = 2
 FreePlots = 3
 Stadium = 공동 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_ALOLA_08]
 Name = 바다민족의 마을
@@ -925,10 +925,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 하푸우 Lv2 · 마츠리카 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,GROUND
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,GROUND
 #-------------------------------
 [CITY_ALOLA_09]
 Name = 에테르파라다이스
@@ -937,11 +937,11 @@ Form = MILAN
 Size = 3
 FreePlots = 3
 Stadium = 공동 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = SANCTUARY,2,LANDMARK
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = SANCTUARY,4,LANDMARK
 #-------------------------------
 [CITY_GALAR_01]
 Name = 슛시티
@@ -950,12 +950,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,4
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,8
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_GALAR_02]
 Name = 터프마을
@@ -964,9 +964,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 이안 임대 · 야로 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,GRASS
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,GRASS
 #-------------------------------
 [CITY_GALAR_03]
 Name = 바우마을
@@ -975,10 +975,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 민재 Lv2 · 야청 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,WATER
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,WATER
 #-------------------------------
 [CITY_GALAR_04]
 Name = 엔진시티
@@ -987,10 +987,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 카브 임대 · 강민 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,FIRE
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,FIRE
 #-------------------------------
 [CITY_GALAR_05]
 Name = 래터럴마을
@@ -999,10 +999,10 @@ Form = MILAN
 Size = 2
 FreePlots = 2
 Stadium = 공동 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,GHOST
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,GHOST
 #-------------------------------
 [CITY_GALAR_06]
 Name = 아라베스크마을
@@ -1011,10 +1011,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,FAIRY
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,FAIRY
 #-------------------------------
 [CITY_GALAR_07]
 Name = 키르쿠스마을
@@ -1023,11 +1023,11 @@ Form = MILAN
 Size = 3
 FreePlots = 3
 Stadium = 공동 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,ROCK
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,ROCK
 #-------------------------------
 [CITY_GALAR_08]
 Name = 스파이크마을
@@ -1036,10 +1036,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,DARK
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,DARK
 #-------------------------------
 [CITY_GALAR_09]
 Name = 너클시티
@@ -1048,10 +1048,10 @@ Form = SOLO
 Size = 3
 FreePlots = 4
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
 #-------------------------------
 [CITY_GALAR_10]
 Name = 브래시마을
@@ -1060,9 +1060,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = SANCTUARY,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = SANCTUARY,2,LANDMARK
 #-------------------------------
 [CITY_GALAR_11]
 Name = 프리즈마을
@@ -1071,8 +1071,8 @@ Form = SOLO
 Size = 1
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
 #-------------------------------
 [CITY_PALDEA_01]
 Name = 포켓몬리그(팔데아)
@@ -1081,12 +1081,12 @@ Form = LEAGUE
 Size = 5
 FreePlots = 6
 Stadium = 메인 Lv5 + 사이드 Lv3 (위원회 소유)
-Building = RESIDENTIAL,4
-Building = SHOPPING,4
-Building = TRANSPORT,4
-Building = HOTEL,3
-Building = BROADCAST,3
-Building = SAFETY,3
+Building = RESIDENTIAL,8
+Building = SHOPPING,8
+Building = TRANSPORT,8
+Building = HOTEL,6
+Building = BROADCAST,6
+Building = SAFETY,6
 #-------------------------------
 [CITY_PALDEA_02]
 Name = 테이블시티
@@ -1095,10 +1095,10 @@ Form = MILAN
 Size = 3
 FreePlots = 4
 Stadium = 공동 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,3,LANDMARK
-Building = TRANSPORT,2
-Building = SAFETY,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,6,LANDMARK
+Building = TRANSPORT,4
+Building = SAFETY,2
 #-------------------------------
 [CITY_PALDEA_03]
 Name = 세르클마을
@@ -1107,9 +1107,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,BUG
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,BUG
 #-------------------------------
 [CITY_PALDEA_04]
 Name = 보울마을
@@ -1118,9 +1118,9 @@ Form = LONDON
 Size = 1
 FreePlots = 1
 Stadium = 채원 임대 · 콜사 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = MUSEUM,1,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = MUSEUM,2,LANDMARK
 #-------------------------------
 [CITY_PALDEA_05]
 Name = 누룩스시티
@@ -1129,9 +1129,9 @@ Form = SOLO
 Size = 1
 FreePlots = 1
 Stadium = 시 소유 임대
-Building = RESIDENTIAL,1
-Building = SHOPPING,1
-Building = TYPE_DISTRICT,1,ELECTRIC
+Building = RESIDENTIAL,2
+Building = SHOPPING,2
+Building = TYPE_DISTRICT,2,ELECTRIC
 #-------------------------------
 [CITY_PALDEA_06]
 Name = 카라프시티
@@ -1140,10 +1140,10 @@ Form = LONDON
 Size = 2
 FreePlots = 2
 Stadium = 하이다이 Lv1 · 새벽 임대
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,WATER
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,WATER
 #-------------------------------
 [CITY_PALDEA_07]
 Name = 참푸르마을
@@ -1152,10 +1152,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,NORMAL
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,NORMAL
 #-------------------------------
 [CITY_PALDEA_08]
 Name = 프리지마을
@@ -1164,11 +1164,11 @@ Form = LONDON
 Size = 3
 FreePlots = 3
 Stadium = 그루샤 Lv2 · 라임 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,2
-Building = TRANSPORT,2
-Building = SAFETY,1
-Building = TYPE_DISTRICT,1,ICE
+Building = RESIDENTIAL,4
+Building = SHOPPING,4
+Building = TRANSPORT,4
+Building = SAFETY,2
+Building = TYPE_DISTRICT,2,ICE
 #-------------------------------
 [CITY_PALDEA_09]
 Name = 베이크마을
@@ -1177,10 +1177,10 @@ Form = SOLO
 Size = 2
 FreePlots = 2
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
-Building = TYPE_DISTRICT,1,PSYCHIC
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
+Building = TYPE_DISTRICT,2,PSYCHIC
 #-------------------------------
 [CITY_PALDEA_10]
 Name = 스이록마을
@@ -1189,9 +1189,9 @@ Form = SOLO
 Size = 2
 FreePlots = 3
 Stadium = 단독 Lv2
-Building = RESIDENTIAL,2
-Building = SHOPPING,1
-Building = TRANSPORT,1
+Building = RESIDENTIAL,4
+Building = SHOPPING,2
+Building = TRANSPORT,2
 #-------------------------------
 [CITY_PALDEA_11]
 Name = 마리네이드마을
@@ -1200,5 +1200,5 @@ Form = SOLO
 Size = 1
 FreePlots = 2
 Stadium = 단독 Lv1
-Building = RESIDENTIAL,1
-Building = SHOPPING,2,LANDMARK
+Building = RESIDENTIAL,2
+Building = SHOPPING,4,LANDMARK
