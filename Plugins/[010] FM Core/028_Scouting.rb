@@ -9,6 +9,10 @@
 # - A type scout (₽8,000) looks for one type (now or after evolving)
 #   everywhere (no region to choose; the home region only below the world
 #   range): 3-5 candidates next week, kept 6 weeks.
+# - A special scout (₽12,000, sendSpecScout / SPEC_POOL) brings only nurse
+#   Pokémon (Happiny, Chansey, Audino, Igglybuff, Jigglypuff; FM::Nurse)
+#   or Ditto (the daycare): 3 or 2 candidates next week, from anywhere.
+#   No Ditto scout while the squad has one (one per family).
 # - A regular report comes free every max(2, 5 - (level - 1) / 3) weeks:
 #   2 candidates (3 from level 7) from anywhere, scouted 2 levels lower,
 #   kept 6 weeks.
@@ -25,6 +29,9 @@ module FM
     TYPE_FEE = 8000
     KEEP_WEEKS = 4
     TYPE_KEEP_WEEKS = 6
+    SPEC_FEE = 12_000
+    SPEC_POOL = { nurse: %w[HAPPINY CHANSEY AUDINO IGGLYBUFF JIGGLYPUFF], ditto: %w[DITTO] }.freeze
+    SPEC_SIZE = { nurse: 3, ditto: 2 }.freeze
     WORLD_TRANSPORT = 3   # transport tier (Civic.tier): car and up
     PASSIVE_DOWN = 2
 
@@ -44,16 +51,25 @@ module FM
 
     def state(world) = world.scouting ||= { assign: [], cands: [], next_passive: nil }
 
-    # region: where a regional scout goes; ignored for a type scout.
-    def send(world, club, region, type: nil, date:)
+    # specBlocked: a Ditto scout while the squad has a Ditto.
+    def spec_blocked?(world, club, spec)
+      return false unless spec == :ditto
+      pool = world.species
+      club.squad.any? { |m| Scout.family(pool, m.species).to_s == "DITTO" }
+    end
+
+    # region: where a regional scout goes; ignored for a type or special scout.
+    def send(world, club, region, type: nil, spec: nil, date:)
       st = state(world)
-      fee = type ? TYPE_FEE : FEE
+      fee = spec ? SPEC_FEE : type ? TYPE_FEE : FEE
       region = regions(world, club).size == 1 ? club.region : nil if type
+      region = nil if spec
       return :busy if st[:assign].size >= max_scouts(club)
-      return :region if !type && !regions(world, club).include?(region)
+      return :blocked if spec && (!SPEC_POOL.key?(spec) || spec_blocked?(world, club, spec))
+      return :region if !type && !spec && !regions(world, club).include?(region)
       return :money if club.wallet.balance < fee
       club.wallet.record(-fee, category: :scout, date: date)
-      st[:assign] << { region: region, type: type, due: world.calendar.date_after(date, 7) }
+      st[:assign] << { region: region, type: type, spec: spec, due: world.calendar.date_after(date, 7) }
       nil
     end
 
@@ -75,7 +91,8 @@ module FM
     end
 
     # scGen: n candidates as the club's scouts see them.
-    def generate(world, club, n, region:, type: nil, down: 0, keep:, date:, rng:)
+    # species: names to draw the first species from (special scouting).
+    def generate(world, club, n, region:, type: nil, species: nil, down: 0, keep:, date:, rng:)
       st = state(world)
       pool = world.species
       level = [orig(club) - down, 1].max
@@ -83,6 +100,8 @@ module FM
       mul = Recruit.recovery_mul(club, year)
       sig = Specialty.of(club)
       taken = (club.squad.map(&:species) + st[:cands].map { |c| c[:mon].species }).map { |s| Scout.family(pool, s) }
+      fixed = species&.filter_map { |name| pool.keys.find { |k| k.to_s == name } }
+      fixed = nil if fixed && fixed.empty?
       out = []
       n.times do
         c = nil
@@ -90,7 +109,8 @@ module FM
           r = region || world.regions[rng.rand(world.regions.size)]
           t = type || (sig && rng.rand < Specialty::SCOUT_SHARE ? sig : nil)
           c = Scout.candidate(pool, region: r, scout_level: 0, orig_level: level, avg_level: world.avg_level(r), rng: rng,
-                                    bonus: Recruit.scout_bonus(club, year), type: t)
+                                    bonus: Recruit.scout_bonus(club, year), type: t,
+                                    species: fixed && fixed[rng.rand(fixed.size)])
           c[:region] = r
           f = Scout.family(pool, c[:mon].species)
           break unless taken.include?(f) || out.any? { |o| Scout.family(pool, o[:mon].species) == f }
@@ -113,7 +133,10 @@ module FM
       st[:cands].reject! { |c| (c[:until] <=> date) <= 0 }
       due, st[:assign] = st[:assign].partition { |a| (a[:due] <=> date) <= 0 }
       due.each do |a|
-        if a[:type]
+        if a[:spec]
+          got = generate(world, club, SPEC_SIZE.fetch(a[:spec]), region: nil, species: SPEC_POOL.fetch(a[:spec]),
+                                                               keep: KEEP_WEEKS, date: date, rng: rng)
+        elsif a[:type]
           got = generate(world, club, report_size(club), region: a[:region], type: a[:type], keep: TYPE_KEEP_WEEKS,
                                                          date: date, rng: rng)
         else
@@ -127,7 +150,7 @@ module FM
             got << l
           end
         end
-        events << { kind: :scout_report, club: club.id, region: a[:region], type: a[:type],
+        events << { kind: :scout_report, club: club.id, region: a[:region], type: a[:type], spec: a[:spec],
                     species: got.map { |c| c[:mon].species }, date: date }
       end
       st[:next_passive] ||= world.calendar.date_after(date, 7 * passive_gap(club))

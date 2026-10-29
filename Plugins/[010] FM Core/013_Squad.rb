@@ -37,6 +37,8 @@ module FM
     def awards = @awards ||= []
     # Retired: coaching (FM::Coach) and the food it ate when it retired.
     attr_accessor :coach, :food_fixed
+    # Nursing at the medical center (FM::Nurse), in the squad or retired.
+    attr_accessor :nurse
 
     # declineMul: the last two seasons of its life play at x0.96, then x0.92.
     def decline_mul = @age >= @life - 1 ? 0.92 : @age >= @life - 2 ? 0.96 : 1.0
@@ -341,12 +343,13 @@ module FM
     # quality level for the target strength and stars only.
     # orig_level: the original 1-10 scouting level to use instead (scGen's
     # lvDown).
-    def candidate(pool, region:, scout_level:, avg_level:, rng:, bonus: 0, type: nil, orig_level: nil)
+    # species: a fixed first species (special scouting), else picked.
+    def candidate(pool, region:, scout_level:, avg_level:, rng:, bonus: 0, type: nil, orig_level: nil, species: nil)
       q = orig_level || Growth.original_level(scout_level)
       ql = q + bonus
       target = 455 + ql * 8 + ri(rng, -50, 50)
       sub_weight = q >= 5 ? 0.05 * (q - 4) : 0
-      base = pick_species(pool, region, target, sub_weight, rng, type: type)
+      base = species || pick_species(pool, region, target, sub_weight, rng, type: type)
       stars = roll_stars(2.3 + ql * 0.17, rng)
       vet = rng.rand < 0.15
       level = vet ? (avg_level * (0.45 + rng.rand * 0.25)).round : ri(rng, 5, 10) + q

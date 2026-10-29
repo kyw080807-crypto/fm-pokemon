@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("간호사"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -95,6 +95,7 @@ module FM
         when 11 then coaches
         when 12 then tour
         when 13 then daycare
+        when 14 then nurses
         else break
         end
       end
@@ -364,7 +365,7 @@ module FM
         end
         rows = list.map do |m|
           q = Coach.quality(m)
-          mark = m.coach ? _INTL("[코치] ") : ""
+          mark = m.coach ? _INTL("[코치] ") : m.nurse ? _INTL("[간호] ") : ""
           food = m.food_fixed || Economy.food(ovr: Economy.ovr(m.rating), fame: c.fame)
           _INTL("{1}{2} {3}등급({4}) · {5} 전문 · KO {6} · 식비 {7}", mark, species_name(m.species), Coach.grade(q),
                 format("%.1f", q), STAT_NAMES[Coach.spec(pool, m)], m.ko, money(food))
@@ -377,6 +378,8 @@ module FM
           pbMessage(_INTL("{1}이 코치에서 물러났습니다.", species_name(m.species)))
         elsif Daycare.paired?(c, m)
           pbMessage(_INTL("{1}은(는) 키우미집에 맡겨져 있습니다. 먼저 짝을 풀어 주세요.", species_name(m.species)))
+        elsif m.nurse
+          pbMessage(_INTL("{1}은(는) 간호사로 일하고 있습니다. 먼저 간호사에서 내려 주세요.", species_name(m.species)))
         elsif staff.size >= slots
           pbMessage(_INTL("코치 자리가 없습니다. 훈련장 단계를 올리면 자리가 늘어납니다."))
         else
@@ -384,6 +387,44 @@ module FM
           m.food_fixed ||= Economy.food(ovr: Economy.ovr(m.rating), fame: c.fame)
           pbMessage(_INTL("{1}이 코치로 합류했습니다 ({2}등급 · {3} 전문).", species_name(m.species),
                           Coach.grade(Coach.quality(m)), STAT_NAMES[Coach.spec(pool, m)]))
+        end
+      end
+    end
+
+    # Poké Manager nurses (nursePanel): the Happiny / Chansey / Audino /
+    # Igglybuff lines, active (70%) or retired, at the medical center.
+    def nurses
+      c = player_club or return
+      loop do
+        ns = Nurse.of(c)
+        n = Nurse.pow(c)
+        head = _INTL("간호사 {1}/{2}자리 (메디컬 센터 Lv4·Lv8에 한 자리씩) · 간호 {3}/{4} · 주 식비 {5}", ns.size, Nurse.slots(c),
+                     format("%.1f", n), Nurse::POW_MAX, money(Nurse.weekly_food(c)))
+        if n.positive?
+          head += "\n" + _INTL("부상 회복 한 주 더 {1}% · 재활 중 부상 위험 −{2}%{3}", ([0.6, 0.12 * n].min * 100).round,
+                               ([0.25, 0.06 * n].min * 100).round, Nurse.short_rehab?(n) ? _INTL(" · 재활 1주") : "")
+        end
+        list = (c.squad + c.retired).select { |m| Nurse.can?(m) }.sort_by { |m| [m.nurse ? 0 : 1, -Nurse.quality(m)] }
+        if list.empty?
+          pbMessage(_INTL("간호사가 될 포켓몬(핑복·럭키·해피너스·다부니·푸린 계열)이 없습니다. 스카우트의 특별 스카우팅으로 찾을 수 있습니다."))
+          return
+        end
+        rows = list.map do |m|
+          q = Nurse.quality(m)
+          ret = Nurse.retired?(c, m)
+          mark = m.nurse ? _INTL("[간호] ") : ""
+          _INTL("{1}{2} {3}등급({4}) · {5}", mark, species_name(m.species), Nurse.grade(q), format("%.1f", q),
+                ret ? _INTL("은퇴 · 식비 {1}", money(Nurse.food(c, m))) : _INTL("현역 겸임 (효과 70%)"))
+        end
+        i = pbMessage(head, rows + [_INTL("닫기")], rows.size + 1)
+        break if i >= list.size
+        m = list[i]
+        case Nurse.toggle(c, m)
+        when :off then pbMessage(_INTL("{1}, 간호사 일을 내려놓았습니다.", species_name(m.species)))
+        when :on
+          pbMessage(_INTL("{1}, 메디컬 센터 간호사로 임명 ({2}등급).", species_name(m.species), Nurse.grade(Nurse.quality(m))))
+        when :busy then pbMessage(_INTL("{1}은(는) 코치이거나 키우미집에 있습니다.", species_name(m.species)))
+        when :full then pbMessage(_INTL("간호사 자리가 없습니다. 메디컬 센터를 Lv4·Lv8로 올리면 자리가 늘어납니다."))
         end
       end
     end
@@ -501,11 +542,12 @@ module FM
                      st[:assign].size, Scouting.max_scouts(c), st[:cands].size, used, limit, nxt)
         head += "\n" + extra.join(" · ") unless extra.empty?
         cmds = [_INTL("지방에 파견 ({1})", money(Scouting::FEE)), _INTL("타입별 스카우팅 ({1})", money(Scouting::TYPE_FEE)),
-                _INTL("후보 명단 ({1})", st[:cands].size), _INTL("닫기")]
+                _INTL("특별 스카우팅 ({1})", money(Scouting::SPEC_FEE)), _INTL("후보 명단 ({1})", st[:cands].size), _INTL("닫기")]
         case pbMessage(head, cmds, cmds.size)
         when 0 then dispatch_scout(c)
         when 1 then dispatch_scout(c, typed: true)
-        when 2 then candidate_list(c)
+        when 2 then special_scout(c)
+        when 3 then candidate_list(c)
         else break
         end
       end
@@ -524,13 +566,13 @@ module FM
       end
       if typed
         where = regions.size == 1 ? region_name(c.region) : _INTL("전체 지방")
-        where_note = regions.size == 1 ? _INTL(" (교통 Lv3부터 전체 지방)") : ""
+        where_note = regions.size == 1 ? _INTL(" (교통 Lv5부터 전체 지방)") : ""
         return unless pbConfirmMessage(_INTL("{1} 타입 스카우트를 {2}{3}에 보낼까요? ({4})", type_name(type), where, where_note,
                                              money(Scouting::TYPE_FEE)))
         target = [nil, where]
       else
         opts = regions.map { |r| [r, region_name(r)] }
-        j = pbMessage(regions.size == 1 ? _INTL("교통 Lv3부터 다른 지방에도 보낼 수 있습니다. 어디로 보낼까요?") : _INTL("어디로 보낼까요?"),
+        j = pbMessage(regions.size == 1 ? _INTL("교통 Lv5부터 다른 지방에도 보낼 수 있습니다. 어디로 보낼까요?") : _INTL("어디로 보낼까요?"),
                       opts.map(&:last) + [_INTL("취소")], opts.size + 1)
         return if j >= opts.size
         target = opts[j]
@@ -538,10 +580,29 @@ module FM
       case world.send_scout(target[0], type: type)
       when :busy then pbMessage(_INTL("파견할 스카우트가 없습니다 (스카우팅 시설을 올리면 늘어납니다)."))
       when :money then pbMessage(_INTL("파견 비용이 모자랍니다."))
-      when :region then pbMessage(_INTL("교통이 Lv3 이상이어야 다른 지방으로 보낼 수 있습니다."))
+      when :region then pbMessage(_INTL("교통이 Lv5 이상이어야 다른 지방으로 보낼 수 있습니다."))
       else pbMessage(_INTL("{1}에 스카우트를 보냈습니다. 다음 주에 보고서가 옵니다.", target[1]))
       end
     end
+
+    # sendSpecScout: nurse Pokémon or Ditto only, from anywhere.
+    def special_scout(c)
+      return if austerity_blocked?(c)
+      kinds = Scouting::SPEC_POOL.keys
+      i = pbMessage(_INTL("무엇을 찾을까요? 간호사 포켓몬(핑복·럭키·다부니·푸린 계열)은 배틀에 쓰다가 간호사로, 메타몽은 키우미집에서 누구와도 알을 낳습니다."),
+                    kinds.map { |k| spec_name(k) } + [_INTL("취소")], kinds.size + 1)
+      return if i >= kinds.size
+      k = kinds[i]
+      return unless pbConfirmMessage(_INTL("{1} 특별 스카우팅을 보낼까요? ({2})", spec_name(k), money(Scouting::SPEC_FEE)))
+      case world.send_scout(nil, spec: k)
+      when :busy then pbMessage(_INTL("파견할 스카우트가 없습니다 (스카우팅 시설을 올리면 늘어납니다)."))
+      when :money then pbMessage(_INTL("파견 비용이 모자랍니다."))
+      when :blocked then pbMessage(_INTL("스쿼드에 이미 메타몽이 있습니다."))
+      else pbMessage(_INTL("{1} 특별 스카우팅을 보냈습니다. 다음 주에 보고서가 옵니다.", spec_name(k)))
+      end
+    end
+
+    def spec_name(k) = k == :ditto ? _INTL("메타몽") : _INTL("간호사 포켓몬")
 
     def age_text(c)
       lo, hi = c[:age_lo], c[:age_hi]
@@ -1052,6 +1113,7 @@ module FM
           next unless e[:club] == id
           names = e[:species].map { |sp| species_name(sp) }.join(", ")
           if e[:passive] then _INTL("정기 스카우트 보고: {1}", names)
+          elsif e[:spec] then _INTL("{1} 특별 스카우트 보고: {2}", spec_name(e[:spec]), names)
           elsif e[:type] then _INTL("{1} 타입 스카우트 보고({2}): {3}", type_name(e[:type]), e[:region] ? region_name(e[:region]) : _INTL("전체 지방"), names)
           else _INTL("스카우트 보고({1}): {2}", region_name(e[:region]), names)
           end

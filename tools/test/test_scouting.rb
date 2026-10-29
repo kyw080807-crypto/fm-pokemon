@@ -6,7 +6,7 @@ require_relative "test_specialty"   # TestSpecialty::POOL (types, families)
 class TestScouting < Minitest::Test
   POOL = TestSpecialty::POOL
 
-  def world(transport: 6, scouting: 4)
+  def world(transport: 6, scouting: 4, pool: POOL)
     cities = [{ id: "C", name: "C", region: "KANTO", form: "SOLO", size: 3, buildings: [[:TRANSPORT, transport]].reject { |_, l| l.zero? } },
               { id: "J", name: "J", region: "JOHTO", form: "SOLO", size: 1, buildings: [] }]
     club = lambda do |id, city, region|
@@ -15,7 +15,7 @@ class TestScouting < Minitest::Test
         pokemon: [{ species: "PIDGEY", bst: 251, level: 20, stars: 3 }] }
     end
     w = FM::World.new_game([club.("P", "C", "KANTO"), club.("A", "C", "KANTO"), club.("J1", "J", "JOHTO"), club.("J2", "J", "JOHTO")],
-                           seed: 2, cities: cities, species: POOL)
+                           seed: 2, cities: cities, species: pool)
     w.player_club = "P"
     w.clubs.each_value { |c| c.wallet.record(5_000_000, category: :grant, date: [1, 1, 1]) }
     w

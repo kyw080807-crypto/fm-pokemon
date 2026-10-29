@@ -76,11 +76,11 @@ module FM
     end
 
     # aiCoaches
-    # (Mons at the daycare don't coach.)
+    # (Mons at the daycare and nurses don't coach.)
     def ai_pick(club)
       n = slots(club)
       club.retired.each { |m| m.coach = false }
-      club.retired.reject { |m| Daycare.paired?(club, m) }.sort_by { |m| -quality(m) }.first(n).each { |m| m.coach = true }
+      club.retired.reject { |m| m.nurse || Daycare.paired?(club, m) }.sort_by { |m| -quality(m) }.first(n).each { |m| m.coach = true }
     end
 
     def dismiss(club, keep: 0)

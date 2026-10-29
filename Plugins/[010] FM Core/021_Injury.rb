@@ -49,9 +49,10 @@ module FM
     def risk_cut(med_level) = [0.18, 0.02 * (med_original(med_level) - 1)].min
 
     # injRisk: chance a mon knocked out in a match gets hurt.
-    def match_risk(mon, med_level)
+    # nurse: the club's nurse power (FM::Nurse.pow).
+    def match_risk(mon, med_level, nurse = 0)
       r = RATE * (mon.cond < 50 ? 2 : 1) * (1 + mon.fat / 150.0) * mon.prone / 1.1
-      r *= 1.6 if mon.rehab.to_i.positive?
+      r *= 1.6 * Nurse.rehab_risk_mul(nurse) if mon.rehab.to_i.positive?
       r * (1 - risk_cut(med_level))
     end
 
@@ -91,7 +92,7 @@ module FM
     # After a match (injureFrom): of the mons that `played`, the injured
     # may get worse; the `fainted` healthy ones are hurt with match_risk.
     # Returns [mon, info] for each new or worse injury.
-    def after_match(played, fainted, med_level, rng)
+    def after_match(played, fainted, med_level, rng, nurse: 0)
       played.filter_map do |m|
         down = fainted.any? { |f| f.equal?(m) }
         if m.red? && m.ptp
@@ -109,7 +110,7 @@ module FM
           m.injd[:w0] += add
           m.resting = true
           [m, { injury: m.injd[:k], sev: 2, weeks: add, cause: :ptp, worse: true }]
-        elsif down && rng.rand < match_risk(m, med_level)
+        elsif down && rng.rand < match_risk(m, med_level, nurse)
           [m, injure(m, :battle, rng)]
         end
       end
@@ -117,18 +118,22 @@ module FM
 
     # Start of the week, before Growth.condition_week: rehab counts down,
     # injuries heal (injHeal) and may end (injRecovered). -> :recovered/nil
-    def heal_week(mon, med_level, rng)
+    def heal_week(mon, med_level, rng, nurse: 0)
       mon.rehab = mon.rehab > 1 ? mon.rehab - 1 : nil if mon.rehab.to_i.positive?
       return unless mon.hurt?
       orig = med_original(med_level)
       mon.inj -= 1 + (rng.rand < orig * 0.03 ? 1 : 0)
+      if nurse.positive?
+        mon.inj -= Nurse.heal_bonus(nurse, rng)
+        Morale.add_bond(mon, 0.5)
+      end
       return if mon.inj.positive?
       sev = mon.injd && mon.injd[:sev]
       mon.inj = nil
       mon.ptp = nil
       mon.injd = nil
       if sev && sev >= 2
-        mon.rehab = orig >= 10 ? 1 : REHAB_WEEKS
+        mon.rehab = orig >= 10 || Nurse.short_rehab?(nurse) ? 1 : REHAB_WEEKS
         mon.cond = [mon.cond, REHAB_COND].min
       end
       :recovered

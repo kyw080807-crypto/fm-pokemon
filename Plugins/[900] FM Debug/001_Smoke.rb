@@ -172,7 +172,13 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: coach #{FM::UI.species_name(old.species)} #{FM::Coach.grade(FM::Coach.quality(old))} " \
                  "#{FM::UI::STAT_NAMES[FM::Coach.spec(FM.world.species, old)]}, slots #{FM::Coach.slots(club)}, " \
                  "lv x#{fx[:lv].round(3)} ev x#{fx[:ev].round(3)}")
-    FM::Log.info("smoke: tour pay #{FM::UI.money(FM::Tour.pay(club))}, match week #{FM.world.official_match_week?(club)}")
+    # Nurses: a retired Chansey at the medical center.
+    nurse = FM::Mon.new(species: :CHANSEY, bst: 450, level: 30, stars: 3)
+    club.retire(nurse)
+    raise "Chansey can't nurse" unless FM::Nurse.toggle(club, nurse) == :on
+    FM::Log.info("smoke: nurse #{FM::UI.species_name(nurse.species)} #{FM::Nurse.grade(FM::Nurse.quality(nurse))}, " \
+                 "power #{FM::Nurse.pow(club)}, slots #{FM::Nurse.slots(club)}, food #{FM::UI.money(FM::Nurse.weekly_food(club))}")
+    FM::Log.info("smoke: tour pay#{FM::UI.money(FM::Tour.pay(club))}, match week #{FM.world.official_match_week?(club)}")
     # Daycare: Essentials' egg groups and gender ratios compiled.
     pool = FM.world.species
     raise "egg data missing" unless pool.dig(:DITTO, :eggs) == ["Ditto"] && pool.dig(:MAGNEMITE, :gender) == "Genderless"

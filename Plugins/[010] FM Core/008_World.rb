@@ -144,7 +144,7 @@ module FM
     end
 
     def weekly_cost
-      food + Coach.weekly_food(self) + @facilities.values.sum { |lv| Economy.facility_keep(lv) } +
+      food + Coach.weekly_food(self) + Nurse.weekly_food(self) + @facilities.values.sum { |lv| Economy.facility_keep(lv) } +
         Economy.stadium_keep(@stadium)
     end
 
@@ -358,8 +358,8 @@ module FM
     # candidate list and the next regular report.
     attr_accessor :scouting
 
-    def send_scout(region, type: nil)
-      Scouting.send(self, @clubs.fetch(@player_club), region, type: type, date: date)
+    def send_scout(region, type: nil, spec: nil)
+      Scouting.send(self, @clubs.fetch(@player_club), region, type: type, spec: spec, date: date)
     end
 
     # The PWT title's gift (free, outside the signing limit); `release`
@@ -481,6 +481,7 @@ module FM
             events.concat(Scouting.week(self, @clubs.fetch(@player_club), date: date, rng: @rng))
           end
           events.concat(tour_week)
+          nurse_week
           events.concat(daycare_week) if @species
           events.concat(condition_week)
           morale_week
@@ -541,7 +542,7 @@ module FM
           Morale.after_match(club, mons, fainted, kos, won: won, pe: talk[club.id], big: talk[:big_after])
         end
         club.drain_lineup(Growth::MATCH_COND, mons: mons, match: true)
-        Injury.after_match(mons, fainted, club.facilities[:MEDICAL], @rng).each do |m, info|
+        Injury.after_match(mons, fainted, club.facilities[:MEDICAL], @rng, nurse: Nurse.pow(club)).each do |m, info|
           (@match_events ||= []) << injury_event(club, m, info)
         end
         club.refresh_rating
@@ -730,6 +731,15 @@ module FM
     end
 
 
+    # nurseWeek for every club with nurses; aiNurses every 13 weeks.
+    def nurse_week
+      ai_turn = ((@calendar.day_of_year - 1) / 7) % Nurse::AI_EVERY == 0
+      @clubs.each_value do |c|
+        Nurse.ai_pick(c) if ai_turn && ai?(c)
+        Nurse.week(c, date: date) if c.squad.any?(&:nurse) || c.retired.any?(&:nurse)
+      end
+    end
+
     # Monday: injuries heal (medical center), condition and fatigue move,
     # then a training week may hurt. -> :injured / :recovered events.
     def condition_week
@@ -737,9 +747,10 @@ module FM
       staying = Cups.staying(self)
       @clubs.each_value do |c|
         med = c.facilities[:MEDICAL]
+        nurse = Nurse.pow(c)
         rest = staying[c.id] ? Travel.hotel_rest(staying[c.id].hotel) : 1.0
         c.squad.each do |m|
-          if Injury.heal_week(m, med, @rng)
+          if Injury.heal_week(m, med, @rng, nurse: nurse)
             events << { kind: :recovered, club: c.id, species: m.species, rehab: m.rehab, date: date }
           end
           Growth.condition_week(m, rest_mul: rest)

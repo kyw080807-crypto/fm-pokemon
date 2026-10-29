@@ -121,7 +121,7 @@ module FM
     end
 
     def candidates(pool, club)
-      club.retired.reject(&:coach) + club.squad.select { |m| ditto?(pool, m) }
+      club.retired.reject { |m| m.coach || m.nurse } + club.squad.select { |m| ditto?(pool, m) && !m.nurse }
     end
 
     def paired?(club, mon) = state(club)[:pairs].any? { |x, y| x.equal?(mon) || y.equal?(mon) }
@@ -140,7 +140,7 @@ module FM
       ai = world.ai?(club)
       events = []
       st[:pairs].select! do |x, y|
-        ok = [x, y].all? { |m| !m.coach && (club.retired.include?(m) || club.squad.include?(m)) } && compat(pool, x, y)[:ok]
+        ok = [x, y].all? { |m| !m.coach && !m.nurse && (club.retired.include?(m) || club.squad.include?(m)) } && compat(pool, x, y)[:ok]
         ok
       end
       st[:pairs].clear unless built?(club)

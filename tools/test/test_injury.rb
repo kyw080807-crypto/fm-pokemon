@@ -108,7 +108,7 @@ class TestInjury < Minitest::Test
       fb = mine ? [] : [victim]
       { res: mine ? -1 : 1, ko_a: 3, ko_b: 3, fainted_a: fa, fainted_b: fb }
     end
-    events = FM::Injury.stub(:match_risk, ->(m, _) { m.equal?(victim) ? 1.0 : 0.0 }) { w.advance_days(200) }
+    events = FM::Injury.stub(:match_risk, ->(m, *) { m.equal?(victim) ? 1.0 : 0.0 }) { w.advance_days(200) }
     battle = events.select { |e| e[:kind] == :injured && e[:cause] == :battle }
     refute_empty battle
     assert(battle.all? { |e| e[:club] == "P" }, "only the named mon could be hurt in a match")
