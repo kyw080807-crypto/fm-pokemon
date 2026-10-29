@@ -126,12 +126,13 @@ module FM
         return choose_club
       end
       loop do
-        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("지방 이적"), _INTL("칭호"), _INTL("닫기")]
+        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("지방 이적"), _INTL("칭호"), _INTL("다음 상대 분석"), _INTL("닫기")]
         case pbMessage(_INTL("내 클럽"), cmds, cmds.size)
         when 0 then show_list(_INTL("내 클럽"), my_club_rows(id))
         when 1 then injury_room(world.clubs[id])
         when 2 then region_move(world.clubs[id])
         when 3 then title_menu(world.clubs[id])
+        when 4 then analysis
         else break
         end
       end

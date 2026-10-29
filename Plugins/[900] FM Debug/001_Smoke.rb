@@ -178,6 +178,13 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: #{fan_row}; goal #{club.goal ? FM::UI.goal_row(club) : 'none yet'}")
     # Choice events: every one has a title, a body and its options.
     keys = FM::Events::OPTIONS.keys
+    # Opponent analysis with Essentials' type chart.
+    raise "type chart" unless FM::UI::TYPE_CHART.call("WATER", "FIRE") == 2.0 && FM::UI::TYPE_CHART.call("NORMAL", "GHOST") == 0.0
+    if (nm = FM::Analysis.next_match(FM.world, club))
+      rep = FM::Analysis.report(FM.world, club, FM.world.clubs[nm[:opp]], chart: FM::UI::TYPE_CHART)
+      FM::Log.info("smoke: analysis vs #{FM.world.clubs[nm[:opp]].name}: win #{(rep[:win] * 100).round}%, best " +
+                   rep[:best].map { |m| FM::UI.species_name(m.species) }.join(", "))
+    end
     # Sponsor contract 2.0: the player's contract screen rows.
     if club.sponsor
       club.sponsor[:human] = true
