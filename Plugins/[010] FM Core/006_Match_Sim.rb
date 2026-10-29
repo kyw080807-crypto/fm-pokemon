@@ -11,8 +11,10 @@
 #===============================================================================
 module FM
   module MatchSim
-    SCALE     = 85.0    # rating gap that moves win odds by a factor of e (real battles, below)
-    DRAW_RATE = 0.013   # both sides left standing at the turn cap
+    # 2026-10-29, after held items, gimmicks and auto moves: 1,000 battles
+    # fit 55 (was 85; real battles turned more one-sided), 2 draws.
+    SCALE     = 55.0    # rating gap that moves win odds by a factor of e (real battles, below)
+    DRAW_RATE = 0.002   # both sides left standing at the turn cap
 
     module_function
 
