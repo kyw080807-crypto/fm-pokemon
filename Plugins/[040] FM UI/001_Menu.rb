@@ -1013,6 +1013,41 @@ module FM
     end
 
     def cups
+      loop do
+        cmds = [_INTL("대회 진행"), _INTL("글로벌 파워랭킹"), _INTL("리그 계수"), _INTL("닫기")]
+        case pbMessage(_INTL("대회"), cmds, cmds.size)
+        when 0 then cup_progress
+        when 1 then power_ranking
+        when 2 then coefficients
+        else break
+        end
+      end
+    end
+
+    # powerPanels: the top 30 and the player's place.
+    def power_ranking
+      list = Power.ranking(world)
+      me = list.find { |x| x[:club] == world.player_club }
+      rows = list.first(30)
+      rows += [me] if me && me[:rank] > 30
+      lines = rows.map do |x|
+        c = world.clubs[x[:club]]
+        _INTL("{1}{2}. {3} ({4}) {5}점 · 전력 {6}", x[:club] == world.player_club ? "▶" : "", x[:rank], c.name, region_name(c.region),
+              format("%.1f", x[:score]), x[:ovr])
+      end
+      head = _INTL("최근 3시즌 (PWT + PET·PENT + 리그 순위 점수) × 1.0 · 0.6 · 0.3")
+      head += "\n" + _INTL("나 {1}위 · {2}점", me[:rank], format("%.1f", me[:score])) if me
+      show_list(head, lines)
+    end
+
+    def coefficients
+      rows = Power.coefficients(world).map do |x|
+        _INTL("{1}. {2} 계수 {3} · PWT 진출권 {4}장", x[:rank], region_name(x[:region]), format("%.1f", x[:score]), x[:slots])
+      end
+      show_list(_INTL("리그 계수 (최근 3번의 PWT, 기록이 없으면 지방 상위 4명 전력)"), rows)
+    end
+
+    def cup_progress
       c = View.cups(world)
       unless c
         pbMessage(_INTL("대회 대진은 리그가 모두 끝난 뒤에 정해집니다."))

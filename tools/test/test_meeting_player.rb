@@ -135,7 +135,11 @@ class TestMeetingPlayer < Minitest::Test
     assert made
     assert_equal 1, @w.promises.size
     rel = @w.relations.get("L1", "L2")
-    nxt = meetings(@w.advance_days(365)).first   # after the passed project is built
+    nxt = nil
+    52.times do   # up to the next meeting, after the passed project is built
+      nxt = meetings(@w.advance_days(7)).first
+      break if nxt
+    end
     assert nxt, "a second meeting"
     assert_equal [{ to: "L2", kept: false }], nxt[:promises]
     assert_empty @w.promises

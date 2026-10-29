@@ -275,6 +275,10 @@ FM::Smoke.register("meeting_player") do
     FM.advance_days(100)
     hof = FM::Hof.of(w)
     raise "no league champions recorded" if hof[:league].size < w.regions.size
+    top = FM::Power.ranking(w).first
+    coef = FM::Power.coefficients(w).first
+    FM::Log.info("smoke: power #1 #{w.clubs[top[:club]].name} #{top[:score]}; coef #1 " \
+                 "#{FM::UI.region_name(coef[:region])} #{coef[:score]} (#{coef[:slots]} slots)")
     best = hof[:records][:ko]
     FM::Log.info("smoke: hof #{hof[:league].size} champions, KO record #{best && best[:ko]} " \
                  "(#{best && FM::UI.species_name(best[:species])}), goal #{me.goal && FM::UI.goal_row(me)}")
