@@ -108,6 +108,7 @@ module FM
         end
         next if year - l[:since] + 1 < LEG_YEARS
         Hof.induct(world, c, m, :legend)
+        Items.give_back(c, m)
         c.squad.delete(m)
         c.refresh_rating
         l[:last] = c.id
@@ -133,6 +134,7 @@ module FM
         out = club.squad.reject { |x| x.canon || Scout.legend?(world.species, x.species) }
                     .min_by { |x| Scout.mon_value(x, world.species) }
         break unless out
+        Items.give_back(club, out)
         club.squad.delete(out)
       end
       club.refresh_rating

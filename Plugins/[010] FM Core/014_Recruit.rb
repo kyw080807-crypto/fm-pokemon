@@ -99,6 +99,7 @@ module FM
           Scout.mon_value(m, pool) / Economy.food(ovr: Economy.ovr(m.rating), fame: club.fame)
         end
         break unless out
+        Items.give_back(club, out)
         club.squad.delete(out)   # aiBudget: let go, not retired
         released << out.species
       end

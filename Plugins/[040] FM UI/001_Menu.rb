@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("간호사"), _INTL("기록·명예의 전당"), _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("간호사"), _INTL("기록·명예의 전당"), _INTL("상점·지닌 물건"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -97,6 +97,7 @@ module FM
         when 13 then daycare
         when 14 then nurses
         when 15 then records
+        when 16 then items_menu
         else break
         end
       end

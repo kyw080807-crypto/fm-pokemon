@@ -56,6 +56,7 @@ module FM
       pkmn.fm_end, pkmn.fm_shake = Morale.bond_fx(mon)
       pkmn.fm_mood = mon.mood(Morale.week)
       pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
+      pkmn.item = mon.item if mon.item && GameData::Item.exists?(mon.item)
       pkmn.calc_stats
       pkmn.heal
       pkmn
@@ -122,8 +123,11 @@ module FM
       disob = lambda do |mons, party|
         mons.each_with_index.filter_map { |m, i| (n = party[i]&.fm_disob_n.to_i).positive? ? [m, n] : nil }.to_h
       end
+      # A consumable used up: Essentials gives back the items it didn't use.
+      gone = ->(mons, party) { mons.select.with_index { |m, i| m.item && party[i] && !party[i].hasItem?(m.item) } }
       { res: res, ko_a: fainted_b.size, ko_b: fainted_a.size,
         lineup_a: picks, lineup_b: theirs, fainted_a: fainted_a, fainted_b: fainted_b,
+        consumed_a: gone.(picks, $player.party), consumed_b: gone.(theirs, foe.party),
         disobeyed_a: disob.(picks, $player.party), disobeyed_b: disob.(theirs, foe.party) }
     ensure
       Battle.auto = Battle.fast = false

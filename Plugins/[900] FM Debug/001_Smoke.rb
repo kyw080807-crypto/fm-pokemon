@@ -176,6 +176,15 @@ FM::Smoke.register("fm_menu_render") do
     fan_row = FM::UI.my_club_rows(club.id).find { |t| t.include?("팬 만족도") }
     raise "no fan row" unless fan_row
     FM::Log.info("smoke: #{fan_row}; goal #{club.goal ? FM::UI.goal_row(club) : 'none yet'}")
+    # Held items: bought, held, and on the battle Pokémon.
+    holder = club.lineup.first
+    FM::Items.buy(club, :LEFTOVERS, date: FM.world.calendar.date)
+    raise "equip failed" unless FM::Items.equip(club, holder, :LEFTOVERS) == :ok
+    pk = FM::Battle.to_pokemon(holder, $player, club: club)
+    raise "battle Pokémon has no item" unless pk.item_id == :LEFTOVERS
+    FM::Log.info("smoke: #{FM::UI.species_name(holder.species)} holds #{FM::UI.item_name(holder.item)} " \
+                 "(#{GameData::Item.get(:LEFTOVERS).name}); AI items " \
+                 "#{FM.world.clubs.values.sum { |c| c.squad.count(&:item) }}")
     # Nurses: a retired Chansey at the medical center.
     nurse = FM::Mon.new(species: :CHANSEY, bst: 450, level: 30, stars: 3)
     club.retire(nurse)

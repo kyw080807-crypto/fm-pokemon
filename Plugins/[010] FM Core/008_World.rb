@@ -19,6 +19,7 @@ module FM
     attr_accessor :fsat, :fs_log, :fs_riot, :fs_love, :goal
     attr_accessor :hof   # FM::Hof: its own hall of fame
     attr_accessor :move_to, :moved_year   # FM::Transfer
+    attr_accessor :bag   # FM::Items: the player's items, { id => count }
     attr_writer :stadium_shared
 
     # FM::Transfer: a new region, home city and role.
@@ -162,6 +163,7 @@ module FM
 
     # Into the retired list (coach candidates), its food fixed as it was.
     def retire(mon)
+      Items.give_back(self, mon)
       mon.coach = false
       mon.food_fixed = Economy.food(ovr: Economy.ovr(mon.rating), fame: @fame)
       @retired << mon
@@ -381,6 +383,7 @@ module FM
       return nil if Legend.block?(self, c, g[:mon].species)
       if c.squad.size >= Build.squad_size(c.clubhouse)
         return nil unless release && c.squad.include?(release)
+        Items.give_back(c, release)
         c.squad.delete(release)
         c.retire(release)
       end
@@ -501,6 +504,7 @@ module FM
           end
           events.concat(tour_week)
           nurse_week
+          item_week if @species
           events.concat(daycare_week) if @species
           events.concat(condition_week)
           morale_week
@@ -562,6 +566,8 @@ module FM
           won = club.equal?(home) ? r[:res].positive? : r[:res].negative?
           Morale.after_match(club, mons, fainted, kos, won: won, pe: talk[club.id], big: talk[:big_after])
         end
+        used = club.equal?(home) ? r[:consumed_a] : r[:consumed_b]
+        Items.consumed(club, used) if used
         club.drain_lineup(Growth::MATCH_COND, mons: mons, match: true)
         Injury.after_match(mons, fainted, club.facilities[:MEDICAL], @rng, nurse: Nurse.pow(club)).each do |m, info|
           (@match_events ||= []) << injury_event(club, m, info)
@@ -778,6 +784,15 @@ module FM
       Travel.land(@cities[away.city], @cities[home.city])[:cond]
     end
 
+
+    # aiShopAll (week % 4 == 1): AI clubs buy held items.
+    def item_week
+      return unless ((@calendar.day_of_year - 1) / 7) % Items::AI_EVERY == 0
+      @clubs.each_value do |c|
+        next unless ai?(c) && !Credit.austerity?(c)
+        c.refresh_rating if Items.ai_shop(c, @species, date: date).positive?
+      end
+    end
 
     # nurseWeek for every club with nurses; aiNurses every 13 weeks.
     def nurse_week

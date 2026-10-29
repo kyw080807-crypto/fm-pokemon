@@ -8,7 +8,7 @@
 # STRICT (bonus for top 4; finishing lower bans the sponsor for 2 seasons),
 # FAME (+4 fame at season end), BUZZ, SHOP, RISKY (big base, may go bust).
 # Design 01 ties sponsor grade to the clubhouse: big companies need clubhouse
-# 3 (스폰서 2등급). Not yet: BUZZ news bonus, SHOP discount, shady sponsors.
+# 3 (스폰서 2등급). Not yet: BUZZ news bonus, shady sponsors (the SHOP discount is FM::Items.shop_mul).
 #===============================================================================
 module FM
   module Sponsor
