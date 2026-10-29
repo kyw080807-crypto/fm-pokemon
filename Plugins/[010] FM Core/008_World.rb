@@ -18,6 +18,13 @@ module FM
     # FM::Fans / FM::Goals (the player's club only).
     attr_accessor :fsat, :fs_log, :fs_riot, :fs_love, :goal
     attr_accessor :hof   # FM::Hof: its own hall of fame
+    attr_accessor :move_to, :moved_year   # FM::Transfer
+    attr_writer :stadium_shared
+
+    # FM::Transfer: a new region, home city and role.
+    def relocate(region:, city:, role:, city_size:)
+      @region, @city, @role, @city_size = region, city, role, city_size
+    end
 
     def initialize(data)
       @id, @name, @region, @city = data.values_at(:id, :name, :region, :city)
@@ -458,6 +465,7 @@ module FM
         when :new_year
           events.concat(Legend.season_end(self)) if @species
           events.concat(season_rollover)
+          events.concat(Transfer.run(self, @calendar.year))
           sign_sponsors
           start_leagues
           reset_cups
@@ -628,6 +636,14 @@ module FM
     def league_dates
       @league_dates[@calendar.year] ||= Season.league_dates(@calendar, @calendar.year)
     end
+
+    # A transfer before the first round: the leagues are drawn again.
+    def redraw_leagues
+      start_leagues
+      pc = @player_club && @clubs[@player_club]
+      (@match_events ||= []) << Goals.set(self, pc) if pc
+    end
+    public :redraw_leagues
 
     def start_leagues
       @leagues = regions.to_h do |region|

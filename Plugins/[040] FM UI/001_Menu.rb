@@ -125,12 +125,45 @@ module FM
         return choose_club
       end
       loop do
-        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("닫기")]
+        cmds = [_INTL("클럽 정보"), _INTL("부상 관리 (무리 출전)"), _INTL("지방 이적"), _INTL("닫기")]
         case pbMessage(_INTL("내 클럽"), cmds, cmds.size)
         when 0 then show_list(_INTL("내 클럽"), my_club_rows(id))
         when 1 then injury_room(world.clubs[id])
+        when 2 then region_move(world.clubs[id])
         else break
         end
+      end
+    end
+
+    # Poké Manager 지방 이적 (movePanel).
+    def region_move(c)
+      if c.move_to
+        return unless pbConfirmMessage(_INTL("{1} 지방으로 이적 예정입니다 (새 시즌이 시작될 때). 신청을 취소할까요?", region_name(c.move_to)))
+        Transfer.cancel(c)
+        pbMessage(_INTL("지방 이적 신청을 취소했습니다."))
+        return
+      end
+      if Transfer.why_not(world, c) == :moved
+        pbMessage(_INTL("이번 시즌에 이미 지방을 옮겼습니다."))
+        return
+      end
+      now = Transfer.now?(world)
+      rs = world.regions - [c.region]
+      rows = rs.map { |r| _INTL("{1} (본거지 포켓몬 {2}마리)", region_name(r), Transfer.home_count(world, c, r)) }
+      head = _INTL("지금 {1} 지방. 포켓몬·자금·우승 기록은 그대로, 명성 −30%, 훈련장·스카우팅 Lv1, 경기장은 임대로 돌아갑니다.\n" \
+                   "새 지방에서 가장 약한 일반 트레이너와 연고 도시를 맞바꿉니다. 한 시즌에 한 번만.", region_name(c.region))
+      i = pbMessage(head, rows + [_INTL("취소")], rows.size + 1)
+      return if i >= rs.size
+      to = rs[i]
+      o = Transfer.partner(world, c, to)
+      fame = (c.fame * (1 - Transfer::FAME_CUT)).round
+      msg = _INTL("{1} → {2}: 명성 {3} → {4}, 새 연고 도시 {5}. {6}", region_name(c.region), region_name(to), c.fame.round, fame,
+                  o ? world.cities[o.city]&.name || o.city : "-",
+                  now ? _INTL("리그 개막 전이라 바로 옮깁니다. 이적할까요?") : _INTL("시즌 중이라 새 시즌부터 옮깁니다. 신청할까요?"))
+      return unless pbConfirmMessage(msg)
+      case Transfer.request(world, c, to)
+      when :moved then pbMessage(_INTL("{1} 지방으로 옮겼습니다. 새 리그가 다시 편성되었습니다.", region_name(to)))
+      when :requested then pbMessage(_INTL("{1} 지방 이적을 신청했습니다. 새 시즌이 시작될 때 옮깁니다.", region_name(to)))
       end
     end
 
@@ -1316,6 +1349,14 @@ module FM
         when :pwt_hof
           n = world.clubs[e[:club]].name
           e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
+        when :region_moved
+          n = world.clubs[e[:club]].name
+          if e[:club] == id
+            _INTL("{1} → {2} 지방 이적 완료. 명성 {3} → {4}, 시설 Lv1, 임대 경기장에서 다시 시작", region_name(e[:from]), region_name(e[:to]),
+                  e[:fame0].round, e[:fame].round)
+          else
+            _INTL("{1}, {2}을 떠나 {3} 리그로", n, region_name(e[:from]), region_name(e[:to]))
+          end
         when :hof_inducted
           _INTL("{1}이(가) 은퇴하며 명예의 전당에 올랐다 ({2}KO)", species_name(e[:species]), e[:ko]) if e[:club] == id
         when :cup_champion

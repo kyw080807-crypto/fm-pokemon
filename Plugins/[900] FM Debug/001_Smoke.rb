@@ -284,6 +284,27 @@ FM::Smoke.register("meeting_player") do
   end
 end
 
+# 지방 이적 on the real world: before the first round it happens at once.
+FM::Smoke.register("region_move") do
+  saved = FM::Bridge.state
+  FM::Bridge.state = FM::State.new_game(world: FM::Bridge.build_world(seed: 8))
+  begin
+    w = FM.world
+    me = w.clubs.values.find { |c| c.region == "KANTO" && c.role == "T" }
+    FM.state.player_club = me.id
+    to = w.regions.find { |r| r != me.region }
+    old_city = me.city
+    raise "transfer refused" unless FM::Transfer.request(w, me, to) == :moved
+    raise "not in the new league" unless w.leagues[to].table.key?(me.id) && me.region == to
+    raise "city lists out of step" unless w.cities[me.city].club_ids.include?(me.id) && !w.cities[old_city].club_ids.include?(me.id)
+    FM.advance_days(14)
+    FM::Log.info("smoke: moved #{me.name} to #{FM::UI.region_name(to)} (#{w.cities[me.city].name}), fame #{me.fame.round}, " \
+                 "#{FM::UI.my_club_rows(me.id).find { |t| t.include?('시즌 목표') }}")
+  ensure
+    FM::Bridge.state = saved
+  end
+end
+
 # Stage 3 (직접 전투와 자동 진행이 시즌에 맞는다): real AI-vs-AI battles
 # between clubs against MatchSim's neutral win odds. Slow, so only with
 # logs/calibrate.flag (delete it after). Pairs are clubs of one region on
