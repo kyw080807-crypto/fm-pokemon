@@ -370,6 +370,9 @@ module FM
     # candidate list and the next regular report.
     attr_accessor :scouting
     attr_accessor :hof   # FM::Hof.of
+    # FM::Events: the pending event, the last one's [year, week], the press
+    # week, the player's last official result and the two boasts.
+    attr_accessor :event, :ev_last, :press_week, :last_official, :boast, :fs_boast
 
     def send_scout(region, type: nil, spec: nil)
       Scouting.send(self, @clubs.fetch(@player_club), region, type: type, spec: spec, date: date)
@@ -482,6 +485,7 @@ module FM
           weekly_economy
           if (pc = @player_club && @clubs[@player_club])
             events.concat(Fans.week(pc, self, date: date))
+            events.concat(Events.week(self, pc, @rng))
             lg = @leagues && @leagues[pc.region]
             if (pc.goal.nil? || pc.goal[:year] != @calendar.year) && lg && lg.next_round.zero?
               events << Goals.set(self, pc)
@@ -540,7 +544,7 @@ module FM
     # the day's events.
     # fans: false for the games inside a best-of-3 (its result counts once).
     def after_match(home, away, r, lineups, league: false, talk: nil, fans: true)
-      fan_result(home, away, r[:res]) if fans
+      fan_result(home, away, r[:res], league: league) if fans
       la = r[:lineup_a] || lineups[0]
       lb = r[:lineup_b] || lineups[1]
       [[home, la, r[:fainted_a], r[:ko_b], r[:ko_a]], [away, lb, r[:fainted_b], r[:ko_a], r[:ko_b]]].each do |club, mons, fainted, ko, scored|
@@ -577,9 +581,11 @@ module FM
     end
 
     # fsResult for the player's side of a game or series (res: home view).
-    def fan_result(home, away, res, series: false)
+    def fan_result(home, away, res, series: false, league: false)
       [[home, away, res], [away, home, -res]].each do |c, o, my|
-        Fans.result(c, o, my <=> 0, series: series, date: date) unless ai?(c)
+        next if ai?(c)
+        Fans.result(c, o, my <=> 0, series: series, date: date)
+        Events.result(self, c, my <=> 0, league: league)
       end
     end
 

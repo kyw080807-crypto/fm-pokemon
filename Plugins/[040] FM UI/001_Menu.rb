@@ -1385,6 +1385,9 @@ module FM
         when :pwt_hof
           n = world.clubs[e[:club]].name
           e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
+        when :event_done
+          next unless e[:club] == id
+          _INTL("선택 이벤트에 답하지 않아 마지막 선택지로 넘어갔다") if e[:auto]
         when :youth
           next unless e[:club] == id
           _INTL("출전할 포켓몬이 모자라 유소년 {1}을(를) 급히 불러올렸다 (긴급 유소년 콜업)", e[:mons].map { |sp| species_name(sp) }.join(", "))
@@ -1406,6 +1409,7 @@ module FM
       end
       lines.unshift(_INTL("오늘: {1}", date_text(world.calendar.date)))
       show_list(_INTL("1주 진행"), lines)
+      ask_event if id && FM.state.player_club == id
     end
   end
 end

@@ -176,6 +176,12 @@ FM::Smoke.register("fm_menu_render") do
     fan_row = FM::UI.my_club_rows(club.id).find { |t| t.include?("팬 만족도") }
     raise "no fan row" unless fan_row
     FM::Log.info("smoke: #{fan_row}; goal #{club.goal ? FM::UI.goal_row(club) : 'none yet'}")
+    # Choice events: every one has a title, a body and its options.
+    keys = FM::Events::OPTIONS.keys
+    texts = keys.map { |k| FM::UI.event_texts({ key: k, region: club.region, mon: club.squad.first }, club) }
+    bad = keys.zip(texts).reject { |k, t| t && t[2].size == FM::Events::OPTIONS[k] }.map(&:first)
+    raise "event texts missing: #{bad.inspect}" unless bad.empty?
+    FM::Log.info("smoke: #{keys.size} events, e.g. #{texts[2][0]}: #{texts[2][2].first}")
     # Held items: bought, held, and on the battle Pokémon.
     holder = club.lineup.first
     FM::Items.buy(club, :LEFTOVERS, date: FM.world.calendar.date)

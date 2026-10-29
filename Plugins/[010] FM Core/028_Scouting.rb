@@ -92,7 +92,8 @@ module FM
 
     # scGen: n candidates as the club's scouts see them.
     # species: names to draw the first species from (special scouting).
-    def generate(world, club, n, region:, type: nil, species: nil, down: 0, keep:, date:, rng:)
+    # extra_bonus: on top of the club's scout bonus (the rumor event: +3).
+    def generate(world, club, n, region:, type: nil, species: nil, down: 0, keep:, date:, rng:, extra_bonus: 0)
       st = state(world)
       pool = world.species
       level = [orig(club) - down, 1].max
@@ -109,7 +110,7 @@ module FM
           r = region || world.regions[rng.rand(world.regions.size)]
           t = type || (sig && rng.rand < Specialty::SCOUT_SHARE ? sig : nil)
           c = Scout.candidate(pool, region: r, scout_level: 0, orig_level: level, avg_level: world.avg_level(r), rng: rng,
-                                    bonus: Recruit.scout_bonus(club, year), type: t,
+                                    bonus: Recruit.scout_bonus(club, year) + extra_bonus, type: t,
                                     species: fixed && fixed[rng.rand(fixed.size)])
           c[:region] = r
           f = Scout.family(pool, c[:mon].species)
