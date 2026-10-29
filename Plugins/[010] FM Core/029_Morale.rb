@@ -75,7 +75,7 @@ module FM
 
     module_function
 
-    def nature(mon) = NATURES[mon.nature_index % NATURES.size]
+    def nature(mon) = mon.nat || NATURES[mon.nature_index % NATURES.size]   # (a mint's nature first)
     TEMPER_OF = TEMPER.flat_map { |t, list| list.map { |n| [n, t] } }.to_h.freeze
     def temper(mon) = TEMPER_OF.fetch(nature(mon), :easy)
 

@@ -137,13 +137,14 @@ module FM
         head = _INTL("잔고 {1} · 가방 {2}개{3}", money(c.wallet.balance), bag.values.sum,
                      Items.shop_mul(c) < 1 ? _INTL(" · 숍 스폰서 할인 20%") : "")
         cmds = [_INTL("배틀 아이템 사기"), _INTL("기믹 아이템 사기"), _INTL("진화 도구 사기"), _INTL("지닌 물건 주기·빼기"),
-                _INTL("진화시키기"), _INTL("닫기")]
+                _INTL("진화시키기"), _INTL("기술·성격·특성 바꾸기"), _INTL("닫기")]
         case pbMessage(head, cmds, cmds.size)
         when 0 then item_shop(c, Items::HELD.keys)
         when 1 then item_shop(c, gimmick_shop_items(c))
         when 2 then item_shop(c, Items::EVO)
         when 3 then item_equip(c)
         when 4 then evolve_menu(c)
+        when 5 then tuning_menu(c)
         else break
         end
       end

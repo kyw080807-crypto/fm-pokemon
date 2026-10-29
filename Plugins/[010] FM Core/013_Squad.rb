@@ -42,6 +42,8 @@ module FM
     # A held item (FM::Items, an Essentials item id) or nil.
     attr_accessor :item
     attr_accessor :prev_item   # FM::Gimmick: the held item a gimmick item replaced (AI)
+    # FM::Tuning: set moves (nil = auto), a mint's nature, an ability index.
+    attr_accessor :moves, :nat, :ab
 
     # declineMul: the last two seasons of its life play at x0.96, then x0.92.
     def decline_mul = @age >= @life - 1 ? 0.92 : @age >= @life - 2 ? 0.96 : 1.0

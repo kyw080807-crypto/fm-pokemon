@@ -222,6 +222,22 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: gimmicks: #{cat[:mega].size} mega stones, #{cat[:z].size} Z-crystals, #{cat[:gmax].size} G-Max species; " +
                  FM::UI.my_club_rows(club.id).grep(/기믹/).first.to_s + "; " +
                  %i[CHARIZARDITEX FIRIUMZ GMAXMUSHROOM FIRETERACRYSTAL].map { |id| FM::UI.item_name(id) }.join(", "))
+    # Moves, nature, ability: auto moves (autoMoves), then a TM ticket, a
+    # mint and a capsule on the battle Pokémon.
+    auto = FM::Battle.auto_moves(:CHARIZARD, 50, :BLAZE, 0)
+    raise "auto moves: #{auto.inspect}" unless auto.size == 4 && auto.all? { |m| GameData::Move.exists?(m) }
+    tm = Marshal.load(Marshal.dump(club.lineup.first))
+    pool = FM::Battle.learnable(tm.species, tm.level).map(&:first)
+    want = pool.first(2)
+    raise "ticket" unless FM::Tuning.set_moves(club, tm, want, pool: pool, date: FM.world.calendar.date) == :ok
+    nat = (FM::Morale::NATURES - [FM::Morale.nature(tm)]).first
+    FM::Tuning.mint(club, tm, nat, date: FM.world.calendar.date)
+    pk = FM::Battle.to_pokemon(tm, $player, club: club)
+    raise "set moves not used: #{pk.moves.map(&:id)}" unless (want - pk.moves.map(&:id)).empty? && pk.moves.size.between?(2, 4)
+    raise "mint not used" unless pk.nature_id == nat
+    FM::Log.info("smoke: Charizard auto moves #{auto.map { |m| FM::UI.move_name(m) }.join('/')}; " \
+                 "#{FM::UI.species_name(tm.species)} with a ticket #{pk.moves.map { |m| FM::UI.move_name(m.id) }.join('/')}, " \
+                 "#{FM::UI.nature_name(nat)}")
     # Held items: bought, held, and on the battle Pokémon.
     holder = club.lineup.first
     FM::Items.buy(club, :LEFTOVERS, date: FM.world.calendar.date)

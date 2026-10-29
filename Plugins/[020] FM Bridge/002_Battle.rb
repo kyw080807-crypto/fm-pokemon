@@ -58,6 +58,7 @@ module FM
       pkmn.fm_debuffs = mon.debuffs.map { |s| STAGE_STAT.fetch(s) { main } }
       pkmn.item = mon.item if mon.item && GameData::Item.exists?(mon.item)
       gimmick_pokemon(pkmn, mon)
+      apply_moves(pkmn, mon)
       pkmn.calc_stats
       pkmn.heal
       pkmn
