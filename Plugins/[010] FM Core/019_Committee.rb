@@ -21,7 +21,10 @@ module FM
     DUES_PER_FAME = 10              # ₽ per fame point per week (draft)
     HQ_INCOME_PER_LEVEL = 750       # ₽ per week (draft: broadcast rights, league sponsors)
     BROADCAST_PER_LEVEL = 75        # ₽ per club per week (draft)
-    COST_MUL = 4.0                  # x club building step cost (draft)
+    # x club building step cost (draft). Capitals max out around year 15,
+    # after which the surplus reaches the weaker clubs (distribute): x6 or
+    # x8 kept capitals building and left 42-46 clubs renting for 20 years.
+    COST_MUL = 4.0
     QUARTER_MONTHS = [1, 4, 7, 10].freeze
     GYM_SEATS = 2
 

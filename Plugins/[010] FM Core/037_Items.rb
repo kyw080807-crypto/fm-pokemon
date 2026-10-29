@@ -161,7 +161,7 @@ module FM
     def ai_shop(club, pool, date:, world: nil)
       reserve = club.weekly_cost * AI_RESERVE_WEEKS + (club.squad.size < 6 ? AI_SHORT_SQUAD : 0)
       # (Ours: a club saving for a sold-out stadium keeps that too, as FM::Invest does.)
-      reserve += Build.stadium_cost(club.stadium) * Invest::MARGIN if Invest.stadium_wanted?(club)
+      reserve += Build.stadium_cost(club.stadium) * Invest::STADIUM_MARGIN if Invest.saving_for_stadium?(club)
       budget = [0, club.wallet.balance - reserve].max * 0.5
       top = club.lineup
       party = club.entry.sort_by { |m| [top.any? { |t| t.equal?(m) } ? 0 : 1, -m.rating] }

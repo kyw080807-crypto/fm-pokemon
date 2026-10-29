@@ -12,18 +12,20 @@ module FM
     MARGIN        = 1.5
     TOP_MARGIN    = 3.0
     MEDICAL_MARGIN = 4.0
-    SELLOUT       = 0.92
+    STADIUM_MARGIN = 1.3   # aiSeasonInvest: a stadium at 1.3x its cost
+    SELLOUT       = 0.9    # aiSeasonInvest: att >= cap x 0.9
 
     module_function
 
     def decide(club, date:, calendar:)
       return if club.project
       spare = club.spare
-      return if spare <= 0
-      choice = stadium_step(club, spare)
+      # aiSeasonInvest buys a stadium on its funds (f > cost x 1.3).
+      choice = stadium_step(club, club.wallet.balance)
+      return if spare <= 0 && !choice
       # Saving for a sold-out stadium: buildings only from money beyond it
       # (one-level steps are cheap enough to eat every week's spare otherwise).
-      spare -= Build.stadium_cost(club.stadium) * MARGIN if !choice && stadium_wanted?(club)
+      spare -= Build.stadium_cost(club.stadium) * STADIUM_MARGIN if !choice && saving_for_stadium?(club)
       choice ||= building_step(club, spare) || clubhouse_step(club, spare) if spare.positive?
       return unless choice
       start(club, choice, date: date, calendar: calendar)
@@ -55,15 +57,23 @@ module FM
       out.sort_by(&:last)
     end
 
+    # aiSeasonInvest: a renting club always wants its own; one with a
+    # stadium, when its crowds fill 90% of it.
     def stadium_wanted?(club)
-      !club.stadium_shared && club.stadium < Build::STADIUM_COST.size &&
-        club.home_fill.size >= 5 && club.home_fill.sum / club.home_fill.size >= SELLOUT
+      return false if club.stadium_shared || club.stadium >= Build::STADIUM_COST.size
+      return true if club.stadium.zero?
+      club.home_fill.size >= 5 && club.home_fill.sum / club.home_fill.size >= SELLOUT
     end
+
+    # (Ours, investing every week:) a club whose own stadium sells out saves
+    # for the next level before it builds; a renting one doesn't (it buys
+    # its first when its funds allow, aiSeasonInvest).
+    def saving_for_stadium?(club) = stadium_wanted?(club)
 
     def stadium_step(club, spare)
       return unless stadium_wanted?(club)
       cost = Build.stadium_cost(club.stadium)
-      [:stadium, :STADIUM, club.stadium, cost] if spare > cost * MARGIN
+      [:stadium, :STADIUM, club.stadium, cost] if spare > cost * STADIUM_MARGIN
     end
 
     def building_step(club, spare)
