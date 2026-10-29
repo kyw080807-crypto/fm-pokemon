@@ -42,6 +42,9 @@ module FM
       @form    = []
     end
 
+    # FM::Aging: { building => { w: weeks at the top, n: renovations } }.
+    attr_accessor :fac_age
+
     # FM::Daycare: { pairs: [[mon, mon], ...], eggs: [{ mon:, hatch: }] }.
     attr_accessor :daycare
 
@@ -443,6 +446,7 @@ module FM
           city_economy
           events.concat(finish_projects)
           events.concat(finish_city_projects)
+          @clubs.each_value { |c| events.concat(Aging.club_week(self, c)) }
           committees.each_value do |cm|
             cm.weekly(self, date)
             (e = cm.finish(self, date)) && events << e

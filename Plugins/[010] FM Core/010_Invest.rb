@@ -10,6 +10,7 @@ module FM
   module Invest
     RESERVE_WEEKS = 20     # original aiBudget keeps 20 weeks of running costs
     MARGIN        = 1.5
+    TOP_MARGIN    = 3.0
     MEDICAL_MARGIN = 4.0
     SELLOUT       = 0.92
 
@@ -62,7 +63,8 @@ module FM
       order = club.role.start_with?("G") ? %i[TRAINING SCOUTING] : %i[SCOUTING TRAINING]
       order.each do |b|
         step = step_for(club, b, cap)
-        return step if step && spare > step.last * MARGIN
+        # The top level needs three times its cost in hand (aiSeasonInvest).
+        return step if step && spare > step.last * (step[2] == Aging::TOP - 1 ? TOP_MARGIN : MARGIN)
       end
       med = step_for(club, :MEDICAL, cap)
       return med if med && club.facilities.fetch(:MEDICAL, 0) < club.facilities.fetch(:TRAINING, 0) &&
@@ -75,7 +77,9 @@ module FM
       lv = club.facilities.fetch(building, 0)
       return if lv >= cap
       return if lv.zero? && club.facilities.size >= Build.club_plots(club.clubhouse)
-      [:building, building, lv, Build.building_cost(lv)]
+      cost = Build.building_cost(lv)
+      cost = Aging.step_cost(cost, club.fac_age&.dig(building)) if lv == Aging::TOP - 1   # a rebuild after aging
+      [:building, building, lv, cost]
     end
 
     # Worth it once the core buildings have hit the clubhouse's cap or the

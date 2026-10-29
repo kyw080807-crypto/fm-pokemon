@@ -397,7 +397,8 @@ module FM
         return
       end
       opts = Invest.options(c)
-      if opts.empty?
+      renov = Aging::BUILDINGS.select { |b| c.facilities[b].to_i >= Aging::TOP }
+      if opts.empty? && renov.empty?
         pbMessage(_INTL("지금 올릴 수 있는 시설이 없습니다. 클럽하우스나 도시 크기가 상한을 정합니다."))
         return
       end
@@ -405,8 +406,25 @@ module FM
         _INTL("{1} Lv{2}→{3} · {4} · {5}주", facility_name(target), from, from + 1, money(cost),
               Build.build_weeks(kind, from))
       end
-      i = pbMessage(_INTL("잔고 {1}. 무엇을 지을까요?", money(c.wallet.balance)), labels + [_INTL("취소")], labels.size + 1)
-      return if i >= opts.size
+      labels += renov.map do |b|
+        a = Aging.age(c, b)
+        _INTL("{1} Lv5 보수 · {2} (노후 {3}/{4}주)", facility_name(b), money(Aging.renov_cost(a)), a[:w], Aging::LIFE)
+      end
+      i = pbMessage(_INTL("잔고 {1}. 무엇을 지을까요? (Lv5 훈련장·스카우팅은 {2}주가 지나면 낡아 Lv4로 떨어집니다)",
+                          money(c.wallet.balance), Aging::LIFE), labels + [_INTL("취소")], labels.size + 1)
+      return if i >= labels.size
+      if i >= opts.size
+        b = renov[i - opts.size]
+        cost = Aging.renov_cost(Aging.age(c, b))
+        return unless pbConfirmMessage(_INTL("{1}을 {2}에 보수할까요? 노후도가 0이 되고, 다음 보수·재건 비용은 25% 오릅니다.",
+                                             facility_name(b), money(cost)))
+        if Aging.renovate(c, b, date: world.calendar.date)
+          pbMessage(_INTL("{1}을 보수했습니다.", facility_name(b)))
+        else
+          pbMessage(_INTL("돈이 모자랍니다 ({1} 필요).", money(cost)))
+        end
+        return
+      end
       choice = opts[i]
       if c.wallet.balance < choice.last
         pbMessage(_INTL("돈이 모자랍니다 ({1} 필요).", money(choice.last)))
@@ -1054,6 +1072,12 @@ module FM
                 species_name(e[:parents][1]), e[:stars])
         when :egg_waiting
           _INTL("{1}의 알이 부화했지만 스쿼드에 자리가 없다 (키우미집에서 기다림)", species_name(e[:species])) if e[:club] == id
+        when :aging_warning
+          next unless e[:club] == id
+          _INTL("{1} Lv5가 낡아 가고 있다: {2}주 뒤 Lv4로 떨어진다 (시설 투자에서 {3}으로 보수)", facility_name(e[:what]), e[:weeks],
+                money(e[:cost]))
+        when :aged
+          _INTL("{1}이 낡아 Lv4로 떨어졌다. 다시 올리려면 {2}", facility_name(e[:what]), money(e[:cost])) if e[:club] == id
         when :tour
           _INTL("원정 친선 투어: 출전료 {1} · 엔트리 컨디션 −{2}, 이번 주 훈련 쉼", money(e[:pay]), Tour::COND) if e[:club] == id
         when :crisis
