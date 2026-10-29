@@ -17,6 +17,10 @@ module FM
         [_INTL("팬 사인회 요청"), _INTL("팬클럽이 홈 경기장에서 사인회를 열자고 한다."),
          [_INTL("연다 (굿즈 수입 +{1}, 엔트리 컨디션 -5, 팬 만족도 +5)", money(Events.fan_cash(c))),
           _INTL("훈련에 집중 (팬 만족도 -1)")]]
+      when :taunt
+        n = world.clubs[world.rival[:club]].name
+        [_INTL("라이벌 {1}의 도발", n), _INTL("\"이번 시즌도 내가 위다.\" {1}의 인터뷰가 화제다.", n),
+         [_INTL("맞받아친다 (명성 +2. 다음 라이벌전 승리 시 명성 +5, 패배 시 -4)"), _INTL("무시한다 (변화 없음)")]]
       when :rumor
         [_INTL("유망주 소문"), _INTL("{1}에 눈에 띄는 유망주가 있다는 소문이 돈다.", region_name(ev[:region])),
          [_INTL("스카우트를 급파한다 ({1} · 좋은 후보 2마리 보고서가 바로 도착)", money(Scouting::FEE)), _INTL("흘려듣는다 (변화 없음)")]]

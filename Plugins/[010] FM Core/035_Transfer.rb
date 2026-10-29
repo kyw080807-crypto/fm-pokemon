@@ -98,6 +98,7 @@ module FM
       Fans.add(club, 0.5, :new_region, date: date)
       world.ticket_price = nil
       world.boast = world.fs_boast = nil
+      world.rival = world.taunt = nil
       club.goal = nil
       [club, o].compact.each(&:refresh_rating)
       { kind: :region_moved, club: club.id, from: from, to: to, partner: o&.id, fame0: fame0, fame: club.fame,

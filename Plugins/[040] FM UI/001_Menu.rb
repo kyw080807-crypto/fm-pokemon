@@ -199,6 +199,9 @@ module FM
       club = world.clubs[id]
       if id == world.player_club
         rows << goal_row(club) if club.goal && club.goal[:year] == world.calendar.year
+        if (rv = Rival.current(world))
+          rows << _INTL("라이벌 {1} · 올 시즌 {2}승 {3}패", world.clubs[rv[:club]].name, rv[:w], rv[:l])
+        end
         v = Fans.of(club)
         rows << _INTL("팬 만족도 {1}/100 ({2}) · 입장료 {3} (적정가 {4})", v.round, fan_mood_name(Fans.mood(v)),
                       money(world.ticket_price), money(Economy.price(club.fame)))
@@ -316,7 +319,10 @@ module FM
     FAN_MOODS = { ecstatic: "열광", happy: "만족", normal: "보통", unhappy: "불만", angry: "분노" }.freeze
     FAN_WHY = { win: "경기 승리", loss: "경기 패배", draw: "무승부", upset_win: "이변의 승리", upset_loss: "약체에게 패배",
                 series_win: "시리즈 승리", series_loss: "시리즈 패배", dear_tickets: "비싼 입장료", cheap_tickets: "저렴한 입장료",
-                price_up: "입장료 인상", price_down: "입장료 인하", goal_met: "시즌 목표 달성", goal_missed: "시즌 목표 실패" }.freeze
+                price_up: "입장료 인상", price_down: "입장료 인하", goal_met: "시즌 목표 달성", goal_missed: "시즌 목표 실패",
+                rival_win: "라이벌전 승리", rival_loss: "라이벌전 패배", new_region: "새 지방 팬들과 첫 만남", tv: "방송 출연",
+                signing: "팬 사인회", no_signing: "사인회 거절", interview: "인터뷰", press: "기자회견", press_sorry: "기자회견 사과",
+                press_excuse: "기자회견 변명", press_skip: "기자회견 불참", boast_loss: "기자회견 큰소리 후 패배" }.freeze
 
     def fan_mood_name(k) = _INTL(FAN_MOODS[k])
 
@@ -1385,6 +1391,17 @@ module FM
         when :pwt_hof
           n = world.clubs[e[:club]].name
           e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
+        when :rival_set
+          next unless e[:club] == id
+          n = world.clubs[e[:rival]].name
+          w, l = e[:h2h]
+          (e[:again] ? _INTL("{1}, 올해도 라이벌", n) : _INTL("올 시즌 라이벌: {1}", n)) +
+            (w + l > 0 ? _INTL(" (지금까지 {1}승 {2}패)", w, l) : "")
+        when :rival_result
+          next unless e[:club] == id
+          n = world.clubs[e[:rival]].name
+          (e[:won] ? _INTL("라이벌 {1}을(를) 꺾었다", n) : _INTL("라이벌 {1}에게 무릎", n)) +
+            _INTL(" (올 시즌 {1}승 {2}패, 명성 {3})", e[:w], e[:l], format("%+d", e[:fame]))
         when :event_done
           next unless e[:club] == id
           _INTL("선택 이벤트에 답하지 않아 마지막 선택지로 넘어갔다") if e[:auto]

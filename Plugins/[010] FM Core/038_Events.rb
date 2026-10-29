@@ -23,7 +23,8 @@
 #   press after a win: fans +4 | fans +2, fame +1 | fame +2, fans +3, the
 #     next official loss fans -5. After a loss: fans +3, fame -1 | fans +2
 #     | fans -4 | fans -2.
-# The rival's taunt is left out (no rivals yet).
+#   taunt (a rival this season, the league on): answer, fame +2, the next
+#     rival game +5 / -4 (FM::Rival) | ignore.
 #===============================================================================
 module FM
   module Events
@@ -34,8 +35,8 @@ module FM
     COND_MIN = 20
     CAMP_FEE = 20_000
     CAMP_NEED = 30_000
-    KEYS = %i[tv fans rumor event camp slump interview].freeze
-    OPTIONS = { tv: 2, fans: 2, rumor: 2, event: 2, camp: 2, slump: 2, interview: 2, press_win: 3, press_loss: 4 }.freeze
+    KEYS = %i[tv fans taunt rumor event camp slump interview].freeze
+    OPTIONS = { tv: 2, fans: 2, taunt: 2, rumor: 2, event: 2, camp: 2, slump: 2, interview: 2, press_win: 3, press_loss: 4 }.freeze
 
     module_function
 
@@ -62,6 +63,7 @@ module FM
         when :camp then club.wallet.balance > CAMP_NEED
         when :slump then !club.entry.empty?
         when :interview then league_on?(world, club)
+        when :taunt then (r = Rival.current(world)) && !world.leagues[club.region]&.done?
         else true
         end
       end
@@ -154,6 +156,9 @@ module FM
             out[:pushed] = :worse
           end
         end
+      when [:taunt, 0]
+        fame.(2)
+        world.taunt = { club: world.rival[:club], year: world.calendar.year }
       when [:interview, 0]
         fame.(3)
         fans.(2, :interview)

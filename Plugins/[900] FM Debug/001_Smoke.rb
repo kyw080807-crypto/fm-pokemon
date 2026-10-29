@@ -178,6 +178,11 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: #{fan_row}; goal #{club.goal ? FM::UI.goal_row(club) : 'none yet'}")
     # Choice events: every one has a title, a body and its options.
     keys = FM::Events::OPTIONS.keys
+    FM::Rival.pick(FM.world, club, Random.new(1)) unless FM::Rival.current(FM.world)
+    rv = FM::Rival.current(FM.world)
+    raise "no rival picked" unless rv
+    FM::Log.info("smoke: rival #{FM.world.clubs[rv[:club]].name}; " +
+                 FM::UI.my_club_rows(club.id).grep(/라이벌/).first.to_s)
     texts = keys.map { |k| FM::UI.event_texts({ key: k, region: club.region, mon: club.squad.first }, club) }
     bad = keys.zip(texts).reject { |k, t| t && t[2].size == FM::Events::OPTIONS[k] }.map(&:first)
     raise "event texts missing: #{bad.inspect}" unless bad.empty?

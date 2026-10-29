@@ -373,6 +373,7 @@ module FM
     # FM::Events: the pending event, the last one's [year, week], the press
     # week, the player's last official result and the two boasts.
     attr_accessor :event, :ev_last, :press_week, :last_official, :boast, :fs_boast
+    attr_accessor :h2h, :rival, :taunt   # FM::Rival
 
     def send_scout(region, type: nil, spec: nil)
       Scouting.send(self, @clubs.fetch(@player_club), region, type: type, spec: spec, date: date)
@@ -485,6 +486,7 @@ module FM
           weekly_economy
           if (pc = @player_club && @clubs[@player_club])
             events.concat(Fans.week(pc, self, date: date))
+            (e = Rival.current(self).nil? && Rival.pick(self, pc, @rng)) && events << e
             events.concat(Events.week(self, pc, @rng))
             lg = @leagues && @leagues[pc.region]
             if (pc.goal.nil? || pc.goal[:year] != @calendar.year) && lg && lg.next_round.zero?
@@ -584,7 +586,9 @@ module FM
     def fan_result(home, away, res, series: false, league: false)
       [[home, away, res], [away, home, -res]].each do |c, o, my|
         next if ai?(c)
-        Fans.result(c, o, my <=> 0, series: series, date: date)
+        Rival.count(self, o.id, my)
+        Fans.result(c, o, my <=> 0, series: series, date: date, rival: Rival.rival?(self, o.id))
+        (e = league && Rival.result(self, c, o.id, my)) && (@match_events ||= []) << e
         Events.result(self, c, my <=> 0, league: league)
       end
     end

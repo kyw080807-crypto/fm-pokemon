@@ -7,7 +7,7 @@
 # - Satisfaction 0-100 (60 at start) moves with official results (a win
 #   +2, a loss -2, a draw +0.3, each shifted up to about 1.5 by the gap in
 #   team OVR: an upset counts more; a best-of-3 series x1.6 for its
-#   result alone), with the ticket price (each home game above 1.05x the
+#   result alone, a rival game x1.4), with the ticket price (each home game above 1.05x the
 #   reference loses (ratio - 1) x 5, at 0.8x or less gains 0.8; raising it
 #   loses 6 x the rise / reference at once, cutting gains 2 x), and drifts
 #   5% a week toward 55. At 80+ fame +0.15 a week, below 25 -0.2.
@@ -66,7 +66,8 @@ module FM
     end
 
     # fsResult for `club` against `opp`: my = +1 win, -1 loss, 0 draw.
-    def result(club, opp, my, series: false, date: nil)
+    # rival: a game against the player's rival (x1.4).
+    def result(club, opp, my, series: false, date: nil, rival: false)
       g = (team_ovr(opp) - team_ovr(club)) / 10.0
       d = if my.positive? then 2 + g.clamp(-1, 1.5)
           elsif my.negative? then -(2 - g.clamp(-1.5, 1))
@@ -78,6 +79,10 @@ module FM
       if series
         d *= 1.6
         why = my.positive? ? :series_win : :series_loss
+      end
+      if rival
+        d *= 1.4
+        why = my.positive? ? :rival_win : :rival_loss
       end
       add(club, d, why, date: date)
     end
