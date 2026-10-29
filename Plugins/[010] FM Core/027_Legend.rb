@@ -107,6 +107,7 @@ module FM
           next
         end
         next if year - l[:since] + 1 < LEG_YEARS
+        Hof.induct(world, c, m, :legend)
         c.squad.delete(m)
         c.refresh_rating
         l[:last] = c.id

@@ -17,6 +17,7 @@ module FM
     attr_accessor :fame, :stadium, :clubhouse, :project, :city_size, :sponsor
     # FM::Fans / FM::Goals (the player's club only).
     attr_accessor :fsat, :fs_log, :fs_riot, :fs_love, :goal
+    attr_accessor :hof   # FM::Hof: its own hall of fame
 
     def initialize(data)
       @id, @name, @region, @city = data.values_at(:id, :name, :region, :city)
@@ -359,6 +360,7 @@ module FM
     # The player's scouting office (FM::Scouting): assignments, the
     # candidate list and the next regular report.
     attr_accessor :scouting
+    attr_accessor :hof   # FM::Hof.of
 
     def send_scout(region, type: nil, spec: nil)
       Scouting.send(self, @clubs.fetch(@player_club), region, type: type, spec: spec, date: date)
@@ -742,7 +744,10 @@ module FM
         c.fame = Growth.fame_drift(c.fame)
         next unless @species
         gone = Growth.rollover(c.squad)
-        gone.each { |m| c.retire(m) }
+        gone.each do |m|
+          c.retire(m)
+          (e = Hof.retired(self, c, m)) && events << e
+        end
         c.squad.each { |m| m.sko = m.sgp = 0 }   # a new season's record
         Coach.ai_pick(c) if ai?(c)
         c.refresh_rating
@@ -889,6 +894,7 @@ module FM
       @clubs[standings.first].squad.each { |m| m.titles << [year, :league] if m.sgp >= Coach::TITLE_GAMES }
       king = standings.flat_map { |id| @clubs[id].squad }.max_by(&:sko)
       king.awards << [year, :ko_king] if king && king.sko.positive?
+      (@match_events ||= []).concat(Hof.season_awards(self, region, league, standings))
       if (cm = committees[region])
         cm.seat_gym_reps(self, standings)
         cm.distribute(self, standings, date)

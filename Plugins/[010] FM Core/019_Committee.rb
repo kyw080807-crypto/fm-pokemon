@@ -71,6 +71,8 @@ module FM
         c.wallet.record(bc, category: :broadcast, date: date)
       end
       budget.record(@facilities[:LEAGUE_HQ] * HQ_INCOME_PER_LEVEL, category: :league_hq, date: date)
+      t = Hof.tourism(self)
+      budget.record(t, category: :tourism, date: date) if t.positive?
     end
 
     # The next step: the side stadium first (design: its upgrade is the

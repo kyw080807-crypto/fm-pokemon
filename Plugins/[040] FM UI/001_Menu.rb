@@ -79,7 +79,7 @@ module FM
                        phase_text(s[:phase]), nxt)
         commands = [_INTL("내 클럽"), _INTL("시설 투자"), _INTL("스카우트"), _INTL("내 도시"), _INTL("리그 관리위원회"),
                     _INTL("리그 순위"), _INTL("대회"), _INTL("1주 진행"), _INTL("클럽 선택"), _INTL("경기 설정"),
-                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("간호사"), _INTL("닫기")]
+                    _INTL("재정·대출"), _INTL("코치"), _INTL("친선 투어"), _INTL("키우미집"), _INTL("간호사"), _INTL("기록·명예의 전당"), _INTL("닫기")]
         case pbMessage(header, commands, commands.size)
         when 0 then my_club
         when 1 then invest
@@ -96,6 +96,7 @@ module FM
         when 12 then tour
         when 13 then daycare
         when 14 then nurses
+        when 15 then records
         else break
         end
       end
@@ -216,6 +217,45 @@ module FM
     end
 
     # Design 04 대출: one loan at a time, up to fame x ₽5,000, repaid weekly.
+    # viewRecords: PWT champions, the region's champions and KO kings,
+    # records, and the club's own hall of fame.
+    def records
+      h = Hof.of(world)
+      c = player_club
+      region = c ? c.region : world.regions.first
+      name = ->(id) { world.clubs[id]&.name || id.to_s }
+      loop do
+        rec = h[:records]
+        best = rec[:"pts_#{region}"]
+        head = _INTL("{1} 리그 최다 승점: {2}", region_name(region), best ? _INTL("{1} {2} · {3}년차", best[:pts], name.(best[:club]), best[:year]) : "-")
+        k = rec[:ko]
+        head += "\n" + _INTL("한 시즌 최다 KO: {1}", k ? _INTL("{1} {2}의 {3} · {4}년차", k[:ko], name.(k[:club]), species_name(k[:species]), k[:year]) : "-")
+        cmds = [_INTL("PWT 역대 우승"), _INTL("{1} 리그 역대 우승", region_name(region)), _INTL("{1} 시즌 KO왕", region_name(region)),
+                _INTL("내 클럽 명예의 전당"), _INTL("지방 바꾸기"), _INTL("닫기")]
+        rows = case pbMessage(head, cmds, cmds.size)
+               when 0 then h[:world].map { |x| _INTL("{1}년차 {2} (준우승 {3})", x[:year], name.(x[:club]), x[:runner_up] ? name.(x[:runner_up]) : "-") }
+               when 1 then h[:league].select { |x| x[:region] == region }.map { |x| _INTL("{1}년차 {2} · 승점 {3} ({4}-{5})", x[:year], name.(x[:club]), x[:pts], x[:w], x[:l]) }
+               when 2 then h[:ko].select { |x| x[:region] == region }.map { |x| _INTL("{1}년차 {2}의 {3} {4}KO", x[:year], name.(x[:club]), species_name(x[:species]), x[:ko]) }
+               when 3
+                 ((c && c.hof) || []).map do |x|
+                   _INTL("{1} ★{2} · {3}~{4}년차 · {5}KO · 우승 {6} · 수상 {7}{8}", species_name(x[:species]), x[:stars], x[:y0], x[:y1], x[:ko],
+                         x[:titles].size, x[:awards].size, x[:kind] == :legend ? _INTL(" · 전설") : "")
+                 end
+               when 4
+                 rs = world.regions
+                 j = pbMessage(_INTL("어느 지방?"), rs.map { |r| region_name(r) } + [_INTL("취소")], rs.size + 1)
+                 region = rs[j] if j < rs.size
+                 next
+               else break
+               end
+        if rows.empty?
+          pbMessage(_INTL("아직 기록이 없습니다."))
+        else
+          rows.each_slice(8) { |part| pbMessage(part.join("\n")) }
+        end
+      end
+    end
+
     def goal_text(world, t, region)
       kind, = Goals.label(world, t, region)
       case kind
@@ -1259,6 +1299,25 @@ module FM
           else
             _INTL("회복: {1}", species_name(e[:species]))
           end
+        when :league_champion
+          n = world.clubs[e[:club]].name
+          base = e[:streak] >= 2 ? _INTL("{1}, {2} 리그 {3}연패", n, region_name(e[:region]), e[:streak]) :
+                                   _INTL("{1}, {2} 리그 우승", n, region_name(e[:region]))
+          base += _INTL(" ({1}승 {2}패, 승점 {3})", e[:w], e[:l], e[:pts])
+          base += _INTL(" · 역대 최다 승점") if e[:record]
+          base
+        when :ko_king
+          next unless id && world.clubs[id].region == e[:region]
+          _INTL("시즌 KO왕: {1}의 {2} ({3}KO, {4}경기)", world.clubs[e[:club]].name, species_name(e[:species]), e[:ko], e[:gp])
+        when :first_top4
+          _INTL("{1}, 처음으로 리그 {2}위 — 상위 4위 진입", world.clubs[e[:club]].name, e[:pos])
+        when :riser
+          _INTL("올해의 돌풍: {1} ({2}위 → {3}위, {4}계단)", world.clubs[e[:club]].name, e[:from], e[:to], e[:d])
+        when :pwt_hof
+          n = world.clubs[e[:club]].name
+          e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
+        when :hof_inducted
+          _INTL("{1}이(가) 은퇴하며 명예의 전당에 올랐다 ({2}KO)", species_name(e[:species]), e[:ko]) if e[:club] == id
         when :cup_champion
           _INTL("{1} 우승: {2}", e[:cup].to_s.upcase, world.clubs[e[:club]].name)
         when :city_grown

@@ -271,6 +271,13 @@ FM::Smoke.register("meeting_player") do
     raise "player never asked at #{city.name}" if seen.empty?
     FM::Log.info("smoke: #{city.name} meetings asked #{seen.size}x; e.g. #{FM::UI.agenda_text(:infrastructure, :HOTEL)}: #{seen.first}")
     FM::Log.info("smoke: petitions " + opts.map { |o| FM::UI.agenda_text(o[:agenda], o[:target]) }.join(", "))
+    # Hall of fame: the leagues end by October.
+    FM.advance_days(100)
+    hof = FM::Hof.of(w)
+    raise "no league champions recorded" if hof[:league].size < w.regions.size
+    best = hof[:records][:ko]
+    FM::Log.info("smoke: hof #{hof[:league].size} champions, KO record #{best && best[:ko]} " \
+                 "(#{best && FM::UI.species_name(best[:species])}), goal #{me.goal && FM::UI.goal_row(me)}")
   ensure
     FM::Meeting.player_hook = nil
     FM::Bridge.state = saved
