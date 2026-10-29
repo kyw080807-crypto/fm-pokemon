@@ -1349,6 +1349,9 @@ module FM
         when :pwt_hof
           n = world.clubs[e[:club]].name
           e[:titles] >= 2 ? _INTL("{1}, PWT 통산 {2}번째 우승", n, e[:titles]) : _INTL("{1}, PWT 챔피언 등극", n)
+        when :youth
+          next unless e[:club] == id
+          _INTL("출전할 포켓몬이 모자라 유소년 {1}을(를) 급히 불러올렸다 (긴급 유소년 콜업)", e[:mons].map { |sp| species_name(sp) }.join(", "))
         when :region_moved
           n = world.clubs[e[:club]].name
           if e[:club] == id

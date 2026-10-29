@@ -69,17 +69,15 @@ module FM
       Specialty.of(club) || ((club.canon || club.role.start_with?("G")) ? club.type : nil)
     end
 
-    # aiEmergency: below 3 mons a club gets free youth players, at least ★3
-    # and 60% of the region's average level.
+    # aiEmergency / emergencyCallup: below 3 mons a club gets free youth
+    # players (youthMon), at least ★3 and 60% of the region's average level.
     def emergency(club, pool:, avg_level:, rng:)
       added = []
       tries = 0
       sig = Specialty.of(club)
       while club.squad.size < 3 && (tries += 1) <= 20
         type = sig && rng.rand < Specialty::SCOUT_SHARE ? sig : nil
-        c = Scout.candidate(pool, region: club.region, scout_level: club.facilities.fetch(:SCOUTING, 0),
-                                  avg_level: avg_level, rng: rng, type: type)
-        m = c[:mon]
+        m = Scout.youth(pool, region: club.region, scout_level: club.facilities.fetch(:SCOUTING, 0), rng: rng, type: type)
         next if fam_dup?(club, m.species, pool)
         m.stars = [m.stars, 3].max
         m.level = [m.level, (avg_level * 0.6).round].max

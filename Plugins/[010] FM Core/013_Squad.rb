@@ -365,6 +365,17 @@ module FM
       { base: base, mon: mon, cost: [(cost / 500).round * 500, 500].max }
     end
 
+    # youthMon: a youth player at age 0, from the region (target BST 445 +
+    # 8 per original scouting level, no legends), level 5-10 + level / 2.
+    def youth(pool, region:, scout_level:, rng:, type: nil)
+      sl = Growth.original_level(scout_level)
+      sp = pick_species(pool, region, 445 + sl * 8 + ri(rng, -40, 40), 0, rng, type: type)
+      m = Mon.new(species: sp, bst: pool[sp][:bst], level: (ri(rng, 5, 10) + sl / 2).clamp(1, 100),
+                  stars: roll_stars(2.3 + sl * 0.17, rng), branch: rng.rand(10_000))
+      Growth.evolve(m, pool)
+      m
+    end
+
     # monValue: what a mon is worth, life left aside.
     def mon_value(mon, pool)
       fb = pool.dig(mon.species, :fb) || mon.bst
