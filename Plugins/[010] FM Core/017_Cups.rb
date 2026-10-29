@@ -102,13 +102,14 @@ module FM
       out.compact
     end
 
-    def game(world, rng, important: false, cup: :pet)
+    # series: a best-of-3 game (fans count the series, World#fan_result).
+    def game(world, rng, important: false, cup: :pet, series: false)
       lambda do |a, b|
         home, away = world.clubs[a], world.clubs[b]
         lineups = [home.lineup, away.lineup]
         talk = world.pre_match(home, away, cup: cup)
         r = world.play_match(home, away, rng: rng, neutral: true, important: important)
-        world.after_match(home, away, r, lineups, talk: talk)
+        world.after_match(home, away, r, lineups, talk: talk, fans: !series)
         r.slice(:res, :ko_a, :ko_b)   # brackets keep results (saved): no Mons
       end
     end
@@ -116,8 +117,9 @@ module FM
     def sub_round(world, cup, i, rng)
       c = world.cups[cup]
       ko = c[:ko] or return []
-      res = ko.play_round(best_of: i == 3 ? 3 : 1, rng: rng, &game(world, rng, important: i == 3))
+      res = ko.play_round(best_of: i == 3 ? 3 : 1, rng: rng, &game(world, rng, important: i == 3, series: i == 3))
       date = world.calendar.date
+      series_fans(world, res) if i == 3
       res.each do |_, _, _, loser, _|
         world.clubs[loser].wallet.record(Tournament::SUB_PRIZE[i], category: :prize, date: date)
         hist(world, loser)[:cup] = [cup, KO_STAGE_RESULT[i]]
@@ -161,7 +163,8 @@ module FM
       pwt = world.cups[:pwt]
       ko = pwt[:ko] or return []
       date = world.calendar.date
-      res = ko.play_round(best_of: 3, rng: rng, &game(world, rng, important: i == 3, cup: :pwt))
+      res = ko.play_round(best_of: 3, rng: rng, &game(world, rng, important: i == 3, cup: :pwt, series: true))
+      series_fans(world, res)
       res.each do |_, _, _, loser, _|
         c = world.clubs[loser]
         c.wallet.record(Tournament::KO_PRIZE[i], category: :prize, date: date)
@@ -184,6 +187,10 @@ module FM
         events << { kind: :cup_champion, cup: :pwt, club: ko.champion, date: date }
       end
       events
+    end
+
+    def series_fans(world, res)
+      res.each { |a, b, _, _, s| world.fan_result(world.clubs[a], world.clubs[b], s[:res], series: true) }
     end
 
     def hist(world, id)

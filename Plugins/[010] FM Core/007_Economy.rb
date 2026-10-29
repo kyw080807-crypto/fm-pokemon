@@ -105,11 +105,15 @@ module FM
       (500 + fame_eff(home_fame) * 45 + away) * (0.8 + 0.1 * wins) * mood
     end
 
-    def gate(home_fame:, away_fame:, wins:, stadium:, rng:, link: 1.0, away: nil, mood: 1.0)
+    # price: the player's ticket price (AI clubs charge the reference);
+    # demand x (reference / price)^1.3. fans: FM::Fans.att_mul.
+    def gate(home_fame:, away_fame:, wins:, stadium:, rng:, link: 1.0, away: nil, mood: 1.0, price: nil, fans: 1.0)
       cap = capacity(stadium)
+      ref = price(home_fame)
+      p = price || ref
       d = demand(home_fame: home_fame, away_fame: away_fame, wins: wins, capacity: cap, link: link, away: away, mood: mood)
+      d *= fans * (ref / [1, p].max.to_f)**Fans::PRICE_ELASTICITY
       att = [cap, (d * (0.92 + rng.rand * 0.16)).round].min
-      p = price(home_fame)
       { attendance: att, price: p, revenue: att * p }
     end
 

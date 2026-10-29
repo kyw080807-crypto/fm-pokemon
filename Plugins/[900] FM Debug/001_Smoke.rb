@@ -172,6 +172,10 @@ FM::Smoke.register("fm_menu_render") do
     FM::Log.info("smoke: coach #{FM::UI.species_name(old.species)} #{FM::Coach.grade(FM::Coach.quality(old))} " \
                  "#{FM::UI::STAT_NAMES[FM::Coach.spec(FM.world.species, old)]}, slots #{FM::Coach.slots(club)}, " \
                  "lv x#{fx[:lv].round(3)} ev x#{fx[:ev].round(3)}")
+    # Fans and the season goal (the player's club).
+    fan_row = FM::UI.my_club_rows(club.id).find { |t| t.include?("팬 만족도") }
+    raise "no fan row" unless fan_row
+    FM::Log.info("smoke: #{fan_row}; goal #{club.goal ? FM::UI.goal_row(club) : 'none yet'}")
     # Nurses: a retired Chansey at the medical center.
     nurse = FM::Mon.new(species: :CHANSEY, bst: 450, level: 30, stars: 3)
     club.retire(nurse)

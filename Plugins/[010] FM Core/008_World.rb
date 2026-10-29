@@ -15,6 +15,8 @@ module FM
                 :facilities, :rating, :wallet, :form, :stadium_shared,
                 :home_fill, :traits, :squad, :retired, :sponsor_bans, :history, :type
     attr_accessor :fame, :stadium, :clubhouse, :project, :city_size, :sponsor
+    # FM::Fans / FM::Goals (the player's club only).
+    attr_accessor :fsat, :fs_log, :fs_riot, :fs_love, :goal
 
     def initialize(data)
       @id, @name, @region, @city = data.values_at(:id, :name, :region, :city)
@@ -465,6 +467,13 @@ module FM
           Morale.week = date
           Morale.calendar = @calendar
           weekly_economy
+          if (pc = @player_club && @clubs[@player_club])
+            events.concat(Fans.week(pc, self, date: date))
+            lg = @leagues && @leagues[pc.region]
+            if (pc.goal.nil? || pc.goal[:year] != @calendar.year) && lg && lg.next_round.zero?
+              events << Goals.set(self, pc)
+            end
+          end
           @clubs.each_value { |c| events.concat(Credit.week(c, date: date, calendar: @calendar)) }
           city_economy
           events.concat(finish_projects)
@@ -515,7 +524,9 @@ module FM
     # match; a real battle's result may name them (:lineup_a/:lineup_b)
     # and who fainted (:fainted_a/:fainted_b). Injury events are added to
     # the day's events.
-    def after_match(home, away, r, lineups, league: false, talk: nil)
+    # fans: false for the games inside a best-of-3 (its result counts once).
+    def after_match(home, away, r, lineups, league: false, talk: nil, fans: true)
+      fan_result(home, away, r[:res]) if fans
       la = r[:lineup_a] || lineups[0]
       lb = r[:lineup_b] || lineups[1]
       [[home, la, r[:fainted_a], r[:ko_b], r[:ko_a]], [away, lb, r[:fainted_b], r[:ko_a], r[:ko_b]]].each do |club, mons, fainted, ko, scored|
@@ -547,6 +558,19 @@ module FM
         end
         club.refresh_rating
       end
+    end
+
+    # fsResult for the player's side of a game or series (res: home view).
+    def fan_result(home, away, res, series: false)
+      [[home, away, res], [away, home, -res]].each do |c, o, my|
+        Fans.result(c, o, my <=> 0, series: series, date: date) unless ai?(c)
+      end
+    end
+
+    # The player's ticket price (the reference until set; FM::Fans.set_price).
+    attr_writer :ticket_price
+    def ticket_price
+      @ticket_price ||= (c = @clubs[@player_club]) ? Economy.price(c.fame) : 1
     end
 
     # Player promises from meetings (FM::Meeting.settle_promises).
@@ -624,9 +648,12 @@ module FM
         hc, ac = @cities[home.city], @cities[away.city]
         fans = hc && ac && Civic.away_fans(away_fame: away.fame, from: ac, to: hc,
                                            capacity: Economy.capacity(home.stadium))
+        mine = !ai?(home)
         gate = Economy.gate(home_fame: home.fame, away_fame: away.fame, wins: home.recent_wins,
                             stadium: home.stadium, rng: @rng, away: fans && fans[:fans],
-                            mood: hc ? hc.crowd_mood : 1.0)
+                            mood: hc ? hc.crowd_mood : 1.0, price: mine ? ticket_price : nil,
+                            fans: mine ? Fans.att_mul(home) : 1.0)
+        Fans.home_game(home, ticket_price, date: date) if mine
         tourism = fans ? (fans[:lodging] * Civic::LODGE_SPEND).round : 0
         hc.budget.record(tourism, category: :tourism, date: date) if tourism.positive?
         home.wallet.record(gate[:revenue], category: :gate, date: date) if gate[:revenue].positive?
@@ -682,7 +709,7 @@ module FM
         w.record(-cp, category: :coach, date: date) if cp.positive?
         w.record(-Economy.stadium_keep(c.stadium), category: :std, date: date)
         legend = @species && Legend.held(c, @species)
-        merch = (Economy.merch(c.fame) * (legend ? Legend::MERCH_MUL : 1)).round
+        merch = (Economy.merch(c.fame) * (legend ? Legend::MERCH_MUL : 1) * (ai?(c) ? 1 : Fans.merch_mul(c))).round
         c.fame = Economy.add_fame(c.fame, Legend::FAME_WEEK) if legend
         w.record(merch, category: :merch, date: date) if merch.positive?
         pay_sponsor(c)
@@ -855,6 +882,7 @@ module FM
         c.fame = Economy.add_fame(c.fame, (11 - pos) * 0.6 + (pos == 1 ? 5 : 0))
         sponsor_season_end(c, pos)
         (c.history[@calendar.year] ||= {})[:pos] = pos
+        (e = !ai?(c) && Goals.check(self, c, pos)) && (@match_events ||= []) << e
       end
       # Titles (league won, 8+ games) and the region's KO king.
       year = @calendar.year

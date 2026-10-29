@@ -161,6 +161,13 @@ module FM
       rows << _INTL("잔고 {1} · 명성 {2} · 전력 {3}", money(c[:balance]), c[:fame], c[:rating])
       rows << _INTL("대출 잔액 {1} (매주 {2} 상환)", money(c[:loan][:owed]), money(c[:loan][:part])) if c[:loan]
       rows << _INTL("재정 위기: {1}", crisis_name(c[:crisis])) if c[:crisis]
+      club = world.clubs[id]
+      if id == world.player_club
+        rows << goal_row(club) if club.goal && club.goal[:year] == world.calendar.year
+        v = Fans.of(club)
+        rows << _INTL("팬 만족도 {1}/100 ({2}) · 입장료 {3} (적정가 {4})", v.round, fan_mood_name(Fans.mood(v)),
+                      money(world.ticket_price), money(Economy.price(club.fame)))
+      end
       fac = c[:facilities].map { |k, lv| "#{facility_name(k)} Lv#{lv}" }.join(" · ")
       rows << _INTL("클럽하우스 Lv{1} · 경기장 Lv{2} · 이번 시즌 영입 {3}/{4}", c[:clubhouse], c[:stadium], c[:signs][:used],
                     c[:signs][:limit])
@@ -209,6 +216,57 @@ module FM
     end
 
     # Design 04 대출: one loan at a time, up to fame x ₽5,000, repaid weekly.
+    def goal_text(world, t, region)
+      kind, = Goals.label(world, t, region)
+      case kind
+      when :title then _INTL("리그 우승")
+      when :pwt then _INTL("PWT 진출권 ({1}위 이내)", t)
+      when :top then _INTL("상위권 ({1}위 이내)", t)
+      when :upper_half then _INTL("상위 절반 ({1}위 이내)", t)
+      when :mid then _INTL("중위권 ({1}위 이내)", t)
+      else _INTL("{1}위 이내", t)
+      end
+    end
+
+    # goalBar
+    def goal_row(club)
+      g = club.goal
+      label = goal_text(world, g[:t], g[:region])
+      if g[:done]
+        return g[:ok] ? _INTL("시즌 목표 {1}: 달성 ({2}위, 보너스 {3})", label, g[:pos], money(g[:paid])) :
+                        _INTL("시즌 목표 {1}: 실패 ({2}위)", label, g[:pos])
+      end
+      _INTL("시즌 목표 {1} · 달성 보너스 {2}+", label, money(g[:bonus]))
+    end
+
+    FAN_MOODS = { ecstatic: "열광", happy: "만족", normal: "보통", unhappy: "불만", angry: "분노" }.freeze
+    FAN_WHY = { win: "경기 승리", loss: "경기 패배", draw: "무승부", upset_win: "이변의 승리", upset_loss: "약체에게 패배",
+                series_win: "시리즈 승리", series_loss: "시리즈 패배", dear_tickets: "비싼 입장료", cheap_tickets: "저렴한 입장료",
+                price_up: "입장료 인상", price_down: "입장료 인하", goal_met: "시즌 목표 달성", goal_missed: "시즌 목표 실패" }.freeze
+
+    def fan_mood_name(k) = _INTL(FAN_MOODS[k])
+
+    # fanPanel and the price picker (fsSetPrice).
+    def fans_and_price(c)
+      loop do
+        v = Fans.of(c)
+        ref = Economy.price(c.fame)
+        head = _INTL("팬 만족도 {1}/100 ({2}) · 관중 ×{3} · 굿즈 ×{4}\n입장료 {5} · 적정가 {6} · 상한 {7}", v.round,
+                     fan_mood_name(Fans.mood(v)), format("%.2f", Fans.att_mul(c)), format("%.2f", Fans.merch_mul(c)),
+                     money(world.ticket_price), money(ref), money(Fans.cap(c)))
+        log = (c.fs_log || []).first(4).map { |x| _INTL("{1} {2}", _INTL(FAN_WHY[x[:why]] || x[:why].to_s), format("%+.1f", x[:d])) }
+        head += "\n" + log.join(" · ") unless log.empty?
+        prices = Fans::PRICES
+        rows = prices.map { |p| p == world.ticket_price ? _INTL("[{1}]", money(p)) : money(p) }
+        i = pbMessage(head, rows + [_INTL("닫기")], rows.size + 1)
+        break if i >= prices.size
+        r = Fans.set_price(c, world, prices[i], date: world.calendar.date)
+        if r == :capped
+          pbMessage(_INTL("팬들의 반발이 커서 입장료를 {1}보다 올릴 수 없습니다 (팬 만족도 {2}).", money(Fans.cap(c)), v.round))
+        end
+      end
+    end
+
     def finance
       c = player_club or return
       loop do
@@ -221,12 +279,13 @@ module FM
                        Credit::TERM_WEEKS, format("%.2f", Credit::LOAN_RATE * 100))
                end
         head += "\n" + _INTL("재정 위기: {1}", crisis_name(c.crisis)) if c.crisis
-        cmds = []
+        cmds = [_INTL("팬 만족도·입장료")]
         cmds << _INTL("대출 받기") unless c.loan
         cmds << _INTL("전액 상환 ({1})", money(c.loan[:owed])) if c.loan
         cmds << _INTL("닫기")
         i = pbMessage(head, cmds, cmds.size)
         case cmds[i]
+        when _INTL("팬 만족도·입장료") then fans_and_price(c)
         when _INTL("대출 받기")
           unless Credit.can_borrow?(c, [limit, 1].max)
             pbMessage(_INTL("지금은 대출을 받을 수 없습니다."))
@@ -1135,6 +1194,25 @@ module FM
                 species_name(e[:parents][1]), e[:stars])
         when :egg_waiting
           _INTL("{1}의 알이 부화했지만 스쿼드에 자리가 없다 (키우미집에서 기다림)", species_name(e[:species])) if e[:club] == id
+        when :fans_price_cut
+          _INTL("팬들의 항의로 입장료를 {1} → {2}로 내렸다", money(e[:from]), money(e[:to])) if e[:club] == id
+        when :fans_riot
+          _INTL("팬들이 경기장 앞에서 항의 시위를 벌였다. 관중이 줄고 굿즈도 안 팔린다") if e[:club] == id
+        when :fans_love
+          _INTL("팬들이 열광하고 있다. 홈 경기장은 연일 응원 열기로 뜨겁다") if e[:club] == id
+        when :goal_set
+          next unless e[:club] == id
+          g = e[:goal]
+          _INTL("{1}년차 시즌 목표: {2} · 달성 보너스 {3} ({4}전력 순위 {5}위 기준)", g[:year], goal_text(world, g[:t], g[:region]),
+                money(g[:bonus]), g[:prev] ? _INTL("지난 시즌 {1}위 · ", g[:prev]) : "", g[:ovr])
+        when :goal_result
+          next unless e[:club] == id
+          g = e[:goal]
+          if g[:ok]
+            _INTL("시즌 목표 달성! 목표 {1}위 이내 → {2}위. 보너스 {3}", g[:t], g[:pos], money(g[:paid]))
+          else
+            _INTL("시즌 목표 실패: 목표 {1}위 이내, 실제 {2}위. 팬들이 실망했다", g[:t], g[:pos])
+          end
         when :aging_warning
           next unless e[:club] == id
           _INTL("{1} Lv{2}가 낡아 가고 있다: {3}주 뒤 Lv{4}로 떨어진다 (시설 투자에서 {5}으로 보수)", facility_name(e[:what]),
