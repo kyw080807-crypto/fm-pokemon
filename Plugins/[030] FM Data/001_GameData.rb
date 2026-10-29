@@ -103,7 +103,7 @@ module GameData
       "Tier"        => [:tier,       "u"],
       "Region"      => [:region,     "m"],
       "Basic"       => [:basic,      "b"],
-      "Evolution"   => [:evolutions, "^mu"],
+      "Evolution"   => [:evolutions, "^muM"],   # species, level, item (optional)
       "Types"       => [:types,      "*m"],   # Poké Manager's (lower-case there)
       "Prev"        => [:prev,       "m"],
       "BaseStats"   => [:base_stats, "*u"],   # HP, Atk, Def, SpA, SpD, Spe

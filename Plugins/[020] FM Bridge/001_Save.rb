@@ -31,7 +31,7 @@ module FM
       species = {}
       GameData::FmSpecies.each do |s|
         species[s.id] = { bst: s.bst, fb: s.final_bst, tier: s.tier, region: s.region.to_s,
-                          basic: s.basic, evo: s.evolutions.map { |to, lv| [to, lv] },
+                          basic: s.basic, evo: s.evolutions.map { |to, lv, item| [to, lv, item&.to_sym].compact },
                           types: s.types.map(&:to_s), prev: s.prev&.to_s, base: s.base_stats.dup,
                           eggs: s.egg_groups.dup, gender: s.gender_ratio }
       end

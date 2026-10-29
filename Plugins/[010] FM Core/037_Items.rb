@@ -15,8 +15,10 @@
 #   Sludge for poison types, Leftovers for bulk, Choice Scarf for speed,
 #   then the attack items and berries). Ours also keeps the money a club
 #   saves for a sold-out stadium (FM::Invest).
+# - Evolution items (EVO) are sold too: the player's mon uses one to take
+#   that branch (useEvolve); an AI pays for it when it evolves (evolve).
 # Not ported: form items, Mega stones and other gimmicks, TM tickets, mints
-# and ability capsules, evolution items (the original's are Showdown sets).
+# and ability capsules (the original's are Showdown sets).
 # Our formula matches have no battle engine: a held item counts x1.03 in
 # the team rating there (draft).
 #===============================================================================
@@ -34,6 +36,13 @@ module FM
     }.freeze
     CONSUMABLE = %i[FOCUSSASH WEAKNESSPOLICY SITRUSBERRY LUMBERRY POWERHERB WHITEHERB MENTALHERB AIRBALLOON
                     BOOSTERENERGY THROATSPRAY EJECTBUTTON EJECTPACK REDCARD].freeze
+    # Evolution items (LEARN.evoItems): itemPrice's stones 8,000, Linking
+    # Cord 12,000, Soothe Bell 10,000, the rest 15,000.
+    EVO = %i[THUNDERSTONE MOONSTONE FIRESTONE SOOTHEBELL LEAFSTONE SUNSTONE WATERSTONE KINGSROCK LINKINGCORD
+             METALCOAT PROTECTOR DRAGONSCALE ELECTIRIZER MAGMARIZER ICESTONE UPGRADE SHINYSTONE DUSKSTONE RAZORFANG
+             RAZORCLAW DUBIOUSDISC DAWNSTONE PRISMSCALE REAPERCLOTH DEEPSEATOOTH DEEPSEASCALE OVALSTONE SACHET
+             WHIPPEDDREAM TARTAPPLE SWEETAPPLE SYRUPYAPPLE CRACKEDPOT METALALLOY AUSPICIOUSARMOR MALICIOUSARMOR
+             UNREMARKABLETEACUP].freeze
     SHOP_MUL = 0.8
     AI_EVERY = 4
     AI_RESERVE_WEEKS = 20
@@ -43,8 +52,15 @@ module FM
     module_function
 
     def held?(id) = HELD.key?(id)
+    def evo?(id) = EVO.include?(id)
     def shop_mul(club) = club.sponsor && club.sponsor[:kind] == "SHOP" ? SHOP_MUL : 1.0
-    def price(club, id) = (HELD.fetch(id) * shop_mul(club) / 10.0).round * 10
+    def base_price(id)
+      return HELD[id] if HELD.key?(id)
+      return 12_000 if id == :LINKINGCORD
+      return 10_000 if id == :SOOTHEBELL
+      id.to_s.end_with?("STONE") && id != :OVALSTONE ? 8000 : 15_000
+    end
+    def price(club, id) = (base_price(id) * shop_mul(club) / 10.0).round * 10
 
     def bag(club) = club.bag ||= {}
     def count(club, id) = bag(club)[id].to_i
@@ -57,7 +73,7 @@ module FM
 
     # buyItem -> the cost, or nil if it can't
     def buy(club, id, n = 1, date:)
-      return unless held?(id)
+      return unless held?(id) || evo?(id)
       cost = price(club, id) * n
       return if club.wallet.balance < cost
       club.wallet.record(-cost, category: :shop, date: date)
@@ -81,6 +97,25 @@ module FM
         add(club, id, -1)
         mon.item = id
       end
+      :ok
+    end
+
+    # evoOptions: [[to, level, item], ...]
+    def evo_options(pool, mon) = (pool.dig(mon.species, :evo) || [])
+
+    # useEvolve: the player's choice k; an item evolution takes the item
+    # from the bag (no level needed), else the level. -> :ok or why not
+    def use_evolve(club, mon, k, pool)
+      to, lv, item = evo_options(pool, mon)[k]
+      return :none unless to
+      if item
+        return :no_item if count(club, item) < 1
+        add(club, item, -1)
+      elsif mon.level < lv
+        return :level
+      end
+      Growth.become(mon, pool, to)
+      club.refresh_rating
       :ok
     end
 

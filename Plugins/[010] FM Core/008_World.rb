@@ -865,7 +865,11 @@ module FM
       @clubs.each_value do |c|
         train = c.facilities.fetch(:TRAINING, 0)
         st = Coach.staff(c, @species)
-        c.squad.each { |m| Growth.week(m, train_level: train, species: @species, fx: Coach.fx(c, m, @species, st)) }
+        mine = !ai?(c)
+        pay = mine ? nil : ->(item) { c.wallet.record(-Items.price(c, item), category: :shop, date: date) }
+        c.squad.each do |m|
+          Growth.week(m, train_level: train, species: @species, fx: Coach.fx(c, m, @species, st), hold: mine, pay: pay)
+        end
         avg = avgs[c.region]
         released = ai?(c) ? Recruit.budget(c, pool: @species) : []
         events << { kind: :released, club: c.id, mons: released, date: date } unless released.empty?

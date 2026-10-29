@@ -176,7 +176,8 @@ trainers.each_with_index do |t, i|
 end
 
 # --- species: Poké Manager's growth data (DEX) keyed by Essentials ID -------
-# Evolution levels are Poké Manager's (it turns every evolution into a level);
+# Evolution levels are Poké Manager's (it turns every evolution into a level;
+# an item evolution adds the item: the AI pays for it, the player uses it);
 # FinalBST is the best base stat total reachable by evolving, which scouting
 # aims at (SP[].fb). Region is the dex range of the species' generation.
 # Types and Prev (what it evolves from) are for the original's roster rules:
@@ -204,7 +205,9 @@ dex.each do |d|
   br = breed.fetch(ids[d['num'] - 1])
   species_txt << "EggGroups = #{br[:eggs]}\nGenderRatio = #{br[:gender]}\n"
   species_txt << "Prev = #{ids[d['prev'] - 1]}\n" if d["prev"]
-  d["evo"].each { |e| species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}\n" }
+  d["evo"].each do |e|   # SPECIES,LEVEL[,ITEM] (the original's evolution item, an Essentials id)
+    species_txt << "Evolution = #{ids[e['num'] - 1]},#{e['level']}#{e['item'] ? ",#{e['item'].upcase}" : ''}\n"
+  end
 end
 
 # --- sponsors: Poké Manager SPONSORS --------------------------------------

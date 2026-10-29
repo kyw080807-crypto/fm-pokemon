@@ -356,7 +356,7 @@ BaseStats = 35,55,40,50,50,90
 EggGroups = Field,Fairy
 GenderRatio = Female50Percent
 Prev = PICHU
-Evolution = RAICHU,27
+Evolution = RAICHU,27,THUNDERSTONE
 #-------------------------------
 [RAICHU]
 Name = 라이츄
@@ -427,7 +427,7 @@ BaseStats = 70,62,67,55,55,56
 EggGroups = Monster,Field
 GenderRatio = AlwaysFemale
 Prev = NIDORANfE
-Evolution = NIDOQUEEN,30
+Evolution = NIDOQUEEN,30,MOONSTONE
 #-------------------------------
 [NIDOQUEEN]
 Name = 니드퀸
@@ -470,7 +470,7 @@ BaseStats = 61,72,57,55,55,65
 EggGroups = Monster,Field
 GenderRatio = AlwaysMale
 Prev = NIDORANmA
-Evolution = NIDOKING,30
+Evolution = NIDOKING,30,MOONSTONE
 #-------------------------------
 [NIDOKING]
 Name = 니드킹
@@ -499,7 +499,7 @@ BaseStats = 70,45,48,60,65,35
 EggGroups = Fairy
 GenderRatio = Female75Percent
 Prev = CLEFFA
-Evolution = CLEFABLE,27
+Evolution = CLEFABLE,27,MOONSTONE
 #-------------------------------
 [CLEFABLE]
 Name = 픽시
@@ -527,7 +527,7 @@ Types = FIRE
 BaseStats = 38,41,40,50,65,65
 EggGroups = Field
 GenderRatio = Female75Percent
-Evolution = NINETALES,25
+Evolution = NINETALES,25,FIRESTONE
 #-------------------------------
 [NINETALES]
 Name = 나인테일
@@ -556,7 +556,7 @@ BaseStats = 115,45,20,45,25,20
 EggGroups = Fairy
 GenderRatio = Female75Percent
 Prev = IGGLYBUFF
-Evolution = WIGGLYTUFF,24
+Evolution = WIGGLYTUFF,24,MOONSTONE
 #-------------------------------
 [WIGGLYTUFF]
 Name = 푸크린
@@ -599,7 +599,7 @@ BaseStats = 75,80,70,65,75,90
 EggGroups = Flying
 GenderRatio = Female50Percent
 Prev = ZUBAT
-Evolution = CROBAT,38
+Evolution = CROBAT,38,SOOTHEBELL
 #-------------------------------
 [ODDISH]
 Name = 뚜벅쵸
@@ -628,8 +628,8 @@ BaseStats = 60,65,70,85,75,40
 EggGroups = Grass
 GenderRatio = Female50Percent
 Prev = ODDISH
-Evolution = VILEPLUME,33
-Evolution = BELLOSSOM,33
+Evolution = VILEPLUME,33,LEAFSTONE
+Evolution = BELLOSSOM,33,SUNSTONE
 #-------------------------------
 [VILEPLUME]
 Name = 라플레시아
@@ -826,7 +826,7 @@ Types = FIRE
 BaseStats = 55,70,45,70,50,60
 EggGroups = Field
 GenderRatio = Female25Percent
-Evolution = ARCANINE,29
+Evolution = ARCANINE,29,FIRESTONE
 #-------------------------------
 [ARCANINE]
 Name = 윈디
@@ -869,8 +869,8 @@ BaseStats = 65,65,65,50,50,90
 EggGroups = Water1
 GenderRatio = Female50Percent
 Prev = POLIWAG
-Evolution = POLIWRATH,32
-Evolution = POLITOED,32
+Evolution = POLIWRATH,32,WATERSTONE
+Evolution = POLITOED,32,KINGSROCK
 #-------------------------------
 [POLIWRATH]
 Name = 강챙이
@@ -913,7 +913,7 @@ BaseStats = 40,35,30,120,70,105
 EggGroups = Humanlike
 GenderRatio = Female25Percent
 Prev = ABRA
-Evolution = ALAKAZAM,33
+Evolution = ALAKAZAM,33,LINKINGCORD
 #-------------------------------
 [ALAKAZAM]
 Name = 후딘
@@ -956,7 +956,7 @@ BaseStats = 80,100,70,50,60,45
 EggGroups = Humanlike
 GenderRatio = Female25Percent
 Prev = MACHOP
-Evolution = MACHAMP,34
+Evolution = MACHAMP,34,LINKINGCORD
 #-------------------------------
 [MACHAMP]
 Name = 괴력몬
@@ -999,7 +999,7 @@ BaseStats = 65,90,50,85,45,55
 EggGroups = Grass
 GenderRatio = Female50Percent
 Prev = BELLSPROUT
-Evolution = VICTREEBEL,33
+Evolution = VICTREEBEL,33,LEAFSTONE
 #-------------------------------
 [VICTREEBEL]
 Name = 우츠보트
@@ -1070,7 +1070,7 @@ BaseStats = 55,95,115,45,45,35
 EggGroups = Mineral
 GenderRatio = Female50Percent
 Prev = GEODUDE
-Evolution = GOLEM,33
+Evolution = GOLEM,33,LINKINGCORD
 #-------------------------------
 [GOLEM]
 Name = 딱구리
@@ -1127,7 +1127,7 @@ BaseStats = 90,65,65,40,40,15
 EggGroups = Monster,Water1
 GenderRatio = Female50Percent
 Evolution = SLOWBRO,37
-Evolution = SLOWKING,26
+Evolution = SLOWKING,26,KINGSROCK
 #-------------------------------
 [SLOWBRO]
 Name = 야도란
@@ -1170,7 +1170,7 @@ BaseStats = 50,60,95,120,70,70
 EggGroups = Mineral
 GenderRatio = Genderless
 Prev = MAGNEMITE
-Evolution = MAGNEZONE,39
+Evolution = MAGNEZONE,39,THUNDERSTONE
 #-------------------------------
 [FARFETCHD]
 Name = 파오리
@@ -1281,7 +1281,7 @@ Types = WATER
 BaseStats = 30,65,100,45,25,40
 EggGroups = Water3
 GenderRatio = Female50Percent
-Evolution = CLOYSTER,25
+Evolution = CLOYSTER,25,WATERSTONE
 #-------------------------------
 [CLOYSTER]
 Name = 파르셀
@@ -1324,7 +1324,7 @@ BaseStats = 45,50,45,115,55,95
 EggGroups = Amorphous
 GenderRatio = Female50Percent
 Prev = GASTLY
-Evolution = GENGAR,34
+Evolution = GENGAR,34,LINKINGCORD
 #-------------------------------
 [GENGAR]
 Name = 팬텀
@@ -1352,7 +1352,7 @@ Types = ROCK,GROUND
 BaseStats = 35,45,160,30,45,70
 EggGroups = Mineral
 GenderRatio = Female50Percent
-Evolution = STEELIX,32
+Evolution = STEELIX,32,METALCOAT
 #-------------------------------
 [DROWZEE]
 Name = 슬리프
@@ -1450,7 +1450,7 @@ Types = GRASS,PSYCHIC
 BaseStats = 60,40,80,60,45,40
 EggGroups = Grass
 GenderRatio = Female50Percent
-Evolution = EXEGGUTOR,27
+Evolution = EXEGGUTOR,27,LEAFSTONE
 #-------------------------------
 [EXEGGUTOR]
 Name = 나시
@@ -1591,7 +1591,7 @@ BaseStats = 105,130,120,45,45,40
 EggGroups = Monster,Field
 GenderRatio = Female50Percent
 Prev = RHYHORN
-Evolution = RHYPERIOR,48
+Evolution = RHYPERIOR,48,PROTECTOR
 #-------------------------------
 [CHANSEY]
 Name = 럭키
@@ -1606,7 +1606,7 @@ BaseStats = 250,5,5,35,105,50
 EggGroups = Fairy
 GenderRatio = AlwaysFemale
 Prev = HAPPINY
-Evolution = BLISSEY,38
+Evolution = BLISSEY,38,SOOTHEBELL
 #-------------------------------
 [TANGELA]
 Name = 덩쿠리
@@ -1662,7 +1662,7 @@ BaseStats = 55,65,95,95,45,85
 EggGroups = Water1,Dragon
 GenderRatio = Female50Percent
 Prev = HORSEA
-Evolution = KINGDRA,38
+Evolution = KINGDRA,38,DRAGONSCALE
 #-------------------------------
 [GOLDEEN]
 Name = 콘치
@@ -1704,7 +1704,7 @@ Types = WATER
 BaseStats = 30,45,55,70,55,85
 EggGroups = Water3
 GenderRatio = Genderless
-Evolution = STARMIE,28
+Evolution = STARMIE,28,WATERSTONE
 #-------------------------------
 [STARMIE]
 Name = 아쿠스타
@@ -1746,7 +1746,7 @@ Types = BUG,FLYING
 BaseStats = 70,110,80,55,80,105
 EggGroups = Bug
 GenderRatio = Female50Percent
-Evolution = SCIZOR,40
+Evolution = SCIZOR,40,METALCOAT
 Evolution = KLEAVOR,40
 #-------------------------------
 [JYNX]
@@ -1776,7 +1776,7 @@ BaseStats = 65,83,57,95,85,105
 EggGroups = Humanlike
 GenderRatio = Female25Percent
 Prev = ELEKID
-Evolution = ELECTIVIRE,40
+Evolution = ELECTIVIRE,40,ELECTIRIZER
 #-------------------------------
 [MAGMAR]
 Name = 마그마
@@ -1791,7 +1791,7 @@ BaseStats = 65,95,57,100,85,93
 EggGroups = Humanlike
 GenderRatio = Female25Percent
 Prev = MAGBY
-Evolution = MAGMORTAR,40
+Evolution = MAGMORTAR,40,MAGMARIZER
 #-------------------------------
 [PINSIR]
 Name = 쁘사이저
@@ -1885,13 +1885,13 @@ Types = NORMAL
 BaseStats = 55,55,50,45,65,55
 EggGroups = Field
 GenderRatio = FemaleOneEighth
-Evolution = VAPOREON,27
-Evolution = JOLTEON,27
-Evolution = FLAREON,27
-Evolution = ESPEON,27
-Evolution = UMBREON,27
-Evolution = LEAFEON,27
-Evolution = GLACEON,27
+Evolution = VAPOREON,27,WATERSTONE
+Evolution = JOLTEON,27,THUNDERSTONE
+Evolution = FLAREON,27,FIRESTONE
+Evolution = ESPEON,27,SOOTHEBELL
+Evolution = UMBREON,27,SOOTHEBELL
+Evolution = LEAFEON,27,LEAFSTONE
+Evolution = GLACEON,27,ICESTONE
 Evolution = SYLVEON,27
 #-------------------------------
 [VAPOREON]
@@ -1948,7 +1948,7 @@ Types = NORMAL
 BaseStats = 65,60,70,85,75,40
 EggGroups = Mineral
 GenderRatio = Genderless
-Evolution = PORYGON2,33
+Evolution = PORYGON2,33,UPGRADE
 #-------------------------------
 [OMANYTE]
 Name = 암나이트
@@ -2436,7 +2436,7 @@ Types = ELECTRIC
 BaseStats = 20,40,15,35,35,60
 EggGroups = Undiscovered
 GenderRatio = Female50Percent
-Evolution = PIKACHU,17
+Evolution = PIKACHU,17,SOOTHEBELL
 #-------------------------------
 [CLEFFA]
 Name = 삐
@@ -2450,7 +2450,7 @@ Types = FAIRY
 BaseStats = 50,25,28,45,55,15
 EggGroups = Undiscovered
 GenderRatio = Female75Percent
-Evolution = CLEFAIRY,18
+Evolution = CLEFAIRY,18,SOOTHEBELL
 #-------------------------------
 [IGGLYBUFF]
 Name = 푸푸린
@@ -2464,7 +2464,7 @@ Types = NORMAL,FAIRY
 BaseStats = 90,30,15,40,20,15
 EggGroups = Undiscovered
 GenderRatio = Female75Percent
-Evolution = JIGGLYPUFF,18
+Evolution = JIGGLYPUFF,18,SOOTHEBELL
 #-------------------------------
 [TOGEPI]
 Name = 토게피
@@ -2478,7 +2478,7 @@ Types = FAIRY
 BaseStats = 35,20,65,40,65,20
 EggGroups = Undiscovered
 GenderRatio = FemaleOneEighth
-Evolution = TOGETIC,20
+Evolution = TOGETIC,20,SOOTHEBELL
 #-------------------------------
 [TOGETIC]
 Name = 토게틱
@@ -2493,7 +2493,7 @@ BaseStats = 55,40,85,80,105,40
 EggGroups = Flying,Fairy
 GenderRatio = FemaleOneEighth
 Prev = TOGEPI
-Evolution = TOGEKISS,34
+Evolution = TOGEKISS,34,SHINYSTONE
 #-------------------------------
 [NATU]
 Name = 네이티
@@ -2706,7 +2706,7 @@ Types = GRASS
 BaseStats = 30,30,30,30,30,30
 EggGroups = Grass
 GenderRatio = Female50Percent
-Evolution = SUNFLORA,16
+Evolution = SUNFLORA,16,SUNSTONE
 #-------------------------------
 [SUNFLORA]
 Name = 해루미
@@ -2804,7 +2804,7 @@ Types = DARK,FLYING
 BaseStats = 60,85,42,85,42,91
 EggGroups = Flying
 GenderRatio = Female50Percent
-Evolution = HONCHKROW,34
+Evolution = HONCHKROW,34,DUSKSTONE
 #-------------------------------
 [SLOWKING]
 Name = 야도킹
@@ -2832,7 +2832,7 @@ Types = GHOST
 BaseStats = 60,60,60,85,85,85
 EggGroups = Amorphous
 GenderRatio = Female50Percent
-Evolution = MISMAGIUS,36
+Evolution = MISMAGIUS,36,DUSKSTONE
 #-------------------------------
 [UNOWN]
 Name = 안농
@@ -2929,7 +2929,7 @@ Types = GROUND,FLYING
 BaseStats = 65,75,105,35,65,85
 EggGroups = Bug
 GenderRatio = Female50Percent
-Evolution = GLISCOR,36
+Evolution = GLISCOR,36,RAZORFANG
 #-------------------------------
 [STEELIX]
 Name = 강철톤
@@ -3038,7 +3038,7 @@ Types = DARK,ICE
 BaseStats = 55,95,55,35,75,115
 EggGroups = Field
 GenderRatio = Female50Percent
-Evolution = WEAVILE,36
+Evolution = WEAVILE,36,RAZORCLAW
 #-------------------------------
 [TEDDIURSA]
 Name = 깜지곰
@@ -3290,7 +3290,7 @@ BaseStats = 85,80,90,105,95,60
 EggGroups = Mineral
 GenderRatio = Genderless
 Prev = PORYGON
-Evolution = PORYGONZ,40
+Evolution = PORYGONZ,40,DUBIOUSDISC
 #-------------------------------
 [STANTLER]
 Name = 노라키
@@ -3824,7 +3824,7 @@ BaseStats = 60,50,50,60,70,50
 EggGroups = Water1,Grass
 GenderRatio = Female50Percent
 Prev = LOTAD
-Evolution = LUDICOLO,28
+Evolution = LUDICOLO,28,WATERSTONE
 #-------------------------------
 [LUDICOLO]
 Name = 로파파
@@ -3867,7 +3867,7 @@ BaseStats = 70,70,40,60,40,60
 EggGroups = Field,Grass
 GenderRatio = Female50Percent
 Prev = SEEDOT
-Evolution = SHIFTRY,28
+Evolution = SHIFTRY,28,LEAFSTONE
 #-------------------------------
 [SHIFTRY]
 Name = 다탱구
@@ -3967,7 +3967,7 @@ EggGroups = Humanlike,Amorphous
 GenderRatio = Female50Percent
 Prev = RALTS
 Evolution = GARDEVOIR,30
-Evolution = GALLADE,26
+Evolution = GALLADE,26,DAWNSTONE
 #-------------------------------
 [GARDEVOIR]
 Name = 가디안
@@ -4208,7 +4208,7 @@ Types = NORMAL,FAIRY
 BaseStats = 50,20,40,20,40,20
 EggGroups = Undiscovered
 GenderRatio = Female75Percent
-Evolution = MARILL,16
+Evolution = MARILL,16,SOOTHEBELL
 #-------------------------------
 [NOSEPASS]
 Name = 코코파스
@@ -4236,7 +4236,7 @@ Types = NORMAL
 BaseStats = 50,45,45,35,35,50
 EggGroups = Field,Fairy
 GenderRatio = Female75Percent
-Evolution = DELCATTY,22
+Evolution = DELCATTY,22,MOONSTONE
 #-------------------------------
 [DELCATTY]
 Name = 델케티
@@ -4442,7 +4442,7 @@ BaseStats = 50,60,45,100,80,65
 EggGroups = Fairy,Grass
 GenderRatio = Female50Percent
 Prev = BUDEW
-Evolution = ROSERADE,33
+Evolution = ROSERADE,33,SHINYSTONE
 #-------------------------------
 [GULPIN]
 Name = 꼴깍몬
@@ -4913,7 +4913,7 @@ Types = WATER
 BaseStats = 20,15,20,10,55,80
 EggGroups = Water1,Dragon
 GenderRatio = Female50Percent
-Evolution = MILOTIC,17
+Evolution = MILOTIC,17,PRISMSCALE
 #-------------------------------
 [MILOTIC]
 Name = 밀로틱
@@ -5010,7 +5010,7 @@ BaseStats = 40,70,130,60,130,25
 EggGroups = Amorphous
 GenderRatio = Female50Percent
 Prev = DUSKULL
-Evolution = DUSKNOIR,43
+Evolution = DUSKNOIR,43,REAPERCLOTH
 #-------------------------------
 [TROPIUS]
 Name = 트로피우스
@@ -5079,7 +5079,7 @@ BaseStats = 50,50,50,50,50,50
 EggGroups = Fairy,Mineral
 GenderRatio = Female50Percent
 Evolution = GLALIE,42
-Evolution = FROSLASS,25
+Evolution = FROSLASS,25,DAWNSTONE
 #-------------------------------
 [GLALIE]
 Name = 얼음귀신
@@ -5150,8 +5150,8 @@ Types = WATER
 BaseStats = 35,64,85,74,55,32
 EggGroups = Water1
 GenderRatio = Female50Percent
-Evolution = HUNTAIL,29
-Evolution = GOREBYSS,29
+Evolution = HUNTAIL,29,DEEPSEATOOTH
+Evolution = GOREBYSS,29,DEEPSEASCALE
 #-------------------------------
 [HUNTAIL]
 Name = 헌테일
@@ -5706,7 +5706,7 @@ Types = GRASS,POISON
 BaseStats = 40,30,35,50,70,55
 EggGroups = Undiscovered
 GenderRatio = Female50Percent
-Evolution = ROSELIA,23
+Evolution = ROSELIA,23,SOOTHEBELL
 #-------------------------------
 [ROSERADE]
 Name = 로즈레이드
@@ -6000,7 +6000,7 @@ Types = NORMAL
 BaseStats = 55,66,44,44,56,85
 EggGroups = Field,Humanlike
 GenderRatio = Female50Percent
-Evolution = LOPUNNY,29
+Evolution = LOPUNNY,29,SOOTHEBELL
 #-------------------------------
 [LOPUNNY]
 Name = 이어롭
@@ -6084,7 +6084,7 @@ Types = PSYCHIC
 BaseStats = 45,30,50,65,50,45
 EggGroups = Undiscovered
 GenderRatio = Female50Percent
-Evolution = CHIMECHO,24
+Evolution = CHIMECHO,24,SOOTHEBELL
 #-------------------------------
 [STUNKY]
 Name = 스컹뿡
@@ -6182,7 +6182,7 @@ Types = NORMAL
 BaseStats = 100,5,5,15,65,30
 EggGroups = Undiscovered
 GenderRatio = AlwaysFemale
-Evolution = CHANSEY,18
+Evolution = CHANSEY,18,OVALSTONE
 #-------------------------------
 [CHATOT]
 Name = 페라페
@@ -6265,7 +6265,7 @@ Types = NORMAL
 BaseStats = 135,85,40,40,85,5
 EggGroups = Undiscovered
 GenderRatio = FemaleOneEighth
-Evolution = SNORLAX,33
+Evolution = SNORLAX,33,SOOTHEBELL
 #-------------------------------
 [RIOLU]
 Name = 리오르
@@ -6279,7 +6279,7 @@ Types = FIGHTING
 BaseStats = 40,70,40,35,40,60
 EggGroups = Undiscovered
 GenderRatio = FemaleOneEighth
-Evolution = LUCARIO,24
+Evolution = LUCARIO,24,SOOTHEBELL
 #-------------------------------
 [LUCARIO]
 Name = 루카리오
@@ -7162,7 +7162,7 @@ Types = GRASS
 BaseStats = 50,53,48,53,48,64
 EggGroups = Field
 GenderRatio = FemaleOneEighth
-Evolution = SIMISAGE,26
+Evolution = SIMISAGE,26,LEAFSTONE
 #-------------------------------
 [SIMISAGE]
 Name = 야나키
@@ -7190,7 +7190,7 @@ Types = FIRE
 BaseStats = 50,53,48,53,48,64
 EggGroups = Field
 GenderRatio = FemaleOneEighth
-Evolution = SIMISEAR,26
+Evolution = SIMISEAR,26,FIRESTONE
 #-------------------------------
 [SIMISEAR]
 Name = 바오키
@@ -7218,7 +7218,7 @@ Types = WATER
 BaseStats = 50,53,48,53,48,64
 EggGroups = Field
 GenderRatio = FemaleOneEighth
-Evolution = SIMIPOUR,26
+Evolution = SIMIPOUR,26,WATERSTONE
 #-------------------------------
 [SIMIPOUR]
 Name = 앗차키
@@ -7246,7 +7246,7 @@ Types = PSYCHIC
 BaseStats = 76,25,45,67,55,24
 EggGroups = Field
 GenderRatio = Female50Percent
-Evolution = MUSHARNA,24
+Evolution = MUSHARNA,24,MOONSTONE
 #-------------------------------
 [MUSHARNA]
 Name = 몽얌나
@@ -7360,7 +7360,7 @@ BaseStats = 70,105,105,50,40,20
 EggGroups = Mineral
 GenderRatio = Female50Percent
 Prev = ROGGENROLA
-Evolution = GIGALITH,33
+Evolution = GIGALITH,33,LINKINGCORD
 #-------------------------------
 [GIGALITH]
 Name = 기가이어스
@@ -7388,7 +7388,7 @@ Types = PSYCHIC,FLYING
 BaseStats = 65,45,43,55,43,72
 EggGroups = Field,Flying
 GenderRatio = Female50Percent
-Evolution = SWOOBAT,27
+Evolution = SWOOBAT,27,SOOTHEBELL
 #-------------------------------
 [SWOOBAT]
 Name = 맘박쥐
@@ -7472,7 +7472,7 @@ BaseStats = 85,105,85,40,50,40
 EggGroups = Humanlike
 GenderRatio = Female25Percent
 Prev = TIMBURR
-Evolution = CONKELDURR,34
+Evolution = CONKELDURR,34,LINKINGCORD
 #-------------------------------
 [CONKELDURR]
 Name = 노보청
@@ -7584,7 +7584,7 @@ BaseStats = 55,63,90,50,80,42
 EggGroups = Bug
 GenderRatio = Female50Percent
 Prev = SEWADDLE
-Evolution = LEAVANNY,32
+Evolution = LEAVANNY,32,SOOTHEBELL
 #-------------------------------
 [LEAVANNY]
 Name = 모아머
@@ -7655,7 +7655,7 @@ Types = GRASS,FAIRY
 BaseStats = 40,27,60,37,50,66
 EggGroups = Grass,Fairy
 GenderRatio = Female50Percent
-Evolution = WHIMSICOTT,23
+Evolution = WHIMSICOTT,23,SUNSTONE
 #-------------------------------
 [WHIMSICOTT]
 Name = 엘풍
@@ -7683,7 +7683,7 @@ Types = GRASS
 BaseStats = 45,35,50,70,50,30
 EggGroups = Grass
 GenderRatio = AlwaysFemale
-Evolution = LILLIGANT,23
+Evolution = LILLIGANT,23,SUNSTONE
 #-------------------------------
 [LILLIGANT]
 Name = 드레디어
@@ -8017,7 +8017,7 @@ Types = NORMAL
 BaseStats = 55,50,40,40,40,75
 EggGroups = Field
 GenderRatio = Female75Percent
-Evolution = CINCCINO,25
+Evolution = CINCCINO,25,SHINYSTONE
 #-------------------------------
 [CINCCINO]
 Name = 치라치노
@@ -8243,7 +8243,7 @@ Types = BUG
 BaseStats = 50,75,45,40,45,60
 EggGroups = Bug
 GenderRatio = Female50Percent
-Evolution = ESCAVALIER,26
+Evolution = ESCAVALIER,26,LINKINGCORD
 #-------------------------------
 [ESCAVALIER]
 Name = 슈바르고
@@ -8454,7 +8454,7 @@ BaseStats = 65,85,70,75,70,40
 EggGroups = Amorphous
 GenderRatio = Female50Percent
 Prev = TYNAMO
-Evolution = EELEKTROSS,45
+Evolution = EELEKTROSS,45,THUNDERSTONE
 #-------------------------------
 [EELEKTROSS]
 Name = 저리더프
@@ -8525,7 +8525,7 @@ BaseStats = 60,40,60,95,60,55
 EggGroups = Amorphous
 GenderRatio = Female50Percent
 Prev = LITWICK
-Evolution = CHANDELURE,47
+Evolution = CHANDELURE,47,DUSKSTONE
 #-------------------------------
 [CHANDELURE]
 Name = 샹델라
@@ -8637,7 +8637,7 @@ Types = BUG
 BaseStats = 50,40,85,40,65,25
 EggGroups = Bug
 GenderRatio = Female50Percent
-Evolution = ACCELGOR,25
+Evolution = ACCELGOR,25,LINKINGCORD
 #-------------------------------
 [ACCELGOR]
 Name = 어지리더
@@ -9384,7 +9384,7 @@ BaseStats = 54,45,47,75,98,52
 EggGroups = Fairy
 GenderRatio = AlwaysFemale
 Prev = FLABEBE
-Evolution = FLORGES,31
+Evolution = FLORGES,31,SHINYSTONE
 #-------------------------------
 [FLORGES]
 Name = 플라제스
@@ -9524,7 +9524,7 @@ BaseStats = 59,110,150,45,49,35
 EggGroups = Mineral
 GenderRatio = Female50Percent
 Prev = HONEDGE
-Evolution = AEGISLASH,41
+Evolution = AEGISLASH,41,DUSKSTONE
 #-------------------------------
 [AEGISLASH]
 Name = 킬가르도
@@ -9552,7 +9552,7 @@ Types = FAIRY
 BaseStats = 78,52,60,63,65,23
 EggGroups = Fairy
 GenderRatio = Female50Percent
-Evolution = AROMATISSE,28
+Evolution = AROMATISSE,28,SACHET
 #-------------------------------
 [AROMATISSE]
 Name = 프레프티르
@@ -9580,7 +9580,7 @@ Types = FAIRY
 BaseStats = 62,48,66,59,57,49
 EggGroups = Fairy
 GenderRatio = Female50Percent
-Evolution = SLURPUFF,28
+Evolution = SLURPUFF,28,WHIPPEDDREAM
 #-------------------------------
 [SLURPUFF]
 Name = 나루림
@@ -9720,7 +9720,7 @@ Types = ELECTRIC,NORMAL
 BaseStats = 44,38,33,61,43,70
 EggGroups = Monster,Dragon
 GenderRatio = Female50Percent
-Evolution = HELIOLISK,24
+Evolution = HELIOLISK,24,SUNSTONE
 #-------------------------------
 [HELIOLISK]
 Name = 일레도리자드
@@ -9913,7 +9913,7 @@ Types = GHOST,GRASS
 BaseStats = 43,70,48,50,60,38
 EggGroups = Grass,Amorphous
 GenderRatio = Female50Percent
-Evolution = TREVENANT,26
+Evolution = TREVENANT,26,LINKINGCORD
 #-------------------------------
 [TREVENANT]
 Name = 대로트
@@ -9941,7 +9941,7 @@ Types = GHOST,GRASS
 BaseStats = 49,66,70,44,55,51
 EggGroups = Amorphous
 GenderRatio = Female50Percent
-Evolution = GOURGEIST,28
+Evolution = GOURGEIST,28,LINKINGCORD
 #-------------------------------
 [GOURGEIST]
 Name = 펌킨인
@@ -10318,7 +10318,7 @@ BaseStats = 57,82,95,55,75,36
 EggGroups = Bug
 GenderRatio = Female50Percent
 Prev = GRUBBIN
-Evolution = VIKAVOLT,33
+Evolution = VIKAVOLT,33,THUNDERSTONE
 #-------------------------------
 [VIKAVOLT]
 Name = 투구뿌논
@@ -10346,7 +10346,7 @@ Types = FIGHTING
 BaseStats = 47,82,57,42,47,63
 EggGroups = Water3
 GenderRatio = Female50Percent
-Evolution = CRABOMINABLE,28
+Evolution = CRABOMINABLE,28,ICESTONE
 #-------------------------------
 [CRABOMINABLE]
 Name = 모단단게
@@ -10803,7 +10803,7 @@ Types = NORMAL
 BaseStats = 95,95,95,95,95,59
 EggGroups = Undiscovered
 GenderRatio = Genderless
-Evolution = SILVALLY,40
+Evolution = SILVALLY,40,SOOTHEBELL
 #-------------------------------
 [SILVALLY]
 Name = 실버디
@@ -11737,9 +11737,9 @@ Types = GRASS,DRAGON
 BaseStats = 40,40,80,40,40,20
 EggGroups = Grass,Dragon
 GenderRatio = Female50Percent
-Evolution = FLAPPLE,22
-Evolution = APPLETUN,22
-Evolution = DIPPLIN,22
+Evolution = FLAPPLE,22,TARTAPPLE
+Evolution = APPLETUN,22,SWEETAPPLE
+Evolution = DIPPLIN,22,SYRUPYAPPLE
 #-------------------------------
 [FLAPPLE]
 Name = 애프룡
@@ -11934,7 +11934,7 @@ Types = GHOST
 BaseStats = 40,45,45,74,54,50
 EggGroups = Mineral,Amorphous
 GenderRatio = Genderless
-Evolution = POLTEAGEIST,26
+Evolution = POLTEAGEIST,26,CRACKEDPOT
 #-------------------------------
 [POLTEAGEIST]
 Name = 포트데스
@@ -12180,7 +12180,7 @@ Types = ICE,BUG
 BaseStats = 30,25,35,45,30,20
 EggGroups = Bug
 GenderRatio = Female50Percent
-Evolution = FROSMOTH,16
+Evolution = FROSMOTH,16,SOOTHEBELL
 #-------------------------------
 [FROSMOTH]
 Name = 모스노우
@@ -12340,7 +12340,7 @@ Types = STEEL,DRAGON
 BaseStats = 70,95,115,120,50,85
 EggGroups = Mineral,Dragon
 GenderRatio = Female50Percent
-Evolution = ARCHALUDON,40
+Evolution = ARCHALUDON,40,METALALLOY
 #-------------------------------
 [DREEPY]
 Name = 드라꼰
@@ -13047,8 +13047,8 @@ Types = FIRE
 BaseStats = 40,50,40,50,40,35
 EggGroups = Humanlike
 GenderRatio = Female50Percent
-Evolution = ARMAROUGE,21
-Evolution = CERULEDGE,21
+Evolution = ARMAROUGE,21,AUSPICIOUSARMOR
+Evolution = CERULEDGE,21,MALICIOUSARMOR
 #-------------------------------
 [ARMAROUGE]
 Name = 카디나르마
@@ -13090,7 +13090,7 @@ Types = ELECTRIC
 BaseStats = 61,31,41,59,35,45
 EggGroups = Water1
 GenderRatio = Female50Percent
-Evolution = BELLIBOLT,23
+Evolution = BELLIBOLT,23,THUNDERSTONE
 #-------------------------------
 [BELLIBOLT]
 Name = 찌리배리
@@ -13271,7 +13271,7 @@ Types = GRASS
 BaseStats = 50,62,40,62,40,50
 EggGroups = Grass
 GenderRatio = Female50Percent
-Evolution = SCOVILLAIN,25
+Evolution = SCOVILLAIN,25,FIRESTONE
 #-------------------------------
 [SCOVILLAIN]
 Name = 스코빌런
@@ -13590,7 +13590,7 @@ Types = ICE
 BaseStats = 108,68,45,30,40,43
 EggGroups = Field
 GenderRatio = Female50Percent
-Evolution = CETITAN,28
+Evolution = CETITAN,28,ICESTONE
 #-------------------------------
 [CETITAN]
 Name = 우락고래
@@ -14098,7 +14098,7 @@ Types = GRASS,GHOST
 BaseStats = 40,45,45,74,54,50
 EggGroups = Mineral,Amorphous
 GenderRatio = Genderless
-Evolution = SINISTCHA,26
+Evolution = SINISTCHA,26,UNREMARKABLETEACUP
 #-------------------------------
 [SINISTCHA]
 Name = 그우린차

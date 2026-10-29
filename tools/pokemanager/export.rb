@@ -46,9 +46,11 @@ end
 
 text = File.read(SRC, encoding: "utf-8")
 
+evi = JSON.parse(literal_after(text, '"evi":'))   # LEARN.evi: the item each evolution needs ("" = level)
 dex = JSON.parse(literal_after(text, "const DEX=")).each_with_index.map do |d, i|
   { num: i + 1, name: d[0], types: d[1].split("/"), base: d[2, 6],
-    evo: d[8].map { |n, lv| { num: n, level: lv } }, tier: d[9], prev: d[10].zero? ? nil : d[10] }
+    evo: d[8].each_with_index.map { |(n, lv), k| { num: n, level: lv, item: evi.dig(i, k).to_s.empty? ? nil : evi[i][k] } },
+    tier: d[9], prev: d[10].zero? ? nil : d[10] }
 end
 
 trainers = JSON.parse(literal_after(text, "const TRAINERS=")).each_with_index.flat_map do |list, r|

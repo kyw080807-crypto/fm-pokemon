@@ -107,8 +107,8 @@ def bad_value(rule, value)
   when Regexp then "#{value.inspect} doesn't match #{rule[:check].source}" unless value.match?(rule[:check])
   when Array  then "#{value.inspect} not one of #{rule[:check].first(4).join('/')}…" unless rule[:check].include?(value)
   when :evolution
-    sp, lv = value.split(",")
-    return "#{value.inspect} must be SPECIES,LEVEL" unless lv&.match?(INT)
+    sp, lv, item = value.split(",")
+    return "#{value.inspect} must be SPECIES,LEVEL[,ITEM]" unless lv&.match?(INT) && (item.nil? || item.match?(/\A[A-Z]+\z/))
     "unknown species #{sp}" unless SPECIES.key?(sp)
   when :species_id
     "unknown species #{value}" unless SPECIES.key?(value)

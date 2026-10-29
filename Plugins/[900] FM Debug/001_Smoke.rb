@@ -194,6 +194,10 @@ FM::Smoke.register("fm_menu_render") do
     bad = keys.zip(texts).reject { |k, t| t && t[2].size == FM::Events::OPTIONS[k] }.map(&:first)
     raise "event texts missing: #{bad.inspect}" unless bad.empty?
     FM::Log.info("smoke: #{keys.size} events, e.g. #{texts[2][0]}: #{texts[2][2].first}")
+    # Evolution items compiled with the species (Evolution = SPECIES,LEVEL,ITEM).
+    eevee = FM.world.species.dig(:EEVEE, :evo) || []
+    raise "evolution items missing: #{eevee.inspect}" unless eevee.any? { |e| e[2].to_s == "WATERSTONE" }
+    FM::Log.info("smoke: Eevee evolutions " + eevee.map { |to, _, it| "#{FM::UI.species_name(to)}(#{FM::UI.item_name(it&.to_sym)})" }.join(", "))
     # Held items: bought, held, and on the battle Pokémon.
     holder = club.lineup.first
     FM::Items.buy(club, :LEFTOVERS, date: FM.world.calendar.date)

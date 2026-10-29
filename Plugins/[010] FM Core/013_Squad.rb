@@ -203,7 +203,8 @@ module FM
     # progress and no EVs; tired mons (under 40) train at half effect.
     # train_level is the club's TRAINING level.
     # fx: FM::Coach.fx multipliers ({ lv:, ev: }).
-    def week(mon, train_level:, species:, fx: nil)
+    # hold / pay: as evolve (the player's mons / an AI's item bill).
+    def week(mon, train_level:, species:, fx: nil, hold: false, pay: nil)
       home = (7 - mon.away_days.to_i).clamp(0, 7) / 7.0   # design 05: travel days stop training
       mon.away_days = nil
       touring = mon.tour
@@ -219,7 +220,7 @@ module FM
           mon.level += 1
         end
         mon.prog = 0.0 if mon.level >= 100
-        return evolve(mon, species)
+        return evolve(mon, species, hold: hold, pay: pay)
       end
       tired = mon.cond < 40
       mon.prog += mon.resting ? g * 0.5 : g * (tired ? 0.6 : 1)
@@ -232,20 +233,30 @@ module FM
       unless mon.resting
         mon.ev = [mon.ev + EV_MAX / (52.0 * TRAIN_SHARE * grow_seasons(t)) * (tired ? 0.5 : 1) * home * (fx ? fx[:ev] : 1), EV_MAX].min
       end
-      evolve(mon, species)
+      evolve(mon, species, hold: hold, pay: pay)
     end
 
-    def evolve(mon, species)
-      loop do
+    # evolve (Poké Manager): up to three stages. The AI takes its branch
+    # (branch % options) at its level and pays for an item (`pay`); the
+    # player's mon (hold) evolves by itself only with a single, item-free
+    # option, else the player chooses (FM::Items.use_evolve).
+    def evolve(mon, species, hold: false, pay: nil)
+      3.times do
         evo = species.fetch(mon.species)[:evo]
         break if evo.empty?
-        to, lv = evo[mon.branch % evo.size]
+        break if hold && (evo.size > 1 || evo[0][2])
+        to, lv, item = hold ? evo[0] : evo[mon.branch % evo.size]
         break if mon.level < lv
-        mon.species = to
-        mon.bst = species.fetch(to)[:bst]
-        mon.evo_week = Morale.week
+        become(mon, species, to)
+        pay&.call(item) if item
       end
       mon
+    end
+
+    def become(mon, species, to)
+      mon.species = to
+      mon.bst = species.fetch(to)[:bst]
+      mon.evo_week = Morale.week
     end
 
     # Jan 1: everyone ages; those at the end of their life retire.
